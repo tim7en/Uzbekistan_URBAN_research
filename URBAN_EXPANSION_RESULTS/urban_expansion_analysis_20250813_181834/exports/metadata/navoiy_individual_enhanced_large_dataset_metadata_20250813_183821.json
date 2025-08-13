@@ -1,0 +1,35 @@
+{
+  "filename": "navoiy_individual_enhanced_large_dataset",
+  "result_type": "city_map",
+  "description": "Enhanced individual map for Navoiy optimized for large datasets (1,000 samples)",
+  "timestamp": "20250813_183821",
+  "created_date": "2025-08-13T18:38:27.218144",
+  "data_type": "Figure",
+  "saved_files": [
+    "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\navoiy_individual_enhanced_large_dataset_20250813_183821.png",
+    "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\navoiy_individual_enhanced_large_dataset_20250813_183821.pdf"
+  ],
+  "file_sizes": [
+    9598444,
+    8675663
+  ],
+  "session_name": "urban_expansion_analysis_20250813_181834",
+  "custom_metadata": {
+    "city": "Navoiy",
+    "samples": 1000,
+    "buffer_km": 10.0,
+    "impact_level": "\ud83d\udfe1 MODERATE",
+    "built_change": 0.021996152093303967,
+    "green_change": -0.010385924613408037,
+    "layers": [
+      "connectivity",
+      "water",
+      "built_up",
+      "vegetation",
+      "hotspots",
+      "activity"
+    ],
+    "optimization": "large_dataset",
+    "density_per_km2": 3.1830988618379066
+  }
+}

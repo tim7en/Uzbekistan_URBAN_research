@@ -1,0 +1,639 @@
+{
+  "session_info": {
+    "session_name": "urban_expansion_analysis_20250813_181834",
+    "timestamp": "20250813_181834",
+    "created_date": "2025-08-13T18:41:28.714507",
+    "analysis_type": "Urban Expansion Analysis",
+    "base_directory": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834"
+  },
+  "analysis_summary": {
+    "expansion_data_periods": 10,
+    "cities_analyzed": 14,
+    "regional_metrics": 19,
+    "visualizations_created": true,
+    "gis_maps_created": true,
+    "boundary_maps_created": true,
+    "report_generated": true,
+    "data_exported": true
+  },
+  "directory_structure": {
+    "base": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834",
+    "data": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data",
+    "visualizations": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations",
+    "reports": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\reports",
+    "exports": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports",
+    "logs": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\logs",
+    "gis_maps": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\gis_maps",
+    "analysis_plots": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\analysis_plots",
+    "city_maps": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps",
+    "boundary_maps": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\boundary_maps",
+    "correlation_plots": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\correlation_analysis",
+    "raw_data": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data",
+    "processed_data": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\processed_impacts",
+    "temporal_data": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\temporal_changes",
+    "city_config": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\city_configurations",
+    "csv_exports": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\csv_files",
+    "json_exports": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\json_files",
+    "combined_datasets": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\combined_datasets",
+    "metadata": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata",
+    "summary_reports": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\reports\\summary",
+    "detailed_reports": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\reports\\detailed",
+    "technical_docs": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\reports\\technical_documentation"
+  },
+  "files_created": [
+    {
+      "category": "base",
+      "file": "SESSION_INFO.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\SESSION_INFO.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "reports",
+      "file": "uzbekistan_data_dictionary_20250813_184128.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\reports\\uzbekistan_data_dictionary_20250813_184128.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "reports",
+      "file": "UZBEKISTAN_DATA_EXPORT_SUMMARY_20250813_184128.txt",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\reports\\UZBEKISTAN_DATA_EXPORT_SUMMARY_20250813_184128.txt",
+      "size_mb": 0.0
+    },
+    {
+      "category": "reports",
+      "file": "uzbekistan_urban_expansion_comprehensive_report_14_cities.md",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\reports\\uzbekistan_urban_expansion_comprehensive_report_14_cities.md",
+      "size_mb": 0.0
+    },
+    {
+      "category": "logs",
+      "file": "analysis_log.txt",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\logs\\analysis_log.txt",
+      "size_mb": 0.0
+    },
+    {
+      "category": "gis_maps",
+      "file": "uzbekistan_cities_enhanced_boundary_maps_20250813_184120.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\gis_maps\\uzbekistan_cities_enhanced_boundary_maps_20250813_184120.pdf",
+      "size_mb": 0.08
+    },
+    {
+      "category": "gis_maps",
+      "file": "uzbekistan_cities_enhanced_boundary_maps_20250813_184120.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\gis_maps\\uzbekistan_cities_enhanced_boundary_maps_20250813_184120.png",
+      "size_mb": 1.29
+    },
+    {
+      "category": "analysis_plots",
+      "file": "uzbekistan_enhanced_large_dataset_analysis_20250813_183436.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\analysis_plots\\uzbekistan_enhanced_large_dataset_analysis_20250813_183436.pdf",
+      "size_mb": 0.09
+    },
+    {
+      "category": "analysis_plots",
+      "file": "uzbekistan_enhanced_large_dataset_analysis_20250813_183436.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\analysis_plots\\uzbekistan_enhanced_large_dataset_analysis_20250813_183436.png",
+      "size_mb": 1.26
+    },
+    {
+      "category": "city_maps",
+      "file": "andijan_individual_enhanced_large_dataset_20250813_183627.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\andijan_individual_enhanced_large_dataset_20250813_183627.pdf",
+      "size_mb": 6.68
+    },
+    {
+      "category": "city_maps",
+      "file": "andijan_individual_enhanced_large_dataset_20250813_183627.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\andijan_individual_enhanced_large_dataset_20250813_183627.png",
+      "size_mb": 7.85
+    },
+    {
+      "category": "city_maps",
+      "file": "bukhara_individual_enhanced_large_dataset_20250813_183653.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\bukhara_individual_enhanced_large_dataset_20250813_183653.pdf",
+      "size_mb": 7.85
+    },
+    {
+      "category": "city_maps",
+      "file": "bukhara_individual_enhanced_large_dataset_20250813_183653.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\bukhara_individual_enhanced_large_dataset_20250813_183653.png",
+      "size_mb": 8.72
+    },
+    {
+      "category": "city_maps",
+      "file": "fergana_individual_enhanced_large_dataset_20250813_184035.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\fergana_individual_enhanced_large_dataset_20250813_184035.pdf",
+      "size_mb": 7.0
+    },
+    {
+      "category": "city_maps",
+      "file": "fergana_individual_enhanced_large_dataset_20250813_184035.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\fergana_individual_enhanced_large_dataset_20250813_184035.png",
+      "size_mb": 8.09
+    },
+    {
+      "category": "city_maps",
+      "file": "gulistan_individual_enhanced_large_dataset_20250813_183951.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\gulistan_individual_enhanced_large_dataset_20250813_183951.pdf",
+      "size_mb": 7.58
+    },
+    {
+      "category": "city_maps",
+      "file": "gulistan_individual_enhanced_large_dataset_20250813_183951.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\gulistan_individual_enhanced_large_dataset_20250813_183951.png",
+      "size_mb": 8.47
+    },
+    {
+      "category": "city_maps",
+      "file": "jizzakh_individual_enhanced_large_dataset_20250813_183718.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\jizzakh_individual_enhanced_large_dataset_20250813_183718.pdf",
+      "size_mb": 7.8
+    },
+    {
+      "category": "city_maps",
+      "file": "jizzakh_individual_enhanced_large_dataset_20250813_183718.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\jizzakh_individual_enhanced_large_dataset_20250813_183718.png",
+      "size_mb": 8.68
+    },
+    {
+      "category": "city_maps",
+      "file": "namangan_individual_enhanced_large_dataset_20250813_183839.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\namangan_individual_enhanced_large_dataset_20250813_183839.pdf",
+      "size_mb": 7.05
+    },
+    {
+      "category": "city_maps",
+      "file": "namangan_individual_enhanced_large_dataset_20250813_183839.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\namangan_individual_enhanced_large_dataset_20250813_183839.png",
+      "size_mb": 8.19
+    },
+    {
+      "category": "city_maps",
+      "file": "navoiy_individual_enhanced_large_dataset_20250813_183821.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\navoiy_individual_enhanced_large_dataset_20250813_183821.pdf",
+      "size_mb": 8.27
+    },
+    {
+      "category": "city_maps",
+      "file": "navoiy_individual_enhanced_large_dataset_20250813_183821.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\navoiy_individual_enhanced_large_dataset_20250813_183821.png",
+      "size_mb": 9.15
+    },
+    {
+      "category": "city_maps",
+      "file": "nukus_individual_enhanced_large_dataset_20250813_183612.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\nukus_individual_enhanced_large_dataset_20250813_183612.pdf",
+      "size_mb": 8.73
+    },
+    {
+      "category": "city_maps",
+      "file": "nukus_individual_enhanced_large_dataset_20250813_183612.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\nukus_individual_enhanced_large_dataset_20250813_183612.png",
+      "size_mb": 9.48
+    },
+    {
+      "category": "city_maps",
+      "file": "nurafshon_individual_enhanced_large_dataset_20250813_184017.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\nurafshon_individual_enhanced_large_dataset_20250813_184017.pdf",
+      "size_mb": 7.9
+    },
+    {
+      "category": "city_maps",
+      "file": "nurafshon_individual_enhanced_large_dataset_20250813_184017.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\nurafshon_individual_enhanced_large_dataset_20250813_184017.png",
+      "size_mb": 8.74
+    },
+    {
+      "category": "city_maps",
+      "file": "qarshi_individual_enhanced_large_dataset_20250813_183749.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\qarshi_individual_enhanced_large_dataset_20250813_183749.pdf",
+      "size_mb": 8.71
+    },
+    {
+      "category": "city_maps",
+      "file": "qarshi_individual_enhanced_large_dataset_20250813_183749.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\qarshi_individual_enhanced_large_dataset_20250813_183749.png",
+      "size_mb": 9.49
+    },
+    {
+      "category": "city_maps",
+      "file": "samarkand_individual_enhanced_large_dataset_20250813_183906.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\samarkand_individual_enhanced_large_dataset_20250813_183906.pdf",
+      "size_mb": 6.98
+    },
+    {
+      "category": "city_maps",
+      "file": "samarkand_individual_enhanced_large_dataset_20250813_183906.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\samarkand_individual_enhanced_large_dataset_20250813_183906.png",
+      "size_mb": 8.14
+    },
+    {
+      "category": "city_maps",
+      "file": "tashkent_individual_enhanced_large_dataset_20250813_183539.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\tashkent_individual_enhanced_large_dataset_20250813_183539.pdf",
+      "size_mb": 7.96
+    },
+    {
+      "category": "city_maps",
+      "file": "tashkent_individual_enhanced_large_dataset_20250813_183539.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\tashkent_individual_enhanced_large_dataset_20250813_183539.png",
+      "size_mb": 8.72
+    },
+    {
+      "category": "city_maps",
+      "file": "termez_individual_enhanced_large_dataset_20250813_183925.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\termez_individual_enhanced_large_dataset_20250813_183925.pdf",
+      "size_mb": 6.3
+    },
+    {
+      "category": "city_maps",
+      "file": "termez_individual_enhanced_large_dataset_20250813_183925.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\termez_individual_enhanced_large_dataset_20250813_183925.png",
+      "size_mb": 7.48
+    },
+    {
+      "category": "city_maps",
+      "file": "urgench_individual_enhanced_large_dataset_20250813_184113.pdf",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\urgench_individual_enhanced_large_dataset_20250813_184113.pdf",
+      "size_mb": 9.35
+    },
+    {
+      "category": "city_maps",
+      "file": "urgench_individual_enhanced_large_dataset_20250813_184113.png",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\urgench_individual_enhanced_large_dataset_20250813_184113.png",
+      "size_mb": 9.7
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2016_20250813_184123.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2016_20250813_184123.csv",
+      "size_mb": 3.5
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2016_20250813_184123.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2016_20250813_184123.pkl",
+      "size_mb": 1.67
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2017_20250813_184124.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2017_20250813_184124.csv",
+      "size_mb": 3.45
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2017_20250813_184124.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2017_20250813_184124.pkl",
+      "size_mb": 1.64
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2018_20250813_184124.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2018_20250813_184124.csv",
+      "size_mb": 3.49
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2018_20250813_184124.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2018_20250813_184124.pkl",
+      "size_mb": 1.67
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2019_20250813_184124.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2019_20250813_184124.csv",
+      "size_mb": 3.55
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2019_20250813_184124.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2019_20250813_184124.pkl",
+      "size_mb": 1.7
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2020_20250813_184124.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2020_20250813_184124.csv",
+      "size_mb": 3.55
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2020_20250813_184124.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2020_20250813_184124.pkl",
+      "size_mb": 1.7
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2021_20250813_184125.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2021_20250813_184125.csv",
+      "size_mb": 3.54
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2021_20250813_184125.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2021_20250813_184125.pkl",
+      "size_mb": 1.69
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2022_20250813_184125.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2022_20250813_184125.csv",
+      "size_mb": 3.46
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2022_20250813_184125.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2022_20250813_184125.pkl",
+      "size_mb": 1.66
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2023_20250813_184125.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2023_20250813_184125.csv",
+      "size_mb": 3.55
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2023_20250813_184125.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2023_20250813_184125.pkl",
+      "size_mb": 1.7
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2024_20250813_184125.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2024_20250813_184125.csv",
+      "size_mb": 3.5
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2024_20250813_184125.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2024_20250813_184125.pkl",
+      "size_mb": 1.67
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2025_20250813_184125.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2025_20250813_184125.csv",
+      "size_mb": 3.55
+    },
+    {
+      "category": "raw_data",
+      "file": "uzbekistan_satellite_data_period_2025_20250813_184125.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\raw_satellite_data\\uzbekistan_satellite_data_period_2025_20250813_184125.pkl",
+      "size_mb": 1.7
+    },
+    {
+      "category": "processed_data",
+      "file": "uzbekistan_city_impacts_20250813_184126.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\processed_impacts\\uzbekistan_city_impacts_20250813_184126.csv",
+      "size_mb": 0.01
+    },
+    {
+      "category": "processed_data",
+      "file": "uzbekistan_city_impacts_20250813_184126.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\processed_impacts\\uzbekistan_city_impacts_20250813_184126.pkl",
+      "size_mb": 0.01
+    },
+    {
+      "category": "processed_data",
+      "file": "uzbekistan_regional_stats_20250813_184126.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\processed_impacts\\uzbekistan_regional_stats_20250813_184126.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "temporal_data",
+      "file": "uzbekistan_yearly_changes_20250813_184128.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\temporal_changes\\uzbekistan_yearly_changes_20250813_184128.csv",
+      "size_mb": 0.04
+    },
+    {
+      "category": "temporal_data",
+      "file": "uzbekistan_yearly_changes_20250813_184128.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\temporal_changes\\uzbekistan_yearly_changes_20250813_184128.pkl",
+      "size_mb": 0.02
+    },
+    {
+      "category": "city_config",
+      "file": "uzbekistan_city_config_20250813_184126.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\city_configurations\\uzbekistan_city_config_20250813_184126.csv",
+      "size_mb": 0.0
+    },
+    {
+      "category": "city_config",
+      "file": "uzbekistan_city_config_20250813_184126.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\data\\city_configurations\\uzbekistan_city_config_20250813_184126.pkl",
+      "size_mb": 0.0
+    },
+    {
+      "category": "combined_datasets",
+      "file": "uzbekistan_combined_dataset_20250813_184128.csv",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\combined_datasets\\uzbekistan_combined_dataset_20250813_184128.csv",
+      "size_mb": 8.97
+    },
+    {
+      "category": "combined_datasets",
+      "file": "uzbekistan_combined_dataset_20250813_184128.pkl",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\combined_datasets\\uzbekistan_combined_dataset_20250813_184128.pkl",
+      "size_mb": 3.93
+    },
+    {
+      "category": "metadata",
+      "file": "andijan_individual_enhanced_large_dataset_metadata_20250813_183627.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\andijan_individual_enhanced_large_dataset_metadata_20250813_183627.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "bukhara_individual_enhanced_large_dataset_metadata_20250813_183653.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\bukhara_individual_enhanced_large_dataset_metadata_20250813_183653.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "fergana_individual_enhanced_large_dataset_metadata_20250813_184035.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\fergana_individual_enhanced_large_dataset_metadata_20250813_184035.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "gulistan_individual_enhanced_large_dataset_metadata_20250813_183951.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\gulistan_individual_enhanced_large_dataset_metadata_20250813_183951.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "jizzakh_individual_enhanced_large_dataset_metadata_20250813_183718.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\jizzakh_individual_enhanced_large_dataset_metadata_20250813_183718.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "namangan_individual_enhanced_large_dataset_metadata_20250813_183839.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\namangan_individual_enhanced_large_dataset_metadata_20250813_183839.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "navoiy_individual_enhanced_large_dataset_metadata_20250813_183821.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\navoiy_individual_enhanced_large_dataset_metadata_20250813_183821.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "nukus_individual_enhanced_large_dataset_metadata_20250813_183612.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\nukus_individual_enhanced_large_dataset_metadata_20250813_183612.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "nurafshon_individual_enhanced_large_dataset_metadata_20250813_184017.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\nurafshon_individual_enhanced_large_dataset_metadata_20250813_184017.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "qarshi_individual_enhanced_large_dataset_metadata_20250813_183749.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\qarshi_individual_enhanced_large_dataset_metadata_20250813_183749.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "samarkand_individual_enhanced_large_dataset_metadata_20250813_183906.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\samarkand_individual_enhanced_large_dataset_metadata_20250813_183906.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "tashkent_individual_enhanced_large_dataset_metadata_20250813_183539.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\tashkent_individual_enhanced_large_dataset_metadata_20250813_183539.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "termez_individual_enhanced_large_dataset_metadata_20250813_183925.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\termez_individual_enhanced_large_dataset_metadata_20250813_183925.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "urgench_individual_enhanced_large_dataset_metadata_20250813_184113.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\urgench_individual_enhanced_large_dataset_metadata_20250813_184113.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_cities_enhanced_boundary_maps_metadata_20250813_184120.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_cities_enhanced_boundary_maps_metadata_20250813_184120.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_city_config_metadata_20250813_184126.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_city_config_metadata_20250813_184126.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_city_impacts_metadata_20250813_184126.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_city_impacts_metadata_20250813_184126.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_combined_dataset_metadata_20250813_184128.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_combined_dataset_metadata_20250813_184128.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_data_dictionary_metadata_20250813_184128.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_data_dictionary_metadata_20250813_184128.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "UZBEKISTAN_DATA_EXPORT_SUMMARY_metadata_20250813_184128.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\UZBEKISTAN_DATA_EXPORT_SUMMARY_metadata_20250813_184128.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_enhanced_large_dataset_analysis_metadata_20250813_183436.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_enhanced_large_dataset_analysis_metadata_20250813_183436.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_regional_stats_metadata_20250813_184126.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_regional_stats_metadata_20250813_184126.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_satellite_data_period_2016_metadata_20250813_184123.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_satellite_data_period_2016_metadata_20250813_184123.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_satellite_data_period_2017_metadata_20250813_184124.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_satellite_data_period_2017_metadata_20250813_184124.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_satellite_data_period_2018_metadata_20250813_184124.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_satellite_data_period_2018_metadata_20250813_184124.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_satellite_data_period_2019_metadata_20250813_184124.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_satellite_data_period_2019_metadata_20250813_184124.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_satellite_data_period_2020_metadata_20250813_184124.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_satellite_data_period_2020_metadata_20250813_184124.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_satellite_data_period_2021_metadata_20250813_184125.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_satellite_data_period_2021_metadata_20250813_184125.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_satellite_data_period_2022_metadata_20250813_184125.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_satellite_data_period_2022_metadata_20250813_184125.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_satellite_data_period_2023_metadata_20250813_184125.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_satellite_data_period_2023_metadata_20250813_184125.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_satellite_data_period_2024_metadata_20250813_184125.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_satellite_data_period_2024_metadata_20250813_184125.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_satellite_data_period_2025_metadata_20250813_184125.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_satellite_data_period_2025_metadata_20250813_184125.json",
+      "size_mb": 0.0
+    },
+    {
+      "category": "metadata",
+      "file": "uzbekistan_yearly_changes_metadata_20250813_184128.json",
+      "path": "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\exports\\metadata\\uzbekistan_yearly_changes_metadata_20250813_184128.json",
+      "size_mb": 0.0
+    }
+  ]
+}

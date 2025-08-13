@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Uzbekistan Cities Night Lights Comparison</title>
+	<style>
+		body {
+			font-family: 'Segoe UI', Arial, sans-serif;
+			margin: 0;
+			padding: 20px;
+			background-color: #0a0a0a;
+			color: #ffffff;
+		}
+		.header {
+			text-align: center;
+			margin-bottom: 30px;
+			padding: 20px;
+			background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+			border-radius: 10px;
+		}
+		.city-comparison {
+			margin-bottom: 40px;
+			padding: 20px;
+			background-color: #151515;
+			border-radius: 15px;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+		}
+		.city-name {
+			font-size: 1.8em;
+			font-weight: bold;
+			text-align: center;
+			margin-bottom: 20px;
+			color: #00d4ff;
+			text-shadow: 0 0 10px rgba(0,212,255,0.3);
+		}
+		.maps-container {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 20px;
+		}
+		.map-item {
+			text-align: center;
+			flex: 1;
+			min-width: 300px;
+		}
+		.map-item img {
+			max-width: 100%;
+			height: auto;
+			border-radius: 10px;
+			border: 2px solid #333;
+			box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+			transition: transform 0.3s ease;
+		}
+		.map-item img:hover {
+			transform: scale(1.05);
+			border-color: #00d4ff;
+		}
+		.map-label {
+			font-size: 1.2em;
+			margin-top: 15px;
+			font-weight: bold;
+			color: #ffffff;
+		}
+		.city-info {
+			text-align: center;
+			margin-top: 15px;
+			color: #cccccc;
+			font-size: 0.9em;
+		}
+		.scroll-indicator {
+			position: fixed;
+			right: 20px;
+			top: 50%;
+			transform: translateY(-50%);
+			writing-mode: vertical-rl;
+			color: #00d4ff;
+			font-size: 0.8em;
+			opacity: 0.7;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<h1>🌃 Uzbekistan Cities Night Lights Evolution</h1>
+		<p>Comparison of urban lighting between 2016 and 2025</p>
+		<p><em>High-resolution satellite imagery showing urban development and growth</em></p>
+	</div>
+	
+	<div class="scroll-indicator">Scroll to explore cities ↓</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Tashkent</div>
+		<div class="city-info">
+			📍 Coordinates: 41.300°N, 69.240°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="tashkent_2016_lights.tif" alt="Tashkent 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="tashkent_2025_lights.tif" alt="Tashkent 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Nukus</div>
+		<div class="city-info">
+			📍 Coordinates: 42.473°N, 59.610°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="nukus_2016_lights.tif" alt="Nukus 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="nukus_2025_lights.tif" alt="Nukus 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Andijan</div>
+		<div class="city-info">
+			📍 Coordinates: 40.782°N, 72.344°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="andijan_2016_lights.tif" alt="Andijan 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="andijan_2025_lights.tif" alt="Andijan 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Bukhara</div>
+		<div class="city-info">
+			📍 Coordinates: 39.775°N, 64.429°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="bukhara_2016_lights.tif" alt="Bukhara 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="bukhara_2025_lights.tif" alt="Bukhara 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Samarkand</div>
+		<div class="city-info">
+			📍 Coordinates: 39.654°N, 66.960°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="samarkand_2016_lights.tif" alt="Samarkand 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="samarkand_2025_lights.tif" alt="Samarkand 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Namangan</div>
+		<div class="city-info">
+			📍 Coordinates: 40.998°N, 71.673°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="namangan_2016_lights.tif" alt="Namangan 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="namangan_2025_lights.tif" alt="Namangan 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Jizzakh</div>
+		<div class="city-info">
+			📍 Coordinates: 40.116°N, 67.842°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="jizzakh_2016_lights.tif" alt="Jizzakh 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="jizzakh_2025_lights.tif" alt="Jizzakh 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Qarshi</div>
+		<div class="city-info">
+			📍 Coordinates: 38.861°N, 65.789°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="qarshi_2016_lights.tif" alt="Qarshi 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="qarshi_2025_lights.tif" alt="Qarshi 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Navoiy</div>
+		<div class="city-info">
+			📍 Coordinates: 40.103°N, 65.369°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="navoiy_2016_lights.tif" alt="Navoiy 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="navoiy_2025_lights.tif" alt="Navoiy 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Termez</div>
+		<div class="city-info">
+			📍 Coordinates: 37.224°N, 67.278°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="termez_2016_lights.tif" alt="Termez 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="termez_2025_lights.tif" alt="Termez 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Gulistan</div>
+		<div class="city-info">
+			📍 Coordinates: 40.491°N, 68.781°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="gulistan_2016_lights.tif" alt="Gulistan 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="gulistan_2025_lights.tif" alt="Gulistan 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Nurafshon</div>
+		<div class="city-info">
+			📍 Coordinates: 41.017°N, 69.342°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="nurafshon_2016_lights.tif" alt="Nurafshon 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="nurafshon_2025_lights.tif" alt="Nurafshon 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Fergana</div>
+		<div class="city-info">
+			📍 Coordinates: 40.384°N, 71.784°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="fergana_2016_lights.tif" alt="Fergana 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="fergana_2025_lights.tif" alt="Fergana 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="city-comparison">
+		<div class="city-name">Urgench</div>
+		<div class="city-info">
+			📍 Coordinates: 41.551°N, 60.632°E | 
+			🔍 Coverage: 15 km radius
+		</div>
+		<div class="maps-container">
+			<div class="map-item">
+				<img src="urgench_2016_lights.tif" alt="Urgench 2016">
+				<div class="map-label">2016</div>
+			</div>
+			<div class="map-item">
+				<img src="urgench_2025_lights.tif" alt="Urgench 2025">
+				<div class="map-label">2025</div>
+			</div>
+		</div>
+	</div>
+
+	<div style="text-align: center; margin-top: 40px; padding: 20px; color: #888;">
+		<p>Generated using Google Earth Engine VIIRS Night Lights Data</p>
+		<p>High-resolution imagery (500m scale) with enhanced contrast processing</p>
+	</div>
+</body>
+</html>

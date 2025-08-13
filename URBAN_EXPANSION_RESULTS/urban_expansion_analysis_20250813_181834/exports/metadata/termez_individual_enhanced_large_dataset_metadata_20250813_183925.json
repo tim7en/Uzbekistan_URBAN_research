@@ -1,0 +1,35 @@
+{
+  "filename": "termez_individual_enhanced_large_dataset",
+  "result_type": "city_map",
+  "description": "Enhanced individual map for Termez optimized for large datasets (1,000 samples)",
+  "timestamp": "20250813_183925",
+  "created_date": "2025-08-13T18:39:31.495882",
+  "data_type": "Figure",
+  "saved_files": [
+    "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\termez_individual_enhanced_large_dataset_20250813_183925.png",
+    "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\termez_individual_enhanced_large_dataset_20250813_183925.pdf"
+  ],
+  "file_sizes": [
+    7847554,
+    6602829
+  ],
+  "session_name": "urban_expansion_analysis_20250813_181834",
+  "custom_metadata": {
+    "city": "Termez",
+    "samples": 1000,
+    "buffer_km": 8.0,
+    "impact_level": "\ud83d\udfe2 LOW",
+    "built_change": 0.010482048020824752,
+    "green_change": -0.005417427071629385,
+    "layers": [
+      "connectivity",
+      "water",
+      "built_up",
+      "vegetation",
+      "hotspots",
+      "activity"
+    ],
+    "optimization": "large_dataset",
+    "density_per_km2": 4.97359197162173
+  }
+}

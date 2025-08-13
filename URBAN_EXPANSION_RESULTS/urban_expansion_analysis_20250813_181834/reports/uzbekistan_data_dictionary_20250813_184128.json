@@ -1,0 +1,74 @@
+{
+  "dataset_info": {
+    "title": "Uzbekistan Urban Expansion Impact Analysis Dataset",
+    "description": "Comprehensive satellite-based analysis of urban expansion impacts across major cities",
+    "temporal_range": "2016-2025",
+    "spatial_resolution": "100m",
+    "cities_analyzed": 14,
+    "total_samples": 138476,
+    "analysis_date": "20250813_184123",
+    "data_sources": [
+      "Google Earth Engine",
+      "Dynamic World Land Cover",
+      "Landsat 8/9 Surface Reflectance",
+      "VIIRS Nighttime Lights"
+    ]
+  },
+  "variables": {
+    "satellite_data": {
+      "Built_Probability": "Built-up area probability (0-1)",
+      "Green_Probability": "Green space probability (0-1)",
+      "Water_Probability": "Water body probability (0-1)",
+      "NDVI": "Normalized Difference Vegetation Index",
+      "NDBI": "Normalized Difference Built-up Index",
+      "NDWI": "Normalized Difference Water Index",
+      "EUI": "Enhanced Urban Index",
+      "Green_Connectivity": "Green space connectivity index",
+      "Impervious_Surface": "Impervious surface fraction",
+      "Nighttime_Lights": "VIIRS nighttime lights radiance"
+    },
+    "impact_metrics": {
+      "built_change_10yr": "10-year built-up expansion",
+      "green_change_10yr": "10-year green space change",
+      "water_change_10yr": "10-year water body change",
+      "ndvi_change_10yr": "10-year vegetation health change",
+      "ndbi_change_10yr": "10-year urban development index change",
+      "ndwi_change_10yr": "10-year water index change",
+      "eui_change_10yr": "10-year enhanced urban index change",
+      "connectivity_change_10yr": "10-year green connectivity change",
+      "impervious_change_10yr": "10-year impervious surface change",
+      "lights_change_10yr": "10-year nighttime lights change",
+      "built_expansion_rate_per_year": "Annual built-up expansion rate",
+      "green_loss_rate_per_year": "Annual green space loss rate"
+    },
+    "spatial_info": {
+      "Sample_Longitude": "Sample point longitude (degrees)",
+      "Sample_Latitude": "Sample point latitude (degrees)",
+      "City": "City name",
+      "Period": "Analysis period"
+    }
+  },
+  "city_buffers": {
+    "Tashkent": "15km radius",
+    "Nukus": "10km radius",
+    "Andijan": "12km radius",
+    "Bukhara": "10km radius",
+    "Jizzakh": "8km radius",
+    "Qarshi": "8km radius",
+    "Navoiy": "10km radius",
+    "Namangan": "12km radius",
+    "Samarkand": "12km radius",
+    "Termez": "8km radius",
+    "Gulistan": "8km radius",
+    "Nurafshon": "8km radius",
+    "Fergana": "12km radius",
+    "Urgench": "10km radius"
+  },
+  "methodology": {
+    "processing": "Google Earth Engine server-side computation",
+    "sampling": "1000 samples per city per period",
+    "temporal_analysis": "Annual composites with year-to-year tracking",
+    "quality_control": "Cloud filtering and invalid data removal",
+    "analysis_focus": "Urban expansion and land cover changes (UHI analysis removed)"
+  }
+}

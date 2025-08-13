@@ -1,0 +1,35 @@
+{
+  "filename": "nurafshon_individual_enhanced_large_dataset",
+  "result_type": "city_map",
+  "description": "Enhanced individual map for Nurafshon optimized for large datasets (1,000 samples)",
+  "timestamp": "20250813_184017",
+  "created_date": "2025-08-13T18:40:23.557551",
+  "data_type": "Figure",
+  "saved_files": [
+    "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\nurafshon_individual_enhanced_large_dataset_20250813_184017.png",
+    "D:\\Research_grade_SUHI\\URBAN_EXPANSION_RESULTS\\urban_expansion_analysis_20250813_181834\\visualizations\\individual_city_maps\\nurafshon_individual_enhanced_large_dataset_20250813_184017.pdf"
+  ],
+  "file_sizes": [
+    9162115,
+    8285104
+  ],
+  "session_name": "urban_expansion_analysis_20250813_181834",
+  "custom_metadata": {
+    "city": "Nurafshon",
+    "samples": 1000,
+    "buffer_km": 8.0,
+    "impact_level": "\ud83d\udfe2 LOW",
+    "built_change": 0.008309572900566359,
+    "green_change": -0.014216515378485062,
+    "layers": [
+      "connectivity",
+      "water",
+      "built_up",
+      "vegetation",
+      "hotspots",
+      "activity"
+    ],
+    "optimization": "large_dataset",
+    "density_per_km2": 4.97359197162173
+  }
+}
