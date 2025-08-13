@@ -1,0 +1,214 @@
+{
+  "statistics": {
+    "metadata": {
+      "analysis_date": "2025-08-13T16:19:55.864150",
+      "analyst": "Uzbekistan Urban Research Comprehensive Analyzer",
+      "data_period": "2016-2025",
+      "cities_analyzed": 14,
+      "analysis_scope": "Urban Expansion + SUHI Analysis"
+    },
+    "suhi_analysis": {
+      "temporal_coverage": {
+        "start_year": 2016,
+        "end_year": 2024,
+        "total_years": 9,
+        "total_observations": 126
+      },
+      "spatial_coverage": {
+        "cities_analyzed": 14,
+        "city_list": [
+          "Andijan",
+          "Bukhara",
+          "Fergana",
+          "Gulistan",
+          "Jizzakh",
+          "Namangan",
+          "Navoiy",
+          "Nukus",
+          "Nurafshon",
+          "Qarshi",
+          "Samarkand",
+          "Tashkent",
+          "Termez",
+          "Urgench"
+        ]
+      },
+      "suhi_intensity_statistics": {
+        "day_suhi": {
+          "mean": 1.0458150541632876,
+          "std": 1.7309487661676208,
+          "min": -3.1452352857467005,
+          "max": 5.255720536357078,
+          "q25": -0.11589057144817616,
+          "q75": 2.1538051387871757,
+          "range": 8.400955822103779
+        },
+        "night_suhi": {
+          "mean": 0.668461914931801,
+          "std": 0.5589035227866387,
+          "min": -0.4161803997826876,
+          "max": 2.2882697718288227,
+          "q25": 0.2618228447428206,
+          "q75": 1.032798660987949,
+          "range": 2.7044501716115104
+        }
+      },
+      "temporal_trends": {
+        "day_trend": {
+          "slope_per_year": 0.013114152478539573,
+          "r_squared": 0.016187874618463285,
+          "p_value": 0.7442770355762197,
+          "significance": "not significant",
+          "trend_direction": "warming"
+        },
+        "night_trend": {
+          "slope_per_year": 0.03970722706878174,
+          "r_squared": 0.35621987188104587,
+          "p_value": 0.08974683998758934,
+          "significance": "not significant",
+          "trend_direction": "warming"
+        }
+      },
+      "city_rankings": {
+        "highest_day_suhi": [
+          {
+            "city": "Fergana",
+            "suhi_intensity": 3.5217889053214995
+          },
+          {
+            "city": "Jizzakh",
+            "suhi_intensity": 3.2222397408496133
+          },
+          {
+            "city": "Nukus",
+            "suhi_intensity": 2.112634836263826
+          },
+          {
+            "city": "Tashkent",
+            "suhi_intensity": 1.9968365335071754
+          },
+          {
+            "city": "Samarkand",
+            "suhi_intensity": 1.7835334048234677
+          }
+        ],
+        "lowest_day_suhi": [
+          {
+            "city": "Namangan",
+            "suhi_intensity": 0.5579243891588079
+          },
+          {
+            "city": "Nurafshon",
+            "suhi_intensity": -0.44560116791916116
+          },
+          {
+            "city": "Termez",
+            "suhi_intensity": -0.45041655695010735
+          },
+          {
+            "city": "Qarshi",
+            "suhi_intensity": -1.261097069198779
+          },
+          {
+            "city": "Bukhara",
+            "suhi_intensity": -1.6502388744495553
+          }
+        ],
+        "highest_night_suhi": [
+          {
+            "city": "Qarshi",
+            "suhi_intensity": 1.3383664977650431
+          },
+          {
+            "city": "Tashkent",
+            "suhi_intensity": 1.3150036018480553
+          },
+          {
+            "city": "Fergana",
+            "suhi_intensity": 1.2286956350781801
+          },
+          {
+            "city": "Jizzakh",
+            "suhi_intensity": 0.9814606164329857
+          },
+          {
+            "city": "Samarkand",
+            "suhi_intensity": 0.8910511426448833
+          }
+        ]
+      },
+      "extreme_events": {
+        "extreme_high_threshold": 3.094097324394941,
+        "extreme_low_threshold": -1.1517283110204488,
+        "cities_with_most_extreme_highs": {
+          "Fergana": {
+            "extreme_high_events": 6
+          },
+          "Jizzakh": {
+            "extreme_high_events": 4
+          },
+          "Tashkent": {
+            "extreme_high_events": 2
+          }
+        },
+        "total_extreme_events": 26
+      },
+      "data_quality_metrics": {
+        "quality_distribution": {
+          "Good": 126
+        },
+        "good_quality_percentage": 100.0,
+        "total_records_analyzed": 126
+      }
+    },
+    "urban_expansion_analysis": {
+      "expansion_metrics": {
+        "mean_built_expansion": 0.0219427134645326,
+        "max_built_expansion": 0.0438758600788219,
+        "cities_with_expansion": 14,
+        "cities_with_contraction": 0
+      },
+      "land_cover_changes": {},
+      "environmental_impacts": {
+        "green_space_metrics": {
+          "green_change_10yr": -0.00797255139942381,
+          "ndvi_change_10yr": -0.008864809061305714,
+          "green_loss_rate_per_year": -0.0007972551399423427
+        }
+      },
+      "city_specific_analysis": {}
+    },
+    "integrated_analysis": {
+      "correlation_analysis": {
+        "note": "Integrated analysis requires temporal alignment of datasets",
+        "available_datasets": [
+          "SUHI_2016_2024",
+          "Urban_Expansion_2018_2025"
+        ]
+      },
+      "spatial_overlap": {
+        "cities_in_both_datasets": 0
+      }
+    },
+    "key_findings": [
+      {
+        "category": "SUHI Analysis",
+        "finding": "Mean daytime SUHI intensity across all cities: 1.05\u00b0C",
+        "significance": "high",
+        "implication": "Indicates significant urban heat island effects requiring mitigation strategies"
+      },
+      {
+        "category": "SUHI Analysis",
+        "finding": "SUHI intensity range: 8.40\u00b0C (indicating high spatial variability)",
+        "significance": "high",
+        "implication": "Suggests need for city-specific approaches to heat island mitigation"
+      },
+      {
+        "category": "Urban Expansion",
+        "finding": "14 cities showing built-up area expansion",
+        "significance": "medium",
+        "implication": "Urban growth patterns require sustainable development planning"
+      }
+    ]
+  }
+}
