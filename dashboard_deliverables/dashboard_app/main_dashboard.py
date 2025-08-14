@@ -58,55 +58,183 @@ def load_css():
             max-width: 95%;
         }
         
+        /* Enhanced Professional Light Theme Styling */
+        .stApp {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 50%, #f0f7ff 100%);
+        }
+        
         /* Header styling */
         .header-container {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            padding: 2rem;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #5a6fd8);
+            padding: 2.5rem;
+            border-radius: 20px;
             margin-bottom: 2rem;
             color: white;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
         .header-title {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 3.5rem;
+            font-weight: 800;
             margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: white;
         }
         
         .header-subtitle {
-            font-size: 1.3rem;
-            opacity: 0.9;
+            font-size: 1.4rem;
+            opacity: 0.95;
             margin-bottom: 1rem;
+            font-weight: 300;
+            color: white;
         }
         
-        /* Metric cards */
+        /* Enhanced Section Headers */
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            border-radius: 15px;
+            margin: 2rem 0 1.5rem 0;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Professional Metric Cards */
         .metric-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 1.5rem;
-            border-radius: 15px;
+            padding: 2rem;
+            border-radius: 18px;
             color: white;
             text-align: center;
-            margin: 0.5rem;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
+            margin: 0.75rem;
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .metric-card:hover::before {
+            left: 100%;
         }
         
         .metric-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
         }
         
         .metric-value {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2.8rem;
+            font-weight: 800;
             margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         
         .metric-label {
-            font-size: 1rem;
-            opacity: 0.9;
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+        
+        /* Enhanced Light Container */
+        .ct-scan-container {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            position: relative;
+        }
+        
+        .ct-scan-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 15px;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            z-index: -1;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { opacity: 0.5; }
+            to { opacity: 0.8; }
+        }
+        
+        /* Enhanced Light Sidebar */
+        .css-1d391kg {
+            background: linear-gradient(180deg, #f8f9ff 0%, #e6f3ff 100%);
+            border-right: 2px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        /* Professional Buttons */
+        .stButton > button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        .stButton > button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Enhanced Selectbox */
+        .stSelectbox > div > div {
+            background: rgba(255,255,255,0.9);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 10px;
+        }
+        
+        /* Professional Warning/Info boxes */
+        .stAlert {
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        /* Enhanced Plot containers */
+        .js-plotly-plot {
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+            background: rgba(255,255,255,0.9);
+        }
+        
+        /* Light theme text colors */
+        .css-10trblm {
+            color: #2c3e50;
+        }
+        
+        .css-1inwz65 {
+            color: #2c3e50;
         }
         
         /* Sidebar styling */
@@ -223,7 +351,10 @@ class UzbekistanUrbanDashboard:
             # Load city statistics
             stats_file = self.data_path / "city_suhi_statistics.csv"
             if stats_file.exists():
-                self.city_stats = pd.read_csv(stats_file, index_col=0)
+                self.city_stats = pd.read_csv(stats_file)
+                # Set City as index if it's a column
+                if 'City' in self.city_stats.columns:
+                    self.city_stats.set_index('City', inplace=True)
             else:
                 self.city_stats = pd.DataFrame()
             
@@ -272,10 +403,11 @@ class UzbekistanUrbanDashboard:
             filtered_city_stats = self.city_stats.copy()
             filtered_suhi_data = self.suhi_data.copy()
             
-            if selected_cities:
+            # Only filter if selections are made, otherwise use all data
+            if selected_cities and len(selected_cities) > 0:
                 filtered_city_stats = filtered_city_stats[filtered_city_stats.index.isin(selected_cities)]
             
-            if selected_years and 'Year' in filtered_suhi_data.columns:
+            if selected_years and len(selected_years) > 0 and 'Year' in filtered_suhi_data.columns:
                 filtered_suhi_data = filtered_suhi_data[filtered_suhi_data['Year'].isin(selected_years)]
             
             col1, col2, col3, col4 = st.columns(4)
@@ -326,84 +458,70 @@ class UzbekistanUrbanDashboard:
                     """, unsafe_allow_html=True)
     
     def create_ct_scan_visualization(self):
-        """Create CT scan-like visualization"""
-        st.markdown('<div class="section-header">🔬 CT SCAN-LIKE URBAN ANALYSIS</div>', unsafe_allow_html=True)
+        """Create radar chart visualization of SUHI intensity"""
+        st.markdown('<div class="section-header">� SUHI INTENSITY RADAR ANALYSIS</div>', unsafe_allow_html=True)
         
         if not self.city_stats.empty:
+            st.markdown('<div class="ct-scan-container">', unsafe_allow_html=True)
+            
             fig = go.Figure()
             
-            # Create CT scan-like heatmap
+            # Create radar chart data
             cities = self.city_stats.index.tolist()
             suhi_values = self.city_stats['SUHI_Day_mean'].values
             
-            # Create radial/circular CT scan visualization
-            theta = np.linspace(0, 2*np.pi, len(cities))
-            r = suhi_values
-            
-            # Add radial heatmap
-            fig.add_trace(go.Scatterpolar(
-                r=r,
-                theta=theta * 180/np.pi,
-                mode='markers+lines',
-                marker=dict(
-                    size=20,
-                    color=suhi_values,
-                    colorscale='RdYlBu_r',
-                    showscale=True,
-                    colorbar=dict(
-                        title="SUHI Intensity (°C)",
-                        titlefont=dict(color='white'),
-                        tickfont=dict(color='white')
-                    )
-                ),
-                line=dict(color='lime', width=2),
-                text=cities,
-                hovertemplate="<b>%{text}</b><br>SUHI: %{r:.2f}°C<extra></extra>",
-                name="Cities"
-            ))
-            
-            # Add concentric circles for reference
-            for intensity in [1, 2, 3, 4]:
+            if len(cities) > 0 and len(suhi_values) > 0:
+                # Create radar chart
                 fig.add_trace(go.Scatterpolar(
-                    r=[intensity] * 360,
-                    theta=list(range(360)),
-                    mode='lines',
-                    line=dict(color='rgba(0,255,0,0.3)', width=1),
-                    showlegend=False,
-                    hoverinfo='skip'
+                    r=suhi_values,
+                    theta=cities,
+                    fill='toself',
+                    fillcolor='rgba(102, 126, 234, 0.3)',
+                    line=dict(color='rgb(102, 126, 234)', width=3),
+                    marker=dict(
+                        size=10,
+                        color=suhi_values,
+                        colorscale='RdYlBu_r',
+                        showscale=True,
+                        colorbar=dict(
+                            title=dict(text="SUHI Intensity (°C)", font=dict(color='black')),
+                            tickfont=dict(color='black')
+                        )
+                    ),
+                    hovertemplate="<b>%{theta}</b><br>SUHI: %{r:.2f}°C<extra></extra>",
+                    name="SUHI Intensity"
                 ))
             
             fig.update_layout(
                 polar=dict(
                     radialaxis=dict(
                         visible=True,
-                        range=[0, max(suhi_values) * 1.1],
-                        tickfont=dict(color='lime'),
-                        gridcolor='rgba(0,255,0,0.3)'
+                        range=[0, max(suhi_values) * 1.1] if len(suhi_values) > 0 else [0, 5],
+                        tickfont=dict(color='black'),
+                        gridcolor='rgba(0,0,0,0.3)'
                     ),
                     angularaxis=dict(
-                        tickfont=dict(color='lime'),
-                        gridcolor='rgba(0,255,0,0.3)'
+                        tickfont=dict(color='black'),
+                        gridcolor='rgba(0,0,0,0.3)'
                     ),
-                    bgcolor='rgba(0,0,0,0.9)'
+                    bgcolor='rgba(255,255,255,0.9)'
                 ),
-                paper_bgcolor='rgba(0,0,0,0)',
-                plot_bgcolor='rgba(0,0,0,0)',
-                font=dict(color='white'),
+                paper_bgcolor='rgba(255,255,255,0.9)',
+                plot_bgcolor='rgba(255,255,255,0.9)',
+                font=dict(color='black'),
                 title=dict(
-                    text="Urban Heat Island CT Scan View",
-                    font=dict(size=20, color='lime'),
+                    text="SUHI Intensity Radar Chart",
+                    font=dict(size=20, color='black'),
                     x=0.5
                 ),
                 height=600
             )
             
-            st.markdown('<div class="ct-scan-container">', unsafe_allow_html=True)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, key="radar_chart_main")
             st.markdown('</div>', unsafe_allow_html=True)
     
     def create_animated_network(self):
-        """Create animated network visualization"""
+        """Create animated network visualization with gradient connections"""
         st.markdown('<div class="section-header">🕸️ ANIMATED CITY NETWORK CONNECTIONS</div>', unsafe_allow_html=True)
         
         if not self.city_stats.empty:
@@ -418,107 +536,325 @@ class UzbekistanUrbanDashboard:
             x_pos = np.cos(angles)
             y_pos = np.sin(angles)
             
-            # Add connections between similar cities
+            # Add connections between cities with gradient based on connection strength
+            max_diff = max(suhi_values) - min(suhi_values)
             for i in range(n_cities):
                 for j in range(i+1, n_cities):
                     diff = abs(suhi_values[i] - suhi_values[j])
-                    if diff < 1.5:  # Connect similar cities
+                    # Connection strength inversely related to difference
+                    strength = 1 - (diff / max_diff) if max_diff > 0 else 1
+                    
+                    if strength > 0.3:  # Only show strong connections
+                        # Create gradient effect by varying opacity and color intensity
+                        alpha = strength * 0.8
+                        color_intensity = int(255 * strength)
+                        
+                        # Use color gradient from blue (weak) to red (strong)
+                        if strength > 0.7:
+                            line_color = f'rgba(255,{255-color_intensity},0,{alpha})'  # Red to orange
+                        elif strength > 0.5:
+                            line_color = f'rgba(255,255,{255-color_intensity},{alpha})'  # Yellow
+                        else:
+                            line_color = f'rgba(0,{color_intensity},255,{alpha})'  # Blue
+                        
                         fig.add_trace(go.Scatter(
                             x=[x_pos[i], x_pos[j]],
                             y=[y_pos[i], y_pos[j]],
                             mode='lines',
                             line=dict(
-                                color=f'rgba(0,255,0,{0.8 - diff/2})',
-                                width=3-diff
+                                color=line_color,
+                                width=1 + strength * 2  # Reduced line thickness (was 2 + strength * 4)
                             ),
                             showlegend=False,
-                            hoverinfo='skip'
+                            hovertemplate=f"<b>Connection Strength:</b> {strength:.2f}<br>" +
+                                        f"<b>Between:</b> {cities[i]} ↔ {cities[j]}<extra></extra>",
+                            name=f"Connection_{i}_{j}"
                         ))
             
-            # Add city nodes with pulsing effect
+            # Add city nodes with enhanced styling
             fig.add_trace(go.Scatter(
                 x=x_pos,
                 y=y_pos,
                 mode='markers+text',
                 marker=dict(
-                    size=[max(5, abs(val) * 10 + 5) for val in suhi_values],  # Ensure positive sizes
+                    size=[max(15, abs(val) * 8 + 15) for val in suhi_values],
                     color=suhi_values,
                     colorscale='RdYlBu_r',
                     showscale=True,
                     colorbar=dict(
-                        title="SUHI Intensity (°C)",
-                        titlefont=dict(color='white'),
-                        tickfont=dict(color='white')
+                        title=dict(text="SUHI Intensity (°C)", font=dict(color='black')),
+                        tickfont=dict(color='black'),
+                        x=1.02
                     ),
-                    line=dict(color='lime', width=2)
+                    line=dict(color='white', width=3),
+                    opacity=0.9
                 ),
                 text=cities,
                 textposition="top center",
-                textfont=dict(color='white', size=12),
-                hovertemplate="<b>%{text}</b><br>SUHI: %{marker.color:.2f}°C<extra></extra>",
+                textfont=dict(color='black', size=11, family="Arial Black"),
+                hovertemplate="<b>%{text}</b><br>SUHI: %{marker.color:.2f}°C<br>" +
+                            "Node Size: %{marker.size}<extra></extra>",
                 name="Cities"
             ))
             
             fig.update_layout(
                 title=dict(
-                    text="Live Network: City SUHI Connections",
-                    font=dict(size=20, color='lime'),
+                    text="City Network: SUHI Similarity Connections",
+                    font=dict(size=20, color='black'),
                     x=0.5
                 ),
-                xaxis=dict(visible=False),
-                yaxis=dict(visible=False),
-                paper_bgcolor='rgba(0,0,0,0.9)',
-                plot_bgcolor='rgba(0,0,0,0)',
-                font=dict(color='white'),
-                height=600,
-                showlegend=False
+                xaxis=dict(visible=False, range=[-1.5, 1.5]),
+                yaxis=dict(visible=False, range=[-1.5, 1.5]),
+                paper_bgcolor='rgba(255,255,255,0.95)',
+                plot_bgcolor='rgba(255,255,255,0.95)',
+                font=dict(color='black'),
+                height=650,
+                showlegend=False,
+                margin=dict(l=20, r=80, t=60, b=20)
             )
             
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, key="animated_network")
     
     def create_interactive_map(self):
-        """Create interactive city map"""
-        st.markdown('<div class="section-header">🗺️ INTERACTIVE CITY ANALYSIS MAP</div>', unsafe_allow_html=True)
+        """Create enhanced interactive city map focused on Uzbekistan"""
+        st.markdown('<div class="section-header">🗺️ INTERACTIVE UZBEKISTAN CITY ANALYSIS MAP</div>', unsafe_allow_html=True)
         
-        if not self.city_stats.empty:
-            # Create folium map centered on Uzbekistan
-            center_lat, center_lon = 41.5, 64.5
-            m = folium.Map(
-                location=[center_lat, center_lon],
-                zoom_start=6,
-                tiles='CartoDB dark_matter'
+        # Map display options
+        col1, col2 = st.columns([1, 4])
+        
+        with col1:
+            st.markdown("**Map Display Options:**")
+            map_mode = st.radio(
+                "Choose display mode:",
+                ["SUHI Data View", "Locations Only"],
+                help="SUHI Data View: Shows cities with heat island intensity colors\nLocations Only: Shows all study locations without data consideration"
             )
             
-            # Add city markers
-            for city in self.city_stats.index:
-                if city in self.city_coords:
-                    lat, lon = self.city_coords[city]
-                    suhi_intensity = self.city_stats.loc[city, 'SUHI_Day_mean']
-                    
-                    # Color based on SUHI intensity
-                    if suhi_intensity > 2.5:
-                        color = 'red'
-                    elif suhi_intensity > 1.5:
-                        color = 'orange'
-                    else:
-                        color = 'green'
-                    
-                    folium.CircleMarker(
-                        location=[lat, lon],
-                        radius=suhi_intensity * 5,
-                        popup=f"""
-                        <b>{city}</b><br>
-                        SUHI Intensity: {suhi_intensity:.2f}°C<br>
-                        Standard Deviation: {self.city_stats.loc[city, 'SUHI_Day_std']:.2f}°C
-                        """,
-                        color='white',
-                        fillColor=color,
-                        fillOpacity=0.8,
-                        weight=2
-                    ).add_to(m)
+            map_size = st.selectbox(
+                "Map Size:",
+                ["Standard (900x600)", "Large (1200x800)", "Extra Large (1400x900)"],
+                index=1
+            )
             
-            # Display map
-            st_folium(m, width=None, height=500)
+            # Extract size values
+            if map_size and "1200x800" in map_size:
+                width, height = 1200, 800
+            elif map_size and "1400x900" in map_size:
+                width, height = 1400, 900
+            else:
+                width, height = 900, 600
+        
+        with col2:
+            if not self.city_stats.empty:
+                # Uzbekistan boundaries (approximate)
+                uzbekistan_bounds = {
+                    'north': 45.6,
+                    'south': 37.2,
+                    'east': 73.2,
+                    'west': 56.0
+                }
+                
+                # Create map centered on Uzbekistan with better bounds
+                center_lat, center_lon = 41.377491, 64.585262  # More precise center of Uzbekistan
+                
+                # Choose appropriate tile layer
+                if map_mode == "SUHI Data View":
+                    tiles = 'CartoDB positron'  # Light background for data visualization
+                else:
+                    tiles = 'OpenStreetMap'  # Standard view for locations
+                
+                m = folium.Map(
+                    location=[center_lat, center_lon],
+                    zoom_start=6,
+                    tiles=tiles,
+                    min_zoom=5,
+                    max_zoom=12,
+                    max_bounds=True,
+                    min_lat=uzbekistan_bounds['south'],
+                    max_lat=uzbekistan_bounds['north'],
+                    min_lon=uzbekistan_bounds['west'],
+                    max_lon=uzbekistan_bounds['east']
+                )
+                
+                # Uzbekistan boundary coordinates (keeping for reference, but not drawing)
+                # uzbekistan_coords = [
+                #     [uzbekistan_bounds['north'], uzbekistan_bounds['west']],
+                #     [uzbekistan_bounds['north'], uzbekistan_bounds['east']],
+                #     [uzbekistan_bounds['south'], uzbekistan_bounds['east']],
+                #     [uzbekistan_bounds['south'], uzbekistan_bounds['west']],
+                #     [uzbekistan_bounds['north'], uzbekistan_bounds['west']]
+                # ]
+                
+                # Boundary box removed per user request
+                # folium.PolyLine(
+                #     locations=uzbekistan_coords,
+                #     color='blue',
+                #     weight=3,
+                #     opacity=0.8,
+                #     popup="Uzbekistan Study Area"
+                # ).add_to(m)
+                
+                # Filter cities to Uzbekistan territory only
+                uzbekistan_cities = {}
+                for city, (lat, lon) in self.city_coords.items():
+                    if (uzbekistan_bounds['south'] <= lat <= uzbekistan_bounds['north'] and 
+                        uzbekistan_bounds['west'] <= lon <= uzbekistan_bounds['east']):
+                        uzbekistan_cities[city] = (lat, lon)
+                
+                if map_mode == "SUHI Data View":
+                    # Add city markers with SUHI data
+                    for city in self.city_stats.index:
+                        if city in uzbekistan_cities:
+                            lat, lon = uzbekistan_cities[city]
+                            try:
+                                suhi_intensity = float(self.city_stats.loc[city, 'SUHI_Day_mean'])
+                                
+                                # Enhanced color scheme based on SUHI intensity
+                                if suhi_intensity > 3.0:
+                                    color = '#8B0000'  # Dark red
+                                    fill_color = '#FF0000'
+                                    intensity_category = "Very High"
+                                elif suhi_intensity > 2.5:
+                                    color = '#FF4500'  # Orange red
+                                    fill_color = '#FF6347'
+                                    intensity_category = "High"
+                                elif suhi_intensity > 2.0:
+                                    color = '#FFA500'  # Orange
+                                    fill_color = '#FFB347'
+                                    intensity_category = "Moderate-High"
+                                elif suhi_intensity > 1.5:
+                                    color = '#FFD700'  # Gold
+                                    fill_color = '#FFFF00'
+                                    intensity_category = "Moderate"
+                                elif suhi_intensity > 1.0:
+                                    color = '#ADFF2F'  # Green yellow
+                                    fill_color = '#90EE90'
+                                    intensity_category = "Low-Moderate"
+                                else:
+                                    color = '#008000'  # Green
+                                    fill_color = '#00FF00'
+                                    intensity_category = "Low"
+                                
+                                # Create enhanced marker
+                                folium.CircleMarker(
+                                    location=[lat, lon],
+                                    radius=max(10, min(25, suhi_intensity * 4)),
+                                    popup=folium.Popup(
+                                        f"""
+                                        <div style='font-family: Arial; text-align: center; min-width: 200px; padding: 10px;'>
+                                            <h3 style='color: {color}; margin: 0; font-weight: bold;'>{city}</h3>
+                                            <hr style='margin: 5px 0;'>
+                                            <p style='margin: 3px 0; font-size: 14px;'><strong>SUHI Intensity:</strong> <span style='color: {color}; font-weight: bold;'>{suhi_intensity:.2f}°C</span></p>
+                                            <p style='margin: 3px 0; font-size: 12px;'><strong>Category:</strong> {intensity_category}</p>
+                                            <p style='margin: 3px 0; font-size: 12px;'><strong>Std Dev:</strong> {self.city_stats.loc[city, 'SUHI_Day_std']:.2f}°C</p>
+                                            <p style='margin: 3px 0; font-size: 11px; color: #666;'><strong>Coordinates:</strong> {lat:.3f}, {lon:.3f}</p>
+                                        </div>
+                                        """,
+                                        max_width=250
+                                    ),
+                                    tooltip=f"{city}: {suhi_intensity:.2f}°C ({intensity_category})",
+                                    color='white',
+                                    fillColor=fill_color,
+                                    fillOpacity=0.8,
+                                    weight=3
+                                ).add_to(m)
+                                
+                                # Add heat influence circles for high intensity cities
+                                if suhi_intensity > 2.5:
+                                    folium.Circle(
+                                        location=[lat, lon],
+                                        radius=suhi_intensity * 8000,  # Radius in meters
+                                        color=color,
+                                        weight=1,
+                                        fillColor=fill_color,
+                                        fillOpacity=0.1,
+                                        tooltip=f"{city} Heat Influence Zone"
+                                    ).add_to(m)
+                                    
+                            except (ValueError, TypeError):
+                                continue
+                                
+                else:  # Locations Only mode
+                    # Add all study locations without data consideration
+                    for city, (lat, lon) in uzbekistan_cities.items():
+                        # Standard marker for all locations
+                        folium.CircleMarker(
+                            location=[lat, lon],
+                            radius=12,
+                            popup=folium.Popup(
+                                f"""
+                                <div style='font-family: Arial; text-align: center; min-width: 150px; padding: 8px;'>
+                                    <h3 style='color: #2E86AB; margin: 0; font-weight: bold;'>{city}</h3>
+                                    <hr style='margin: 5px 0;'>
+                                    <p style='margin: 3px 0; font-size: 12px;'><strong>Study Location</strong></p>
+                                    <p style='margin: 3px 0; font-size: 11px; color: #666;'><strong>Coordinates:</strong> {lat:.3f}, {lon:.3f}</p>
+                                    <p style='margin: 3px 0; font-size: 10px; color: #888;'>Click for detailed analysis</p>
+                                </div>
+                                """,
+                                max_width=200
+                            ),
+                            tooltip=f"Study Location: {city}",
+                            color='#2E86AB',
+                            fillColor='#A8DADC',
+                            fillOpacity=0.8,
+                            weight=2
+                        ).add_to(m)
+                
+                # Add legend
+                if map_mode == "SUHI Data View":
+                    legend_html = '''
+                    <div style="position: fixed; 
+                         bottom: 50px; left: 50px; width: 220px; height: 180px; 
+                         background-color: rgba(255,255,255,0.9); border:2px solid #ccc; z-index:9999; 
+                         font-size:12px; color: black; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                    <h4 style="margin: 0; color: #2E86AB; text-align: center;">SUHI Intensity Legend</h4>
+                    <hr style="margin: 10px 0;">
+                    <p style="margin: 3px 0;"><i class="fa fa-circle" style="color:#008000"></i> <strong>Low:</strong> < 1.0°C</p>
+                    <p style="margin: 3px 0;"><i class="fa fa-circle" style="color:#ADFF2F"></i> <strong>Low-Mod:</strong> 1.0-1.5°C</p>
+                    <p style="margin: 3px 0;"><i class="fa fa-circle" style="color:#FFD700"></i> <strong>Moderate:</strong> 1.5-2.0°C</p>
+                    <p style="margin: 3px 0;"><i class="fa fa-circle" style="color:#FFA500"></i> <strong>Mod-High:</strong> 2.0-2.5°C</p>
+                    <p style="margin: 3px 0;"><i class="fa fa-circle" style="color:#FF4500"></i> <strong>High:</strong> 2.5-3.0°C</p>
+                    <p style="margin: 3px 0;"><i class="fa fa-circle" style="color:#8B0000"></i> <strong>Very High:</strong> > 3.0°C</p>
+                    </div>
+                    '''
+                else:
+                    legend_html = '''
+                    <div style="position: fixed; 
+                         bottom: 50px; left: 50px; width: 200px; height: 80px; 
+                         background-color: rgba(255,255,255,0.9); border:2px solid #ccc; z-index:9999; 
+                         font-size:12px; color: black; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                    <h4 style="margin: 0; color: #2E86AB; text-align: center;">Study Locations</h4>
+                    <hr style="margin: 10px 0;">
+                    <p style="margin: 3px 0; text-align: center;"><i class="fa fa-circle" style="color:#2E86AB"></i> Research Sites</p>
+                    </div>
+                    '''
+                
+                m.get_root().html.add_child(folium.Element(legend_html))
+                
+                # Add scale bar
+                folium.plugins.MeasureControl().add_to(m)
+                
+                # Add fullscreen button
+                folium.plugins.Fullscreen().add_to(m)
+                
+                # Display the enhanced map
+                map_key = "uzbekistan_map_suhi" if map_mode == "SUHI Data View" else "uzbekistan_map_locations"
+                map_data = st_folium(
+                    m, 
+                    width=width, 
+                    height=height, 
+                    returned_objects=["last_object_clicked"],
+                    key=map_key
+                )
+                
+                # Display click information
+                if map_data and map_data.get("last_object_clicked"):
+                    clicked_data = map_data["last_object_clicked"]
+                    if clicked_data:
+                        st.success(f"📍 Selected location: Lat {clicked_data.get('lat', 'N/A'):.3f}, Lon {clicked_data.get('lng', 'N/A'):.3f}")
+                        
+            else:
+                st.warning("⚠️ City statistics not available for map visualization")
     
     def create_temporal_analysis(self, selected_cities=None, selected_years=None):
         """Create temporal analysis visualizations"""
@@ -559,7 +895,7 @@ class UzbekistanUrbanDashboard:
                     yaxis_title="SUHI Intensity (°C)"
                 )
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True, key="annual_suhi_trend")
             
             with col2:
                 # City comparison over time
@@ -581,7 +917,7 @@ class UzbekistanUrbanDashboard:
                     yaxis_title="SUHI Intensity (°C)"
                 )
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True, key="city_wise_trends")
         else:
             st.warning("⚠️ Temporal data not available")
     
@@ -612,17 +948,40 @@ class UzbekistanUrbanDashboard:
                     nbins=10
                 )
                 fig.update_layout(height=350)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True, key="suhi_distribution")
             
             with col2:
-                # Box plot
-                fig = px.box(
+                # Violin plot showing SUHI distribution with statistical insights
+                st.markdown("**📊 SUHI Intensity Distribution Analysis**")
+                st.markdown("*This violin plot shows the distribution shape and statistical summary of SUHI intensities across all cities. The width indicates data density at different intensity levels.*")
+                
+                fig = px.violin(
                     y=filtered_city_stats['SUHI_Day_mean'],
-                    title='SUHI Statistical Summary (Filtered)',
-                    template='plotly_dark'
+                    title='SUHI Distribution & Statistics',
+                    template='plotly_white',
+                    box=True  # Show box plot inside violin
                 )
-                fig.update_layout(height=350)
-                st.plotly_chart(fig, use_container_width=True)
+                
+                # Add statistical annotations
+                mean_val = filtered_city_stats['SUHI_Day_mean'].mean()
+                median_val = filtered_city_stats['SUHI_Day_mean'].median()
+                
+                fig.add_hline(y=mean_val, line_dash="dash", line_color="red", 
+                             annotation_text=f"Mean: {mean_val:.2f}°C")
+                fig.add_hline(y=median_val, line_dash="dot", line_color="blue", 
+                             annotation_text=f"Median: {median_val:.2f}°C")
+                
+                fig.update_layout(
+                    height=350,
+                    yaxis_title="SUHI Intensity (°C)",
+                    showlegend=False,
+                    font=dict(color='black')
+                )
+                fig.update_traces(
+                    fillcolor='rgba(102, 126, 234, 0.4)',
+                    line_color='rgb(102, 126, 234)'
+                )
+                st.plotly_chart(fig, use_container_width=True, key="suhi_violin_plot")
             
             with col3:
                 # Ranking
@@ -635,7 +994,7 @@ class UzbekistanUrbanDashboard:
                     template='plotly_dark'
                 )
                 fig.update_layout(height=350)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True, key="top_cities_ranking")
     
     def render_sidebar(self):
         """Render interactive sidebar"""
@@ -651,7 +1010,7 @@ class UzbekistanUrbanDashboard:
                 selected_years = st.multiselect(
                     "📅 Select Years",
                     years,
-                    default=years[-3:] if len(years) >= 3 else years,
+                    default=years,  # Select all years by default
                     help="Choose years to analyze"
                 )
             else:
@@ -662,7 +1021,7 @@ class UzbekistanUrbanDashboard:
                 selected_cities = st.multiselect(
                     "🏙️ Select Cities",
                     cities,
-                    default=cities[:5] if len(cities) >= 5 else cities,
+                    default=cities,  # Select all cities by default
                     help="Choose cities to analyze"
                 )
             else:
@@ -716,10 +1075,11 @@ class UzbekistanUrbanDashboard:
             # Filter data
             filtered_data = self.suhi_data.copy()
             
-            if selected_cities:
+            # Only filter if selections are made
+            if selected_cities and len(selected_cities) > 0:
                 filtered_data = filtered_data[filtered_data['City'].isin(selected_cities)]
             
-            if selected_years:
+            if selected_years and len(selected_years) > 0:
                 filtered_data = filtered_data[filtered_data['Year'].isin(selected_years)]
             
             if filtered_data.empty:
@@ -727,12 +1087,21 @@ class UzbekistanUrbanDashboard:
                 return
             
             # Create pivot table for heatmap
-            heatmap_data = filtered_data.pivot_table(
-                index='City', 
-                columns='Year', 
-                values='SUHI_Day', 
-                aggfunc='mean'
-            )
+            try:
+                heatmap_data = filtered_data.pivot_table(
+                    index='City', 
+                    columns='Year', 
+                    values='SUHI_Day', 
+                    aggfunc='mean'
+                )
+                
+                if not heatmap_data.empty and heatmap_data.shape[0] > 0 and heatmap_data.shape[1] > 0:
+                    st.warning("Heatmap data is empty or has invalid dimensions")
+                    
+            except Exception as e:
+                st.error(f"Error creating heatmap: {e}")
+                st.write("Raw data sample:")
+                st.dataframe(filtered_data.head())
             
             if not heatmap_data.empty:
                 # Create interactive heatmap
@@ -756,7 +1125,7 @@ class UzbekistanUrbanDashboard:
                     hovertemplate="<b>%{y}</b><br>Year: %{x}<br>SUHI: %{z:.2f}°C<extra></extra>"
                 )
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True, key="suhi_heatmap_day")
                 
                 # Add night heatmap
                 st.markdown("#### 🌙 Night SUHI Heatmap")
@@ -788,7 +1157,7 @@ class UzbekistanUrbanDashboard:
                         hovertemplate="<b>%{y}</b><br>Year: %{x}<br>SUHI: %{z:.2f}°C<extra></extra>"
                     )
                     
-                    st.plotly_chart(fig_night, use_container_width=True)
+                    st.plotly_chart(fig_night, use_container_width=True, key="suhi_heatmap_night")
             else:
                 st.warning("⚠️ Not enough data to create heatmap")
         else:
@@ -802,10 +1171,11 @@ class UzbekistanUrbanDashboard:
             # Filter data
             filtered_data = self.suhi_data.copy()
             
-            if selected_cities:
+            # Only filter if selections are made
+            if selected_cities and len(selected_cities) > 0:
                 filtered_data = filtered_data[filtered_data['City'].isin(selected_cities)]
             
-            if selected_years:
+            if selected_years and len(selected_years) > 0:
                 filtered_data = filtered_data[filtered_data['Year'].isin(selected_years)]
             
             if filtered_data.empty:
@@ -821,7 +1191,7 @@ class UzbekistanUrbanDashboard:
                 animation_speed = st.slider("Animation speed (ms)", 500, 3000, 1000, 100)
             
             with col1:
-                # Create animated scatter plot
+                # Create animated scatter plot with movement traces
                 if show_night:
                     # Prepare data for both day and night
                     day_data = filtered_data.copy()
@@ -849,11 +1219,45 @@ class UzbekistanUrbanDashboard:
                         animation_frame='Year',
                         animation_group='City',
                         title='SUHI Evolution Over Time (Day vs Night)',
-                        template='plotly_dark',
+                        template='plotly_white',
                         hover_data=['City', 'Period'],
                         range_x=year_range,
                         range_y=[-10, 10]
                     )
+                    
+                    # Add movement traces for each city
+                    for city in combined_data['City'].unique():
+                        city_data = combined_data[combined_data['City'] == city]
+                        day_city = city_data[city_data['Period'] == 'Day'].sort_values('Year')
+                        night_city = city_data[city_data['Period'] == 'Night'].sort_values('Year')
+                        
+                        if not day_city.empty:
+                            # Get color for this city from the scatter plot
+                            city_color = px.colors.qualitative.Plotly[len(fig.data) % len(px.colors.qualitative.Plotly)]
+                            
+                            # Add day trace line
+                            fig.add_trace(go.Scatter(
+                                x=day_city['Year'],
+                                y=day_city['SUHI'],
+                                mode='lines',
+                                line=dict(color=city_color, width=2, dash='solid'),
+                                name=f"{city} Day Trend",
+                                showlegend=False,
+                                opacity=0.6
+                            ))
+                            
+                            # Add night trace line
+                            if not night_city.empty:
+                                fig.add_trace(go.Scatter(
+                                    x=night_city['Year'],
+                                    y=night_city['SUHI'],
+                                    mode='lines',
+                                    line=dict(color=city_color, width=2, dash='dash'),
+                                    name=f"{city} Night Trend",
+                                    showlegend=False,
+                                    opacity=0.4
+                                ))
+                    
                 else:
                     # Add size column for day-only visualization
                     filtered_data_copy = filtered_data.copy()
@@ -871,11 +1275,28 @@ class UzbekistanUrbanDashboard:
                         animation_frame='Year',
                         animation_group='City',
                         title='SUHI Evolution Over Time (Day)',
-                        template='plotly_dark',
+                        template='plotly_white',
                         hover_data=['City'],
                         range_x=year_range,
                         range_y=[-10, 10]
                     )
+                    
+                    # Add movement traces for each city
+                    for city in filtered_data_copy['City'].unique():
+                        city_data = filtered_data_copy[filtered_data_copy['City'] == city].sort_values('Year')
+                        if len(city_data) > 1:
+                            # Get color for this city
+                            city_color = px.colors.qualitative.Plotly[len(fig.data) % len(px.colors.qualitative.Plotly)]
+                            
+                            fig.add_trace(go.Scatter(
+                                x=city_data['Year'],
+                                y=city_data['SUHI_Day'],
+                                mode='lines',
+                                line=dict(color=city_color, width=3, dash='solid'),
+                                name=f"{city} Trend",
+                                showlegend=False,
+                                opacity=0.5
+                            ))
                 
                 # Update layout
                 fig.update_layout(
@@ -894,7 +1315,7 @@ class UzbekistanUrbanDashboard:
                         # Auto-start animation
                         fig.layout.updatemenus[0].buttons[0].args[1]['mode'] = 'immediate'
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True, key="suhi_timeline_animation")
             
             # Add summary statistics timeline
             st.markdown("#### 📊 Statistical Timeline")
@@ -947,7 +1368,7 @@ class UzbekistanUrbanDashboard:
                 height=400
             )
             
-            st.plotly_chart(fig_stats, use_container_width=True)
+            st.plotly_chart(fig_stats, use_container_width=True, key="suhi_trends_variability")
         else:
             st.warning("⚠️ Timeline data not available")
     
