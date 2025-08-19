@@ -1858,10 +1858,10 @@ def run_comprehensive_analysis(city_name: str, year: int) -> Dict:
         if year <= 2020:
             # For early years, compare 2017 baseline and 2020
             analysis_start = 2017
-            analysis_end = 2020
+            analysis_end = 2024
         else:
             # For recent years, compare 2020 with current/latest
-            analysis_start = 2020
+            analysis_start = 2017
             analysis_end = min(2024, year)
         
         print(f"     📅 Analyzing landcover changes from {analysis_start} to {analysis_end}")
@@ -2189,13 +2189,22 @@ def generate_comprehensive_report(all_results: List[Dict], output_dir: Path) -> 
                         f.write(f"**Day-Night Difference:** {diff.get('suhi_difference', 0):.2f} °C\n")
                         f.write(f"**Day Stronger:** {'Yes' if diff.get('day_stronger', False) else 'No'}\n")
             
-            # Landcover Changes
             if 'landcover_changes' in result and 'landcover_changes' in result['landcover_changes']:
-                changes = result['landcover_changes']['landcover_changes']
-                f.write(f"**Landcover Changes:**\n")
-                for lc_class, change_data in changes.items():
-                    if isinstance(change_data, dict) and abs(change_data.get('change_km2', 0)) > 0.1:
-                        f.write(f"  - {lc_class}: {change_data['change_km2']:.2f} km² ({change_data.get('change_percent', 0):.1f}%)\n")
+                if result['year'] > baseline_year:
+                    changes = result['landcover_changes']['landcover_changes']
+                    f.write(f"**Landcover Changes (vs {baseline_year}):**\n")
+                    for lc_class, change_data in changes.items():
+                        if isinstance(change_data, dict) and abs(change_data.get('change_km2', 0)) > 0.1:
+                            f.write(f"  - {lc_class}: {change_data['change_km2']:.2f} km² ({change_data.get('change_percent', 0):.1f}%)\n")
+                else:
+                    # Optionally report absolute landcover stats for baseline year
+                    if 'absolute' in result['landcover_changes']:
+                        abs_cover = result['landcover_changes']['absolute']
+                        f.write("**Landcover Areas (baseline):**\n")
+                        for lc_class, area in abs_cover.items():
+                            f.write(f"  - {lc_class}: {area:.2f} km²\n")
+            
+            
             
             f.write("\n")
         
