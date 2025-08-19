@@ -1,0 +1,85 @@
+{
+  "city": "Tashkent",
+  "years_analyzed": 8,
+  "data": [
+    {
+      "city": "Tashkent",
+      "year": 2017,
+      "urban_temp": 39.79818101396221,
+      "rural_temp": 40.63407709215601,
+      "suhi_intensity": -0.8358960781938052,
+      "urban_pixels": 700,
+      "rural_pixels": 5030
+    },
+    {
+      "city": "Tashkent",
+      "year": 2018,
+      "urban_temp": 40.842012190529175,
+      "rural_temp": 42.04904504574993,
+      "suhi_intensity": -1.2070328552207528,
+      "urban_pixels": 704,
+      "rural_pixels": 5002
+    },
+    {
+      "city": "Tashkent",
+      "year": 2019,
+      "urban_temp": 40.75839324008402,
+      "rural_temp": 40.73896464239077,
+      "suhi_intensity": 0.019428597693249117,
+      "urban_pixels": 718,
+      "rural_pixels": 4977
+    },
+    {
+      "city": "Tashkent",
+      "year": 2020,
+      "urban_temp": 40.80549580331698,
+      "rural_temp": 41.22075849658562,
+      "suhi_intensity": -0.4152626932686374,
+      "urban_pixels": 728,
+      "rural_pixels": 4947
+    },
+    {
+      "city": "Tashkent",
+      "year": 2021,
+      "urban_temp": 41.498497266854436,
+      "rural_temp": 42.252034418994086,
+      "suhi_intensity": -0.7535371521396499,
+      "urban_pixels": 740,
+      "rural_pixels": 4945
+    },
+    {
+      "city": "Tashkent",
+      "year": 2022,
+      "urban_temp": 40.87032988392473,
+      "rural_temp": 41.06820883682457,
+      "suhi_intensity": -0.19787895289983481,
+      "urban_pixels": 746,
+      "rural_pixels": 4922
+    },
+    {
+      "city": "Tashkent",
+      "year": 2023,
+      "urban_temp": 41.123934878676955,
+      "rural_temp": 40.514752934433005,
+      "suhi_intensity": 0.6091819442439501,
+      "urban_pixels": 753,
+      "rural_pixels": 4934
+    },
+    {
+      "city": "Tashkent",
+      "year": 2024,
+      "urban_temp": 39.913591534082926,
+      "rural_temp": 38.73758616090424,
+      "suhi_intensity": 1.1760053731786826,
+      "urban_pixels": 757,
+      "rural_pixels": 4921
+    }
+  ],
+  "trends": {
+    "suhi_trend_per_year": 0.26397841721762694,
+    "suhi_r_squared": 0.6701153229799206,
+    "suhi_p_value": 0.012965089407761586,
+    "urban_temp_trend_per_year": 0.038646410436232514,
+    "urban_temp_r_squared": 0.02712319602607408
+  }
+}
