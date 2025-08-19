@@ -1,0 +1,219 @@
+{
+  "city": "Gulistan",
+  "year": 2024,
+  "processing_scale": 150,
+  "classifications_available": [
+    "esri",
+    "dynamic_world",
+    "ghsl",
+    "esa",
+    "modis_lc"
+  ],
+  "accuracy_assessment": {
+    "dynamic_world_agreement": {
+      "dw_built": 0
+    },
+    "esa_agreement": {
+      "esa_built": 0.886417958579508
+    },
+    "ghsl_agreement": {
+      "ghsl_built": 0.5573140425841139
+    },
+    "modis_lc_agreement": {
+      "modis_urban": 0.7862366126133956
+    }
+  },
+  "suhi_analysis": {
+    "suhi": 0.7128616880512695,
+    "suhi_se": 0.1225052730314444,
+    "ci_95_lower": 0.47275135290963843,
+    "ci_95_upper": 0.9529720231929005,
+    "relative_error_pct": 17.184998869322563,
+    "urban_pixels": 98,
+    "rural_pixels": 3674,
+    "urban_std": 1.1521717944018577,
+    "rural_std": 2.3173283732895653
+  },
+  "day_night_analysis": {
+    "day": {
+      "urban_mean": 23.44343758933401,
+      "urban_std": 0.8646155866575509,
+      "urban_count": 102,
+      "rural_mean": 22.44561482868263,
+      "rural_std": 1.3280572812347458,
+      "rural_count": 3742,
+      "suhi": 0.9978227606513812,
+      "band": "LST_Day_MODIS"
+    },
+    "night": {
+      "urban_mean": 11.349440630183608,
+      "urban_std": 0.5829822786060044,
+      "urban_count": 102,
+      "rural_mean": 10.750331449391602,
+      "rural_std": 0.9451693919967395,
+      "rural_count": 3742,
+      "suhi": 0.5991091807920057,
+      "band": "LST_Night_MODIS"
+    },
+    "day_night_difference": {
+      "suhi_difference": 0.3987135798593755,
+      "day_stronger": true,
+      "magnitude_ratio": 1.665510715980495
+    }
+  },
+  "landcover_changes": {
+    "landcover_changes": {
+      "Trees": {
+        "start_area_km2": 0,
+        "end_area_km2": 0.0306,
+        "change_km2": 0.0306,
+        "change_percent": Infinity
+      },
+      "Water": {
+        "start_area_km2": 4.67833411764706,
+        "end_area_km2": 4.38078,
+        "change_km2": -0.29755411764705997,
+        "change_percent": -6.360257950039555
+      },
+      "Crops": {
+        "start_area_km2": 165.28220117647047,
+        "end_area_km2": 161.37248470588224,
+        "change_km2": -3.909716470588222,
+        "change_percent": -2.3654794301861033
+      },
+      "Built_area": {
+        "start_area_km2": 90.2635376470588,
+        "end_area_km2": 93.50258470588234,
+        "change_km2": 3.2390470588235445,
+        "change_percent": 3.5884335394526694
+      },
+      "Bare_ground": {
+        "start_area_km2": 0.0009,
+        "end_area_km2": 0,
+        "change_km2": -0.0009,
+        "change_percent": -100.0
+      },
+      "Rangeland": {
+        "start_area_km2": 1.5781094117647059,
+        "end_area_km2": 2.5166329411764705,
+        "change_km2": 0.9385235294117646,
+        "change_percent": 59.471385343445206
+      }
+    },
+    "yearly_stats": {
+      "2021": {
+        "Water": {
+          "area_km2": 4.67833411764706,
+          "percentage": 1.7869667826676385
+        },
+        "Rangeland": {
+          "area_km2": 1.5781094117647059,
+          "percentage": 0.6027848860989461
+        },
+        "Crops": {
+          "area_km2": 165.28220117647047,
+          "percentage": 63.132259441334924
+        },
+        "Built_area": {
+          "area_km2": 90.2635376470588,
+          "percentage": 34.477645120072744
+        },
+        "Bare_ground": {
+          "area_km2": 0.0009,
+          "percentage": 0.00034376982574509763
+        }
+      },
+      "2022": {
+        "Water": {
+          "area_km2": 4.472791764705883,
+          "percentage": 1.7084564950522765
+        },
+        "Rangeland": {
+          "area_km2": 2.3340070588235293,
+          "percentage": 0.8915124443328805
+        },
+        "Trees": {
+          "area_km2": 0.0243,
+          "percentage": 0.009281785295117636
+        },
+        "Flooded_vegetation": {
+          "area_km2": 0.0045,
+          "percentage": 0.001718849128725488
+        },
+        "Crops": {
+          "area_km2": 162.93817764705872,
+          "percentage": 62.23692104105905
+        },
+        "Built_area": {
+          "area_km2": 92.02930588235293,
+          "percentage": 35.15210938513194
+        }
+      },
+      "2023": {
+        "Water": {
+          "area_km2": 4.02042,
+          "percentage": 1.5356656475801174
+        },
+        "Rangeland": {
+          "area_km2": 1.858662352941176,
+          "percentage": 0.7099467035439572
+        },
+        "Trees": {
+          "area_km2": 0.0135,
+          "percentage": 0.005156547386176465
+        },
+        "Crops": {
+          "area_km2": 164.3857799999999,
+          "percentage": 62.789856606191044
+        },
+        "Built_area": {
+          "area_km2": 91.52201999999998,
+          "percentage": 34.95834318582149
+        },
+        "Bare_ground": {
+          "area_km2": 0.0027,
+          "percentage": 0.001031309477235293
+        }
+      },
+      "2024": {
+        "Water": {
+          "area_km2": 4.38078,
+          "percentage": 1.6733110858084543
+        },
+        "Rangeland": {
+          "area_km2": 2.5166329411764705,
+          "percentage": 0.9612694085028977
+        },
+        "Trees": {
+          "area_km2": 0.0306,
+          "percentage": 0.01168817407533332
+        },
+        "Crops": {
+          "area_km2": 161.37248470588224,
+          "percentage": 61.638878830438415
+        },
+        "Built_area": {
+          "area_km2": 93.50258470588234,
+          "percentage": 35.714852501174896
+        }
+      }
+    },
+    "analysis_period": "2021-2024"
+  },
+  "vegetation_indices": {
+    "NDBI": -0.11546123895682937,
+    "NDVI": 0.3649969299345611,
+    "NDWI": -0.40669708851304165
+  },
+  "urban_stats": {
+    "LST_Day_MODIS_mean": 37.42439299424186,
+    "LST_Day_MODIS_stdDev": 1.1521717944018577,
+    "LST_Day_MODIS_count": 98
+  },
+  "rural_stats": {
+    "LST_Day_MODIS_mean": 36.711531306190594,
+    "LST_Day_MODIS_stdDev": 2.3173283732895653,
+    "LST_Day_MODIS_count": 3674
+  },
+  "optimization_note": "Processed at 150m resolution for memory optimization"
+}

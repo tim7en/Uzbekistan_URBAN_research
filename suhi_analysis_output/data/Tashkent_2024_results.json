@@ -1,0 +1,245 @@
+{
+  "city": "Tashkent",
+  "year": 2024,
+  "processing_scale": 200,
+  "classifications_available": [
+    "esri",
+    "dynamic_world",
+    "ghsl",
+    "esa",
+    "modis_lc"
+  ],
+  "accuracy_assessment": {
+    "dynamic_world_agreement": {
+      "dw_built": 0
+    },
+    "esa_agreement": {
+      "esa_built": 0.8729662048852284
+    },
+    "ghsl_agreement": {
+      "ghsl_built": 0.16389236936748486
+    },
+    "modis_lc_agreement": {
+      "modis_urban": 0.8280774573626609
+    }
+  },
+  "suhi_analysis": {
+    "suhi": 1.0595991889303207,
+    "suhi_se": 0.0818671806675552,
+    "ci_95_lower": 0.8991395148219125,
+    "ci_95_upper": 1.2200588630387288,
+    "relative_error_pct": 7.7262404051291504,
+    "urban_pixels": 733,
+    "rural_pixels": 4500,
+    "urban_std": 1.5936407905459935,
+    "rural_std": 3.816871013710725
+  },
+  "day_night_analysis": {
+    "day": {
+      "urban_mean": 24.50216176962102,
+      "urban_std": 1.5706827404818133,
+      "urban_count": 768,
+      "rural_mean": 22.02682612739689,
+      "rural_std": 1.4880371200126985,
+      "rural_count": 4593,
+      "suhi": 2.4753356422241275,
+      "band": "LST_Day_MODIS"
+    },
+    "night": {
+      "urban_mean": 11.339911217454103,
+      "urban_std": 1.0714889556681648,
+      "urban_count": 768,
+      "rural_mean": 9.397643590760516,
+      "rural_std": 0.6889647359705491,
+      "rural_count": 4593,
+      "suhi": 1.942267626693587,
+      "band": "LST_Night_MODIS"
+    },
+    "day_night_difference": {
+      "suhi_difference": 0.5330680155305405,
+      "day_stronger": true,
+      "magnitude_ratio": 1.274456520926525
+    }
+  },
+  "landcover_changes": {
+    "landcover_changes": {
+      "Flooded_vegetation": {
+        "start_area_km2": 0.0459,
+        "end_area_km2": 0.0027,
+        "change_km2": -0.0432,
+        "change_percent": -94.11764705882352
+      },
+      "Trees": {
+        "start_area_km2": 1.33488,
+        "end_area_km2": 1.8460941176470587,
+        "change_km2": 0.5112141176470586,
+        "change_percent": 38.29663472724579
+      },
+      "Water": {
+        "start_area_km2": 6.037514117647058,
+        "end_area_km2": 8.995810588235292,
+        "change_km2": 2.958296470588234,
+        "change_percent": 48.99858473111351
+      },
+      "Crops": {
+        "start_area_km2": 189.75589058823522,
+        "end_area_km2": 177.47195294117628,
+        "change_km2": -12.283937647058934,
+        "change_percent": -6.473547466157307
+      },
+      "Built_area": {
+        "start_area_km2": 704.6222611764708,
+        "end_area_km2": 715.897591764706,
+        "change_km2": 11.275330588235192,
+        "change_percent": 1.6001950562006606
+      },
+      "Bare_ground": {
+        "start_area_km2": 2.7103094117647055,
+        "end_area_km2": 1.3848705882352939,
+        "change_km2": -1.3254388235294117,
+        "change_percent": -48.90359815658121
+      },
+      "Rangeland": {
+        "start_area_km2": 27.216769411764712,
+        "end_area_km2": 26.124504705882362,
+        "change_km2": -1.09226470588235,
+        "change_percent": -4.0132048347009475
+      }
+    },
+    "yearly_stats": {
+      "2021": {
+        "Water": {
+          "area_km2": 6.037514117647058,
+          "percentage": 0.6479941696817113
+        },
+        "Rangeland": {
+          "area_km2": 27.216769411764712,
+          "percentage": 2.9211207713528795
+        },
+        "Trees": {
+          "area_km2": 1.33488,
+          "percentage": 0.14326996846209095
+        },
+        "Flooded_vegetation": {
+          "area_km2": 0.0459,
+          "percentage": 0.004926354093558952
+        },
+        "Crops": {
+          "area_km2": 189.75589058823522,
+          "percentage": 20.36611565089928
+        },
+        "Built_area": {
+          "area_km2": 704.6222611764708,
+          "percentage": 75.62568106229787
+        },
+        "Bare_ground": {
+          "area_km2": 2.7103094117647055,
+          "percentage": 0.2908920232126016
+        }
+      },
+      "2022": {
+        "Water": {
+          "area_km2": 7.245264705882353,
+          "percentage": 0.777619595702434
+        },
+        "Rangeland": {
+          "area_km2": 26.56771764705884,
+          "percentage": 2.8514593591962245
+        },
+        "Trees": {
+          "area_km2": 1.6509705882352943,
+          "percentage": 0.17719533149669656
+        },
+        "Crops": {
+          "area_km2": 183.03039176470574,
+          "percentage": 19.64428147528882
+        },
+        "Built_area": {
+          "area_km2": 711.1037576470592,
+          "percentage": 76.32132695925365
+        },
+        "Bare_ground": {
+          "area_km2": 2.125422352941176,
+          "percentage": 0.22811727906216697
+        }
+      },
+      "2023": {
+        "Water": {
+          "area_km2": 6.8224341176470595,
+          "percentage": 0.7322380445208463
+        },
+        "Rangeland": {
+          "area_km2": 21.81140117647059,
+          "percentage": 2.3409735396941707
+        },
+        "Trees": {
+          "area_km2": 1.7263129411764704,
+          "percentage": 0.18528167373700433
+        },
+        "Flooded_vegetation": {
+          "area_km2": 0.0054,
+          "percentage": 0.0005795710698304648
+        },
+        "Crops": {
+          "area_km2": 187.46774117647047,
+          "percentage": 20.12053320599031
+        },
+        "Built_area": {
+          "area_km2": 712.4079741176474,
+          "percentage": 76.4613058731702
+        },
+        "Bare_ground": {
+          "area_km2": 1.4822611764705884,
+          "percentage": 0.15908809181763378
+        }
+      },
+      "2024": {
+        "Water": {
+          "area_km2": 8.995810588235292,
+          "percentage": 0.9655021419658804
+        },
+        "Rangeland": {
+          "area_km2": 26.124504705882362,
+          "percentage": 2.803890211329493
+        },
+        "Trees": {
+          "area_km2": 1.8460941176470587,
+          "percentage": 0.19813754495785818
+        },
+        "Flooded_vegetation": {
+          "area_km2": 0.0027,
+          "percentage": 0.0002897855349152326
+        },
+        "Crops": {
+          "area_km2": 177.47195294117628,
+          "percentage": 19.047705487225837
+        },
+        "Built_area": {
+          "area_km2": 715.897591764706,
+          "percentage": 76.83583947187486
+        },
+        "Bare_ground": {
+          "area_km2": 1.3848705882352939,
+          "percentage": 0.14863535711116202
+        }
+      }
+    },
+    "analysis_period": "2021-2024"
+  },
+  "vegetation_indices": {
+    "NDBI": -0.034382553887813874,
+    "NDVI": 0.2699315289917409,
+    "NDWI": -0.31806507482153873
+  },
+  "urban_stats": {
+    "LST_Day_MODIS_mean": 39.87385539914135,
+    "LST_Day_MODIS_stdDev": 1.5936407905459935,
+    "LST_Day_MODIS_count": 733
+  },
+  "rural_stats": {
+    "LST_Day_MODIS_mean": 38.81425621021103,
+    "LST_Day_MODIS_stdDev": 3.816871013710725,
+    "LST_Day_MODIS_count": 4500
+  },
+  "optimization_note": "Processed at 200m resolution for memory optimization"
+}

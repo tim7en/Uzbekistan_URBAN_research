@@ -1,0 +1,93 @@
+{
+  "city": "Termez",
+  "years_analyzed": 8,
+  "data": [
+    {
+      "city": "Termez",
+      "year": 2017,
+      "urban_temp": 39.45930555555555,
+      "rural_temp": 48.28901018430618,
+      "suhi_intensity": -8.829704628750626,
+      "urban_pixels": 71,
+      "rural_pixels": 3949,
+      "band_used": "b1"
+    },
+    {
+      "city": "Termez",
+      "year": 2018,
+      "urban_temp": 41.063877872915754,
+      "rural_temp": 49.06244897004246,
+      "suhi_intensity": -7.998571097126707,
+      "urban_pixels": 75,
+      "rural_pixels": 3924,
+      "band_used": "b1"
+    },
+    {
+      "city": "Termez",
+      "year": 2019,
+      "urban_temp": 41.90037878408812,
+      "rural_temp": 50.279314287147116,
+      "suhi_intensity": -8.378935503058997,
+      "urban_pixels": 87,
+      "rural_pixels": 3905,
+      "band_used": "b1"
+    },
+    {
+      "city": "Termez",
+      "year": 2020,
+      "urban_temp": 41.93297200102752,
+      "rural_temp": 50.665319692907666,
+      "suhi_intensity": -8.732347691880143,
+      "urban_pixels": 83,
+      "rural_pixels": 3904,
+      "band_used": "b1"
+    },
+    {
+      "city": "Termez",
+      "year": 2021,
+      "urban_temp": 41.592844031885896,
+      "rural_temp": 49.52035899256544,
+      "suhi_intensity": -7.927514960679545,
+      "urban_pixels": 81,
+      "rural_pixels": 3910,
+      "band_used": "b1"
+    },
+    {
+      "city": "Termez",
+      "year": 2022,
+      "urban_temp": 40.63537334372568,
+      "rural_temp": 48.16519929990819,
+      "suhi_intensity": -7.529825956182506,
+      "urban_pixels": 80,
+      "rural_pixels": 3913,
+      "band_used": "b1"
+    },
+    {
+      "city": "Termez",
+      "year": 2023,
+      "urban_temp": 39.8006378462335,
+      "rural_temp": 47.21672722847987,
+      "suhi_intensity": -7.416089382246369,
+      "urban_pixels": 82,
+      "rural_pixels": 3908,
+      "band_used": "b1"
+    },
+    {
+      "city": "Termez",
+      "year": 2024,
+      "urban_temp": 38.8785015508212,
+      "rural_temp": 46.45924908428742,
+      "suhi_intensity": -7.580747533466223,
+      "urban_pixels": 83,
+      "rural_pixels": 3884,
+      "band_used": "b1"
+    }
+  ],
+  "trends": {
+    "suhi_trend_per_year": 0.17865797158598312,
+    "suhi_r_squared": 0.6408144788232049,
+    "suhi_p_value": 0.01699661989130249,
+    "urban_temp_trend_per_year": -0.17282110067596054,
+    "urban_temp_r_squared": 0.1313969493051936
+  }
+}
