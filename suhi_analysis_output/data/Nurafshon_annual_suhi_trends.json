@@ -1,0 +1,93 @@
+{
+  "city": "Nurafshon",
+  "years_analyzed": 8,
+  "data": [
+    {
+      "city": "Nurafshon",
+      "year": 2017,
+      "urban_temp": 36.77399145110181,
+      "rural_temp": 38.35396382459891,
+      "suhi_intensity": -1.5799723734970996,
+      "urban_pixels": 58,
+      "rural_pixels": 3549,
+      "band_used": "b1"
+    },
+    {
+      "city": "Nurafshon",
+      "year": 2018,
+      "urban_temp": 38.0112005306213,
+      "rural_temp": 40.19038957630817,
+      "suhi_intensity": -2.1791890456868686,
+      "urban_pixels": 58,
+      "rural_pixels": 3522,
+      "band_used": "b1"
+    },
+    {
+      "city": "Nurafshon",
+      "year": 2019,
+      "urban_temp": 38.06345763193412,
+      "rural_temp": 39.1591802798355,
+      "suhi_intensity": -1.0957226479013826,
+      "urban_pixels": 60,
+      "rural_pixels": 3506,
+      "band_used": "b1"
+    },
+    {
+      "city": "Nurafshon",
+      "year": 2020,
+      "urban_temp": 37.47026057938088,
+      "rural_temp": 39.40208427610462,
+      "suhi_intensity": -1.9318236967237397,
+      "urban_pixels": 60,
+      "rural_pixels": 3476,
+      "band_used": "b1"
+    },
+    {
+      "city": "Nurafshon",
+      "year": 2021,
+      "urban_temp": 38.76181340528262,
+      "rural_temp": 40.2414650786146,
+      "suhi_intensity": -1.4796516733319791,
+      "urban_pixels": 60,
+      "rural_pixels": 3463,
+      "band_used": "b1"
+    },
+    {
+      "city": "Nurafshon",
+      "year": 2022,
+      "urban_temp": 38.467620038856545,
+      "rural_temp": 39.23973506025987,
+      "suhi_intensity": -0.772115021403323,
+      "urban_pixels": 62,
+      "rural_pixels": 3446,
+      "band_used": "b1"
+    },
+    {
+      "city": "Nurafshon",
+      "year": 2023,
+      "urban_temp": 37.647886881930425,
+      "rural_temp": 39.06818869299211,
+      "suhi_intensity": -1.4203018110616838,
+      "urban_pixels": 61,
+      "rural_pixels": 3449,
+      "band_used": "b1"
+    },
+    {
+      "city": "Nurafshon",
+      "year": 2024,
+      "urban_temp": 36.68965917099112,
+      "rural_temp": 37.74636279133044,
+      "suhi_intensity": -1.05670362033932,
+      "urban_pixels": 66,
+      "rural_pixels": 3431,
+      "band_used": "b1"
+    }
+  ],
+  "trends": {
+    "suhi_trend_per_year": 0.1057180041442419,
+    "suhi_r_squared": 0.30854380102493767,
+    "suhi_p_value": 0.1529014357695071,
+    "urban_temp_trend_per_year": 0.0011564981242836818,
+    "urban_temp_r_squared": 1.4518391759112987e-05
+  }
+}

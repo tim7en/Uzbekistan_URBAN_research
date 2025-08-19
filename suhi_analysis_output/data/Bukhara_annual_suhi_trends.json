@@ -1,0 +1,93 @@
+{
+  "city": "Bukhara",
+  "years_analyzed": 8,
+  "data": [
+    {
+      "city": "Bukhara",
+      "year": 2017,
+      "urban_temp": 39.18045789640158,
+      "rural_temp": 43.39621254296762,
+      "suhi_intensity": -4.21575464656604,
+      "urban_pixels": 173,
+      "rural_pixels": 4223,
+      "band_used": "b1"
+    },
+    {
+      "city": "Bukhara",
+      "year": 2018,
+      "urban_temp": 40.19665737832673,
+      "rural_temp": 44.83164768299111,
+      "suhi_intensity": -4.6349903046643846,
+      "urban_pixels": 178,
+      "rural_pixels": 4219,
+      "band_used": "b1"
+    },
+    {
+      "city": "Bukhara",
+      "year": 2019,
+      "urban_temp": 39.72634045171734,
+      "rural_temp": 44.24350207259786,
+      "suhi_intensity": -4.517161620880522,
+      "urban_pixels": 184,
+      "rural_pixels": 4200,
+      "band_used": "b1"
+    },
+    {
+      "city": "Bukhara",
+      "year": 2020,
+      "urban_temp": 39.55943346690623,
+      "rural_temp": 44.13544296529281,
+      "suhi_intensity": -4.576009498386583,
+      "urban_pixels": 183,
+      "rural_pixels": 4198,
+      "band_used": "b1"
+    },
+    {
+      "city": "Bukhara",
+      "year": 2021,
+      "urban_temp": 39.23347444071464,
+      "rural_temp": 43.437432111317605,
+      "suhi_intensity": -4.203957670602968,
+      "urban_pixels": 186,
+      "rural_pixels": 4195,
+      "band_used": "b1"
+    },
+    {
+      "city": "Bukhara",
+      "year": 2022,
+      "urban_temp": 39.487164458687865,
+      "rural_temp": 43.61424450843853,
+      "suhi_intensity": -4.127080049750667,
+      "urban_pixels": 187,
+      "rural_pixels": 4192,
+      "band_used": "b1"
+    },
+    {
+      "city": "Bukhara",
+      "year": 2023,
+      "urban_temp": 40.04581470465216,
+      "rural_temp": 43.79487073899473,
+      "suhi_intensity": -3.7490560343425727,
+      "urban_pixels": 182,
+      "rural_pixels": 4192,
+      "band_used": "b1"
+    },
+    {
+      "city": "Bukhara",
+      "year": 2024,
+      "urban_temp": 38.153119402643256,
+      "rural_temp": 41.12772688519621,
+      "suhi_intensity": -2.9746074825529547,
+      "urban_pixels": 185,
+      "rural_pixels": 4180,
+      "band_used": "b1"
+    }
+  ],
+  "trends": {
+    "suhi_trend_per_year": 0.17452378620087902,
+    "suhi_r_squared": 0.610187427574622,
+    "suhi_p_value": 0.022093252071711558,
+    "urban_temp_trend_per_year": -0.10701273607096559,
+    "urban_temp_r_squared": 0.17155467592828255
+  }
+}

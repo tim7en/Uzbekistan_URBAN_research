@@ -2615,3 +2615,6 @@ def create_multi_city_landcover_comparison(all_results: List[Dict], output_dir: 
     plt.close()
     
     print(f"     💾 Multi-city comparison saved: {output_file}")
+
+if __name__ == "__main__":
+    main()

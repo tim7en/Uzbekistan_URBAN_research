@@ -1,0 +1,93 @@
+{
+  "city": "Navoiy",
+  "years_analyzed": 8,
+  "data": [
+    {
+      "city": "Navoiy",
+      "year": 2017,
+      "urban_temp": 42.20138084027532,
+      "rural_temp": 47.50334826951612,
+      "suhi_intensity": -5.301967429240797,
+      "urban_pixels": 133,
+      "rural_pixels": 4499,
+      "band_used": "b1"
+    },
+    {
+      "city": "Navoiy",
+      "year": 2018,
+      "urban_temp": 43.29891494822552,
+      "rural_temp": 48.279095057996145,
+      "suhi_intensity": -4.980180109770622,
+      "urban_pixels": 136,
+      "rural_pixels": 4491,
+      "band_used": "b1"
+    },
+    {
+      "city": "Navoiy",
+      "year": 2019,
+      "urban_temp": 42.66368422595493,
+      "rural_temp": 47.84988628434111,
+      "suhi_intensity": -5.186202058386179,
+      "urban_pixels": 136,
+      "rural_pixels": 4487,
+      "band_used": "b1"
+    },
+    {
+      "city": "Navoiy",
+      "year": 2020,
+      "urban_temp": 42.00124818535513,
+      "rural_temp": 47.7277815370316,
+      "suhi_intensity": -5.726533351676473,
+      "urban_pixels": 139,
+      "rural_pixels": 4485,
+      "band_used": "b1"
+    },
+    {
+      "city": "Navoiy",
+      "year": 2021,
+      "urban_temp": 42.83504005493252,
+      "rural_temp": 47.95432368699982,
+      "suhi_intensity": -5.119283632067301,
+      "urban_pixels": 141,
+      "rural_pixels": 4476,
+      "band_used": "b1"
+    },
+    {
+      "city": "Navoiy",
+      "year": 2022,
+      "urban_temp": 41.57030117877629,
+      "rural_temp": 46.99594766899981,
+      "suhi_intensity": -5.425646490223521,
+      "urban_pixels": 140,
+      "rural_pixels": 4473,
+      "band_used": "b1"
+    },
+    {
+      "city": "Navoiy",
+      "year": 2023,
+      "urban_temp": 42.76658366702387,
+      "rural_temp": 47.35593532761194,
+      "suhi_intensity": -4.589351660588065,
+      "urban_pixels": 143,
+      "rural_pixels": 4473,
+      "band_used": "b1"
+    },
+    {
+      "city": "Navoiy",
+      "year": 2024,
+      "urban_temp": 40.18724912659416,
+      "rural_temp": 44.48610060961679,
+      "suhi_intensity": -4.298851483022631,
+      "urban_pixels": 142,
+      "rural_pixels": 4473,
+      "band_used": "b1"
+    }
+  ],
+  "trends": {
+    "suhi_trend_per_year": 0.10553417016115589,
+    "suhi_r_squared": 0.32029545359657347,
+    "suhi_p_value": 0.14366541438893263,
+    "urban_temp_trend_per_year": -0.22865399611589163,
+    "urban_temp_r_squared": 0.3310332185173668
+  }
+}

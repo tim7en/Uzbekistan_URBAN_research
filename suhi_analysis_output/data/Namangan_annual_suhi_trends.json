@@ -1,0 +1,93 @@
+{
+  "city": "Namangan",
+  "years_analyzed": 8,
+  "data": [
+    {
+      "city": "Namangan",
+      "year": 2017,
+      "urban_temp": 39.52881422007712,
+      "rural_temp": 37.696217774877745,
+      "suhi_intensity": 1.8325964451993784,
+      "urban_pixels": 264,
+      "rural_pixels": 4443,
+      "band_used": "b1"
+    },
+    {
+      "city": "Namangan",
+      "year": 2018,
+      "urban_temp": 39.09212945491877,
+      "rural_temp": 37.99507902549232,
+      "suhi_intensity": 1.0970504294264458,
+      "urban_pixels": 271,
+      "rural_pixels": 4410,
+      "band_used": "b1"
+    },
+    {
+      "city": "Namangan",
+      "year": 2019,
+      "urban_temp": 39.06680568233685,
+      "rural_temp": 37.81982365604601,
+      "suhi_intensity": 1.246982026290837,
+      "urban_pixels": 288,
+      "rural_pixels": 4382,
+      "band_used": "b1"
+    },
+    {
+      "city": "Namangan",
+      "year": 2020,
+      "urban_temp": 38.895606037206065,
+      "rural_temp": 37.62380212392512,
+      "suhi_intensity": 1.271803913280948,
+      "urban_pixels": 292,
+      "rural_pixels": 4376,
+      "band_used": "b1"
+    },
+    {
+      "city": "Namangan",
+      "year": 2021,
+      "urban_temp": 39.085665498410656,
+      "rural_temp": 37.5361369154764,
+      "suhi_intensity": 1.5495285829342578,
+      "urban_pixels": 304,
+      "rural_pixels": 4358,
+      "band_used": "b1"
+    },
+    {
+      "city": "Namangan",
+      "year": 2022,
+      "urban_temp": 38.79627757834872,
+      "rural_temp": 36.86322212894025,
+      "suhi_intensity": 1.9330554494084708,
+      "urban_pixels": 307,
+      "rural_pixels": 4346,
+      "band_used": "b1"
+    },
+    {
+      "city": "Namangan",
+      "year": 2023,
+      "urban_temp": 39.610104108047295,
+      "rural_temp": 37.83666185488534,
+      "suhi_intensity": 1.773442253161953,
+      "urban_pixels": 308,
+      "rural_pixels": 4346,
+      "band_used": "b1"
+    },
+    {
+      "city": "Namangan",
+      "year": 2024,
+      "urban_temp": 38.44389235201679,
+      "rural_temp": 36.40660778829133,
+      "suhi_intensity": 2.037284563725457,
+      "urban_pixels": 316,
+      "rural_pixels": 4305,
+      "band_used": "b1"
+    }
+  ],
+  "trends": {
+    "suhi_trend_per_year": 0.08512762961150354,
+    "suhi_r_squared": 0.3483427327658153,
+    "suhi_p_value": 0.12350026678390884,
+    "urban_temp_trend_per_year": -0.06697743644689881,
+    "urban_temp_r_squared": 0.1883904703651136
+  }
+}

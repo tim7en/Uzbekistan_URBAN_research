@@ -1,0 +1,93 @@
+{
+  "city": "Samarkand",
+  "years_analyzed": 8,
+  "data": [
+    {
+      "city": "Samarkand",
+      "year": 2017,
+      "urban_temp": 38.58516416826603,
+      "rural_temp": 38.42344333093805,
+      "suhi_intensity": 0.1617208373279837,
+      "urban_pixels": 316,
+      "rural_pixels": 4083,
+      "band_used": "b1"
+    },
+    {
+      "city": "Samarkand",
+      "year": 2018,
+      "urban_temp": 39.91646652373665,
+      "rural_temp": 40.18407852065945,
+      "suhi_intensity": -0.26761199692279547,
+      "urban_pixels": 335,
+      "rural_pixels": 4075,
+      "band_used": "b1"
+    },
+    {
+      "city": "Samarkand",
+      "year": 2019,
+      "urban_temp": 39.63796262426438,
+      "rural_temp": 38.867928871683496,
+      "suhi_intensity": 0.7700337525808862,
+      "urban_pixels": 330,
+      "rural_pixels": 4063,
+      "band_used": "b1"
+    },
+    {
+      "city": "Samarkand",
+      "year": 2020,
+      "urban_temp": 38.40572091534649,
+      "rural_temp": 37.75265048887762,
+      "suhi_intensity": 0.6530704264688723,
+      "urban_pixels": 333,
+      "rural_pixels": 4031,
+      "band_used": "b1"
+    },
+    {
+      "city": "Samarkand",
+      "year": 2021,
+      "urban_temp": 40.33501527083798,
+      "rural_temp": 39.990387279121585,
+      "suhi_intensity": 0.34462799171639347,
+      "urban_pixels": 350,
+      "rural_pixels": 4013,
+      "band_used": "b1"
+    },
+    {
+      "city": "Samarkand",
+      "year": 2022,
+      "urban_temp": 38.54754195595204,
+      "rural_temp": 37.918202363998184,
+      "suhi_intensity": 0.6293395919538582,
+      "urban_pixels": 355,
+      "rural_pixels": 3982,
+      "band_used": "b1"
+    },
+    {
+      "city": "Samarkand",
+      "year": 2023,
+      "urban_temp": 40.02694613359432,
+      "rural_temp": 39.16813479142039,
+      "suhi_intensity": 0.8588113421739294,
+      "urban_pixels": 351,
+      "rural_pixels": 3995,
+      "band_used": "b1"
+    },
+    {
+      "city": "Samarkand",
+      "year": 2024,
+      "urban_temp": 37.65308969617057,
+      "rural_temp": 36.548054242007126,
+      "suhi_intensity": 1.105035454163442,
+      "urban_pixels": 366,
+      "rural_pixels": 3962,
+      "band_used": "b1"
+    }
+  ],
+  "trends": {
+    "suhi_trend_per_year": 0.13696183448450322,
+    "suhi_r_squared": 0.5934626969209954,
+    "suhi_p_value": 0.025298485658971304,
+    "urban_temp_trend_per_year": -0.08707251077173145,
+    "urban_temp_r_squared": 0.049181879284118775
+  }
+}

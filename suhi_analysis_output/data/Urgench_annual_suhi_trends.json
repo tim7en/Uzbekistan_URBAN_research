@@ -1,0 +1,93 @@
+{
+  "city": "Urgench",
+  "years_analyzed": 8,
+  "data": [
+    {
+      "city": "Urgench",
+      "year": 2017,
+      "urban_temp": 38.611341665455605,
+      "rural_temp": 36.811924519478296,
+      "suhi_intensity": 1.7994171459773085,
+      "urban_pixels": 143,
+      "rural_pixels": 3901,
+      "band_used": "b1"
+    },
+    {
+      "city": "Urgench",
+      "year": 2018,
+      "urban_temp": 40.01332343620637,
+      "rural_temp": 38.45786283495471,
+      "suhi_intensity": 1.55546060125166,
+      "urban_pixels": 146,
+      "rural_pixels": 3887,
+      "band_used": "b1"
+    },
+    {
+      "city": "Urgench",
+      "year": 2019,
+      "urban_temp": 38.95208042744659,
+      "rural_temp": 37.01470679817546,
+      "suhi_intensity": 1.9373736292711286,
+      "urban_pixels": 148,
+      "rural_pixels": 3881,
+      "band_used": "b1"
+    },
+    {
+      "city": "Urgench",
+      "year": 2020,
+      "urban_temp": 39.75639013452917,
+      "rural_temp": 37.601750899336736,
+      "suhi_intensity": 2.154639235192434,
+      "urban_pixels": 148,
+      "rural_pixels": 3867,
+      "band_used": "b1"
+    },
+    {
+      "city": "Urgench",
+      "year": 2021,
+      "urban_temp": 40.18109146681542,
+      "rural_temp": 37.856404181383546,
+      "suhi_intensity": 2.324687285431871,
+      "urban_pixels": 149,
+      "rural_pixels": 3870,
+      "band_used": "b1"
+    },
+    {
+      "city": "Urgench",
+      "year": 2022,
+      "urban_temp": 39.188234033671954,
+      "rural_temp": 37.160185381095744,
+      "suhi_intensity": 2.02804865257621,
+      "urban_pixels": 149,
+      "rural_pixels": 3829,
+      "band_used": "b1"
+    },
+    {
+      "city": "Urgench",
+      "year": 2023,
+      "urban_temp": 38.286230468207954,
+      "rural_temp": 36.35012499193602,
+      "suhi_intensity": 1.9361054762719334,
+      "urban_pixels": 151,
+      "rural_pixels": 3807,
+      "band_used": "b1"
+    },
+    {
+      "city": "Urgench",
+      "year": 2024,
+      "urban_temp": 36.65863988054843,
+      "rural_temp": 34.96720995189806,
+      "suhi_intensity": 1.691429928650365,
+      "urban_pixels": 153,
+      "rural_pixels": 3810,
+      "band_used": "b1"
+    }
+  ],
+  "trends": {
+    "suhi_trend_per_year": 0.018921273499612416,
+    "suhi_r_squared": 0.034954824539154286,
+    "suhi_p_value": 0.6575294438572461,
+    "urban_temp_trend_per_year": -0.2520382759926188,
+    "urban_temp_r_squared": 0.29130857976318186
+  }
+}
