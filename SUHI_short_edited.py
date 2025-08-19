@@ -83,7 +83,7 @@ UZBEKISTAN_CITIES = {
 
 # Analysis parameters
 ANALYSIS_CONFIG = {
-    "years": list(range(2016, 2025)),  # 2016-2024
+    "years": list(range(2016, 2024)),  # 2016-2024
     "warm_months": [6, 7, 8],  # June-August for peak SUHI
     "target_resolution_m": 100,  # Target spatial resolution in meters
     "esri_weight": 0.5,  # ESRI classification weight (50%)
@@ -121,14 +121,13 @@ GEE_CONFIG = {
 ESRI_CLASSES = {
     1: 'Water',
     2: 'Trees',
-    3: 'Grass',
     4: 'Flooded_Vegetation',
     5: 'Crops',
-    6: 'Scrub_Shrub',
     7: 'Built_Area',
     8: 'Bare_Ground',
     9: 'Snow_Ice',
-    10: 'Clouds'
+    10: 'Clouds',
+    11: 'Rangeland'
 }
 
 def get_optimal_scale_for_city(city_name: str, analysis_phase: str = "default") -> Dict[str, Union[int, float]]:
@@ -263,19 +262,6 @@ def test_dataset_availability() -> Dict[str, bool]:
             print(f"   ❌ {name}: {e}")
     
     return availability
-
-# Land cover class definitions
-ESRI_CLASSES = {
-    1: 'Water',
-    2: 'Trees',
-    4: 'Flooded_vegetation',
-    5: 'Crops',
-    7: 'Built_area',  # Urban class
-    8: 'Bare_ground',
-    9: 'Snow_ice',
-    10: 'Clouds',
-    11: 'Rangeland'
-}
 
 # ================================================================================
 # SECTION 3: INITIALIZATION AND SETUP
@@ -1241,7 +1227,7 @@ def analyze_annual_urban_expansion(city_name: str, start_year: int = 2017,
             
             # Calculate total built area using the approach from the working reference
             pixel_area = ee.Image.pixelArea()
-            total_built_area = built_mask.multiply(pixel_area).reduceRegion(
+            total_Built_Area = built_mask.multiply(pixel_area).reduceRegion(
                 reducer=ee.Reducer.sum(),
                 geometry=zones['urban_core'],
                 scale=GEE_CONFIG['scale'],
@@ -1250,7 +1236,7 @@ def analyze_annual_urban_expansion(city_name: str, start_year: int = 2017,
             )
             
             # Calculate built area in extended region for sprawl analysis
-            extended_built_area = built_mask.multiply(pixel_area).reduceRegion(
+            extended_Built_Area = built_mask.multiply(pixel_area).reduceRegion(
                 reducer=ee.Reducer.sum(),
                 geometry=zones['full_extent'],
                 scale=GEE_CONFIG['scale'],
@@ -1270,8 +1256,8 @@ def analyze_annual_urban_expansion(city_name: str, start_year: int = 2017,
             # Get computed values - use the approach from working reference
             try:
                 # Get all available results first
-                area_result = total_built_area.getInfo()
-                extended_result = extended_built_area.getInfo()
+                area_result = total_Built_Area.getInfo()
+                extended_result = extended_Built_Area.getInfo()
                 pixel_result = built_pixels.getInfo()
                 
                 #print(f"     🔍 Debug - Area result: {area_result}")
@@ -1289,11 +1275,11 @@ def analyze_annual_urban_expansion(city_name: str, start_year: int = 2017,
                     #print(f"     🔍 Debug - Available area keys: {area_keys}")
                     
                     # Use the first available key
-                    area_key = area_keys[0]
+                    area_key = area_keys[0];
                     
                     # Extract values
-                    built_area_m2 = area_result.get(area_key, 0)
-                    built_area_km2 = built_area_m2 / 1e6  # Convert to km²
+                    Built_Area_m2 = area_result.get(area_key, 0)
+                    Built_Area_km2 = Built_Area_m2 / 1e6  # Convert to km²
                     
                     extended_area_m2 = extended_result.get(area_key, 0) if extended_result else 0
                     extended_area_km2 = extended_area_m2 / 1e6
@@ -1303,21 +1289,21 @@ def analyze_annual_urban_expansion(city_name: str, start_year: int = 2017,
                     # Calculate total area for density
                     total_area_m2 = zones['urban_core'].area().getInfo()
                     total_area_km2 = total_area_m2 / 1e6
-                    urban_density = (built_area_km2 / total_area_km2 * 100) if total_area_km2 > 0 else 0
+                    urban_density = (Built_Area_km2 / total_area_km2 * 100) if total_area_km2 > 0 else 0
                     
                     annual_data.append({
                         'city': city_name,
                         'year': year,
-                        'built_area_core_km2': built_area_km2,
-                        'built_area_extended_km2': extended_area_km2,
+                        'Built_Area_core_km2': Built_Area_km2,
+                        'Built_Area_extended_km2': extended_area_km2,
                         'built_pixels': built_pixel_count,
                         'urban_density_pct': urban_density,
                         'analysis_area_km2': total_area_km2,
                         'area_key_used': area_key,  # For debugging
-                        'debug_area_m2': built_area_m2  # For debugging
+                        'debug_area_m2': Built_Area_m2  # For debugging
                     })
                     
-                    print(f"     ✅ {year}: {built_area_km2:.2f} km² built area (from {built_area_m2:.0f} m²)")
+                    print(f"     ✅ {year}: {Built_Area_km2:.2f} km² built area (from {Built_Area_m2:.0f} m²)")
                 else:
                     print(f"     ❌ Error processing {year}: No data in reduction result")
                     print(f"        Area result: {area_result}")
@@ -1336,14 +1322,14 @@ def analyze_annual_urban_expansion(city_name: str, start_year: int = 2017,
     
     if len(df) > 1:
         # Calculate annual growth rates
-        df['annual_growth_km2'] = df['built_area_core_km2'].diff()
-        df['annual_growth_pct'] = df['built_area_core_km2'].pct_change() * 100
+        df['annual_growth_km2'] = df['Built_Area_core_km2'].diff()
+        df['annual_growth_pct'] = df['Built_Area_core_km2'].pct_change() * 100
         df['density_change_pct'] = df['urban_density_pct'].diff()
         
         # Calculate cumulative growth from baseline
-        baseline_area = df['built_area_core_km2'].iloc[0]
-        df['cumulative_growth_km2'] = df['built_area_core_km2'] - baseline_area
-        df['cumulative_growth_pct'] = (df['built_area_core_km2'] / baseline_area - 1) * 100
+        baseline_area = df['Built_Area_core_km2'].iloc[0]
+        df['cumulative_growth_km2'] = df['Built_Area_core_km2'] - baseline_area
+        df['cumulative_growth_pct'] = (df['Built_Area_core_km2'] / baseline_area - 1) * 100
     
     return df
 
@@ -1378,9 +1364,10 @@ def analyze_annual_suhi_trends(city_name: str, years: List[int]) -> Dict:
             actual_band = band_names[0]
             print(f"     🔍 Debug - Using band '{actual_band}' for {year}")
             
-            # Create built area mask using the actual band name
-            built_mask = esri_image.select(actual_band).eq(7)
+            # CREATE BUILT MASK - THIS WAS MISSING!
+            built_mask = esri_image.select(actual_band).eq(7)  # <-- ADD THIS LINE
             
+
             # Load temperature data for this year
             start_date = f'{year}-01-01'
             end_date = f'{year}-12-31'
@@ -1391,6 +1378,7 @@ def analyze_annual_suhi_trends(city_name: str, years: List[int]) -> Dict:
                 print(f"     ⚠️ No temperature data for {year}")
                 continue
             
+
             # Calculate SUHI using year-specific urban mask
             urban_temp = modis_lst.select('LST_Day_MODIS').updateMask(built_mask).reduceRegion(
                 reducer=ee.Reducer.mean().combine(ee.Reducer.count(), sharedInputs=True),
@@ -1520,7 +1508,7 @@ def create_temporal_expansion_report(cities: List[str],
         # Create summary statistics only if we have data with 'city' column
         if 'city' in combined_df.columns and len(combined_df) > 0:
             summary_stats = combined_df.groupby('city').agg({
-                'built_area_core_km2': ['first', 'last', 'mean'],
+                'Built_Area_core_km2': ['first', 'last', 'mean'],
                 'annual_growth_km2': 'mean',
                 'annual_growth_pct': 'mean',
                 'urban_density_pct': ['first', 'last'],
@@ -1772,7 +1760,7 @@ def run_comprehensive_analysis(city_name: str, year: int) -> Dict:
         vegetation = calculate_vegetation_indices(start_date, end_date, zones['full_extent'], 
                                                 target_scale=int(optimal_scales['scale_landsat']))
     except Exception as e:
-        print(f"     ⚠️ Vegetation calculation failed: {e}")
+        print(f"                                 ⚠️ Vegetation calculation failed: {e}")
         vegetation = None
     
     # Step 5: Compute SUHI with optimized settings
@@ -1861,14 +1849,22 @@ def run_comprehensive_analysis(city_name: str, year: int) -> Dict:
             print(f"     ⚠️ Day/night analysis failed: {e}")
             day_night_analysis = {'error': str(e)}
 
-    # Step 6.6: ESRI Landcover Change Analysis
-    print("     🏗️ Analyzing ESRI landcover changes...")
+    # Step 6.6: ESRI Landcover Change Analysis - FIXED YEAR RANGE
+    print("   🏗️ Analyzing ESRI landcover changes...")
     landcover_changes = {}
     try:
-        # Analyze landcover changes for the decade around this year
-        analysis_start = max(2017, year - 3)
-
-        analysis_end = min(2024, year + 3)
+        # For a specific year analysis, compare with baseline (2017) and 2020
+        # This makes more sense than arbitrary ±3 years
+        if year <= 2020:
+            # For early years, compare 2017 baseline and 2020
+            analysis_start = 2017
+            analysis_end = 2020
+        else:
+            # For recent years, compare 2020 with current/latest
+            analysis_start = 2020
+            analysis_end = min(2024, year)
+        
+        print(f"     📅 Analyzing landcover changes from {analysis_start} to {analysis_end}")
         landcover_changes = analyze_esri_landcover_changes(city_name, analysis_start, analysis_end)
     except Exception as e:
         print(f"     ⚠️ Landcover change analysis failed: {e}")
@@ -2270,10 +2266,10 @@ def generate_landcover_change_table(city_changes: Dict[str, pd.DataFrame],
             # Calculate total built gain with safe numeric conversion
             built_gain_values = []
             for cls in matrix.index:
-                if (cls != 'Built_area' and cls != 'total_to' and 
-                    'Built_area' in matrix.columns):
+                if (cls != 'Built_Area' and cls != 'total_to' and 
+                    'Built_Area' in matrix.columns):
                     try:
-                        val = matrix.loc[cls, 'Built_area']
+                        val = matrix.loc[cls, 'Built_Area']
                         val_numeric = pd.to_numeric(val, errors='coerce')
                         if pd.notna(val_numeric):
                             built_gain_values.append(val_numeric)
@@ -2287,8 +2283,8 @@ def generate_landcover_change_table(city_changes: Dict[str, pd.DataFrame],
                 'Period': f"{matrix.attrs['start_year']}-{matrix.attrs['end_year']}",
                 'Accuracy (%)': f"{matrix.attrs['accuracy_pct']:.1f}",
                 'Error (%)': f"{matrix.attrs['error_pct']:.1f}",
-                'Crops→Built': matrix.loc['Crops', 'Built_area'] if 'Crops' in matrix.index else 0,
-                'Bare→Built': matrix.loc['Bare_ground', 'Built_area'] if 'Bare_ground' in matrix.index else 0,
+                'Crops→Built': matrix.loc['Crops', 'Built_Area'] if 'Crops' in matrix.index else 0,
+                'Bare→Built': matrix.loc['Bare_Ground', 'Built_Area'] if 'Bare_Ground' in matrix.index else 0,
                 'Total Built Gain': total_built_gain
             })
     
@@ -2344,7 +2340,7 @@ def main():
     # For production, process all cities; for testing, limit to 3
     TESTING_MODE = False  # Set to False for full analysis
     if TESTING_MODE:
-        cities_to_process = all_cities[:]  # Only first 3 cities for testing
+        cities_to_process = all_cities[:3]  # Only first 3 cities for testing
         print(f"\n⚠️ TESTING MODE: Processing only {len(cities_to_process)} cities")
     else:
         cities_to_process = all_cities
@@ -2432,6 +2428,7 @@ def main():
         
         # Generate visualizations for each result
         for result in all_results:
+            # Generate day/night comparison plots
             if 'day_night_analysis' in result and result['day_night_analysis']:
                 try:
                     create_day_night_comparison_plot(
@@ -2441,7 +2438,29 @@ def main():
                         output_dirs['visualizations']
                     )
                 except Exception as e:
-                    print(f"     ⚠️ Error creating day/night plot: {e}")
+                    print(f"     ⚠️ Error creating day/night plot for {result['city']}: {e}")
+            
+            # Generate landcover change visualizations - ADDED
+            if 'landcover_changes' in result and result['landcover_changes']:
+                try:
+                    create_landcover_change_visualization(
+                        result['landcover_changes'],
+                        result['city'],
+                        output_dirs['visualizations']
+                    )
+                    print(f"     ✅ Landcover visualization created for {result['city']}")
+                except Exception as e:
+                    print(f"     ⚠️ Error creating landcover plot for {result['city']}: {e}")
+    
+    # Phase 4: Create comparison visualizations across cities - ADDED
+    print("\n📊 Creating comparative visualizations...")
+    
+    # Create a comprehensive landcover change comparison
+    if all_results:
+        try:
+            create_multi_city_landcover_comparison(all_results, output_dirs['visualizations'])
+        except Exception as e:
+            print(f"   ⚠️ Error creating multi-city comparison: {e}")
     
     # Final summary
     print("\n" + "="*80)
@@ -2460,5 +2479,139 @@ def main():
     
     print("="*80)
 
-if __name__ == "__main__":
-    main()
+def create_multi_city_landcover_comparison(all_results: List[Dict], output_dir: Path) -> None:
+    """
+    Create a comparison visualization of landcover changes across multiple cities.
+    
+    Args:
+        all_results: List of all analysis results
+        output_dir: Output directory for visualizations
+    """
+    print("   📊 Creating multi-city landcover comparison...")
+    
+    # Extract landcover change data for all cities
+    city_changes = {}
+    
+    for result in all_results:
+        if 'landcover_changes' not in result or 'error' in result['landcover_changes']:
+            continue 
+        
+        city = result['city']
+        year = result['year']
+        landcover_data = result['landcover_changes']
+        
+        if 'landcover_changes' in landcover_data:
+            changes = landcover_data['landcover_changes']
+            
+            # Get Built_Area change specifically
+            if 'Built_Area' in changes:
+                built_change = changes['Built_Area']
+                
+                if city not in city_changes:
+                    city_changes[city] = {}
+                
+                city_changes[city][year] = {
+                    'built_change_km2': built_change.get('change_km2', 0),
+                    'built_change_pct': built_change.get('change_percent', 0),
+                    'start_area': built_change.get('start_area_km2', 0),
+                    'end_area': built_change.get('end_area_km2', 0),
+                    'period': landcover_data.get('analysis_period', 'Unknown')
+                }
+    
+    if not city_changes:
+        print("     ⚠️ No landcover change data available for comparison")
+        return
+    
+    # Create comparison plot
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 12))
+    
+    # 1. Built area changes by city
+    cities = []
+    changes_km2 = []
+    periods = []
+    
+    for city, years_data in city_changes.items():
+        for year, data in years_data.items():
+            cities.append(f"{city}\n({data['period']})")
+            changes_km2.append(data['built_change_km2'])
+            periods.append(data['period'])
+    
+    colors = ['#ff6b6b' if c > 0 else '#4ecdc4' for c in changes_km2]
+    bars = ax1.barh(cities, changes_km2, color=colors, alpha=0.7)
+    ax1.set_xlabel('Built Area Change (km²)')
+    ax1.set_title('Urban Expansion Across Uzbekistan Cities')
+    ax1.grid(True, alpha=0.3)
+    
+    # Add value labels
+    for bar, value in zip(bars, changes_km2):
+        ax1.text(value + (0.01 * max(abs(v) for v in changes_km2) if changes_km2 else 0), 
+                bar.get_y() + bar.get_height()/2, 
+                f'{value:.1f}', ha='left' if value >= 0 else 'right', 
+                va='center', fontsize=9)
+    
+    # 2. Percentage changes
+    changes_pct = []
+    for city, years_data in city_changes.items():
+        for year, data in years_data.items():
+            changes_pct.append(data['built_change_pct'])
+    
+    ax2.barh(cities, changes_pct, color=['#ffa726' if c > 0 else '#26a69a' for c in changes_pct], alpha=0.7)
+    ax2.set_xlabel('Built Area Change (%)')
+    ax2.set_title('Relative Urban Growth Rates')
+    ax2.grid(True, alpha=0.3)
+    
+    # 3. Start vs End areas comparison
+    city_names = list(city_changes.keys())
+    start_areas = []
+    end_areas = []
+    
+    for city in city_names:
+        # Get the most recent year data
+        years = list(city_changes[city].keys())
+        if years:
+            latest_year = max(years)
+            start_areas.append(city_changes[city][latest_year]['start_area'])
+            end_areas.append(city_changes[city][latest_year]['end_area'])
+    
+    x = np.arange(len(city_names))
+    width = 0.35
+    
+    bars1 = ax3.bar(x - width/2, start_areas, width, label='Start Period', color='#3498db', alpha=0.7)
+    bars2 = ax3.bar(x + width/2, end_areas, width, label='End Period', color='#e74c3c', alpha=0.7)
+    
+    ax3.set_ylabel('Built Area (km²)')
+    ax3.set_title('Built Area: Before vs After')
+    ax3.set_xticks(x)
+    ax3.set_xticklabels(city_names, rotation=45, ha='right')
+    ax3.legend()
+    ax3.grid(True, alpha=0.3)
+    
+    # 4. Summary statistics table
+    summary_text = "LANDCOVER CHANGE SUMMARY\n" + "="*30 + "\n\n"
+    
+    total_expansion = sum(changes_km2)
+    avg_expansion = np.mean(changes_km2) if changes_km2 else 0
+    max_expansion_idx = np.argmax(np.abs(changes_km2)) if changes_km2 else 0
+    max_expansion_city = cities[max_expansion_idx].split('\n')[0] if cities else 'N/A'
+    
+    summary_text += f"Total Built Area Change: {total_expansion:.2f} km²\n"
+    summary_text += f"Average Change per City: {avg_expansion:.2f} km²\n"
+    summary_text += f"Largest Change: {max_expansion_city}\n"
+    summary_text += f"Cities Analyzed: {len(city_names)}\n"
+    
+    ax4.text(0.1, 0.5, summary_text, transform=ax4.transAxes, fontsize=11,
+            verticalalignment='center', 
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
+    ax4.set_title('Analysis Summary')
+    ax4.axis('off')
+    
+    plt.suptitle('Uzbekistan Urban Landcover Changes - Comparative Analysis', fontsize=14, fontweight='bold')
+    plt.tight_layout()
+    
+    # Save plot
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_file = output_dir / f"multi_city_landcover_comparison_{timestamp}.png"
+    plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    plt.close()
+    
+    print(f"     💾 Multi-city comparison saved: {output_file}")
