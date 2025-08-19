@@ -28,6 +28,8 @@ import warnings
 import time
 import json
 from typing import Dict, List, Tuple, Optional, Any, Union
+import os
+import glob
 try:
     from scipy import stats
     SCIPY_AVAILABLE = True
@@ -40,6 +42,21 @@ warnings.filterwarnings('ignore')
 # ================================================================================
 # SECTION 2: STUDY AREA DEFINITION AND CONSTANTS
 # ================================================================================
+class RateLimiter:
+    """Simple rate limiter to avoid GEE quota issues"""
+    def __init__(self, min_interval=2):
+        self.min_interval = min_interval
+        self.last_call = 0
+    
+    def wait(self):
+        current = time.time()
+        elapsed = current - self.last_call
+        if elapsed < self.min_interval:
+            time.sleep(self.min_interval - elapsed)
+        self.last_call = time.time()
+
+# Create global rate limiter
+rate_limiter = RateLimiter(min_interval=3)  # 3 seconds between heavy operations
 
 # Define all major Uzbekistan cities with their coordinates and analysis buffers
 UZBEKISTAN_CITIES = {
@@ -50,18 +67,18 @@ UZBEKISTAN_CITIES = {
     "Nukus":      {"lat": 42.4731, "lon": 59.6103, "buffer_m": 10000, "type": "republic_capital"},
     
     # Regional capitals and major cities
-    "Andijan":    {"lat": 40.7821, "lon": 72.3442, "buffer_m": 12000, "type": "regional_capital"},
-    "Bukhara":    {"lat": 39.7748, "lon": 64.4286, "buffer_m": 10000, "type": "regional_capital"},
-    "Samarkand":  {"lat": 39.6542, "lon": 66.9597, "buffer_m": 12000, "type": "regional_capital"},
-    "Namangan":   {"lat": 40.9983, "lon": 71.6726, "buffer_m": 12000, "type": "regional_capital"},
-    "Jizzakh":    {"lat": 40.1158, "lon": 67.8422, "buffer_m": 8000,  "type": "regional_capital"},
-    "Qarshi":     {"lat": 38.8606, "lon": 65.7887, "buffer_m": 8000,  "type": "regional_capital"},
-    "Navoiy":     {"lat": 40.1030, "lon": 65.3686, "buffer_m": 10000, "type": "regional_capital"},
-    "Termez":     {"lat": 37.2242, "lon": 67.2783, "buffer_m": 8000,  "type": "regional_capital"},
-    "Gulistan":   {"lat": 40.4910, "lon": 68.7810, "buffer_m": 8000,  "type": "regional_capital"},
-    "Nurafshon":  {"lat": 41.0167, "lon": 69.3417, "buffer_m": 8000,  "type": "city"},
-    "Fergana":    {"lat": 40.3842, "lon": 71.7843, "buffer_m": 12000, "type": "regional_capital"},
-    "Urgench":    {"lat": 41.5506, "lon": 60.6317, "buffer_m": 10000, "type": "regional_capital"},
+    #"Andijan":    {"lat": 40.7821, "lon": 72.3442, "buffer_m": 12000, "type": "regional_capital"},
+    #"Bukhara":    {"lat": 39.7748, "lon": 64.4286, "buffer_m": 10000, "type": "regional_capital"},
+    #"Samarkand":  {"lat": 39.6542, "lon": 66.9597, "buffer_m": 12000, "type": "regional_capital"},
+    #"Namangan":   {"lat": 40.9983, "lon": 71.6726, "buffer_m": 12000, "type": "regional_capital"},
+    #"Jizzakh":    {"lat": 40.1158, "lon": 67.8422, "buffer_m": 8000,  "type": "regional_capital"},
+    #"Qarshi":     {"lat": 38.8606, "lon": 65.7887, "buffer_m": 8000,  "type": "regional_capital"},
+    #"Navoiy":     {"lat": 40.1030, "lon": 65.3686, "buffer_m": 10000, "type": "regional_capital"},
+    #"Termez":     {"lat": 37.2242, "lon": 67.2783, "buffer_m": 8000,  "type": "regional_capital"},
+    #"Gulistan":   {"lat": 40.4910, "lon": 68.7810, "buffer_m": 8000,  "type": "regional_capital"},
+    #"Nurafshon":  {"lat": 41.0167, "lon": 69.3417, "buffer_m": 8000,  "type": "city"},
+    #"Fergana":    {"lat": 40.3842, "lon": 71.7843, "buffer_m": 12000, "type": "regional_capital"},
+    #"Urgench":    {"lat": 41.5506, "lon": 60.6317, "buffer_m": 10000, "type": "regional_capital"},
 }
 
 # Analysis parameters
@@ -98,6 +115,20 @@ GEE_CONFIG = {
     "scale_modis": 1000, # Scale for MODIS data
     "scale_landsat": 30, # Scale for Landsat data
     "best_effort": True, # Use bestEffort for large computations
+}
+
+# ESRI Landcover Classification Classes
+ESRI_CLASSES = {
+    1: 'Water',
+    2: 'Trees',
+    3: 'Grass',
+    4: 'Flooded_Vegetation',
+    5: 'Crops',
+    6: 'Scrub_Shrub',
+    7: 'Built_Area',
+    8: 'Bare_Ground',
+    9: 'Snow_Ice',
+    10: 'Clouds'
 }
 
 def get_optimal_scale_for_city(city_name: str, analysis_phase: str = "default") -> Dict[str, Union[int, float]]:
@@ -324,35 +355,64 @@ def load_esri_classification(year: int, geometry: ee.Geometry) -> ee.Image:
             print(f"   ⚠️ Year {year} beyond ESRI data, using 2024")
             year = 2024
         
-        # Create date range for the year
-        start_date = ee.Date.fromYMD(year, 1, 1)
-        end_date = ee.Date.fromYMD(year, 12, 31)
+        # Method 1: Filter by date range (most reliable, following working reference)
+        try:
+            start_date = ee.Date.fromYMD(year, 1, 1)
+            end_date = ee.Date.fromYMD(year, 12, 31)
+            
+            # Filter by date and create composite
+            year_composite = (esri_lulc_ts
+                             .filterDate(start_date, end_date)
+                             .filterBounds(geometry)
+                             .mosaic())  # Use mosaic() like in working reference
+            
+            # Check if we got any data
+            pixel_count = year_composite.select([0]).reduceRegion(
+                reducer=ee.Reducer.count(),
+                geometry=geometry,
+                scale=100,
+                maxPixels=1e6
+            )
+            
+            count = pixel_count.getInfo()
+            if count and list(count.values())[0] > 0:
+                # The ESRI data has values 1-11, clip to geometry
+                clipped_image = year_composite.clip(geometry)
+                
+                print(f"   ✅ ESRI {year} loaded successfully (Method 1)")
+                return clipped_image
+                
+        except Exception as method1_error:
+            print(f"   ⚠️ Method 1 failed: {method1_error}")
         
-        # Filter by date and create composite
-        year_composite = (esri_lulc_ts
-                         .filterDate(start_date, end_date)
-                         .filterBounds(geometry)
-                         .mosaic())  # Use mosaic() instead of first()
+        # Method 2: Filter by year property
+        try:
+            year_collection = esri_lulc_ts.filter(ee.Filter.eq('year', year))
+            size = year_collection.size().getInfo()
+            
+            if size > 0:
+                year_image = year_collection.first()
+                clipped_image = year_image.clip(geometry)
+                
+                print(f"   ✅ ESRI {year} loaded successfully (Method 2)")
+                return clipped_image
+                    
+        except Exception as method2_error:
+            print(f"   ⚠️ Method 2 failed: {method2_error}")
         
-        # Check if we got any data
-        pixel_count = year_composite.select([0]).reduceRegion(
-            reducer=ee.Reducer.count(),
-            geometry=geometry,
-            scale=100,
-            maxPixels=1e6
-        )
+        # Method 3: Get the latest available image
+        try:
+            latest_image = esri_lulc_ts.sort('system:time_start', False).first()
+            clipped_image = latest_image.clip(geometry)
+            
+            print(f"   ✅ ESRI latest image loaded as fallback for {year} (Method 3)")
+            return clipped_image
+                
+        except Exception as method3_error:
+            print(f"   ⚠️ Method 3 failed: {method3_error}")
         
-        count = pixel_count.getInfo()
-        if not count or list(count.values())[0] == 0:
-            print(f"   ❌ No ESRI data found for year {year}")
-            return None
-        
-        # The ESRI data has values 1-11 as per the remapping in JS example
-        # No need to select band by name, it's already a single band
-        clipped_image = year_composite.clip(geometry)
-        
-        print(f"   ✅ ESRI {year} loaded successfully")
-        return clipped_image
+        print(f"   ❌ No ESRI data found for year {year}")
+        return None
         
     except Exception as e:
         print(f"   ❌ Error loading ESRI classification for year {year}: {e}")
@@ -569,9 +629,22 @@ def load_modis_lst(start_date: str, end_date: str, geometry: ee.Geometry) -> ee.
            .filter(ee.Filter.calendarRange(ANALYSIS_CONFIG['warm_months'][0],
                                            ANALYSIS_CONFIG['warm_months'][-1], 'month')))
     comp = col.median()
-    lst_day = comp.select('LST_Day_1km').multiply(0.02).subtract(273.15).rename('LST_Day_MODIS').clamp(-20, 60)
-    lst_night = comp.select('LST_Night_1km').multiply(0.02).subtract(273.15).rename('LST_Night_MODIS').clamp(-20, 50)
-    return ee.Image.cat([lst_day, lst_night]).clip(geometry)
+    
+    # Get dynamic band names
+    band_names = comp.bandNames().getInfo()
+    print(f"     📊 Available MODIS LST bands: {band_names}")
+    
+    # Find day and night LST bands
+    day_bands = [b for b in band_names if 'Day' in b and 'LST' in b]
+    night_bands = [b for b in band_names if 'Night' in b and 'LST' in b]
+    
+    if day_bands and night_bands:
+        lst_day = comp.select(day_bands[0]).multiply(0.02).subtract(273.15).rename('LST_Day_MODIS').clamp(-20, 60)
+        lst_night = comp.select(night_bands[0]).multiply(0.02).subtract(273.15).rename('LST_Night_MODIS').clamp(-20, 50)
+        return ee.Image.cat([lst_day, lst_night]).clip(geometry)
+    else:
+        print(f"     ⚠️ Could not find Day/Night LST bands in: {band_names}")
+        return None
 
 
 def load_landsat_thermal(start_date: str, end_date: str, geometry: ee.Geometry) -> ee.Image:
@@ -920,6 +993,214 @@ def calculate_error_metrics(urban_stats: Dict, rural_stats: Dict) -> Union[Dict[
         'rural_std': float(rural_std)
     }
 
+def compute_day_night_suhi(zones: Dict[str, ee.Geometry], lst_day: ee.Image, 
+                          lst_night: ee.Image, classifications: Dict[str, ee.Image]) -> Dict[str, Any]:
+    """
+    Compute day vs night SUHI analysis with both MODIS LST bands.
+    """
+    print(f"   📊 Computing day vs night SUHI analysis...")
+    
+    # Apply rate limiting
+    rate_limiter.wait()
+    
+    # Create consensus urban mask
+    if 'esri' in classifications and len(classifications) > 1:
+        w = ANALYSIS_CONFIG['esri_weight']
+        urban_mask = classifications['esri'].multiply(w)
+        other_w = (1 - w) / (len(classifications) - 1)
+        for name, img in classifications.items():
+            if name != 'esri':
+                urban_mask = urban_mask.add(img.multiply(other_w))
+    else:
+        weight = 1.0 / max(1, len(classifications))
+        urban_mask = ee.Image.constant(0)
+        for img in classifications.values():
+            urban_mask = urban_mask.add(img.multiply(weight))
+    
+    urban_mask = urban_mask.gt(0.5)
+    rural_mask = urban_mask.Not()
+    
+    scale = GEE_CONFIG['scale_modis']
+    results = {}
+    
+    # Process day and night with dynamic band detection
+    for time_period, lst_image in [
+        ('day', lst_day),
+        ('night', lst_night)
+    ]:
+        if lst_image is None:
+            results[time_period] = {'error': f'No {time_period} LST data available'}
+            continue
+        
+        try:
+            # Get actual band names dynamically
+            band_names = lst_image.bandNames().getInfo()
+            print(f"     📊 Available {time_period} LST bands: {band_names}")
+            
+            # Use the first available band (should be the LST band)
+            band_name = band_names[0] if band_names else f'LST_{time_period.title()}_MODIS'
+            
+            # Convert to Celsius
+            lst_celsius = lst_image.select(band_name).multiply(0.02).subtract(273.15)
+            
+            # Urban statistics
+            urban_stats = lst_celsius.updateMask(urban_mask).reduceRegion(
+                reducer=ee.Reducer.mean().combine(ee.Reducer.stdDev(), None, True).combine(ee.Reducer.count(), None, True),
+                geometry=zones['urban_core'],
+                scale=scale,
+                maxPixels=GEE_CONFIG['max_pixels'],
+                bestEffort=True,
+                tileScale=4
+            )
+            
+            # Rural statistics
+            rural_stats = lst_celsius.updateMask(rural_mask).reduceRegion(
+                reducer=ee.Reducer.mean().combine(ee.Reducer.stdDev(), None, True).combine(ee.Reducer.count(), None, True),
+                geometry=zones['rural_ring'],
+                scale=scale,
+                maxPixels=GEE_CONFIG['max_pixels'],
+                bestEffort=True,
+                tileScale=4
+            )
+            
+            # Extract values
+            urban_mean = urban_stats.get(f'{band_name}_mean').getInfo()
+            urban_std = urban_stats.get(f'{band_name}_stdDev').getInfo()
+            urban_count = urban_stats.get(f'{band_name}_count').getInfo()
+            
+            rural_mean = rural_stats.get(f'{band_name}_mean').getInfo()
+            rural_std = rural_stats.get(f'{band_name}_stdDev').getInfo()
+            rural_count = rural_stats.get(f'{band_name}_count').getInfo()
+            
+            # Calculate SUHI
+            suhi = urban_mean - rural_mean if urban_mean and rural_mean else None
+            
+            results[time_period] = {
+                'urban_mean': urban_mean,
+                'urban_std': urban_std,
+                'urban_count': urban_count,
+                'rural_mean': rural_mean,
+                'rural_std': rural_std,
+                'rural_count': rural_count,
+                'suhi': suhi,
+                'band': band_name
+            }
+            
+        except Exception as e:
+            print(f"     ⚠️ Error computing {time_period} SUHI: {e}")
+            results[time_period] = {'error': str(e)}
+    
+    # Calculate day-night differences
+    if 'day' in results and 'night' in results and 'error' not in results['day'] and 'error' not in results['night']:
+        day_suhi = results['day']['suhi']
+        night_suhi = results['night']['suhi']
+        
+        if day_suhi is not None and night_suhi is not None:
+            results['day_night_difference'] = {
+                'suhi_difference': day_suhi - night_suhi,
+                'day_stronger': day_suhi > night_suhi,
+                'magnitude_ratio': day_suhi / night_suhi if night_suhi != 0 else np.inf
+            }
+    
+    return results
+
+def analyze_esri_landcover_changes(city_name: str, start_year: int = 2017, 
+                                  end_year: int = 2024) -> Dict[str, Any]:
+    """
+    Analyze ESRI landcover changes over time for urban expansion assessment.
+    
+    Args:
+        city_name: Name of the city
+        start_year: Starting year (default 2017)
+        end_year: Ending year (default 2024)
+        
+    Returns:
+        Dictionary containing landcover change analysis
+    """
+    print(f"   🏗️ Analyzing ESRI landcover changes {start_year}-{end_year}...")
+    
+    city_info = UZBEKISTAN_CITIES[city_name]
+    center = ee.Geometry.Point([city_info['lon'], city_info['lat']])
+    buffer_m = city_info['buffer_m']
+    region = center.buffer(buffer_m)
+    
+    results = {}
+    yearly_stats = {}
+    
+    # Analyze each year
+    for year in range(start_year, end_year + 1):
+        try:
+            # Load ESRI data for the year
+            esri_image = load_esri_classification(year, region)
+            
+            if esri_image is None:
+                print(f"     ⚠️ No ESRI data for {year}")
+                continue
+            
+            # Get actual band names dynamically
+            band_names = esri_image.bandNames().getInfo()
+            print(f"     📊 Available ESRI bands for {year}: {band_names}")
+            
+            # Use the first available band (should be the ESRI landcover band)
+            band_name = band_names[0] if band_names else 'b1'
+            
+            # Calculate landcover areas using dynamic band name
+            landcover_stats = esri_image.select(band_name).reduceRegion(
+                reducer=ee.Reducer.frequencyHistogram(),
+                geometry=region,
+                scale=30,  # Use 30m for efficiency
+                maxPixels=1e8,
+                bestEffort=True
+            )
+            
+            # Extract histogram
+            histogram = landcover_stats.get(band_name).getInfo()
+            
+            # Convert to meaningful landcover areas
+            landcover_areas = {}
+            total_pixels = sum(histogram.values()) if histogram else 0
+            
+            if histogram and total_pixels > 0:
+                for class_id, pixel_count in histogram.items():
+                    class_name = ESRI_CLASSES.get(int(class_id), f'Unknown_{class_id}')
+                    area_km2 = (pixel_count * 30 * 30) / 1000000  # Convert to km²
+                    landcover_areas[class_name] = {
+                        'area_km2': area_km2,
+                        'percentage': (pixel_count / total_pixels) * 100
+                    }
+            
+            yearly_stats[year] = landcover_areas
+            
+        except Exception as e:
+            print(f"     ⚠️ Error analyzing {year}: {e}")
+            yearly_stats[year] = {'error': str(e)}
+    
+    # Calculate changes between start and end years
+    if start_year in yearly_stats and end_year in yearly_stats:
+        if 'error' not in yearly_stats[start_year] and 'error' not in yearly_stats[end_year]:
+            changes = {}
+            
+            # Find all unique landcover classes
+            all_classes = set(yearly_stats[start_year].keys()) | set(yearly_stats[end_year].keys())
+            
+            for class_name in all_classes:
+                start_area = yearly_stats[start_year].get(class_name, {}).get('area_km2', 0)
+                end_area = yearly_stats[end_year].get(class_name, {}).get('area_km2', 0)
+                
+                changes[class_name] = {
+                    'start_area_km2': start_area,
+                    'end_area_km2': end_area,
+                    'change_km2': end_area - start_area,
+                    'change_percent': ((end_area - start_area) / start_area * 100) if start_area > 0 else np.inf
+                }
+            
+            results['landcover_changes'] = changes
+    
+    results['yearly_stats'] = yearly_stats
+    results['analysis_period'] = f"{start_year}-{end_year}"
+    
+    return results
+
 # ================================================================================
 # SECTION 10: ANNUAL ESRI-BASED TEMPORAL ANALYSIS
 # ================================================================================
@@ -955,10 +1236,10 @@ def analyze_annual_urban_expansion(city_name: str, start_year: int = 2017,
                 print(f"     ❌ Error processing {year}: No ESRI data available")
                 continue
             
-            # Extract built area (class 7) - no need to select band
+            # Extract built area (class 7) - the image should be single band
             built_mask = esri_image.eq(7)
             
-            # Calculate total built area
+            # Calculate total built area using the approach from the working reference
             pixel_area = ee.Image.pixelArea()
             total_built_area = built_mask.multiply(pixel_area).reduceRegion(
                 reducer=ee.Reducer.sum(),
@@ -978,7 +1259,6 @@ def analyze_annual_urban_expansion(city_name: str, start_year: int = 2017,
             )
             
             # Calculate urban density (built pixels / total pixels)
-            total_pixels = zones['urban_core'].area().divide(100)  # 10m pixels
             built_pixels = built_mask.reduceRegion(
                 reducer=ee.Reducer.sum(),
                 geometry=zones['urban_core'],
@@ -987,40 +1267,61 @@ def analyze_annual_urban_expansion(city_name: str, start_year: int = 2017,
                 bestEffort=GEE_CONFIG['best_effort']
             )
             
-            # Get computed values with error handling
+            # Get computed values - use the approach from working reference
             try:
-                # For single band images, the key is usually 'constant' or the first key
-                area_keys = total_built_area.getInfo().keys()
-                area_key = list(area_keys)[0] if area_keys else None
+                # Get all available results first
+                area_result = total_built_area.getInfo()
+                extended_result = extended_built_area.getInfo()
+                pixel_result = built_pixels.getInfo()
                 
-                if area_key:
-                    built_area_km2 = total_built_area.get(area_key)
-                    built_area_km2 = ee.Number(built_area_km2).divide(1e6).getInfo()
+                #print(f"     🔍 Debug - Area result: {area_result}")
+                #print(f"     🔍 Debug - Pixel result: {pixel_result}")
+                
+                # In the working reference, after multiplication with pixelArea,
+                # the band name should be the same as the original ESRI band
+                # Let's try to get the band name from the original image
+                original_band_names = esri_image.bandNames().getInfo()
+                #print(f"     🔍 Debug - Original band names: {original_band_names}")
+                
+                if area_result and len(area_result) > 0:
+                    # Try different possible keys
+                    area_keys = list(area_result.keys())
+                    #print(f"     🔍 Debug - Available area keys: {area_keys}")
                     
-                    extended_area_km2 = extended_built_area.get(area_key)
-                    extended_area_km2 = ee.Number(extended_area_km2).divide(1e6).getInfo() if extended_area_km2 else 0
+                    # Use the first available key
+                    area_key = area_keys[0]
                     
-                    built_pixel_count = built_pixels.get(area_key)
-                    built_pixel_count = ee.Number(built_pixel_count).getInfo() if built_pixel_count else 0
+                    # Extract values
+                    built_area_m2 = area_result.get(area_key, 0)
+                    built_area_km2 = built_area_m2 / 1e6  # Convert to km²
+                    
+                    extended_area_m2 = extended_result.get(area_key, 0) if extended_result else 0
+                    extended_area_km2 = extended_area_m2 / 1e6
+                    
+                    built_pixel_count = pixel_result.get(area_key, 0) if pixel_result else 0
+                    
+                    # Calculate total area for density
+                    total_area_m2 = zones['urban_core'].area().getInfo()
+                    total_area_km2 = total_area_m2 / 1e6
+                    urban_density = (built_area_km2 / total_area_km2 * 100) if total_area_km2 > 0 else 0
+                    
+                    annual_data.append({
+                        'city': city_name,
+                        'year': year,
+                        'built_area_core_km2': built_area_km2,
+                        'built_area_extended_km2': extended_area_km2,
+                        'built_pixels': built_pixel_count,
+                        'urban_density_pct': urban_density,
+                        'analysis_area_km2': total_area_km2,
+                        'area_key_used': area_key,  # For debugging
+                        'debug_area_m2': built_area_m2  # For debugging
+                    })
+                    
+                    print(f"     ✅ {year}: {built_area_km2:.2f} km² built area (from {built_area_m2:.0f} m²)")
                 else:
                     print(f"     ❌ Error processing {year}: No data in reduction result")
+                    print(f"        Area result: {area_result}")
                     continue
-                
-                total_pixel_count = total_pixels.getInfo()
-                
-                urban_density = (built_pixel_count / total_pixel_count * 100) if total_pixel_count > 0 else 0
-                
-                annual_data.append({
-                    'city': city_name,
-                    'year': year,
-                    'built_area_core_km2': built_area_km2,
-                    'built_area_extended_km2': extended_area_km2,
-                    'built_pixels': built_pixel_count,
-                    'urban_density_pct': urban_density,
-                    'analysis_area_km2': total_pixel_count / 10000,  # Convert to km2
-                })
-                
-                print(f"     ✅ {year}: {built_area_km2:.2f} km² built area")
                 
             except Exception as compute_error:
                 print(f"     ❌ Error computing values for {year}: {compute_error}")
@@ -1045,16 +1346,11 @@ def analyze_annual_urban_expansion(city_name: str, start_year: int = 2017,
         df['cumulative_growth_pct'] = (df['built_area_core_km2'] / baseline_area - 1) * 100
     
     return df
+
+
 def analyze_annual_suhi_trends(city_name: str, years: List[int]) -> Dict:
     """
     Analyze SUHI trends using year-specific ESRI urban masks.
-    
-    Args:
-        city_name: Name of the city
-        years: List of years to analyze
-        
-    Returns:
-        Dictionary with annual SUHI trends and statistics
     """
     city_info = UZBEKISTAN_CITIES[city_name]
     zones = create_analysis_zones(city_info)
@@ -1071,8 +1367,19 @@ def analyze_annual_suhi_trends(city_name: str, years: List[int]) -> Dict:
             if esri_image is None:
                 print(f"     ⚠️ No ESRI data for {year}")
                 continue
-                
-            built_mask = esri_image.eq(7)
+            
+            # Get the actual band name from the loaded image
+            band_names = esri_image.bandNames().getInfo()
+            if not band_names:
+                print(f"     ⚠️ No bands found in ESRI image for {year}")
+                continue
+            
+            # Use the first (and usually only) band
+            actual_band = band_names[0]
+            print(f"     🔍 Debug - Using band '{actual_band}' for {year}")
+            
+            # Create built area mask using the actual band name
+            built_mask = esri_image.select(actual_band).eq(7)
             
             # Load temperature data for this year
             start_date = f'{year}-01-01'
@@ -1119,10 +1426,11 @@ def analyze_annual_suhi_trends(city_name: str, years: List[int]) -> Dict:
                     'rural_temp': rural_mean,
                     'suhi_intensity': suhi,
                     'urban_pixels': urban_count,
-                    'rural_pixels': rural_count
+                    'rural_pixels': rural_count,
+                    'band_used': actual_band  # For debugging
                 })
                 
-                print(f"     ✅ {year}: SUHI = {suhi:.2f}°C")
+                print(f"     ✅ {year}: SUHI = {suhi:.2f}°C (using band '{actual_band}')")
             
         except Exception as e:
             print(f"     ❌ Error processing SUHI for {year}: {e}")
@@ -1241,14 +1549,6 @@ def create_temporal_expansion_report(cities: List[str],
 def analyze_urban_expansion(city_name: str, start_year: int, end_year: int) -> Dict:
     """
     Analyze urban expansion between two time periods.
-    
-    Args:
-        city_name: Name of the city
-        start_year: Baseline year
-        end_year: Target year
-        
-    Returns:
-        Urban expansion statistics
     """
     city_info = UZBEKISTAN_CITIES[city_name]
     zones = create_analysis_zones(city_info)
@@ -1265,11 +1565,15 @@ def analyze_urban_expansion(city_name: str, start_year: int, end_year: int) -> D
             'error': 'ESRI data not available for one or both years'
         }
     
-    # Get band names for area calculations
-    start_band = esri_start.bandNames().getInfo()[0]
-    end_band = esri_end.bandNames().getInfo()[0]
+    # Get actual band names dynamically
+    start_bands = esri_start.bandNames().getInfo()
+    end_bands = esri_end.bandNames().getInfo()
+    print(f"     📊 Start year bands: {start_bands}, End year bands: {end_bands}")
     
-    # Extract built area
+    start_band = start_bands[0] if start_bands else 'b1'
+    end_band = end_bands[0] if end_bands else 'b1'
+    
+    # Extract built area (class 7) using dynamic band names
     built_start = esri_start.select(start_band).eq(7)
     built_end = esri_end.select(end_band).eq(7)
     
@@ -1292,20 +1596,20 @@ def analyze_urban_expansion(city_name: str, start_year: int, end_year: int) -> D
         bestEffort=GEE_CONFIG['best_effort']
     )
     
-    # Calculate expansion using the correct band names
-    area_start_km2 = ee.Number(area_start.get(start_band)).divide(1e6)
-    area_end_km2 = ee.Number(area_end.get(end_band)).divide(1e6)
-    expansion_km2 = area_end_km2.subtract(area_start_km2)
-    expansion_pct = expansion_km2.divide(area_start_km2).multiply(100)
+    # Use dynamic band names for area calculation
+    area_start_km2 = ee.Number(area_start.get(start_band)).divide(1e6).getInfo()
+    area_end_km2 = ee.Number(area_end.get(end_band)).divide(1e6).getInfo()
+    expansion_km2 = area_end_km2 - area_start_km2
+    expansion_pct = (expansion_km2 / area_start_km2 * 100) if area_start_km2 > 0 else 0
     
     return {
         'city': city_name,
         'start_year': start_year,
         'end_year': end_year,
-        'area_start_km2': area_start_km2.getInfo(),
-        'area_end_km2': area_end_km2.getInfo(),
-        'expansion_km2': expansion_km2.getInfo(),
-        'expansion_pct': expansion_pct.getInfo()
+        'area_start_km2': area_start_km2,
+        'area_end_km2': area_end_km2,
+        'expansion_km2': expansion_km2,
+        'expansion_pct': expansion_pct
     }
 
 # ================================================================================
@@ -1315,14 +1619,6 @@ def analyze_urban_expansion(city_name: str, start_year: int, end_year: int) -> D
 def analyze_landcover_changes(city_name: str, start_year: int, end_year: int) -> pd.DataFrame:
     """
     Analyze land cover changes with transition matrix and error estimation.
-    
-    Args:
-        city_name: Name of the city
-        start_year: Baseline year
-        end_year: Target year
-        
-    Returns:
-        DataFrame with land cover change statistics
     """
     city_info = UZBEKISTAN_CITIES[city_name]
     zones = create_analysis_zones(city_info)
@@ -1331,13 +1627,26 @@ def analyze_landcover_changes(city_name: str, start_year: int, end_year: int) ->
     esri_start = load_esri_classification(start_year, zones['urban_core'])
     esri_end = load_esri_classification(end_year, zones['urban_core'])
     
+    if esri_start is None or esri_end is None:
+        return pd.DataFrame()  # Return empty DataFrame if no data
+    
+    # Get actual band names
+    start_bands = esri_start.bandNames().getInfo()
+    end_bands = esri_end.bandNames().getInfo()
+    
+    if not start_bands or not end_bands:
+        return pd.DataFrame()
+    
+    start_band = start_bands[0]
+    end_band = end_bands[0]
+    
     # Calculate transition matrix
     results = []
     
     for from_class, from_name in ESRI_CLASSES.items():
         for to_class, to_name in ESRI_CLASSES.items():
-            # Create transition mask
-            transition = esri_start.eq(from_class).And(esri_end.eq(to_class))
+            # Create transition mask using actual band names
+            transition = esri_start.select(start_band).eq(from_class).And(esri_end.select(end_band).eq(to_class))
             
             # Calculate area
             area = transition.multiply(ee.Image.pixelArea()).reduceRegion(
@@ -1348,13 +1657,8 @@ def analyze_landcover_changes(city_name: str, start_year: int, end_year: int) ->
                 bestEffort=GEE_CONFIG['best_effort']
             )
             
-            # Get the area value using the correct band name
-            band_names = esri_start.bandNames().getInfo()
-            if len(band_names) > 0:
-                area_band = band_names[0]
-                area_km2 = ee.Number(area.get(area_band)).divide(1e6).getInfo()
-            else:
-                area_km2 = 0
+            # Get the area value using actual band name
+            area_km2 = ee.Number(area.get(start_band)).divide(1e6).getInfo()
             
             results.append({
                 'from_class': from_name,
@@ -1517,7 +1821,59 @@ def run_comprehensive_analysis(city_name: str, year: int) -> Dict:
             error_metrics = {'error': f'Error metrics failed: {str(e)}'}
     else:
         error_metrics = {'error': suhi_stats.get('error', 'SUHI computation failed')}
-    
+
+    # Step 6.5: Day/Night SUHI Analysis
+    print("   🌙 Computing day vs night SUHI analysis...")
+    day_night_analysis = {}
+    if modis_lst is not None:
+        try:
+            # Load MODIS LST Day and Night separately
+            modis_collection = ee.ImageCollection("MODIS/061/MOD11A2") \
+                .filterBounds(zones['full_extent']) \
+                .filterDate(start_date, end_date)
+            
+            if modis_collection.size().getInfo() > 0:
+                modis_composite = modis_collection.mean()
+                
+                # Get dynamic band names
+                modis_bands = modis_composite.bandNames().getInfo()
+                print(f"     📊 Available MODIS bands: {modis_bands}")
+                
+                # Find day and night LST bands
+                day_bands = [b for b in modis_bands if 'Day' in b and 'LST' in b]
+                night_bands = [b for b in modis_bands if 'Night' in b and 'LST' in b]
+                
+                if day_bands and night_bands:
+                    # Get day and night LST images
+                    lst_day = modis_composite.select(day_bands[0])
+                    lst_night = modis_composite.select(night_bands[0])
+                    
+                    # Rename bands to match expected format
+                    lst_day = lst_day.rename('LST_Day_MODIS')
+                    lst_night = lst_night.rename('LST_Night_MODIS')
+                    
+                    day_night_analysis = compute_day_night_suhi(zones, lst_day, lst_night, classifications)
+                else:
+                    print(f"     ⚠️ Could not find Day/Night LST bands in: {modis_bands}")
+                    day_night_analysis = {'error': 'Day/Night LST bands not found'}
+                
+        except Exception as e:
+            print(f"     ⚠️ Day/night analysis failed: {e}")
+            day_night_analysis = {'error': str(e)}
+
+    # Step 6.6: ESRI Landcover Change Analysis
+    print("     🏗️ Analyzing ESRI landcover changes...")
+    landcover_changes = {}
+    try:
+        # Analyze landcover changes for the decade around this year
+        analysis_start = max(2017, year - 3)
+
+        analysis_end = min(2024, year + 3)
+        landcover_changes = analyze_esri_landcover_changes(city_name, analysis_start, analysis_end)
+    except Exception as e:
+        print(f"     ⚠️ Landcover change analysis failed: {e}")
+        landcover_changes = {'error': str(e)}
+
     # Step 7: Extract vegetation statistics (simplified)
     if vegetation is not None:
         try:
@@ -1543,6 +1899,8 @@ def run_comprehensive_analysis(city_name: str, year: int) -> Dict:
         'classifications_available': list(classifications.keys()),
         'accuracy_assessment': accuracy_metrics.getInfo() if accuracy_metrics else {},
         'suhi_analysis': error_metrics,
+        'day_night_analysis': day_night_analysis,
+        'landcover_changes': landcover_changes,
         'vegetation_indices': veg_stats,
         'urban_stats': suhi_stats.get('urban_stats', {}),
         'rural_stats': suhi_stats.get('rural_stats', {}),
@@ -1554,6 +1912,301 @@ def run_comprehensive_analysis(city_name: str, year: int) -> Dict:
 # ================================================================================
 # SECTION 13: REPORTING AND VISUALIZATION
 # ================================================================================
+
+# ================================================================================
+# SECTION 13: ENHANCED VISUALIZATION AND REPORTING
+# ================================================================================
+
+def create_day_night_comparison_plot(day_night_results: Dict, city_name: str, year: int, 
+                                    output_dir: Path) -> None:
+    """
+    Create visualization comparing day vs night SUHI intensities.
+    
+    Args:
+        day_night_results: Results from day/night SUHI analysis
+        city_name: Name of the city
+        year: Analysis year
+        output_dir: Output directory for plots
+    """
+    if 'error' in day_night_results or 'day' not in day_night_results or 'night' not in day_night_results:
+        print(f"     ⚠️ Insufficient data for day/night comparison")
+        return
+    
+    day_data = day_night_results['day']
+    night_data = day_night_results['night']
+    
+    if 'error' in day_data or 'error' in night_data:
+        print(f"     ⚠️ Error in day/night data")
+        return
+    
+    # Create comparison plot
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(12, 10))
+    
+    # Day vs Night SUHI comparison
+    periods = ['Day', 'Night']
+    suhi_values = [day_data.get('suhi', 0), night_data.get('suhi', 0)]
+    colors = ['#ff6b6b', '#4ecdc4']
+    
+    ax1.bar(periods, suhi_values, color=colors, alpha=0.7)
+    ax1.set_ylabel('SUHI Intensity (K)')
+    ax1.set_title(f'{city_name} Day vs Night SUHI ({year})')
+    ax1.grid(True, alpha=0.3)
+    
+    # Urban temperatures
+    urban_temps = [day_data.get('urban_mean', 0), night_data.get('urban_mean', 0)]
+    rural_temps = [day_data.get('rural_mean', 0), night_data.get('rural_mean', 0)]
+    
+    x = np.arange(len(periods))
+    width = 0.35
+    
+    ax2.bar(x - width/2, urban_temps, width, label='Urban', color='#ff6b6b', alpha=0.7)
+    ax2.bar(x + width/2, rural_temps, width, label='Rural', color='#4ecdc4', alpha=0.7)
+    ax2.set_ylabel('LST (K)')
+    ax2.set_title('Urban vs Rural Temperatures')
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(periods)
+    ax2.legend()
+    ax2.grid(True, alpha=0.3)
+    
+    # Temperature difference analysis
+    if 'day_night_difference' in day_night_results:
+        diff_data = day_night_results['day_night_difference']
+        
+        categories = ['SUHI Difference\n(Day-Night)', 'Day Stronger?', 'Magnitude Ratio']
+        values = [
+            diff_data.get('suhi_difference', 0),
+            1 if diff_data.get('day_stronger', False) else 0,
+            min(diff_data.get('magnitude_ratio', 0), 10)  # Cap for visualization
+        ]
+        
+        ax3.bar(categories[:1], values[:1], color='#ffa726', alpha=0.7)
+        ax3.set_ylabel('Temperature Difference (K)')
+        ax3.set_title('Day-Night SUHI Difference')
+        ax3.grid(True, alpha=0.3)
+        
+        # Summary statistics
+        stats_text = f"""
+        Day SUHI: {day_data.get('suhi', 0):.2f} K
+        Night SUHI: {night_data.get('suhi', 0):.2f} K
+        Difference: {diff_data.get('suhi_difference', 0):.2f} K
+        Day Stronger: {'Yes' if diff_data.get('day_stronger', False) else 'No'}
+        """
+        
+        ax4.text(0.1, 0.5, stats_text, transform=ax4.transAxes, fontsize=10,
+                verticalalignment='center', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
+        ax4.set_title('Analysis Summary')
+        ax4.axis('off')
+    
+    plt.tight_layout()
+    
+    # Save plot
+    output_file = output_dir / f"{city_name}_day_night_suhi_{year}.png"
+    plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    plt.close()
+    
+    print(f"     💾 Day/night comparison saved: {output_file}")
+
+def create_landcover_change_visualization(landcover_data: Dict, city_name: str, 
+                                        output_dir: Path) -> None:
+    """
+    Create visualization of landcover changes over time.
+    
+    Args:
+        landcover_data: Results from ESRI landcover analysis
+        city_name: Name of the city
+        output_dir: Output directory for plots
+    """
+    if 'error' in landcover_data or 'yearly_stats' not in landcover_data:
+        print(f"     ⚠️ Insufficient data for landcover visualization")
+        return
+    
+    yearly_stats = landcover_data['yearly_stats']
+    
+    # Filter out error years
+    valid_years = {year: data for year, data in yearly_stats.items() 
+                   if isinstance(data, dict) and 'error' not in data}
+    
+    if len(valid_years) < 2:
+        print(f"     ⚠️ Insufficient valid years for landcover visualization")
+        return
+    
+    # Extract key landcover classes
+    key_classes = ['Built_Area', 'Trees', 'Crops', 'Grass', 'Bare_Ground']
+    
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
+    
+    # Time series of key landcover classes
+    years = sorted(valid_years.keys())
+    for class_name in key_classes:
+        areas = []
+        for year in years:
+            year_data = valid_years[year]
+            area = year_data.get(class_name, {}).get('area_km2', 0)
+            areas.append(area)
+        
+        if any(a > 0 for a in areas):  # Only plot if there's data
+            ax1.plot(years, areas, marker='o', label=class_name, linewidth=2)
+    
+    ax1.set_xlabel('Year')
+    ax1.set_ylabel('Area (km²)')
+    ax1.set_title(f'{city_name} Landcover Changes Over Time')
+    ax1.legend()
+    ax1.grid(True, alpha=0.3)
+    
+    # Landcover change summary (if changes are available)
+    if 'landcover_changes' in landcover_data:
+        changes = landcover_data['landcover_changes']
+        
+        class_names = []
+        change_values = []
+        colors = []
+        
+        for class_name, change_data in changes.items():
+            if isinstance(change_data, dict) and 'change_km2' in change_data:
+                change_km2 = change_data['change_km2']
+                if abs(change_km2) > 0.1:  # Only show significant changes
+                    class_names.append(class_name.replace('_', ' '))
+                    change_values.append(change_km2)
+                    colors.append('#ff6b6b' if change_km2 > 0 else '#4ecdc4')
+        
+        if class_names:
+            bars = ax2.barh(class_names, change_values, color=colors, alpha=0.7)
+            ax2.set_xlabel('Change in Area (km²)')
+            ax2.set_title(f'Landcover Changes ({landcover_data.get("analysis_period", "N/A")})')
+            ax2.grid(True, alpha=0.3)
+            
+            # Add value labels on bars
+            for bar, value in zip(bars, change_values):
+                ax2.text(value + (0.01 * max(abs(v) for v in change_values)), 
+                        bar.get_y() + bar.get_height()/2, 
+                        f'{value:.1f}', ha='left' if value >= 0 else 'right', 
+                        va='center', fontsize=9)
+    
+    plt.tight_layout()
+    
+    # Save plot
+    output_file = output_dir / f"{city_name}_landcover_changes.png"
+    plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    plt.close()
+    
+    print(f"     💾 Landcover changes visualization saved: {output_file}")
+
+def generate_comprehensive_report(all_results: List[Dict], output_dir: Path) -> None:
+    """
+    Generate comprehensive report with all new analysis components.
+    
+    Args:
+        all_results: List of all analysis results
+        output_dir: Output directory for reports
+    """
+    report_file = output_dir / "COMPREHENSIVE_SUHI_ANALYSIS_REPORT.md"
+    
+    with open(report_file, 'w', encoding='utf-8') as f:
+        f.write("# COMPREHENSIVE SUHI ANALYSIS REPORT\n")
+        f.write("=" * 50 + "\n\n")
+        
+        f.write(f"**Analysis Date:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"**Cities Analyzed:** {len(set(r['city'] for r in all_results))}\n")
+        f.write(f"**Total Analyses:** {len(all_results)}\n\n")
+        
+        # Summary statistics
+        f.write("## ANALYSIS SUMMARY\n\n")
+        
+        # Group by city
+        city_groups = {}
+        for result in all_results:
+            city = result['city']
+            if city not in city_groups:
+                city_groups[city] = []
+            city_groups[city].append(result)
+        
+        for city, city_results in city_groups.items():
+            f.write(f"### {city}\n\n")
+            
+            # Basic SUHI statistics
+            suhi_values = []
+            day_night_ratios = []
+            landcover_changes = []
+            
+            for result in city_results:
+                # Extract SUHI values
+                if 'suhi_analysis' in result and 'suhi' in result['suhi_analysis']:
+                    suhi_values.append(result['suhi_analysis']['suhi'])
+                
+                # Extract day/night ratios
+                if 'day_night_analysis' in result and 'day_night_difference' in result['day_night_analysis']:
+                    diff_data = result['day_night_analysis']['day_night_difference']
+                    if 'magnitude_ratio' in diff_data:
+                        day_night_ratios.append(diff_data['magnitude_ratio'])
+                
+                # Extract landcover change data
+                if 'landcover_changes' in result and 'landcover_changes' in result['landcover_changes']:
+                    changes = result['landcover_changes']['landcover_changes']
+                    if 'Built_Area' in changes:
+                        built_change = changes['Built_Area'].get('change_km2', 0)
+                        landcover_changes.append(built_change)
+            
+            # Write statistics
+            if suhi_values:
+                f.write(f"- **Average SUHI:** {np.mean(suhi_values):.2f} C (±{np.std(suhi_values):.2f})\n")
+                f.write(f"- **SUHI Range:** {min(suhi_values):.2f} - {max(suhi_values):.2f} C\n")
+            
+            if day_night_ratios:
+                valid_ratios = [r for r in day_night_ratios if not np.isinf(r)]
+                if valid_ratios:
+                    f.write(f"- **Day/Night SUHI Ratio:** {np.mean(valid_ratios):.2f} (±{np.std(valid_ratios):.2f})\n")
+            
+            if landcover_changes:
+                total_change = sum(landcover_changes)
+                f.write(f"- **Built Area Change:** {total_change:.2f} km² over analysis period\n")
+            
+            f.write(f"- **Years Analyzed:** {len(city_results)}\n")
+            f.write(f"- **Processing Scale:** {city_results[0].get('processing_scale', 'Unknown')}m\n\n")
+        
+        # Detailed results
+        f.write("## DETAILED RESULTS\n\n")
+        
+        for result in all_results:
+            f.write(f"### {result['city']} - {result['year']}\n\n")
+            
+            # SUHI Analysis
+            if 'suhi_analysis' in result:
+                suhi_data = result['suhi_analysis']
+                if 'error' not in suhi_data:
+                    f.write(f"**SUHI Intensity:** {suhi_data.get('suhi', 'N/A'):.2f} °C\n")
+                    f.write(f"**Confidence Interval:** [{suhi_data.get('ci_95_lower', 'N/A'):.2f}, {suhi_data.get('ci_95_upper', 'N/A'):.2f}] °C\n")
+                    f.write(f"**Relative Error:** {suhi_data.get('relative_error_pct', 'N/A'):.1f}%\n")
+                else:
+                    f.write(f"**SUHI Analysis:** Error - {suhi_data.get('error', 'Unknown error')}\n")
+            
+            # Day/Night Analysis
+            if 'day_night_analysis' in result:
+                day_night = result['day_night_analysis']
+                if 'error' not in day_night and 'day' in day_night and 'night' in day_night:
+                    day_suhi = day_night['day'].get('suhi', 0)
+                    night_suhi = day_night['night'].get('suhi', 0)
+                    f.write(f"**Day SUHI:** {day_suhi:.2f} °C\n")
+                    f.write(f"**Night SUHI:** {night_suhi:.2f} °C\n")
+
+                    if 'day_night_difference' in day_night:
+                        diff = day_night['day_night_difference']
+                        f.write(f"**Day-Night Difference:** {diff.get('suhi_difference', 0):.2f} °C\n")
+                        f.write(f"**Day Stronger:** {'Yes' if diff.get('day_stronger', False) else 'No'}\n")
+            
+            # Landcover Changes
+            if 'landcover_changes' in result and 'landcover_changes' in result['landcover_changes']:
+                changes = result['landcover_changes']['landcover_changes']
+                f.write(f"**Landcover Changes:**\n")
+                for lc_class, change_data in changes.items():
+                    if isinstance(change_data, dict) and abs(change_data.get('change_km2', 0)) > 0.1:
+                        f.write(f"  - {lc_class}: {change_data['change_km2']:.2f} km² ({change_data.get('change_percent', 0):.1f}%)\n")
+            
+            f.write("\n")
+        
+        f.write("\n---\n")
+        f.write("*Report generated by Enhanced SUHI Analysis System*\n")
+    
+    print(f"📄 Comprehensive report saved: {report_file}")
 
 def generate_error_report(results: List[Dict], output_dir: Path) -> None:
     """
@@ -1674,71 +2327,59 @@ def main():
     # Initialize GEE
     if not initialize_gee():
         print("\n❌ Cannot proceed without Google Earth Engine access")
-        print("Please run the following in a Python shell to authenticate:")
-        print("   import ee")
-        print("   ee.Authenticate()")
-        print("   ee.Initialize(project='your-project-id')")
         return
     
     # Test dataset availability
     dataset_status = test_dataset_availability()
-    
-    if not dataset_status.get('esri_lulc', False):
-        print("\n⚠️ ESRI Global LULC dataset not available!")
-        print("   This is required for temporal analysis")
-        print("   Proceeding with available datasets only...")
     
     # Create output directories
     output_dirs = create_output_directories()
     
     # Analysis configuration
     analysis_years = ANALYSIS_CONFIG['years']
-    cities = list(UZBEKISTAN_CITIES.keys())
     
-    print(f"\n📍 Cities to analyze: {len(cities)}")
+    # Process cities in batches to avoid memory issues
+    all_cities = list(UZBEKISTAN_CITIES.keys())
+    
+    # For production, process all cities; for testing, limit to 3
+    TESTING_MODE = True  # Set to False for full analysis
+    if TESTING_MODE:
+        cities_to_process = all_cities[:3]  # Only first 3 cities for testing
+        print(f"\n⚠️ TESTING MODE: Processing only {len(cities_to_process)} cities")
+    else:
+        cities_to_process = all_cities
+    
+    print(f"\n📍 Cities to analyze: {len(cities_to_process)}")
     print(f"📅 Years to analyze: {analysis_years[0]}-{analysis_years[-1]}")
-    print(f"📅 ESRI annual data: 2017-2024 (year-by-year analysis)")
-    print(f"🎯 Target resolution: {ANALYSIS_CONFIG['target_resolution_m']}m")
-    print(f"⚖️ ESRI classification weight: {ANALYSIS_CONFIG['esri_weight']*100}%")
     
     # Store results
     all_results = []
-    landcover_changes = {}
-    expansion_results = []
     annual_suhi_trends = []
     
-    # Phase 1: Annual ESRI-based temporal analysis (2017-2024)
+    # Phase 1: Annual ESRI-based temporal analysis
     print("\n" + "="*60)
     print("PHASE 1: ANNUAL ESRI TEMPORAL ANALYSIS (2017-2024)")
     print("="*60)
     
     try:
-        # Create comprehensive temporal expansion report
-        temporal_data = create_temporal_expansion_report(cities[:14], output_dirs['reports'])  # Limit for testing
+        temporal_data = create_temporal_expansion_report(cities_to_process, output_dirs['reports'])
         
         if temporal_data.empty:
-            print("⚠️ No temporal data collected - checking GEE connection issues")
-            print("   This might be due to:")
-            print("   - ESRI dataset unavailable or changed")
-            print("   - Network connectivity issues")
-            print("   - Google Earth Engine quota limits")
-            print("   - Authentication problems")
-        
+            print("⚠️ No temporal data collected")
     except Exception as e:
         print(f"❌ Error in Phase 1: {e}")
-        print("   Continuing to Phase 2...")
     
-    # Phase 2: Annual SUHI trends using year-specific ESRI masks
+    # Phase 2: Annual SUHI trends
     print("\n" + "="*60)
     print("PHASE 2: ANNUAL SUHI TRENDS WITH ESRI MASKS")
     print("="*60)
     
-    esri_years = list(range(2017, 2025))  # 2017-2024 where ESRI data is available
+    esri_years = list(range(2017, 2025))
     
-    for city in cities[:14]:  # Limit to first 3 cities for testing
+    for city in cities_to_process:
         try:
-            # Add delay between cities to avoid rate limits
-            time.sleep(5)
+            # Apply rate limiting
+            rate_limiter.wait()
             
             suhi_trends = analyze_annual_suhi_trends(city, esri_years)
             annual_suhi_trends.append(suhi_trends)
@@ -1754,19 +2395,20 @@ def main():
             print(f"❌ Error analyzing SUHI trends for {city}: {e}")
             continue
     
-    # Phase 3: Detailed analysis for specific years (for validation)
+    # Phase 3: Detailed analysis for key years
     print("\n" + "="*60)
     print("PHASE 3: DETAILED VALIDATION ANALYSIS")
     print("="*60)
     
-    # Run analysis for each city and year with longer delays
-    for city in cities[:14]:  # Limit to first 2 cities for testing
-        for year in [2017, 2024]:  # Analyze 2017 and 2024 for comparison
+    # Analyze only 2017 and 2024 for comparison
+    validation_years = [2017, 2024]
+    
+    for city in cities_to_process:
+        for year in validation_years:
             try:
-                # Add significant delay between analyses
-                time.sleep(10)
+                # Apply rate limiting
+                rate_limiter.wait()
                 
-                # Run comprehensive analysis with optimized settings
                 results = run_comprehensive_analysis(city, year)
                 all_results.append(results)
                 
@@ -1779,67 +2421,31 @@ def main():
                 
             except Exception as e:
                 print(f"   ❌ Error analyzing {city} ({year}): {e}")
-                # Continue with next analysis even if one fails
                 continue
-        
-        # Add delay between cities
-        time.sleep(15)
-        
-        # Analyze urban expansion (2017-2024) - This is now supplemented by annual data
-        try:
-            expansion = analyze_urban_expansion(city, 2017, 2024)
-            expansion_results.append(expansion)
-            print(f"   📈 Urban expansion {city}: {expansion['expansion_km2']:.2f} km²")
-        except Exception as e:
-            print(f"   ❌ Error analyzing expansion for {city}: {e}")
-        
-        # Skip land cover changes for now to save memory
-        print(f"   ⚠️ Skipping detailed land cover analysis for {city} (memory optimization)")
     
-    # Generate reports
-    print("\n📊 Generating comprehensive reports...")
+    # Generate reports and visualizations
+    print("\n📊 Generating reports and visualizations...")
     
-    # Error report
     if all_results:
         generate_error_report(all_results, output_dirs['error_analysis'])
-    else:
-        print("   ⚠️ No results available for error report")
-    
-    # Save expansion results (both traditional and annual)
-    if expansion_results:
-        expansion_df = pd.DataFrame(expansion_results)
-        expansion_path = output_dirs['reports'] / 'urban_expansion_summary.csv'
-        expansion_df.to_csv(expansion_path, index=False)
-        print(f"📊 Urban expansion summary saved to: {expansion_path}")
-    else:
-        print("   ⚠️ No expansion results available")
-    
-    # Save annual SUHI trends
-    if annual_suhi_trends:
-        trends_file = output_dirs['reports'] / 'annual_suhi_trends_summary.json'
-        with open(trends_file, 'w') as f:
-            json.dump(annual_suhi_trends, f, indent=2)
-        print(f"📊 Annual SUHI trends saved to: {trends_file}")
+        generate_comprehensive_report(all_results, output_dirs['reports'])
         
-        # Create SUHI trends CSV for easier analysis
-        suhi_trend_data = []
-        for city_trends in annual_suhi_trends:
-            for record in city_trends.get('data', []):
-                suhi_trend_data.append(record)
-        
-        if suhi_trend_data:
-            suhi_df = pd.DataFrame(suhi_trend_data)
-            suhi_csv = output_dirs['reports'] / 'annual_suhi_data.csv'
-            suhi_df.to_csv(suhi_csv, index=False)
-            print(f"📊 Annual SUHI data CSV saved to: {suhi_csv}")
-        else:
-            print("   ⚠️ No SUHI trend data to save")
-    else:
-        print("   ⚠️ No SUHI trends data available")
+        # Generate visualizations for each result
+        for result in all_results:
+            if 'day_night_analysis' in result and result['day_night_analysis']:
+                try:
+                    create_day_night_comparison_plot(
+                        result['day_night_analysis'],
+                        result['city'],
+                        result['year'],
+                        output_dirs['visualizations']
+                    )
+                except Exception as e:
+                    print(f"     ⚠️ Error creating day/night plot: {e}")
     
-    # Final summary with enhanced temporal analysis
+    # Final summary
     print("\n" + "="*80)
-    print("COMPREHENSIVE ANALYSIS COMPLETE")
+    print("ANALYSIS COMPLETE")
     print("="*80)
     
     successful_analyses = len([r for r in all_results if r])
@@ -1847,24 +2453,10 @@ def main():
     
     print(f"✅ Cities analyzed: {cities_analyzed}")
     print(f"✅ Total analyses: {successful_analyses}")
-    print(f"✅ Annual ESRI temporal data: 2017-2024 (8 years)")
-    print(f"✅ SUHI trend analyses: {len(annual_suhi_trends)} cities")
     print(f"✅ Output directory: {output_dirs['base']}")
     
-    if successful_analyses > 0:
-        print("\n📈 Key Improvements with Annual ESRI Data:")
-        print("   • Year-by-year urban expansion tracking (2017-2024)")
-        print("   • Annual SUHI trends with evolving urban masks")
-        print("   • Improved temporal resolution for change detection")
-        print("   • Enhanced accuracy with year-specific classifications")
-        print("\n⚡ Memory Optimizations Applied:")
-        print("   • Adaptive processing scales based on city size")
-        print("   • Sampling fallback for large computations")
-        print("   • Simplified statistics when memory is limited")
-        print("   • Strategic delays to avoid rate limits")
-    else:
-        print("\n⚠️ Analysis completed with limited success")
-        print("   Please check GEE authentication and dataset availability")
+    if TESTING_MODE:
+        print("\n⚠️ TESTING MODE ACTIVE - Set TESTING_MODE=False for full analysis")
     
     print("="*80)
 
