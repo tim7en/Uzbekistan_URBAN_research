@@ -202,6 +202,118 @@ def _combine_urban_classifications(geom, start, end, year):
         # Return a constant image as fallback
         return ee.Image.constant(0.5).rename('urban_probability')
 
+def _combine_urban_classifications_with_esri(geom, start, end, year):
+    """
+    Enhanced urban classification that combines multiple datasets INCLUDING ESRI landcover
+    Uses: Dynamic World, GHSL, ESA WorldCover, MODIS Land Cover, and ESRI Global-LULC 10m
+    """
+    urban_layers = []
+    weights = []
+    
+    print(f"   🌍 Enhanced classification with ESRI landcover validation...")
+    
+    # 1. ESRI Global Land Use Land Cover 10m - High priority for validation
+    try:
+        esri_lulc = ee.ImageCollection("projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS")
+        
+        # Get the closest year to our target year
+        if year >= 2020:
+            esri_year = esri_lulc.filterMetadata('year', 'equals', 2024).first()
+            print(f"   ✓ Using ESRI 2024 for year {year}")
+        elif year >= 2018:
+            esri_year = esri_lulc.filterMetadata('year', 'equals', 2020).first()
+            print(f"   ✓ Using ESRI 2020 for year {year}")
+        else:
+            esri_year = esri_lulc.filterMetadata('year', 'equals', 2017).first()
+            print(f"   ✓ Using ESRI 2017 for year {year}")
+        
+        # Built Area class is 7 in ESRI classification
+        esri_built = esri_year.eq(7).rename('esri_built')
+        urban_layers.append(esri_built)
+        weights.append(0.35)  # High weight for ESRI high-resolution data
+        print(f"   ✓ ESRI Global-LULC data integrated")
+    except Exception as e:
+        print(f"   ⚠️ ESRI Global-LULC not available: {e}")
+    
+    # 2. Dynamic World V1 - Most recent and detailed
+    try:
+        dw = (ee.ImageCollection('GOOGLE/DYNAMICWORLD/V1')
+              .filterDate(start, end)
+              .filterBounds(geom)
+              .select('built'))
+        
+        size = dw.size()
+        if size.gt(0):
+            dw_built = dw.median().rename('dw_built')
+            urban_layers.append(dw_built)
+            weights.append(0.3)  # Reduced weight to accommodate ESRI
+            print(f"   ✓ Dynamic World data available")
+    except:
+        print(f"   ⚠️ Dynamic World not available")
+    
+    # 3. Global Human Settlement Layer (GHSL) - Built-up areas
+    try:
+        # Use the most recent GHSL built-up layer
+        ghsl = ee.Image('JRC/GHSL/P2023A/GHS_BUILT_S/2020').select('built_surface')
+        # Normalize to 0-1 range (original is percentage 0-100)
+        ghsl_norm = ghsl.divide(100).rename('ghsl_built')
+        urban_layers.append(ghsl_norm)
+        weights.append(0.2)  # Reduced weight
+        print(f"   ✓ GHSL data available")
+    except:
+        print(f"   ⚠️ GHSL not available")
+    
+    # 4. ESA WorldCover - 10m resolution land cover
+    try:
+        # Use 2021 if available, otherwise 2020
+        esa = ee.Image('ESA/WorldCover/v200/2021').select('Map')
+        # Built-up class is 50
+        esa_built = esa.eq(50).rename('esa_built')
+        urban_layers.append(esa_built)
+        weights.append(0.1)  # Reduced weight
+        print(f"   ✓ ESA WorldCover data available")
+    except:
+        try:
+            esa = ee.Image('ESA/WorldCover/v100/2020').select('Map')
+            esa_built = esa.eq(50).rename('esa_built')
+            urban_layers.append(esa_built)
+            weights.append(0.1)
+            print(f"   ✓ ESA WorldCover 2020 data available")
+        except:
+            print(f"   ⚠️ ESA WorldCover not available")
+    
+    # 5. MODIS Land Cover Type - 500m resolution
+    try:
+        modis_lc = (ee.ImageCollection('MODIS/061/MCD12Q1')
+                   .filterDate(f'{year-1}-01-01', f'{year+1}-01-01')
+                   .first()
+                   .select('LC_Type1'))
+        # Urban and built-up class is 13
+        modis_urban = modis_lc.eq(13).rename('modis_urban')
+        urban_layers.append(modis_urban)
+        weights.append(0.05)  # Minimal weight for coarse resolution
+        print(f"   ✓ MODIS Land Cover data available")
+    except:
+        print(f"   ⚠️ MODIS Land Cover not available")
+    
+    # Combine all available layers with weighted average
+    if len(urban_layers) > 0:
+        # Normalize weights
+        total_weight = sum(weights)
+        weights = [w/total_weight for w in weights]
+        
+        # Create weighted composite
+        combined = ee.Image.constant(0)
+        for layer, weight in zip(urban_layers, weights):
+            combined = combined.add(layer.multiply(weight))
+        
+        print(f"   ✓ Enhanced: Combined {len(urban_layers)} urban classification layers with ESRI")
+        return combined.rename('urban_probability_enhanced')
+    else:
+        print(f"   ⚠️ No urban classification data available, using fallback")
+        # Return a constant image as fallback
+        return ee.Image.constant(0.5).rename('urban_probability_enhanced')
+
 def _mask_landsat_l2(img):
     """
     Properly mask Landsat L2 using QA_PIXEL bits
@@ -474,15 +586,15 @@ def _to_target_resolution(img, ref_proj):
 
 def analyze_period(period):
     """
-    Server-side computation for one period using combined classification approach
+    Server-side computation for one period using combined classification approach with ESRI landcover integration
     """
     start, end, label = period['start'], period['end'], period['label']
     year = int(label)
-    print(f"   🔄 Processing period {label}...")
+    print(f"   🔄 Processing period {label} with ESRI landcover validation...")
     results = []
 
     for city, info in UZBEKISTAN_CITIES.items():
-        print(f"      🏙️ Analyzing {city}...")
+        print(f"      🏙️ Analyzing {city} (Enhanced with ESRI landcover)...")
         
         # Add delay before processing each city to avoid rate limits
         time.sleep(3)  # 3 second delay between cities
@@ -514,8 +626,8 @@ def analyze_period(period):
             # Vegetation indices
             nds = _landsat_nd_indices(bbox, start, end)
             
-            # Combined urban classification
-            urban_prob = _combine_urban_classifications(bbox, start, end, year)
+            # Combined urban classification with ESRI landcover validation
+            urban_prob = _combine_urban_classifications_with_esri(bbox, start, end, year)
             
             # Reference projection from LST
             ref_proj = lst.select('LST_Day').projection()
@@ -528,17 +640,88 @@ def analyze_period(period):
             gsw = ee.Image('JRC/GSW1_4/GlobalSurfaceWater').select('occurrence')
             water_mask = gsw.resample('bilinear').reproject(ref_proj, None, TARGET_SCALE).lt(25)
             
-            # --- Create urban and rural masks with city-specific thresholds at enhanced resolution ---
-            # Urban mask: adaptive thresholds for different cities
-            urban_mask = (urban_prob_hr.gte(urban_thresh)
-                         .And(water_mask)
-                         .And(nds_hr.select('NDVI').lt(ndvi_max)))
+            # --- Create enhanced urban and rural masks with ESRI landcover validation ---
+            # Get ESRI built area for current year (shared for both urban and rural masks)
+            esri_built_hr = None
+            try:
+                esri_lulc = ee.ImageCollection("projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS")
+                if year >= 2020:
+                    esri_image = esri_lulc.filterMetadata('year', 'equals', 2024).first()
+                elif year >= 2018:
+                    esri_image = esri_lulc.filterMetadata('year', 'equals', 2020).first()
+                else:
+                    esri_image = esri_lulc.filterMetadata('year', 'equals', 2017).first()
+                
+                # Check if image exists and has data
+                if esri_image:
+                    esri_built_direct = esri_image.eq(7)  # Built Area class is 7
+                    esri_built_hr = _to_target_resolution(esri_built_direct, ref_proj)
+                    
+                    # Test if the image is valid by checking if it has any data
+                    test_pixel = esri_built_hr.select(0).reduceRegion(
+                        reducer=ee.Reducer.firstNonNull(),
+                        geometry=pt.buffer(1000),  # Small test area
+                        scale=TARGET_SCALE,
+                        maxPixels=100
+                    ).getInfo()
+                    
+                    if test_pixel and len(test_pixel) > 0:
+                        print(f"         ✓ ESRI landcover data loaded and validated")
+                    else:
+                        print(f"         ⚠️ ESRI landcover data empty for this region")
+                        esri_built_hr = None
+                else:
+                    print(f"         ⚠️ ESRI landcover image not found")
+                    esri_built_hr = None
+                    
+            except Exception as e:
+                print(f"         ⚠️ ESRI landcover unavailable: {e}")
+                esri_built_hr = None
+            
+            # Enhanced urban mask: combines probability threshold with ESRI validation
+            if esri_built_hr is not None:
+                try:
+                    urban_mask = (urban_prob_hr.gte(urban_thresh)
+                                 .Or(esri_built_hr)  # Include areas identified as built by ESRI
+                                 .And(water_mask)
+                                 .And(nds_hr.select('NDVI').lt(ndvi_max)))
+                    print(f"         ✓ Urban mask enhanced with ESRI landcover validation")
+                except Exception as e:
+                    print(f"         ⚠️ Error in ESRI urban mask creation: {e}")
+                    urban_mask = (urban_prob_hr.gte(urban_thresh)
+                                 .And(water_mask)
+                                 .And(nds_hr.select('NDVI').lt(ndvi_max)))
+                    print(f"         ⚠️ Falling back to standard urban mask")
+            else:
+                # Fallback to original method if ESRI data unavailable
+                urban_mask = (urban_prob_hr.gte(urban_thresh)
+                             .And(water_mask)
+                             .And(nds_hr.select('NDVI').lt(ndvi_max)))
+                print(f"         ⚠️ Using standard urban mask (ESRI unavailable)")
+            
             urban_mask = urban_mask.clip(urban_core).rename('urban_mask')
             
-            # Rural mask: low urban probability within rural ring
-            rural_mask = (urban_prob_hr.lt(rural_thresh)
-                         .And(water_mask)
-                         .Or(nds_hr.select('NDVI').gt(0.3)))  # Or vegetated areas
+            # Enhanced rural mask: excludes ESRI built areas more explicitly
+            if esri_built_hr is not None:
+                try:
+                    rural_mask = (urban_prob_hr.lt(rural_thresh)
+                                 .And(esri_built_hr.Not())  # Explicitly exclude ESRI built areas
+                                 .And(water_mask)
+                                 .Or(nds_hr.select('NDVI').gt(0.3)))  # Or vegetated areas
+                    print(f"         ✓ Rural mask enhanced with ESRI landcover exclusion")
+                except Exception as e:
+                    print(f"         ⚠️ Error in ESRI rural mask creation: {e}")
+                    rural_mask = (urban_prob_hr.lt(rural_thresh)
+                                 .And(water_mask)
+                                 .Or(nds_hr.select('NDVI').gt(0.3)))  # Or vegetated areas
+                    print(f"         ⚠️ Falling back to standard rural mask")
+            else:
+                # Fallback to original method
+                rural_mask = (urban_prob_hr.lt(rural_thresh)
+                             .And(water_mask)
+                             .Or(nds_hr.select('NDVI').gt(0.3)))  # Or vegetated areas
+                print(f"         ⚠️ Using standard rural mask (ESRI unavailable)")
+                
             rural_mask = rural_mask.clip(rural_ring_eroded).rename('rural_mask')
             
             # Stack variables at enhanced resolution
@@ -808,13 +991,14 @@ def fc_to_pandas(fc, period_label):
 
 def analyze_urban_expansion_impacts():
     """
-    Main analysis function using multi-dataset approach
+    Main analysis function using multi-dataset approach with ESRI landcover integration
     """
-    print("🔬 SCIENTIFIC SUHI ANALYSIS FOR UZBEKISTAN CITIES")
+    print("🔬 ENHANCED SUHI ANALYSIS FOR UZBEKISTAN CITIES")
     print("="*60)
-    print("Method: Multi-dataset Urban Classification + Enhanced Resolution LST")
-    print("Datasets: Dynamic World, GHSL, ESA WorldCover, MODIS LC")
+    print("Method: Multi-dataset Urban Classification + ESRI Landcover + Enhanced LST")
+    print("Datasets: Dynamic World, GHSL, ESA WorldCover, MODIS LC, ESRI Global-LULC 10m")
     print("Resolution: 200m (Enhanced from 1km) for improved spatial detail")
+    print("ESRI Integration: Real-time landcover validation for urban/rural classification")
     print("="*60)
     
     # Define analysis periods - reduced to avoid rate limits
@@ -867,6 +1051,181 @@ def analyze_urban_expansion_impacts():
     else:
         print("❌ No data collected from any period")
         return {}
+
+def analyze_esri_landcover_changes():
+    """
+    Analyze land cover changes using ESRI Global Land Use Land Cover dataset
+    Compare 2017 vs 2024 for urban expansion assessment
+    """
+    print("\n🌍 ESRI LANDCOVER CHANGE ANALYSIS")
+    print("="*60)
+    print("Dataset: ESRI Global-LULC 10m Time Series")
+    print("Comparison: 2017 vs 2024")
+    print("Focus: Urban expansion and land cover transitions")
+    print("="*60)
+    
+    # Load ESRI landcover dataset
+    esri_lulc_ts = ee.ImageCollection("projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS")
+    
+    # ESRI Land Cover classes of interest
+    landcover_classes = {
+        1: 'Water',
+        2: 'Trees', 
+        4: 'Flooded vegetation',
+        5: 'Crops',
+        7: 'Built Area',
+        8: 'Bare ground',
+        9: 'Snow/Ice',
+        10: 'Clouds',
+        11: 'Rangeland'
+    }
+    
+    print(f"📊 Analyzing land cover for {len(UZBEKISTAN_CITIES)} cities")
+    
+    landcover_results = []
+    
+    for city_name, city_data in UZBEKISTAN_CITIES.items():
+        print(f"\n🏙️ Processing {city_name}...")
+        
+        try:
+            # Create city geometry
+            center = ee.Geometry.Point([city_data['lon'], city_data['lat']])
+            city_area = center.buffer(city_data['buffer'])
+            
+            # Get 2017 landcover (fallback to 2018 if 2017 not available)
+            lc_2017 = None
+            for year in [2017, 2018, 2019]:
+                try:
+                    lc_temp = esri_lulc_ts.filterDate(f'{year}-01-01', f'{year}-12-31').first()
+                    if lc_temp is not None:
+                        lc_2017 = lc_temp
+                        baseline_year = year
+                        break
+                except:
+                    continue
+            
+            # Get 2024 landcover (fallback to 2023 if 2024 not available)
+            lc_2024 = None
+            for year in [2024, 2023, 2022]:
+                try:
+                    lc_temp = esri_lulc_ts.filterDate(f'{year}-01-01', f'{year}-12-31').first()
+                    if lc_temp is not None:
+                        lc_2024 = lc_temp
+                        target_year = year
+                        break
+                except:
+                    continue
+            
+            if lc_2017 is None or lc_2024 is None:
+                print(f"   ⚠️ Missing landcover data for {city_name}")
+                continue
+            
+            print(f"   📅 Comparing {baseline_year} vs {target_year}")
+            
+            # Calculate land cover statistics for both periods
+            lc_stats_2017 = calculate_landcover_stats(lc_2017, city_area, landcover_classes, baseline_year)
+            lc_stats_2024 = calculate_landcover_stats(lc_2024, city_area, landcover_classes, target_year)
+            
+            # Calculate changes
+            landcover_change = {
+                'City': city_name,
+                'Baseline_Year': baseline_year,
+                'Target_Year': target_year,
+                'Buffer_Size_m': city_data['buffer'],
+                'Total_Area_km2': (city_area.area().getInfo() / 1000000),
+            }
+            
+            # Add baseline statistics
+            for class_id, class_name in landcover_classes.items():
+                landcover_change[f'{class_name}_2017_km2'] = lc_stats_2017.get(class_id, 0)
+                landcover_change[f'{class_name}_2024_km2'] = lc_stats_2024.get(class_id, 0)
+                
+                # Calculate change
+                change_km2 = lc_stats_2024.get(class_id, 0) - lc_stats_2017.get(class_id, 0)
+                landcover_change[f'{class_name}_Change_km2'] = change_km2
+                
+                # Calculate percentage change
+                baseline_area = lc_stats_2017.get(class_id, 0)
+                if baseline_area > 0:
+                    pct_change = (change_km2 / baseline_area) * 100
+                else:
+                    pct_change = 0 if change_km2 == 0 else float('inf')
+                landcover_change[f'{class_name}_Change_Pct'] = pct_change
+            
+            # Calculate urban expansion metrics
+            built_2017 = lc_stats_2017.get(7, 0)  # Built Area class
+            built_2024 = lc_stats_2024.get(7, 0)
+            urban_expansion = built_2024 - built_2017
+            
+            landcover_change['Urban_Expansion_km2'] = urban_expansion
+            landcover_change['Urban_Expansion_Rate_Pct'] = (urban_expansion / built_2017 * 100) if built_2017 > 0 else 0
+            
+            # Calculate conversion patterns (what was converted to urban)
+            landcover_change['Crops_to_Urban_km2'] = calculate_land_conversion(lc_2017, lc_2024, city_area, 5, 7)  # Crops to Built
+            landcover_change['Rangeland_to_Urban_km2'] = calculate_land_conversion(lc_2017, lc_2024, city_area, 11, 7)  # Rangeland to Built
+            landcover_change['Bare_to_Urban_km2'] = calculate_land_conversion(lc_2017, lc_2024, city_area, 8, 7)  # Bare to Built
+            
+            landcover_results.append(landcover_change)
+            
+            print(f"   ✅ Built area: {built_2017:.2f} → {built_2024:.2f} km² (+{urban_expansion:.2f} km²)")
+            
+            # Add delay to avoid rate limits
+            time.sleep(0.5)
+            
+        except Exception as e:
+            print(f"   ❌ Error processing {city_name}: {e}")
+            continue
+    
+    print(f"\n✅ ESRI Landcover analysis complete: {len(landcover_results)} cities processed")
+    return landcover_results
+
+def calculate_landcover_stats(landcover_image, geometry, class_dict, year):
+    """Calculate area statistics for each land cover class"""
+    stats = {}
+    
+    try:
+        for class_id, class_name in class_dict.items():
+            # Create mask for this land cover class
+            class_mask = landcover_image.eq(class_id)
+            
+            # Calculate area in square meters, then convert to km2
+            area_m2 = class_mask.multiply(ee.Image.pixelArea()).reduceRegion(
+                reducer=ee.Reducer.sum(),
+                geometry=geometry,
+                scale=10,  # 10m resolution for ESRI data
+                maxPixels=1e9
+            ).getInfo()
+            
+            # Convert to km2
+            area_km2 = list(area_m2.values())[0] / 1000000 if area_m2 and list(area_m2.values())[0] else 0
+            stats[class_id] = area_km2
+            
+    except Exception as e:
+        print(f"   ⚠️ Error calculating stats for {year}: {e}")
+        
+    return stats
+
+def calculate_land_conversion(lc_before, lc_after, geometry, from_class, to_class):
+    """Calculate area converted from one land cover class to another"""
+    try:
+        # Create mask for areas that were 'from_class' initially and became 'to_class'
+        conversion_mask = lc_before.eq(from_class).And(lc_after.eq(to_class))
+        
+        # Calculate conversion area
+        area_m2 = conversion_mask.multiply(ee.Image.pixelArea()).reduceRegion(
+            reducer=ee.Reducer.sum(),
+            geometry=geometry,
+            scale=10,
+            maxPixels=1e9
+        ).getInfo()
+        
+        # Convert to km2
+        area_km2 = list(area_m2.values())[0] / 1000000 if area_m2 and list(area_m2.values())[0] else 0
+        return area_km2
+        
+    except Exception as e:
+        print(f"   ⚠️ Error calculating conversion: {e}")
+        return 0
 
 def calculate_expansion_impacts(expansion_data):
     """
@@ -1275,6 +1634,61 @@ def export_scientific_data(expansion_data, impacts_df, regional_stats, output_di
     print(f"   ✅ Regional statistics: {stats_path}")
     
     return timestamp
+
+def export_landcover_data(landcover_data, output_dirs):
+    """
+    Export ESRI landcover change analysis data
+    """
+    print("\n💾 Exporting ESRI landcover change data...")
+    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    if not landcover_data:
+        print("   ⚠️ No landcover data to export")
+        return
+    
+    try:
+        # Convert to DataFrame
+        landcover_df = pd.DataFrame(landcover_data)
+        
+        # Export main landcover change data
+        landcover_path = output_dirs['data'] / f'esri_landcover_changes_{timestamp}.csv'
+        landcover_df.to_csv(landcover_path, index=False)
+        print(f"   ✅ Landcover changes: {landcover_path}")
+        
+        # Export summary statistics
+        summary_stats = {
+            'analysis_date': timestamp,
+            'cities_analyzed': len(landcover_data),
+            'total_urban_expansion_km2': landcover_df['Urban_Expansion_km2'].sum(),
+            'avg_urban_expansion_rate_pct': landcover_df['Urban_Expansion_Rate_Pct'].mean(),
+            'max_urban_expansion_km2': landcover_df['Urban_Expansion_km2'].max(),
+            'city_max_expansion': landcover_df.loc[landcover_df['Urban_Expansion_km2'].idxmax(), 'City'],
+            'total_crops_to_urban_km2': landcover_df['Crops_to_Urban_km2'].sum(),
+            'total_rangeland_to_urban_km2': landcover_df['Rangeland_to_Urban_km2'].sum(),
+            'total_bare_to_urban_km2': landcover_df['Bare_to_Urban_km2'].sum(),
+        }
+        
+        import json
+        summary_path = output_dirs['data'] / f'esri_landcover_summary_{timestamp}.json'
+        with open(summary_path, 'w') as f:
+            json.dump(summary_stats, f, indent=2)
+        print(f"   ✅ Summary statistics: {summary_path}")
+        
+        # Create visualization-ready data
+        viz_data = landcover_df[['City', 'Urban_Expansion_km2', 'Urban_Expansion_Rate_Pct', 
+                                'Crops_to_Urban_km2', 'Rangeland_to_Urban_km2', 'Bare_to_Urban_km2',
+                                'Built Area_2017_km2', 'Built Area_2024_km2']].copy()
+        
+        viz_path = output_dirs['data'] / f'landcover_visualization_data_{timestamp}.csv'
+        viz_data.to_csv(viz_path, index=False)
+        print(f"   ✅ Visualization data: {viz_path}")
+        
+        return timestamp
+        
+    except Exception as e:
+        print(f"   ❌ Error exporting landcover data: {e}")
+        return None
 
 def generate_scientific_report(impacts_df, regional_stats, output_dirs):
     """
@@ -2060,11 +2474,12 @@ def create_city_overview_map(impacts_df, output_dirs):
 
 def main():
     """
-    Main execution function
+    Main execution function - Enhanced SUHI Analysis with ESRI Landcover Integration
     """
-    print("🔬 SCIENTIFIC SURFACE URBAN HEAT ISLAND (SUHI) ANALYSIS")
+    print("🔬 ENHANCED SURFACE URBAN HEAT ISLAND (SUHI) ANALYSIS")
     print("="*70)
-    print("Using Multi-Dataset Urban Classification Approach")
+    print("Enhanced Method: Multi-Dataset Urban Classification + ESRI Landcover Integration")
+    print("ESRI Integration: Real-time landcover validation for improved urban/rural classification")
     print("="*70)
     
     try:
@@ -2075,19 +2490,29 @@ def main():
         # Setup directories
         output_dirs = setup_output_directories()
         
-        # Run analysis
-        print(f"\n📡 Starting analysis for {len(UZBEKISTAN_CITIES)} cities...")
+        # Run enhanced SUHI analysis with ESRI landcover integration
+        print(f"\n📡 Starting enhanced SUHI analysis for {len(UZBEKISTAN_CITIES)} cities...")
+        print("🌍 ESRI Global-LULC 10m dataset integrated for urban/rural validation")
         expansion_data = analyze_urban_expansion_impacts()
         
-        if not expansion_data:
-            print("❌ No data collected. Exiting...")
+        # Run ESRI landcover analysis
+        print(f"\n🌍 Starting comprehensive ESRI landcover change analysis...")
+        landcover_data = analyze_esri_landcover_changes()
+        
+        if not expansion_data and not landcover_data:
+            print("❌ No data collected from either analysis. Exiting...")
             return
         
         # Calculate impacts
         print("\n📊 Calculating SUHI trends and impacts...")
         impacts_df, regional_stats = calculate_expansion_impacts(expansion_data)
         
-        if len(impacts_df) == 0:
+        # Export landcover data
+        if landcover_data:
+            print("\n💾 Exporting landcover change data...")
+            export_landcover_data(landcover_data, output_dirs)
+        
+        if len(impacts_df) == 0 and not landcover_data:
             print("❌ No impact analysis possible. Exiting...")
             return
         
@@ -2117,17 +2542,21 @@ def main():
         
         # Final summary
         print("\n" + "="*70)
-        print("🎉 SCIENTIFIC SUHI ANALYSIS COMPLETE!")
+        print("🎉 COMPREHENSIVE URBAN ANALYSIS COMPLETE!")
         print("="*70)
-        print(f"📊 Cities Analyzed: {len(impacts_df)}")
-        print(f"📊 Cities with Valid SUHI: {regional_stats.get('cities_with_valid_suhi', 0)}")
+        print(f"📊 Cities Analyzed (SUHI): {len(impacts_df) if expansion_data else 0}")
+        print(f"📊 Cities with Valid SUHI: {regional_stats.get('cities_with_valid_suhi', 0) if expansion_data else 0}")
+        print(f"🌍 Cities Analyzed (Landcover): {len(landcover_data) if landcover_data else 0}")
+        if landcover_data:
+            total_expansion = sum([city['Urban_Expansion_km2'] for city in landcover_data])
+            print(f"🏗️ Total Urban Expansion: {total_expansion:.2f} km²")
         print(f"📈 Main Visualization: {viz_path}")
         if trend_path:
             print(f"📈 Trend Analysis: {trend_path}")
         if city_maps_path:
             print(f"🗺️ City Maps: {city_maps_path}")
         print(f"📋 Report: {report_path}")
-        print(f"💾 Data exported with timestamp: {timestamp}")
+        print(f"💾 SUHI Data exported with timestamp: {timestamp}")
         if export_info:
             print(f"💾 Comprehensive export: {export_info['json']}")
         print(f"📁 All outputs in: {output_dirs['base']}")
