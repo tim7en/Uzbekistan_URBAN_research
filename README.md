@@ -276,9 +276,18 @@ For issues, questions, or contributions:
 3. Test with a single city first
 4. Ensure Google Earth Engine authentication is working
 
----
 
 **Last Updated**: August 2025  
 **Version**: 2.0 (Modular Architecture)  
 **Python**: 3.8+  
 **Key Dependencies**: earthengine-api, pandas, matplotlib, plotly
+
+## Auxiliary data — biomass model (short note)
+
+The auxiliary data runner produces seasonal NDVI/EVI and Landsat-based LST rasters and computes a simple NDVI→biomass estimate used for quick comparisons across cities and seasons.
+
+- Model type: a small, configurable function converts mean NDVI to biomass (t/ha). The default preset is `central_asia`, which uses an FVC-style scaling (fractional vegetation cover derived from NDVI) and a conservative maximum biomass value appropriate for semi-arid/steppe landscapes.
+- Presets available: `arid`, `central_asia`, `semiarid`, `mesic`, and a `linear_example` for testing. These are heuristics and not calibrated field models.
+- Caveat: this is a proxy for rapid analysis and visualization. For research-grade biomass estimates, supply a locally calibrated model (coefficients or an empirical formula) and replace the preset values or implement a model fit using field data.
+
+How to change: edit `services/auxiliary_data.py`, function `ndvi_to_biomass_model(...)` and choose a different preset or provide `params` to tune the conversion. Future work: expose preset selection as a CLI flag or per-city configuration.
