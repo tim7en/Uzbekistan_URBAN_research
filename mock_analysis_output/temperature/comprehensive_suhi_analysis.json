@@ -1,0 +1,56 @@
+{
+  "analysis_type": "suhi",
+  "years": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "timestamp": "2025-08-21T10:07:16.451073",
+  "processing_scale_m": 500,
+  "cities_analysis": [
+    {
+      "city": "Tashkent",
+      "annual_results": [
+        {
+          "city": "Tashkent",
+          "year": 2017,
+          "suhi_intensity_celsius": 3.2,
+          "urban_temperature_celsius": 32.1,
+          "rural_temperature_celsius": 28.9,
+          "raster_exports": {
+            "suhi_map": "tashkent_suhi_map_2017.tif",
+            "urban_temperature": "tashkent_urban_temp_2017.tif"
+          }
+        },
+        {
+          "city": "Tashkent",
+          "year": 2024,
+          "suhi_intensity_celsius": 3.8,
+          "urban_temperature_celsius": 33.2,
+          "rural_temperature_celsius": 29.4,
+          "raster_exports": {
+            "suhi_map": "tashkent_suhi_map_2024.tif",
+            "urban_temperature": "tashkent_urban_temp_2024.tif"
+          }
+        }
+      ],
+      "trend_statistics": {
+        "mean_suhi": 3.5,
+        "trend_slope_celsius_per_year": 0.08,
+        "correlation_coefficient": 0.85
+      }
+    }
+  ],
+  "summary_statistics": {
+    "total_analyses": 16,
+    "mean_suhi_all_cities": 2.3,
+    "min_suhi_observed": 0.8,
+    "max_suhi_observed": 4.2,
+    "suhi_range": 3.4
+  }
+}
