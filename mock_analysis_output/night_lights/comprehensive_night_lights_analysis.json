@@ -1,0 +1,53 @@
+{
+  "analysis_type": "night_lights",
+  "year_early": 2017,
+  "year_late": 2024,
+  "timestamp": "2025-08-21T10:07:16.450697",
+  "cities": [
+    {
+      "city": "Tashkent",
+      "early_mean_radiance": 2.5,
+      "late_mean_radiance": 3.2,
+      "change_absolute": 0.7,
+      "change_percent": 28.0,
+      "raster_exports": {
+        "early": "tashkent_night_lights_2017.tif",
+        "late": "tashkent_night_lights_2024.tif",
+        "change": "tashkent_night_lights_change.tif"
+      }
+    },
+    {
+      "city": "Samarkand",
+      "early_mean_radiance": 1.8,
+      "late_mean_radiance": 2.3,
+      "change_absolute": 0.5,
+      "change_percent": 27.8,
+      "raster_exports": {
+        "early": "samarkand_night_lights_2017.tif",
+        "late": "samarkand_night_lights_2024.tif",
+        "change": "samarkand_night_lights_change.tif"
+      }
+    },
+    {
+      "city": "Bukhara",
+      "early_mean_radiance": 1.2,
+      "late_mean_radiance": 1.6,
+      "change_absolute": 0.4,
+      "change_percent": 33.3,
+      "raster_exports": {
+        "early": "bukhara_night_lights_2017.tif",
+        "late": "bukhara_night_lights_2024.tif",
+        "change": "bukhara_night_lights_change.tif"
+      }
+    }
+  ],
+  "country": {
+    "scope": "country",
+    "early_mean_radiance": 1.1,
+    "late_mean_radiance": 1.4,
+    "raster_exports": {
+      "early": "uzbekistan_night_lights_2017.tif",
+      "late": "uzbekistan_night_lights_2024.tif"
+    }
+  }
+}

@@ -23,6 +23,7 @@ from services.visualization.generators import (
     create_urban_expansion_visualization,
     create_comprehensive_dashboard
 )
+from services.analysis.statistical import run_statistical_analysis
 
 
 def run_analysis(resolution_m: int = 500, testing_mode: bool = False, 
@@ -196,7 +197,23 @@ def run_analysis(resolution_m: int = 500, testing_mode: bool = False,
     except Exception as e:
         print(f"❌ Dashboard creation failed: {e}")
     
-    # 5. FINAL SUMMARY
+    # 5. STATISTICAL ANALYSIS
+    print("\n" + "="*60)
+    print("📊 PHASE 5: COMPREHENSIVE STATISTICAL ANALYSIS")
+    print("="*60)
+    
+    try:
+        statistical_results = run_statistical_analysis(
+            analysis_results=results,
+            output_dir=output_dirs['statistical']
+        )
+        results["statistical_analysis"] = statistical_results
+        
+    except Exception as e:
+        print(f"❌ Statistical analysis failed: {e}")
+        results["statistical_analysis"] = {"error": str(e)}
+    
+    # 6. FINAL SUMMARY
     print("\n" + "="*80)
     print("✅ ANALYSIS COMPLETE")
     print("="*80)
