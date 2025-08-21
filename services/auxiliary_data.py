@@ -15,6 +15,7 @@ from typing import Dict, Any, List, Optional, Tuple
 import ee
 
 from . import lulc
+from . import error_assessment
 from .utils import UZBEKISTAN_CITIES, create_output_directories, ANALYSIS_CONFIG
 from .temperature import load_landsat_thermal
 
@@ -237,6 +238,57 @@ def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 3
                 stats['biomass_conversion_error'] = True
 
             out['stats'] = stats
+            # Compute uncertainty/error assessments using server-side EE reducers
+            try:
+                unc = {}
+                zones = {'city': region}
+                # Vegetation indices: NDVI and EVI (summer, winter, change)
+                try:
+                    unc['summer_ndvi'] = error_assessment.compute_zonal_uncertainty(summer_veg.select('NDVI'), zones, scale=download_scale)
+                except Exception as _e:
+                    unc.setdefault('errors', {})['summer_ndvi'] = str(_e)
+                try:
+                    unc['winter_ndvi'] = error_assessment.compute_zonal_uncertainty(winter_veg.select('NDVI'), zones, scale=download_scale)
+                except Exception as _e:
+                    unc.setdefault('errors', {})['winter_ndvi'] = str(_e)
+                try:
+                    unc['ndvi_change'] = error_assessment.compute_zonal_uncertainty(ndvi_change, zones, scale=download_scale)
+                except Exception as _e:
+                    unc.setdefault('errors', {})['ndvi_change'] = str(_e)
+
+                try:
+                    unc['summer_evi'] = error_assessment.compute_zonal_uncertainty(summer_veg.select('EVI'), zones, scale=download_scale)
+                except Exception as _e:
+                    unc.setdefault('errors', {})['summer_evi'] = str(_e)
+                try:
+                    unc['winter_evi'] = error_assessment.compute_zonal_uncertainty(winter_veg.select('EVI'), zones, scale=download_scale)
+                except Exception as _e:
+                    unc.setdefault('errors', {})['winter_evi'] = str(_e)
+                try:
+                    unc['evi_change'] = error_assessment.compute_zonal_uncertainty(evi_change, zones, scale=download_scale)
+                except Exception as _e:
+                    unc.setdefault('errors', {})['evi_change'] = str(_e)
+
+                # LST products (if available)
+                try:
+                    if summer_lst is not None:
+                        unc['summer_lst'] = error_assessment.compute_zonal_uncertainty(summer_lst, zones, scale=download_scale)
+                except Exception as _e:
+                    unc.setdefault('errors', {})['summer_lst'] = str(_e)
+                try:
+                    if winter_lst is not None:
+                        unc['winter_lst'] = error_assessment.compute_zonal_uncertainty(winter_lst, zones, scale=download_scale)
+                except Exception as _e:
+                    unc.setdefault('errors', {})['winter_lst'] = str(_e)
+                try:
+                    if lst_change is not None:
+                        unc['lst_change'] = error_assessment.compute_zonal_uncertainty(lst_change, zones, scale=download_scale)
+                except Exception as _e:
+                    unc.setdefault('errors', {})['lst_change'] = str(_e)
+
+                out['uncertainty'] = unc
+            except Exception as ee_unc_err:
+                out['uncertainty_error'] = str(ee_unc_err)
         except Exception as e:
             out['stats_error'] = str(e)
 
