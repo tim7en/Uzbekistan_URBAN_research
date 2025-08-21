@@ -111,6 +111,8 @@ python main.py
 - **Error metrics**: RMSE, MAE, bias calculation
 - **Temporal analysis**: Multi-year trend detection
 
+Note: High-resolution SUHI map creation (GeoTIFF exports) has been moved out of the default batch runs into a separate helper `services.suhi_unit.export_suhi_tiles()` to avoid large reprojection errors when exporting wide extents at fine resolution. By default, the SUHI batch now runs stats-only (zonal means) and writes per-city/year JSON summaries; use `export_suhi_tiles` when you want Drive export tasks for map tiles.
+
 ### 📊 services/visualization.py
 - **SUHIChartGenerator**: Professional chart creation
 - **Heat map generation**: GIS-style temperature maps

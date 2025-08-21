@@ -114,6 +114,60 @@ def create_output_directories() -> Dict[str, Path]:
     return dirs
 
 
+def make_json_safe(v):
+    """Recursively convert common EE objects and non-JSON types to JSON-serializable Python types.
+
+    This helper attempts to call getInfo() on Earth Engine objects when available
+    and falls back to safe Python casts. It is intentionally permissive to avoid
+    write-time failures when saving analysis summaries.
+    """
+    try:
+        import ee as _ee
+    except Exception:
+        _ee = None
+
+    # primitive types
+    if v is None or isinstance(v, (str, bool, int, float)):
+        return v
+    # containers
+    if isinstance(v, dict):
+        return {k: make_json_safe(val) for k, val in v.items()}
+    if isinstance(v, (list, tuple)):
+        return [make_json_safe(x) for x in v]
+
+    # Earth Engine types
+    if _ee is not None:
+        try:
+            if isinstance(v, (_ee.Number, _ee.String, _ee.List, _ee.Dictionary)):
+                try:
+                    info = v.getInfo()
+                    return make_json_safe(info)
+                except Exception:
+                    return str(v)
+            if isinstance(v, (_ee.Image, _ee.Geometry, _ee.FeatureCollection, _ee.Feature)):
+                return str(v)
+        except Exception:
+            # If ee is not behaving as expected, continue to fallbacks
+            pass
+
+    # numpy scalars
+    try:
+        import numpy as _np
+        if isinstance(v, (_np.floating, _np.integer)):
+            return float(v)
+    except Exception:
+        pass
+
+    # final fallbacks
+    try:
+        return float(v)
+    except Exception:
+        try:
+            return str(v)
+        except Exception:
+            return None
+
+
 def create_analysis_zones(city_info: Dict, erosion_distance: int = 100) -> Dict[str, ee.Geometry]:
     center = ee.Geometry.Point([city_info['lon'], city_info['lat']])
     urban_buffer = center.buffer(city_info['buffer_m'])

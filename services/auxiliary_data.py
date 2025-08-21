@@ -245,12 +245,14 @@ def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 3
 
     # Write JSON summary
     try:
+        from .utils import make_json_safe
         base_dir = Path(__file__).parent.parent / 'suhi_analysis_output'
         save_dir = base_dir / 'vegetation' / city
         save_dir.mkdir(parents=True, exist_ok=True)
         out_file = save_dir / f"{city}_auxiliary_{year}.json"
+        safe_out = make_json_safe(out)
         with open(out_file, 'w', encoding='utf-8') as fh:
-            json.dump(out, fh, indent=2)
+            json.dump(safe_out, fh, indent=2)
         out['summary_json'] = str(out_file)
     except Exception:
         out['summary_json'] = None
