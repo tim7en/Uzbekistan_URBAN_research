@@ -31,7 +31,7 @@ UZBEKISTAN_CITIES = {
     #"Navoiy":     {"lat": 40.1030, "lon": 65.3686, "buffer_m": 10000, "type": "regional_capital"},
     #"Termez":     {"lat": 37.2242, "lon": 67.2783, "buffer_m": 8000,  "type": "regional_capital"},
     #"Gulistan":   {"lat": 40.4910, "lon": 68.7810, "buffer_m": 8000,  "type": "regional_capital"},
-    #"Nurafshon":  {"lat": 41.0167, "lon": 69.3417, "buffer_m": 8000,  "type": "city"},
+    #"Nurafshon":  {"lat": 41.0167, "lon": 69.3417, "buffer_m": 8000, "type": "city"},
     #"Fergana":    {"lat": 40.3842, "lon": 71.7843, "buffer_m": 12000, "type": "regional_capital"},
     #"Urgench":    {"lat": 41.5506, "lon": 60.6317, "buffer_m": 10000, "type": "regional_capital"},
 }
@@ -60,6 +60,9 @@ DATASETS = {
     "landsat9": "LANDSAT/LC09/C02/T1_L2",
     "aster": "ASTER/AST_L1T_003",
     "water": "JRC/GSW1_4/GlobalSurfaceWater",
+    # Nighttime lights datasets
+    "viirs_monthly": "NOAA/VIIRS/DNB/MONTHLY_V1/VCMCFG",
+    "dmsp_ols": "NOAA/DMSP-OLS/NIGHTTIME_LIGHTS",
 }
 
 GEE_CONFIG = {

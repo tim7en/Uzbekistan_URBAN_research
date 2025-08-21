@@ -1,0 +1,62 @@
+[
+  {
+    "city": "Tashkent",
+    "years": [
+      2018
+    ],
+    "datasets": {
+      "esri_full": {
+        "time_series": {
+          "2018": {}
+        },
+        "trends": {}
+      },
+      "dynamic_world": {
+        "time_series": {
+          "2018": {}
+        },
+        "trends": {}
+      },
+      "ghsl_pct": {
+        "time_series": {
+          "2018": {}
+        },
+        "trends": {}
+      },
+      "esa_map": {
+        "time_series": {
+          "2018": {}
+        },
+        "trends": {}
+      },
+      "modis_map": {
+        "time_series": {
+          "2018": {}
+        },
+        "trends": {}
+      }
+    },
+    "comparisons_against_esri": {
+      "dynamic_world": {
+        "2018": {
+          "error": "missing files"
+        }
+      },
+      "ghsl_pct": {
+        "2018": {
+          "error": "missing files"
+        }
+      },
+      "esa_map": {
+        "2018": {
+          "error": "missing files"
+        }
+      },
+      "modis_map": {
+        "2018": {
+          "error": "missing files"
+        }
+      }
+    }
+  }
+]
