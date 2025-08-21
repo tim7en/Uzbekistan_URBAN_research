@@ -13,6 +13,9 @@ import requests
 
 from .utils import UZBEKISTAN_CITIES
 from . import classification
+from . import error_assessment
+from .utils import create_output_directories, make_json_safe
+from pathlib import Path
 
 
 def _download_image_geturl(image, region, scale: int, out_path: Path, file_name: str, crs: str = 'EPSG:4326') -> Optional[Path]:
@@ -65,6 +68,12 @@ def generate_coarse_local(base: Path, city: str, year: int, coarse_scale: int = 
             time.sleep(1)
         except Exception as e:
             out['generated'][name] = {'error': str(e)}
+        # compute categorical uncertainty (histogram, entropy) and save
+        try:
+            cat_unc = error_assessment.compute_categorical_uncertainty(img, region, scale=coarse_scale, maxPixels=int(1e8))
+            out.setdefault('uncertainty', {})[name] = cat_unc
+        except Exception:
+            out.setdefault('uncertainty', {})[name] = None
     return out
 
 
@@ -94,6 +103,11 @@ def generate_highres_local(base: Path, city: str, year: int, highres_scale: int 
             time.sleep(2)  # Longer sleep for larger downloads
         except Exception as e:
             out['generated'][name] = {'error': str(e)}
+        try:
+            cat_unc = error_assessment.compute_categorical_uncertainty(img, region, scale=highres_scale, maxPixels=int(1e9))
+            out.setdefault('uncertainty', {})[name] = cat_unc
+        except Exception:
+            out.setdefault('uncertainty', {})[name] = None
     return out
 
 

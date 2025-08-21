@@ -18,58 +18,15 @@ def main():
         return
 
     years = list(range(2016, 2025))  # inclusive 2016-2024
-    # Select first 14 cities from config
+    # Select first N cities from config (default: first 2 here)
     cities = list(UZBEKISTAN_CITIES.keys())[:2]
 
-    # Choose whether to save a coarse local GeoTIFF and whether to export a high-res GeoTIFF to Drive
-    SAVE_LOCAL_GEOTIFF = True
-    LOCAL_GTIFF_SCALE = 1000  # meters (coarse)
-    EXPORT_TO_DRIVE = False
-    DRIVE_GTIFF_SCALE = 200   # meters (higher resolution export)
-
-    results = []
-    for city in cities:
-        city_info = UZBEKISTAN_CITIES[city]
-        for y in years:
-            print(f"Running VIIRS for {city} {y}...")
-            # run thumbnail + stats
-            res = nightlight.run_city_year_viirs(city, city_info, y, out_dirs['base'])
-            # if export enabled and viirs image available, create export task
-            try:
-                zones = nightlight.create_analysis_zones(city_info)
-            except Exception:
-                zones = None
-            # Optionally save a coarse GeoTIFF locally
-            if SAVE_LOCAL_GEOTIFF:
-                try:
-                    if zones:
-                        geom = zones['full_extent']
-                        viirs_img = nightlight.load_viirs_monthly(y, geom)
-                        out_dir = out_dirs['base'] / 'nightlights' / city
-                        local_tif = nightlight.download_viirs_geotiff(viirs_img, geom, scale=LOCAL_GTIFF_SCALE, out_path=out_dir, file_name=f"viirs_{y}_coarse")
-                        res.setdefault('exports', {})['local_tif'] = str(local_tif) if local_tif else None
-                except Exception as e:
-                    res.setdefault('exports', {})['local_error'] = str(e)
-
-            if EXPORT_TO_DRIVE:
-                try:
-                    geom = zones['full_extent'] if zones else None
-                    if geom is not None:
-                        viirs_img = nightlight.load_viirs_monthly(y, geom)
-                        description = f"VIIRS_{city}_{y}"
-                        folder = 'Nightlights_Exports'
-                        task = nightlight.export_viirs_geotiff_drive(viirs_img, geom, scale=DRIVE_GTIFF_SCALE, description=description, folder=folder, file_prefix=description)
-                        res.setdefault('exports', {})['drive_task'] = getattr(task, 'id', None) if task else None
-                except Exception as e:
-                    res.setdefault('exports', {})['drive_error'] = str(e)
-            results.append(res)
-            
-
-
-    # Save aggregated results
+    # Run batch that computes stats in EE and writes one JSON per city
+    summaries = nightlight.run_batch_viirs(cities, years, out_dirs['base'])
+    # Save a compact summary aggregating per-city JSON paths
     out_file = out_dirs['base'] / 'nightlights_summary.json'
     with open(out_file, 'w', encoding='utf-8') as f:
-        json.dump(results, f, indent=2)
+        json.dump(summaries, f, indent=2)
     print(f"Saved nightlight summary: {out_file}")
 
     # Create a simple report with dataset metadata

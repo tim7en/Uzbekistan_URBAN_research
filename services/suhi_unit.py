@@ -11,6 +11,9 @@ from typing import Dict, Any, List, Optional
 import ee
 
 from . import lulc, classification, suhi as suhi_core
+from . import error_assessment
+from .utils import create_output_directories, make_json_safe, GEE_CONFIG
+from pathlib import Path
 from .temperature import load_landsat_thermal, load_modis_lst
 from .utils import UZBEKISTAN_CITIES, create_output_directories, GEE_CONFIG, ANALYSIS_CONFIG, get_optimal_scale_for_city
 import math
@@ -146,6 +149,12 @@ def run_city_suhi(base: Path, city: str, year: int, download_scale: int = 30) ->
                     out['stats']['landsat_urban_mean'] = float(urban_mean) if urban_mean is not None else None
                     out['stats']['landsat_rural_mean'] = float(rural_mean) if rural_mean is not None else None
                     out['stats']['suhi_mean'] = (float(urban_mean) - float(rural_mean)) if urban_mean is not None and rural_mean is not None else None
+                    # compute uncertainty for urban and rural zones on server-side
+                    try:
+                        ua = error_assessment.compute_zonal_uncertainty(landsat_lst.select([band]), {'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, scale=max(download_scale, 250), maxPixels=GEE_CONFIG.get('max_pixels', int(1e8)))
+                        out['stats']['uncertainty'] = ua
+                    except Exception:
+                        out['stats']['uncertainty'] = None
                 except Exception:
                     pass
             else:
@@ -170,6 +179,16 @@ def run_city_suhi(base: Path, city: str, year: int, download_scale: int = 30) ->
                 day_img = night_img = None
             day_night_res = suhi_core.compute_day_night_suhi({'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, day_img, night_img, classifications)
             out['day_night'] = day_night_res
+            # attach uncertainty for MODIS day/night if available
+            try:
+                if day_img is not None:
+                    day_unc = error_assessment.compute_zonal_uncertainty(day_img, {'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, scale=GEE_CONFIG.get('scale_modis', 1000), maxPixels=GEE_CONFIG.get('max_pixels', int(1e8)))
+                    out['day_night'].setdefault('uncertainty', {})['day'] = day_unc
+                if night_img is not None:
+                    night_unc = error_assessment.compute_zonal_uncertainty(night_img, {'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, scale=GEE_CONFIG.get('scale_modis', 1000), maxPixels=GEE_CONFIG.get('max_pixels', int(1e8)))
+                    out['day_night'].setdefault('uncertainty', {})['night'] = night_unc
+            except Exception:
+                pass
         except Exception as e:
             out['day_night_error'] = str(e)
 

@@ -9,7 +9,9 @@ from typing import Dict, Any, List, Optional
 import ee
 import numpy as np
 
-from .utils import UZBEKISTAN_CITIES, DATASETS, ANALYSIS_CONFIG, create_analysis_zones, rate_limiter
+from .utils import UZBEKISTAN_CITIES, DATASETS, ANALYSIS_CONFIG, create_analysis_zones, rate_limiter, create_output_directories, make_json_safe, GEE_CONFIG
+from . import error_assessment
+from pathlib import Path
 
 
 def load_viirs_monthly(year: int, geometry: ee.Geometry) -> ee.Image:
@@ -172,6 +174,12 @@ def run_city_year_viirs(city_name: str, city_info: Dict[str, Any], year: int, ou
         geom = zones['full_extent']
         viirs = load_viirs_monthly(year, geom)
         stats = compute_nightlight_stats(viirs, {'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, scale=ANALYSIS_CONFIG.get('target_resolution_m',500))
+        # compute uncertainty metrics on server-side using EE reducers
+        try:
+            ua = error_assessment.compute_zonal_uncertainty(viirs, {'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, scale=ANALYSIS_CONFIG.get('target_resolution_m',500), maxPixels=GEE_CONFIG.get('max_pixels', int(1e8)) if 'GEE_CONFIG' in globals() else int(1e8))
+            stats['uncertainty'] = ua
+        except Exception:
+            stats['uncertainty'] = None
         out_dir = output_base / 'nightlights' / city_name
         out_dir.mkdir(parents=True, exist_ok=True)
         thumb = create_nightlight_thumbnail(viirs, city_info['lon'], city_info['lat'], city_info['buffer_m'], out_dir, f"viirs_{year}")
@@ -182,17 +190,42 @@ def run_city_year_viirs(city_name: str, city_info: Dict[str, Any], year: int, ou
 
 
 def run_batch_viirs(cities: List[str], years: List[int], output_base: Path) -> List[Dict[str, Any]]:
-    results = []
+    """Run VIIRS for a batch of cities and years, and write one JSON per city.
+
+    The output JSON per city will contain yearly entries with stats, uncertainty and
+    thumbnail path where available. Returns a list of per-city summaries.
+    """
+    out_dirs = create_output_directories()
+    summaries = []
     for city in cities:
         city_info = UZBEKISTAN_CITIES.get(city)
         if not city_info:
             print(f"City not found: {city}")
             continue
+        city_results = {'city': city, 'years': {}}
+        print(f"Starting VIIRS batch for city: {city}")
         for y in years:
-            print(f"Running VIIRS for {city} {y}...")
-            res = run_city_year_viirs(city, city_info, y, output_base)
-            results.append(res)
-    return results
+            print(f"  Running VIIRS for {city} {y}...")
+            res = run_city_year_viirs(city, city_info, y, out_dirs['base'])
+            # keep only relevant viirs block for compactness
+            city_results['years'][str(y)] = res.get('viirs', res)
+
+        # save single JSON per city
+        try:
+            jdir = out_dirs['base'] / 'nightlights' / city
+            jdir.mkdir(parents=True, exist_ok=True)
+            jfile = jdir / f"{city}_nightlights.json"
+            safe = make_json_safe(city_results)
+            import json
+            with open(jfile, 'w', encoding='utf-8') as fh:
+                json.dump(safe, fh, indent=2)
+            city_results['summary_json'] = str(jfile)
+        except Exception:
+            city_results['summary_json'] = None
+
+        summaries.append(city_results)
+
+    return summaries
 
 
 def export_viirs_geotiff_drive(image: ee.Image, region: ee.Geometry, scale: int, description: str, folder: str, file_prefix: Optional[str] = None, crs: str = 'EPSG:4326') -> Any:
