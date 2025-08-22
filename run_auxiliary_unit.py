@@ -7,21 +7,39 @@ It will run the service for configured cities and years and write
 results into `suhi_analysis_output/vegetation/<city>/` and
 `suhi_analysis_output/temperature/<city>/` with per-city JSON summaries.
 """
-import json
+import sys
 from pathlib import Path
+
+# Ensure repository root is on sys.path so local `services` package is importable
+ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT))
+
+import argparse
+import json
 from services.auxiliary_data import run_batch
 from services.gee import initialize_gee
 
 
 def main():
-    # Ensure GEE is initialized (this may prompt for auth in interactive env)
+    p = argparse.ArgumentParser(description='Run auxiliary data extractor')
+    p.add_argument('--start-year', type=int, default=None)
+    p.add_argument('--end-year', type=int, default=None)
+    p.add_argument('--cities', nargs='*', help='Cities to process')
+    p.add_argument('--download-scale', type=int, default=30)
+    p.add_argument('--verbose', action='store_true')
+    args = p.parse_args()
+
     ok = initialize_gee()
     if not ok:
         print("GEE initialization failed or was cancelled. Authenticate and try again.")
         return
 
-    # Default: run all configured cities and years in ANALYSIS_CONFIG
-    results = run_batch()
+    years = None
+    if args.start_year is not None and args.end_year is not None:
+        years = list(range(args.start_year, args.end_year + 1))
+
+    results = run_batch(cities=args.cities, years=years, download_scale=args.download_scale, verbose=args.verbose)
+
     out = Path('suhi_analysis_output') / 'reports'
     out.mkdir(parents=True, exist_ok=True)
     p = out / 'auxiliary_batch_results.json'

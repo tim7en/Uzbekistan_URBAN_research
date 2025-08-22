@@ -121,7 +121,7 @@ def ndvi_to_biomass_model(ndvi_mean: Optional[float], preset: str = 'central_asi
                 return None
 
 
-def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 30, cloud_threshold: int = None) -> Dict[str, Any]:
+def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 30, cloud_threshold: int = None, verbose: bool = False) -> Dict[str, Any]:
     out: Dict[str, Any] = {'city': city, 'year': year, 'generated': {}, 'stats': {}}
     if city not in UZBEKISTAN_CITIES:
         out['error'] = 'city not found'
@@ -140,14 +140,26 @@ def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 3
     summer_start, summer_end = _format_date_range_for_months(year, summer_months)
     winter_start, winter_end = _format_date_range_for_months(year, winter_months)
 
+    import time
     try:
+        start_t = time.time()
+        if verbose:
+            print(f"[aux] {city} {year}: start")
         # Vegetation indices
+        if verbose:
+            t0 = time.time(); print(f"[aux] {city} {year}: computing seasonal NDVI/EVI {summer_start}..{summer_end}")
         summer_veg = _compute_seasonal_ndvi_evi(summer_start, summer_end, region, cloud_threshold)
         winter_veg = _compute_seasonal_ndvi_evi(winter_start, winter_end, region, cloud_threshold)
+        if verbose:
+            print(f"[aux] {city} {year}: NDVI/EVI composite built in {time.time()-t0:.1f}s (server-side op)")
 
         # Landsat thermal
+        if verbose:
+            t1 = time.time(); print(f"[aux] {city} {year}: loading Landsat thermal {summer_start}..{summer_end}")
         summer_lst = load_landsat_thermal(summer_start, summer_end, region)
         winter_lst = load_landsat_thermal(winter_start, winter_end, region)
+        if verbose:
+            print(f"[aux] {city} {year}: Landsat thermal prepared in {time.time()-t1:.1f}s")
 
         # Compute change images
         ndvi_change = summer_veg.select('NDVI').subtract(winter_veg.select('NDVI')).rename('NDVI_change')
@@ -175,6 +187,8 @@ def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 3
             except Exception:
                 return None
 
+        if verbose:
+            print(f"[aux] {city} {year}: starting downloads (scale={download_scale})")
         out['generated']['summer_veg_tif'] = _dl(summer_veg, veg_dir, f"{city}_ndvi_evi_summer_{year}")
         out['generated']['winter_veg_tif'] = _dl(winter_veg, veg_dir, f"{city}_ndvi_evi_winter_{year}")
         out['generated']['ndvi_change_tif'] = _dl(ndvi_change, veg_dir, f"{city}_ndvi_change_{year}")
@@ -195,6 +209,8 @@ def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 3
 
         # Summary stats: compute area mean within region using reduceRegion
         try:
+            if verbose:
+                t2 = time.time(); print(f"[aux] {city} {year}: computing summary stats (reduceRegion)")
             stats = {}
             def _region_mean(img, band_name):
                 try:
@@ -238,6 +254,8 @@ def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 3
                 stats['biomass_conversion_error'] = True
 
             out['stats'] = stats
+            if verbose:
+                print(f"[aux] {city} {year}: stats computed in {time.time()-t2:.1f}s")
             # Compute uncertainty/error assessments using server-side EE reducers
             try:
                 unc = {}
@@ -287,13 +305,21 @@ def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 3
                     unc.setdefault('errors', {})['lst_change'] = str(_e)
 
                 out['uncertainty'] = unc
+                if verbose:
+                    print(f"[aux] {city} {year}: uncertainty computed in {time.time()-t2:.1f}s")
             except Exception as ee_unc_err:
                 out['uncertainty_error'] = str(ee_unc_err)
+                if verbose:
+                    print(f"[aux] {city} {year}: uncertainty error: {str(ee_unc_err)}")
         except Exception as e:
             out['stats_error'] = str(e)
+            if verbose:
+                print(f"[aux] {city} {year}: stats error: {str(e)}")
 
     except Exception as ex:
         out['error'] = str(ex)
+        if verbose:
+            print(f"[aux] {city} {year}: fatal error: {str(ex)}")
 
     # Write JSON summary
     try:
@@ -306,13 +332,15 @@ def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 3
         with open(out_file, 'w', encoding='utf-8') as fh:
             json.dump(safe_out, fh, indent=2)
         out['summary_json'] = str(out_file)
+        if verbose:
+            print(f"[aux] {city} {year}: summary written: {out_file}")
     except Exception:
         out['summary_json'] = None
 
     return out
 
 
-def run_batch(cities: Optional[List[str]] = None, years: Optional[List[int]] = None, download_scale: int = 30) -> Dict[str, Any]:
+def run_batch(cities: Optional[List[str]] = None, years: Optional[List[int]] = None, download_scale: int = 30, verbose: bool = False) -> Dict[str, Any]:
     base_dirs = create_output_directories()
     if cities is None:
         cities = list(UZBEKISTAN_CITIES.keys())
@@ -323,5 +351,9 @@ def run_batch(cities: Optional[List[str]] = None, years: Optional[List[int]] = N
     for city in cities:
         results[city] = {}
         for y in years:
-            results[city][str(y)] = run_city_auxiliary(base_dirs['base'], city, y, download_scale=download_scale)
+            if verbose:
+                print(f"[aux] starting {city} {y}")
+            results[city][str(y)] = run_city_auxiliary(base_dirs['base'], city, y, download_scale=download_scale, verbose=verbose)
+            if verbose:
+                print(f"[aux] finished {city} {y}")
     return results
