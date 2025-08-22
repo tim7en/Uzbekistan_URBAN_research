@@ -8,8 +8,14 @@ Produces per-city JSON reports with:
 
 This script runs independently and writes outputs to `suhi_analysis_output/reports/`.
 """
-import json
+import sys
 from pathlib import Path
+
+# Ensure repository root is on sys.path so local `services` package is importable
+ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT))
+
+import json
 from typing import List, Dict, Any
 
 import ee
@@ -183,4 +189,6 @@ def main(cities: List[str] = None, years: List[int] = None, scale: int = None):
 
 
 if __name__ == '__main__':
-    main(cities=['Tashkent','Nukus'], years=[2018,2019], scale=200)
+    from services.utils import UZBEKISTAN_CITIES
+    # Process all configured cities by default
+    main(cities=list(UZBEKISTAN_CITIES.keys()), years=[2016,2024])

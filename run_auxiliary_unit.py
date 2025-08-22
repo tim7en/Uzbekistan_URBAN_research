@@ -7,9 +7,15 @@ It will run the service for configured cities and years and write
 results into `suhi_analysis_output/vegetation/<city>/` and
 `suhi_analysis_output/temperature/<city>/` with per-city JSON summaries.
 """
+import sys
+from pathlib import Path
+
+# Ensure repository root is on sys.path so local `services` package is importable
+ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT))
+
 import argparse
 import json
-from pathlib import Path
 from services.auxiliary_data import run_batch
 from services.gee import initialize_gee
 
