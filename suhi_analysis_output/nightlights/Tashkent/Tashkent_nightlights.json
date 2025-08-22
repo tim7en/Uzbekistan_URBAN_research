@@ -1,79 +1,79 @@
 {
   "city": "Tashkent",
   "years": {
-    "2017": {
+    "2018": {
       "stats": {
         "urban_core": {
-          "mean": 15.879008454735882,
-          "stdDev": 13.529814698402909,
+          "mean": 16.6121677681418,
+          "stdDev": 14.846667184734878,
           "count": 91924
         },
         "rural_ring": {
-          "mean": 1.3254597841551692,
-          "stdDev": 2.0134188514068745,
+          "mean": 1.1736388623579699,
+          "stdDev": 1.5492384308701947,
           "count": 564801
         },
         "uncertainty": {
           "urban_core": {
-            "mean": 15.879008454735882,
-            "stdDev": 13.529814698402909,
+            "mean": 16.6121677681418,
+            "stdDev": 14.846667184734878,
             "count": 91924,
-            "stdError": 0.044624913941810486,
+            "stdError": 0.048968242375093465,
             "ci95": [
-              15.791543623409932,
-              15.96647328606183
+              16.516190013086614,
+              16.708145523196983
             ]
           },
           "rural_ring": {
-            "mean": 1.3254597841551692,
-            "stdDev": 2.0134188514068745,
+            "mean": 1.1736388623579699,
+            "stdDev": 1.5492384308701947,
             "count": 564801,
-            "stdError": 0.002679084440227062,
+            "stdError": 0.002061439213925081,
             "ci95": [
-              1.3202087786523242,
-              1.3307107896580141
+              1.1695984414986766,
+              1.1776792832172631
             ]
           }
         }
       },
-      "thumbnail": "/Users/timursabitov/Dev/Uzbekistan_URBAN_research/suhi_analysis_output/nightlights/Tashkent/viirs_2017.png"
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Tashkent\\viirs_2018.png"
     },
-    "2024": {
+    "2019": {
       "stats": {
         "urban_core": {
-          "mean": 22.89357935656735,
-          "stdDev": 15.221709170804633,
+          "mean": 19.483465611602377,
+          "stdDev": 16.553578358536885,
           "count": 91924
         },
         "rural_ring": {
-          "mean": 2.157101394928811,
-          "stdDev": 2.706164904211636,
+          "mean": 1.4882413358337896,
+          "stdDev": 2.527087561366767,
           "count": 564801
         },
         "uncertainty": {
           "urban_core": {
-            "mean": 22.89357935656735,
-            "stdDev": 15.221709170804633,
+            "mean": 19.483465611602377,
+            "stdDev": 16.553578358536885,
             "count": 91924,
-            "stdError": 0.05020523022200789,
+            "stdError": 0.0545980877155637,
             "ci95": [
-              22.795177105332215,
-              22.991981607802487
+              19.37645335967987,
+              19.59047786352488
             ]
           },
           "rural_ring": {
-            "mean": 2.157101394928811,
-            "stdDev": 2.706164904211636,
+            "mean": 1.4882413358337896,
+            "stdDev": 2.527087561366767,
             "count": 564801,
-            "stdError": 0.003600862424872991,
+            "stdError": 0.0033625795050137375,
             "ci95": [
-              2.15004370457606,
-              2.164159085281562
+              1.4816506800039626,
+              1.4948319916636166
             ]
           }
         }
       },
-      "thumbnail": "/Users/timursabitov/Dev/Uzbekistan_URBAN_research/suhi_analysis_output/nightlights/Tashkent/viirs_2024.png"
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Tashkent\\viirs_2019.png"
     }
   }
 }

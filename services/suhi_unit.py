@@ -298,6 +298,14 @@ def run_city_suhi_stats(city: str, year: int, stats_scale: int = 500) -> Dict[st
             out['stats']['urban_mean'] = float(urban_mean) if urban_mean is not None else None
             out['stats']['rural_mean'] = float(rural_mean) if rural_mean is not None else None
             out['stats']['suhi'] = (out['stats']['urban_mean'] - out['stats']['rural_mean']) if out['stats']['urban_mean'] is not None and out['stats']['rural_mean'] is not None else None
+            
+            # Add uncertainty analysis for SUHI stats
+            try:
+                zones = {'urban_core': urban_core, 'rural_ring': rural_ring}
+                uncertainty = error_assessment.compute_zonal_uncertainty(landsat_lst.select([band]), zones, scale=stats_scale, maxPixels=GEE_CONFIG['max_pixels'])
+                out['stats']['uncertainty'] = uncertainty
+            except Exception as unc_err:
+                out['stats']['uncertainty_error'] = str(unc_err)
         except Exception as e:
             out['error'] = str(e)
     except Exception as e:

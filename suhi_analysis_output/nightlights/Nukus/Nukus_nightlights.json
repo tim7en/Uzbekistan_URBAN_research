@@ -1,0 +1,79 @@
+{
+  "city": "Nukus",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 1.7312316221885897,
+          "stdDev": 3.758878897307009,
+          "count": 41320
+        },
+        "rural_ring": {
+          "mean": 0.37573126123103195,
+          "stdDev": 0.415402671775104,
+          "count": 470648
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 1.7312316221885897,
+            "stdDev": 3.758878897307009,
+            "count": 41320,
+            "stdError": 0.01849175699029413,
+            "ci95": [
+              1.6949877784876133,
+              1.7674754658895662
+            ]
+          },
+          "rural_ring": {
+            "mean": 0.37573126123103195,
+            "stdDev": 0.415402671775104,
+            "count": 470648,
+            "stdError": 0.0006055098003760928,
+            "ci95": [
+              0.3745444620222948,
+              0.3769180604397691
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Nukus\\viirs_2018.png"
+    },
+    "2019": {
+      "stats": {
+        "urban_core": {
+          "mean": 2.167185004476215,
+          "stdDev": 4.907735818090974,
+          "count": 41320
+        },
+        "rural_ring": {
+          "mean": 0.40630295000476113,
+          "stdDev": 0.40810137902795424,
+          "count": 470648
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 2.167185004476215,
+            "stdDev": 4.907735818090974,
+            "count": 41320,
+            "stdError": 0.02414354401939339,
+            "ci95": [
+              2.119863658198204,
+              2.2145063507542257
+            ]
+          },
+          "rural_ring": {
+            "mean": 0.40630295000476113,
+            "stdDev": 0.40810137902795424,
+            "count": 470648,
+            "stdError": 0.0005948671044711239,
+            "ci95": [
+              0.40513701047999773,
+              0.40746888952952454
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Nukus\\viirs_2019.png"
+    }
+  }
+}

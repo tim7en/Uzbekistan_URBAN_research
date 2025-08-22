@@ -1,0 +1,166 @@
+[
+  {
+    "city": "Tashkent",
+    "year": 2018,
+    "generated": {
+      "esri_full": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\lulc\\Tashkent\\esri_full_2018_coarse.tif",
+      "esri_built": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\lulc\\Tashkent\\esri_built_2018_coarse.tif"
+    },
+    "uncertainty": {
+      "esri_full": {
+        "histogram": {
+          "1": 202,
+          "11": 635,
+          "2": 44,
+          "5": 9751,
+          "7": 19164,
+          "8": 47
+        },
+        "proportions": {
+          "1": 0.0067687564923097545,
+          "11": 0.021278021646617296,
+          "2": 0.001474382602285293,
+          "5": 0.3267432898837248,
+          "7": 0.6421606406862581,
+          "8": 0.0015749086888047449
+        },
+        "entropy": 0.7854234144946088
+      },
+      "esri_built": {
+        "histogram": {
+          "0": 10680,
+          "1": 19164
+        },
+        "proportions": {
+          "0": 0.3578608765581021,
+          "1": 0.6421391234418978
+        },
+        "entropy": 0.6521774809864846
+      }
+    }
+  },
+  {
+    "city": "Tashkent",
+    "year": 2019,
+    "generated": {
+      "esri_full": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\lulc\\Tashkent\\esri_full_2019_coarse.tif",
+      "esri_built": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\lulc\\Tashkent\\esri_built_2019_coarse.tif"
+    },
+    "uncertainty": {
+      "esri_full": {
+        "histogram": {
+          "1": 248,
+          "11": 606,
+          "2": 54,
+          "4": 1,
+          "5": 9428,
+          "7": 19471,
+          "8": 34
+        },
+        "proportions": {
+          "1": 0.00831043495744253,
+          "11": 0.020306949936331344,
+          "2": 0.0018095301923463575,
+          "4": 3.35098183767844e-05,
+          "5": 0.3159305676563233,
+          "7": 0.652469673614369,
+          "8": 0.0011393338248106696
+        },
+        "entropy": 0.7810584762590838
+      },
+      "esri_built": {
+        "histogram": {
+          "0": 10373,
+          "1": 19471
+        },
+        "proportions": {
+          "0": 0.3475740517356923,
+          "1": 0.6524259482643078
+        },
+        "entropy": 0.6459319335101956
+      }
+    }
+  },
+  {
+    "city": "Nukus",
+    "year": 2018,
+    "generated": {
+      "esri_full": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\lulc\\Nukus\\esri_full_2018_coarse.tif",
+      "esri_built": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\lulc\\Nukus\\esri_built_2018_coarse.tif"
+    },
+    "uncertainty": {
+      "esri_full": {
+        "histogram": {
+          "1": 299,
+          "11": 6245,
+          "2": 29,
+          "5": 3119,
+          "7": 3618,
+          "8": 194
+        },
+        "proportions": {
+          "1": 0.02214158767772512,
+          "11": 0.46245556872037913,
+          "2": 0.0021475118483412323,
+          "5": 0.2309686018957346,
+          "7": 0.26792061611374407,
+          "8": 0.014366113744075829
+        },
+        "entropy": 1.2065079648524226
+      },
+      "esri_built": {
+        "histogram": {
+          "0": 9889,
+          "1": 3618
+        },
+        "proportions": {
+          "0": 0.7321388909454357,
+          "1": 0.2678611090545643
+        },
+        "entropy": 0.5811198260895271
+      }
+    }
+  },
+  {
+    "city": "Nukus",
+    "year": 2019,
+    "generated": {
+      "esri_full": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\lulc\\Nukus\\esri_full_2019_coarse.tif",
+      "esri_built": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\lulc\\Nukus\\esri_built_2019_coarse.tif"
+    },
+    "uncertainty": {
+      "esri_full": {
+        "histogram": {
+          "1": 354,
+          "11": 6166,
+          "2": 19,
+          "4": 4,
+          "5": 3162,
+          "7": 3671,
+          "8": 130
+        },
+        "proportions": {
+          "1": 0.02621057307863172,
+          "11": 0.45653783503628015,
+          "2": 0.0014067821708870132,
+          "4": 0.0002961646675551607,
+          "5": 0.23411816970235452,
+          "7": 0.2718051236487487,
+          "8": 0.009625351695542721
+        },
+        "entropy": 1.2037451950348592
+      },
+      "esri_built": {
+        "histogram": {
+          "0": 9836,
+          "1": 3671
+        },
+        "proportions": {
+          "0": 0.7282149996298216,
+          "1": 0.27178500037017844
+        },
+        "entropy": 0.5850261702065335
+      }
+    }
+  }
+]
