@@ -1,6 +1,80 @@
 {
   "city": "Andijan",
   "years": {
+    "2016": {
+      "stats": {
+        "urban_core": {
+          "mean": 3.1007409612524532,
+          "stdDev": 3.9821853577239974,
+          "count": 58177
+        },
+        "rural_ring": {
+          "mean": 1.0327097506493115,
+          "stdDev": 1.3304340707841236,
+          "count": 499260
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 3.1007409612524532,
+            "stdDev": 3.9821853577239974,
+            "count": 58177,
+            "stdError": 0.016509951975874678,
+            "ci95": [
+              3.068381455379739,
+              3.1331004671251677
+            ]
+          },
+          "rural_ring": {
+            "mean": 1.0327097506493115,
+            "stdDev": 1.3304340707841236,
+            "count": 499260,
+            "stdError": 0.0018829117773845167,
+            "ci95": [
+              1.0290192435656378,
+              1.0364002577329852
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\viirs_2016.png"
+    },
+    "2017": {
+      "stats": {
+        "urban_core": {
+          "mean": 3.0280518071280342,
+          "stdDev": 3.7816742063147655,
+          "count": 58177
+        },
+        "rural_ring": {
+          "mean": 1.1692760039927919,
+          "stdDev": 1.2118117297553637,
+          "count": 499260
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 3.0280518071280342,
+            "stdDev": 3.7816742063147655,
+            "count": 58177,
+            "stdError": 0.015678642234359826,
+            "ci95": [
+              2.997321668348689,
+              3.0587819459073793
+            ]
+          },
+          "rural_ring": {
+            "mean": 1.1692760039927919,
+            "stdDev": 1.2118117297553637,
+            "count": 499260,
+            "stdError": 0.0017150301755157863,
+            "ci95": [
+              1.1659145448487809,
+              1.1726374631368028
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\viirs_2017.png"
+    },
     "2018": {
       "stats": {
         "urban_core": {
@@ -37,6 +111,228 @@
         }
       },
       "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\viirs_2018.png"
+    },
+    "2019": {
+      "stats": {
+        "urban_core": {
+          "mean": 4.399153200046024,
+          "stdDev": 5.437616640252832,
+          "count": 58177
+        },
+        "rural_ring": {
+          "mean": 1.3348803044301598,
+          "stdDev": 1.3632623298966453,
+          "count": 499260
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 4.399153200046024,
+            "stdDev": 5.437616640252832,
+            "count": 58177,
+            "stdError": 0.02254410117290515,
+            "ci95": [
+              4.35496676174713,
+              4.443339638344918
+            ]
+          },
+          "rural_ring": {
+            "mean": 1.3348803044301598,
+            "stdDev": 1.3632623298966453,
+            "count": 499260,
+            "stdError": 0.001929372340197349,
+            "ci95": [
+              1.331098734643373,
+              1.3386618742169467
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\viirs_2019.png"
+    },
+    "2020": {
+      "stats": {
+        "urban_core": {
+          "mean": 5.009392517680269,
+          "stdDev": 6.2856833881620435,
+          "count": 58177
+        },
+        "rural_ring": {
+          "mean": 1.4198594288041675,
+          "stdDev": 1.5359464047549665,
+          "count": 499260
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 5.009392517680269,
+            "stdDev": 6.2856833881620435,
+            "count": 58177,
+            "stdError": 0.02606014576213035,
+            "ci95": [
+              4.958314631986494,
+              5.060470403374045
+            ]
+          },
+          "rural_ring": {
+            "mean": 1.4198594288041675,
+            "stdDev": 1.5359464047549665,
+            "count": 499260,
+            "stdError": 0.002173765418710325,
+            "ci95": [
+              1.4155988485834952,
+              1.4241200090248398
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\viirs_2020.png"
+    },
+    "2021": {
+      "stats": {
+        "urban_core": {
+          "mean": 5.736456284420695,
+          "stdDev": 6.90462347167402,
+          "count": 58177
+        },
+        "rural_ring": {
+          "mean": 1.613194120150807,
+          "stdDev": 1.7680063241132407,
+          "count": 499260
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 5.736456284420695,
+            "stdDev": 6.90462347167402,
+            "count": 58177,
+            "stdError": 0.0286262420476551,
+            "ci95": [
+              5.680348850007292,
+              5.792563718834099
+            ]
+          },
+          "rural_ring": {
+            "mean": 1.613194120150807,
+            "stdDev": 1.7680063241132407,
+            "count": 499260,
+            "stdError": 0.002502190828742909,
+            "ci95": [
+              1.608289826126471,
+              1.618098414175143
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\viirs_2021.png"
+    },
+    "2022": {
+      "stats": {
+        "urban_core": {
+          "mean": 6.124221283914189,
+          "stdDev": 7.074815052157071,
+          "count": 58177
+        },
+        "rural_ring": {
+          "mean": 1.6900842543187002,
+          "stdDev": 1.852361415394831,
+          "count": 499260
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 6.124221283914189,
+            "stdDev": 7.074815052157071,
+            "count": 58177,
+            "stdError": 0.029331848283443013,
+            "ci95": [
+              6.066730861278641,
+              6.181711706549738
+            ]
+          },
+          "rural_ring": {
+            "mean": 1.6900842543187002,
+            "stdDev": 1.852361415394831,
+            "count": 499260,
+            "stdError": 0.0026215753201238607,
+            "ci95": [
+              1.6849459666912574,
+              1.695222541946143
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\viirs_2022.png"
+    },
+    "2023": {
+      "stats": {
+        "urban_core": {
+          "mean": 6.5804643968144445,
+          "stdDev": 7.199871755394723,
+          "count": 58177
+        },
+        "rural_ring": {
+          "mean": 1.870571629353963,
+          "stdDev": 1.909103075801936,
+          "count": 499260
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 6.5804643968144445,
+            "stdDev": 7.199871755394723,
+            "count": 58177,
+            "stdError": 0.029850327454863327,
+            "ci95": [
+              6.521957755002912,
+              6.638971038625977
+            ]
+          },
+          "rural_ring": {
+            "mean": 1.870571629353963,
+            "stdDev": 1.909103075801936,
+            "count": 499260,
+            "stdError": 0.002701879592988673,
+            "ci95": [
+              1.8652759453517052,
+              1.8758673133562207
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\viirs_2023.png"
+    },
+    "2024": {
+      "stats": {
+        "urban_core": {
+          "mean": 6.371026968223264,
+          "stdDev": 7.100202569028143,
+          "count": 58177
+        },
+        "rural_ring": {
+          "mean": 1.7639377699573169,
+          "stdDev": 1.7333397821607301,
+          "count": 499260
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 6.371026968223264,
+            "stdDev": 7.100202569028143,
+            "count": 58177,
+            "stdError": 0.029437103726541645,
+            "ci95": [
+              6.313330244919242,
+              6.428723691527286
+            ]
+          },
+          "rural_ring": {
+            "mean": 1.7639377699573169,
+            "stdDev": 1.7333397821607301,
+            "count": 499260,
+            "stdError": 0.0024531286154720884,
+            "ci95": [
+              1.7591296378709915,
+              1.7687459020436422
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\viirs_2024.png"
     }
   }
 }
