@@ -17,6 +17,7 @@ UNIT_RUNNERS = {
     'lulc': Path('run_lulc_unit.py'),
     'suhi': Path('run_suhi_unit.py'),
     'auxiliary': Path('run_auxiliary_unit.py'),
+    'spatial_relationships': Path('run_spatial_relationships_unit.py'),
 }
 
 
@@ -28,7 +29,7 @@ def _run_script(path: Path, args: list) -> int:
 
 def main():
     p = argparse.ArgumentParser(description='Run unit pipelines for SUHI project')
-    p.add_argument('--unit', choices=['nightlight', 'lulc', 'suhi', 'auxiliary', 'all'], default='all', help='Which unit to run')
+    p.add_argument('--unit', choices=['nightlight', 'lulc', 'suhi', 'auxiliary', 'spatial_relationships', 'all'], default='all', help='Which unit to run')
     p.add_argument('--start-year', type=int, default=2016)
     p.add_argument('--end-year', type=int, default=2024)
     p.add_argument('--cities', nargs='*', help='Cities to process (default: configured subset)')
@@ -42,7 +43,7 @@ def main():
 
     utils.create_output_directories()
 
-    units = [args.unit] if args.unit != 'all' else ['nightlight', 'lulc', 'suhi', 'auxiliary']
+    units = [args.unit] if args.unit != 'all' else ['nightlight', 'lulc', 'suhi', 'auxiliary', 'spatial_relationships']
     for unit in units:
         runner = UNIT_RUNNERS.get(unit)
         if not runner or not runner.exists():
@@ -70,6 +71,9 @@ def main():
             ret = _run_script(runner, common_args)
         elif unit == 'auxiliary':
             # Auxiliary/biodiversity-related runner is self-contained; run it
+            ret = _run_script(runner, common_args)
+        elif unit == 'spatial_relationships':
+            # Spatial relationships unit (vegetation vs built-up metrics)
             ret = _run_script(runner, common_args)
         else:
             ret = 1

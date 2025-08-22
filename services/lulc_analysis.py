@@ -65,15 +65,59 @@ def run_city_lulc_analyze_esri_only(base: Path, city: str, start_year: int, end_
             try:
                 freq = esri_image.select(band_name).reduceRegion(
                     reducer=ee.Reducer.frequencyHistogram(), geometry=region, scale=download_scale, maxPixels=1e10, bestEffort=True)
-                freq_dict = freq.get(band_name).getInfo() if freq and freq.getInfo() else {}
-                # Convert counts to area (m2)
+                # freq is an ee.Dictionary mapping band_name -> dict(class->count)
+                # We'll compute entropy server-side using ee.List.iterate over the values
+                try:
+                    freq_dict_ee = ee.Dictionary(freq.get(band_name))
+                    vals = ee.List(freq_dict_ee.values())
+                    total = ee.Number(vals.iterate(lambda v, acc: ee.Number(acc).add(ee.Number(v)), ee.Number(0)))
+                    # entropy = - sum(p * log(p)) in nats; convert to bits later
+                    def _acc_entropy(v, acc):
+                        vnum = ee.Number(v)
+                        p = vnum.divide(total)
+                        # guard against zero
+                        term = ee.Algorithms.If(p.gt(0), p.multiply(p.log()), ee.Number(0))
+                        return ee.Number(acc).add(ee.Number(term))
+                    entropy_nats = ee.Number(vals.iterate(_acc_entropy, ee.Number(0))).multiply(-1)
+                    entropy_bits = entropy_nats.divide(ee.Number(ee.Number(2).log()))
+                    # get client-side histogram to preserve areas etc.
+                    freq_dict = freq.get(band_name).getInfo() if freq and freq.getInfo() else {}
+                except Exception:
+                    # fallback to client-side retrieval
+                    freq_dict = freq.get(band_name).getInfo() if freq and freq.getInfo() else {}
+                    entropy_nats = None
+                    entropy_bits = None
+
+                # Convert counts to area (m2) and compute 95% Wilson CI for proportions
                 areas = {}
                 total_pixels = sum(freq_dict.values()) if freq_dict else 0
+                total_area_m2 = float(total_pixels) * (download_scale ** 2) if total_pixels else 0.0
+                import math
+                z = 1.96  # 95% CI
                 for class_id, px_count in freq_dict.items():
                     area_m2 = float(px_count) * (download_scale ** 2)
                     class_name = ESRI_CLASSES.get(int(class_id), f'Class_{class_id}')
-                    areas[class_name] = {'pixels': int(px_count), 'area_m2': area_m2, 'percentage': (px_count / total_pixels * 100) if total_pixels > 0 else None}
+                    pct = (px_count / total_pixels * 100) if total_pixels > 0 else None
+                    ci_pct = None
+                    ci_area = None
+                    if total_pixels and total_pixels > 0:
+                        n = total_pixels
+                        k = px_count
+                        p = float(k) / n
+                        denom = 1 + (z*z)/n
+                        center = (p + (z*z)/(2*n)) / denom
+                        half = (z * math.sqrt((p*(1-p)/n) + (z*z)/(4*(n*n)))) / denom
+                        lower = max(0.0, center - half)
+                        upper = min(1.0, center + half)
+                        ci_pct = [lower * 100.0, upper * 100.0]
+                        ci_area = [lower * total_area_m2, upper * total_area_m2]
+                    areas[class_name] = {'pixels': int(px_count), 'area_m2': area_m2, 'percentage': pct, 'ci_percentage': ci_pct, 'ci_area_m2': ci_area}
                 hist = areas
+                # attach entropy values (may be None if we fell back)
+                if entropy_nats is not None:
+                    hist.setdefault('_entropy', {})
+                    hist['_entropy']['nats'] = float(entropy_nats.getInfo())
+                    hist['_entropy']['bits'] = float(entropy_bits.getInfo())
             except Exception as e:
                 hist = {'error': str(e)}
 

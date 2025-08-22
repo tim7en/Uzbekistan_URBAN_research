@@ -1,0 +1,137 @@
+{
+  "city": "Nukus",
+  "year": 2017,
+  "generated": {
+    "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nukus\\Nukus_ndvi_evi_summer_2017.tif",
+    "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nukus\\Nukus_ndvi_evi_winter_2017.tif",
+    "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nukus\\Nukus_ndvi_change_2017.tif",
+    "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nukus\\Nukus_evi_change_2017.tif",
+    "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_lst_summer_2017.tif",
+    "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_lst_winter_2017.tif",
+    "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_lst_change_2017.tif"
+  },
+  "stats": {
+    "summer_ndvi_mean": 0.25369718009826275,
+    "winter_ndvi_mean": 0.10746939015553643,
+    "ndvi_change_mean": 0.14622778994272667,
+    "summer_evi_mean": 0.18285279469016705,
+    "winter_evi_mean": 0.07225939898532996,
+    "evi_change_mean": 0.1105933957048374,
+    "summer_lst_mean": 46.23668231989087,
+    "winter_lst_mean": 9.697498342155722,
+    "lst_change_mean": 36.53918397773517,
+    "summer_biomass_t_per_ha": 4.301868848043514,
+    "winter_biomass_t_per_ha": 1.4897959645295467,
+    "biomass_change_t_per_ha": 2.8120728835139674
+  },
+  "uncertainty": {
+    "summer_ndvi": {
+      "city": {
+        "mean": 0.25369718009826275,
+        "stdDev": 0.1479158107996365,
+        "count": 2160,
+        "stdError": 0.003182641510376441,
+        "ci95": [
+          0.24745920273792493,
+          0.2599351574586006
+        ]
+      }
+    },
+    "winter_ndvi": {
+      "city": {
+        "mean": 0.10746939015553643,
+        "stdDev": 0.03988962975163909,
+        "count": 2160,
+        "stdError": 0.000858288176191545,
+        "ci95": [
+          0.105787145330201,
+          0.10915163498087185
+        ]
+      }
+    },
+    "ndvi_change": {
+      "city": {
+        "mean": 0.14622778994272667,
+        "stdDev": 0.13111222932981362,
+        "count": 2160,
+        "stdError": 0.002821086003769421,
+        "ci95": [
+          0.14069846137533862,
+          0.15175711851011472
+        ]
+      }
+    },
+    "summer_evi": {
+      "city": {
+        "mean": 0.18285279469016705,
+        "stdDev": 0.09744127210110794,
+        "count": 2160,
+        "stdError": 0.002096602356004758,
+        "ci95": [
+          0.17874345407239772,
+          0.18696213530793637
+        ]
+      }
+    },
+    "winter_evi": {
+      "city": {
+        "mean": 0.07225939898532996,
+        "stdDev": 0.02205112855184648,
+        "count": 2160,
+        "stdError": 0.0004744647424798906,
+        "ci95": [
+          0.07132944809006937,
+          0.07318934988059055
+        ]
+      }
+    },
+    "evi_change": {
+      "city": {
+        "mean": 0.1105933957048374,
+        "stdDev": 0.09241436904450995,
+        "count": 2160,
+        "stdError": 0.0019884406236647402,
+        "ci95": [
+          0.1066960520824545,
+          0.11449073932722029
+        ]
+      }
+    },
+    "summer_lst": {
+      "city": {
+        "mean": 46.23668231989087,
+        "stdDev": 7.111396509599241,
+        "count": 2160,
+        "stdError": 0.1530128902775301,
+        "ci95": [
+          45.93677705494691,
+          46.53658758483483
+        ]
+      }
+    },
+    "winter_lst": {
+      "city": {
+        "mean": 9.697498342155722,
+        "stdDev": 3.1819478580225677,
+        "count": 2160,
+        "stdError": 0.06846461701456538,
+        "ci95": [
+          9.563307692807173,
+          9.83168899150427
+        ]
+      }
+    },
+    "lst_change": {
+      "city": {
+        "mean": 36.53918397773517,
+        "stdDev": 6.703914144138141,
+        "count": 2160,
+        "stdError": 0.14424526574806315,
+        "ci95": [
+          36.25646325686897,
+          36.82190469860137
+        ]
+      }
+    }
+  }
+}

@@ -84,7 +84,8 @@ def main():
 
     # Save generation summary
     if any('coarse' in r or 'highres' in r or 'drive' in r for r in results):
-        gen_file = base / 'lulc_summary.json'
+        gen_file = base / 'reports' / 'lulc_summary.json'
+        gen_file.parent.mkdir(parents=True, exist_ok=True)
         with open(gen_file, 'w', encoding='utf-8') as f:
             json.dump(results, f, indent=2)
         print('Saved generation summary:', gen_file)
@@ -96,7 +97,8 @@ def main():
             # run detailed LULC analysis (time series, trends, comparisons vs ESRI)
             r = lulc_analysis.run_city_lulc_analysis(base, city, start_year, end_year)
             analysis_results.append(r)
-        analysis_file = base / 'lulc_analysis_summary.json'
+        analysis_file = base / 'reports' / 'lulc_analysis_summary.json'
+        analysis_file.parent.mkdir(parents=True, exist_ok=True)
         with open(analysis_file, 'w', encoding='utf-8') as f:
             json.dump(analysis_results, f, indent=2)
         print('Saved analysis summary:', analysis_file)
