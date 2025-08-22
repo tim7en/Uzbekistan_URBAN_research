@@ -1,0 +1,42 @@
+{
+  "city": "Jizzakh",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 3.5890411880691993,
+          "stdDev": 4.446492220788209,
+          "count": 25388
+        },
+        "rural_ring": {
+          "mean": 0.4316182308107282,
+          "stdDev": 0.5145338522867756,
+          "count": 413599
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 3.5890411880691993,
+            "stdDev": 4.446492220788209,
+            "count": 25388,
+            "stdError": 0.027906366398180088,
+            "ci95": [
+              3.5343447099287664,
+              3.643737666209632
+            ]
+          },
+          "rural_ring": {
+            "mean": 0.4316182308107282,
+            "stdDev": 0.5145338522867756,
+            "count": 413599,
+            "stdError": 0.0008000630494526656,
+            "ci95": [
+              0.430050107233801,
+              0.4331863543876554
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Jizzakh\\viirs_2018.png"
+    }
+  }
+}

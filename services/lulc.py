@@ -63,7 +63,8 @@ def generate_esri_only_local(base: Path, city: str, year: int, coarse_scale: int
         # Process ESRI full and built maps
         try:
             esri_proj = esri.setDefaultProjection('EPSG:3857', None, 10)
-            esri_mode = esri_proj.reduceResolution(ee.Reducer.mode(), maxPixels=1024)
+            # Increase maxPixels to support larger input neighborhoods for big city extents
+            esri_mode = esri_proj.reduceResolution(ee.Reducer.mode(), maxPixels=8192)
             esri_agg = esri_mode.reproject(crs='EPSG:4326', scale=coarse_scale).rename('esri_full')
         except Exception:
             esri_agg = esri.reproject(crs='EPSG:4326', scale=coarse_scale).rename('esri_full')

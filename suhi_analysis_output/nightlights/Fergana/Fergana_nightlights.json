@@ -1,0 +1,42 @@
+{
+  "city": "Fergana",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 2.4598130689379913,
+          "stdDev": 2.7000265848914435,
+          "count": 57830
+        },
+        "rural_ring": {
+          "mean": 0.7268691150778261,
+          "stdDev": 0.8094622413009332,
+          "count": 496279
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 2.4598130689379913,
+            "stdDev": 2.7000265848914435,
+            "count": 57830,
+            "stdError": 0.01122771665516253,
+            "ci95": [
+              2.437806744293873,
+              2.48181939358211
+            ]
+          },
+          "rural_ring": {
+            "mean": 0.7268691150778261,
+            "stdDev": 0.8094622413009332,
+            "count": 496279,
+            "stdError": 0.0011490360273573468,
+            "ci95": [
+              0.7246170044642057,
+              0.7291212256914466
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Fergana\\viirs_2018.png"
+    }
+  }
+}

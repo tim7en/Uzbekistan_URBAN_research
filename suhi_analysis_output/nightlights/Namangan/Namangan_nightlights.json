@@ -1,0 +1,42 @@
+{
+  "city": "Namangan",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 3.344812315480411,
+          "stdDev": 3.422186357695452,
+          "count": 58368
+        },
+        "rural_ring": {
+          "mean": 0.8337865564828467,
+          "stdDev": 0.9222185126412089,
+          "count": 500873
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 3.344812315480411,
+            "stdDev": 3.422186357695452,
+            "count": 58368,
+            "stdError": 0.014164989258356856,
+            "ci95": [
+              3.3170489365340314,
+              3.37257569442679
+            ]
+          },
+          "rural_ring": {
+            "mean": 0.8337865564828467,
+            "stdDev": 0.9222185126412089,
+            "count": 500873,
+            "stdError": 0.0013030768380923891,
+            "ci95": [
+              0.8312325258801856,
+              0.8363405870855078
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Namangan\\viirs_2018.png"
+    }
+  }
+}

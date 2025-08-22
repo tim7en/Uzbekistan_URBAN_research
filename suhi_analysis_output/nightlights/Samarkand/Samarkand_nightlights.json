@@ -1,0 +1,42 @@
+{
+  "city": "Samarkand",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 4.945243708283391,
+          "stdDev": 6.8562976304428,
+          "count": 57213
+        },
+        "rural_ring": {
+          "mean": 0.7388855301295295,
+          "stdDev": 0.7181845641698847,
+          "count": 490987
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 4.945243708283391,
+            "stdDev": 6.8562976304428,
+            "count": 57213,
+            "stdError": 0.02866436342946926,
+            "ci95": [
+              4.889061555961631,
+              5.00142586060515
+            ]
+          },
+          "rural_ring": {
+            "mean": 0.7388855301295295,
+            "stdDev": 0.7181845641698847,
+            "count": 490987,
+            "stdError": 0.001024946200866379,
+            "ci95": [
+              0.7368766355758314,
+              0.7408944246832276
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Samarkand\\viirs_2018.png"
+    }
+  }
+}

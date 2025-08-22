@@ -1,0 +1,1840 @@
+{
+  "Tashkent": {
+    "2018": {
+      "city": "Tashkent",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.324104275052236,
+        "winter_ndvi_mean": 0.14772063326213175,
+        "ndvi_change_mean": 0.17686873132053946,
+        "summer_evi_mean": 0.2427349880614154,
+        "winter_evi_mean": 0.088100163931764,
+        "evi_change_mean": 0.15499837111502715,
+        "summer_lst_mean": 42.72754464389265,
+        "winter_lst_mean": 3.968655389344174,
+        "lst_change_mean": 38.76028189661343,
+        "summer_biomass_t_per_ha": 5.655851443312231,
+        "winter_biomass_t_per_ha": 2.263858331964072,
+        "biomass_change_t_per_ha": 3.3919931113481585
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.324104275052236,
+            "stdDev": 0.12239038096710514,
+            "count": 4740,
+            "stdError": 0.0017776985402049054,
+            "ci95": [
+              0.3206199859134344,
+              0.3275885641910376
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.14772063326213175,
+            "stdDev": 0.055334744721606384,
+            "count": 4721,
+            "stdError": 0.0008053430414456069,
+            "ci95": [
+              0.14614216090089835,
+              0.14929910562336515
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.17686873132053946,
+            "stdDev": 0.09812594700332078,
+            "count": 4721,
+            "stdError": 0.0014281271017326683,
+            "ci95": [
+              0.17406960220114343,
+              0.1796678604399355
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.2427349880614154,
+            "stdDev": 0.09138537807813563,
+            "count": 4740,
+            "stdError": 0.0013273563814564665,
+            "ci95": [
+              0.24013336955376074,
+              0.24533660656907008
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.088100163931764,
+            "stdDev": 0.03303490083229752,
+            "count": 4721,
+            "stdError": 0.0004807906432745925,
+            "ci95": [
+              0.0871578142709458,
+              0.0890425135925822
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.15499837111502715,
+            "stdDev": 0.07762524425481288,
+            "count": 4721,
+            "stdError": 0.0011297594416608758,
+            "ci95": [
+              0.15278404260937184,
+              0.15721269962068246
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 42.72754464389265,
+            "stdDev": 2.9287852532644725,
+            "count": 4740,
+            "stdError": 0.042540085488427866,
+            "ci95": [
+              42.64416607633533,
+              42.81092321144997
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": 3.968655389344174,
+            "stdDev": 2.3027710663189476,
+            "count": 4717,
+            "stdError": 0.03352878576781075,
+            "ci95": [
+              3.9029389692392646,
+              4.034371809449083
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 38.76028189661343,
+            "stdDev": 3.5929245716402676,
+            "count": 4717,
+            "stdError": 0.05231366678364562,
+            "ci95": [
+              38.657747109717484,
+              38.86281668350937
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_auxiliary_2018.json"
+    }
+  },
+  "Nukus": {
+    "2018": {
+      "city": "Nukus",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nukus\\Nukus_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nukus\\Nukus_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nukus\\Nukus_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nukus\\Nukus_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.24211397285665198,
+        "winter_ndvi_mean": 0.10702045184764776,
+        "ndvi_change_mean": 0.13535464574907244,
+        "summer_evi_mean": 0.17957419439476663,
+        "winter_evi_mean": 0.07215230887529529,
+        "evi_change_mean": 0.10757452771341734,
+        "summer_lst_mean": 48.16608732691,
+        "winter_lst_mean": -2.020063406988234,
+        "lst_change_mean": 48.9937749346373,
+        "summer_biomass_t_per_ha": 4.0791148626279226,
+        "winter_biomass_t_per_ha": 1.4811625355316878,
+        "biomass_change_t_per_ha": 2.597952327096235
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.24211397285665198,
+            "stdDev": 0.1280547356505873,
+            "count": 2160,
+            "stdError": 0.0027552992143206547,
+            "ci95": [
+              0.2367135863965835,
+              0.24751435931672047
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.10702045184764776,
+            "stdDev": 0.05400605430124683,
+            "count": 2150,
+            "stdError": 0.0011647245210157859,
+            "ci95": [
+              0.10473759178645682,
+              0.1093033119088387
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.13535464574907244,
+            "stdDev": 0.12486817869973824,
+            "count": 2150,
+            "stdError": 0.0026929763988110585,
+            "ci95": [
+              0.13007641200740278,
+              0.1406328794907421
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.17957419439476663,
+            "stdDev": 0.08885238069997209,
+            "count": 2160,
+            "stdError": 0.00191179883734374,
+            "ci95": [
+              0.1758270686735729,
+              0.18332132011596036
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.07215230887529529,
+            "stdDev": 0.035976349469885566,
+            "count": 2150,
+            "stdError": 0.0007758859066147624,
+            "ci95": [
+              0.07063157249833035,
+              0.07367304525226023
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.10757452771341734,
+            "stdDev": 0.09113030569300415,
+            "count": 2150,
+            "stdError": 0.001965366717150746,
+            "ci95": [
+              0.10372240894780188,
+              0.1114266464790328
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 48.16608732691,
+            "stdDev": 6.202560740785252,
+            "count": 2160,
+            "stdError": 0.13345785807167346,
+            "ci95": [
+              47.90450992508952,
+              48.427664728730484
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": -2.020063406988234,
+            "stdDev": 5.346487333346514,
+            "count": 911,
+            "stdError": 0.17713702797599892,
+            "ci95": [
+              -2.367251981821192,
+              -1.6728748321552762
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 48.9937749346373,
+            "stdDev": 4.838174175492481,
+            "count": 911,
+            "stdError": 0.1602958617205841,
+            "ci95": [
+              48.67959504566495,
+              49.30795482360965
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nukus\\Nukus_auxiliary_2018.json"
+    }
+  },
+  "Andijan": {
+    "2018": {
+      "city": "Andijan",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Andijan\\Andijan_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Andijan\\Andijan_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Andijan\\Andijan_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Andijan\\Andijan_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.3661880264193387,
+        "winter_ndvi_mean": 0.15581374480756255,
+        "ndvi_change_mean": 0.17879181353043896,
+        "summer_evi_mean": 0.26247551829813975,
+        "winter_evi_mean": 0.23987128650311074,
+        "evi_change_mean": 0.00371664013494471,
+        "summer_lst_mean": 42.101629009637975,
+        "winter_lst_mean": 4.84680932450765,
+        "lst_change_mean": 39.836645234788314,
+        "summer_biomass_t_per_ha": 6.465154354218051,
+        "winter_biomass_t_per_ha": 2.419495092453126,
+        "biomass_change_t_per_ha": 4.045659261764925
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.3661880264193387,
+            "stdDev": 0.13903079313846534,
+            "count": 3024,
+            "stdError": 0.0025282505297093824,
+            "ci95": [
+              0.36123265538110827,
+              0.3711433974575691
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.15581374480756255,
+            "stdDev": 0.09219070479209586,
+            "count": 494,
+            "stdError": 0.004147855904363981,
+            "ci95": [
+              0.14768394723500913,
+              0.16394354238011596
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.17879181353043896,
+            "stdDev": 0.17460206960615807,
+            "count": 494,
+            "stdError": 0.00785571850180894,
+            "ci95": [
+              0.16339460526689345,
+              0.19418902179398448
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.26247551829813975,
+            "stdDev": 0.09897675479971937,
+            "count": 3024,
+            "stdError": 0.001799874884566658,
+            "ci95": [
+              0.2589477635243891,
+              0.2660032730718904
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.23987128650311074,
+            "stdDev": 3.5457606967091984,
+            "count": 494,
+            "stdError": 0.15953131581404234,
+            "ci95": [
+              -0.07281009249241227,
+              0.5525526654986337
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.00371664013494471,
+            "stdDev": 3.545480924659702,
+            "count": 494,
+            "stdError": 0.15951872827444172,
+            "ci95": [
+              -0.30894006728296103,
+              0.31637334755285046
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 42.101629009637975,
+            "stdDev": 4.738781922846408,
+            "count": 3024,
+            "stdError": 0.08617391612433352,
+            "ci95": [
+              41.93272813403428,
+              42.27052988524167
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": 4.84680932450765,
+            "stdDev": 3.8133814866708198,
+            "count": 492,
+            "stdError": 0.17192051459670138,
+            "ci95": [
+              4.5098451158981145,
+              5.183773533117185
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 39.836645234788314,
+            "stdDev": 6.7602009121119355,
+            "count": 492,
+            "stdError": 0.3047733943351206,
+            "ci95": [
+              39.239289381891474,
+              40.434001087685154
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Andijan\\Andijan_auxiliary_2018.json"
+    }
+  },
+  "Bukhara": {
+    "2018": {
+      "city": "Bukhara",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Bukhara\\Bukhara_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Bukhara\\Bukhara_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Bukhara\\Bukhara_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Bukhara\\Bukhara_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.34168418029248815,
+        "winter_ndvi_mean": 0.10118466696898838,
+        "ndvi_change_mean": 0.2405577458127004,
+        "summer_evi_mean": 0.2691433664791158,
+        "winter_evi_mean": 0.0599125567774943,
+        "evi_change_mean": 0.20927083763453444,
+        "summer_lst_mean": 39.91248758702172,
+        "winter_lst_mean": 5.577729064495645,
+        "lst_change_mean": 34.42132732379121,
+        "summer_biomass_t_per_ha": 5.99392654408631,
+        "winter_biomass_t_per_ha": 1.3689359032497768,
+        "biomass_change_t_per_ha": 4.6249906408365336
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.34168418029248815,
+            "stdDev": 0.12352437141588045,
+            "count": 2080,
+            "stdError": 0.002708451013253948,
+            "ci95": [
+              0.3363756163065104,
+              0.3469927442784659
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.10118466696898838,
+            "stdDev": 0.07242515639992406,
+            "count": 2079,
+            "stdError": 0.0015884084803685465,
+            "ci95": [
+              0.09807138634746602,
+              0.10429794759051074
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.2405577458127004,
+            "stdDev": 0.14273908609604435,
+            "count": 2079,
+            "stdError": 0.003130514121130026,
+            "ci95": [
+              0.23442193813528556,
+              0.24669355349011524
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.2691433664791158,
+            "stdDev": 0.09355108233524216,
+            "count": 2080,
+            "stdError": 0.0020512431744244075,
+            "ci95": [
+              0.26512292985724395,
+              0.27316380310098765
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.0599125567774943,
+            "stdDev": 0.04116217707438589,
+            "count": 2079,
+            "stdError": 0.0009027574724775447,
+            "ci95": [
+              0.05814315213143831,
+              0.061681961423550286
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.20927083763453444,
+            "stdDev": 0.10299443912316211,
+            "count": 2079,
+            "stdError": 0.0022588455264171753,
+            "ci95": [
+              0.20484350040275678,
+              0.2136981748663121
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 39.91248758702172,
+            "stdDev": 3.401198708184111,
+            "count": 2080,
+            "stdError": 0.07457621505673957,
+            "ci95": [
+              39.766318205510515,
+              40.05865696853293
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": 5.577729064495645,
+            "stdDev": 1.5314920025492906,
+            "count": 2023,
+            "stdError": 0.03404997456831699,
+            "ci95": [
+              5.510991114341744,
+              5.644467014649546
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 34.42132732379121,
+            "stdDev": 2.818956534531593,
+            "count": 2023,
+            "stdError": 0.06267443653000888,
+            "ci95": [
+              34.29848542819239,
+              34.54416921939003
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Bukhara\\Bukhara_auxiliary_2018.json"
+    }
+  },
+  "Samarkand": {
+    "2018": {
+      "city": "Samarkand",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.32067448626449374,
+        "winter_ndvi_mean": 0.14744341718271187,
+        "ndvi_change_mean": 0.17412828481234285,
+        "summer_evi_mean": 0.24203426621515828,
+        "winter_evi_mean": 0.08634113199803627,
+        "evi_change_mean": 0.15629292951255,
+        "summer_lst_mean": 40.528478411949706,
+        "winter_lst_mean": 6.347825832971462,
+        "lst_change_mean": 34.192136138011016,
+        "summer_biomass_t_per_ha": 5.589893966624881,
+        "winter_biomass_t_per_ha": 2.2585272535136895,
+        "biomass_change_t_per_ha": 3.331366713111191
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.32067448626449374,
+            "stdDev": 0.1249191619589713,
+            "count": 2976,
+            "stdError": 0.0022898793390210407,
+            "ci95": [
+              0.3161863227600125,
+              0.32516264976897497
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.14744341718271187,
+            "stdDev": 0.06553301571512368,
+            "count": 2945,
+            "stdError": 0.0012075844286700058,
+            "ci95": [
+              0.14507655170251865,
+              0.14981028266290508
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.17412828481234285,
+            "stdDev": 0.11241299558910452,
+            "count": 2945,
+            "stdError": 0.0020714472174401207,
+            "ci95": [
+              0.1700682482661602,
+              0.1781883213585255
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.24203426621515828,
+            "stdDev": 0.09278379643169883,
+            "count": 2976,
+            "stdError": 0.001700809508429646,
+            "ci95": [
+              0.23870067957863617,
+              0.2453678528516804
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.08634113199803627,
+            "stdDev": 0.03735373771781895,
+            "count": 2945,
+            "stdError": 0.0006883216273267229,
+            "ci95": [
+              0.0849920216084759,
+              0.08769024238759664
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.15629292951255,
+            "stdDev": 0.08777758588027713,
+            "count": 2945,
+            "stdError": 0.0016174876852310712,
+            "ci95": [
+              0.1531226536494971,
+              0.1594632053756029
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 40.528478411949706,
+            "stdDev": 3.6578846916737326,
+            "count": 2976,
+            "stdError": 0.06705227963934067,
+            "ci95": [
+              40.3970559438566,
+              40.65990088004281
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": 6.347825832971462,
+            "stdDev": 1.804022194917666,
+            "count": 2940,
+            "stdError": 0.03327118055764129,
+            "ci95": [
+              6.282614319078485,
+              6.413037346864439
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 34.192136138011016,
+            "stdDev": 3.4540301605209516,
+            "count": 2940,
+            "stdError": 0.0637019108999799,
+            "ci95": [
+              34.067280392647056,
+              34.316991883374975
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_auxiliary_2018.json"
+    }
+  },
+  "Namangan": {
+    "2018": {
+      "city": "Namangan",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": null,
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Namangan\\Namangan_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Namangan\\Namangan_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Namangan\\Namangan_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.342612777476344,
+        "winter_ndvi_mean": 0.098226051176233,
+        "ndvi_change_mean": 0.22539914076045398,
+        "summer_evi_mean": 0.2531673768556134,
+        "winter_evi_mean": 0.06793059500050488,
+        "evi_change_mean": 0.17263020644400215,
+        "summer_lst_mean": 41.62376286987764,
+        "winter_lst_mean": 1.6300111671214221,
+        "lst_change_mean": 40.52514101116456,
+        "summer_biomass_t_per_ha": 6.011784182237384,
+        "winter_biomass_t_per_ha": 1.3120394456967883,
+        "biomass_change_t_per_ha": 4.6997447365405955
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.342612777476344,
+            "stdDev": 0.11601057530949446,
+            "count": 3024,
+            "stdError": 0.002109631915758466,
+            "ci95": [
+              0.3384778989214574,
+              0.3467476560312306
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.098226051176233,
+            "stdDev": 0.09503484365451959,
+            "count": 1764,
+            "stdError": 0.0022627343727266566,
+            "ci95": [
+              0.09379109180568874,
+              0.10266101054677725
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.22539914076045398,
+            "stdDev": 0.147686433070392,
+            "count": 1764,
+            "stdError": 0.003516343644533143,
+            "ci95": [
+              0.218507107217169,
+              0.23229117430373894
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.2531673768556134,
+            "stdDev": 0.08472389311537558,
+            "count": 3024,
+            "stdError": 0.0015406891006847481,
+            "ci95": [
+              0.2501476262182713,
+              0.2561871274929555
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.06793059500050488,
+            "stdDev": 0.03824912010815572,
+            "count": 1764,
+            "stdError": 0.0009106933359084695,
+            "ci95": [
+              0.06614563606212429,
+              0.06971555393888548
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.17263020644400215,
+            "stdDev": 0.08953937776630426,
+            "count": 1764,
+            "stdError": 0.002131889946816768,
+            "ci95": [
+              0.1684517021482413,
+              0.176808710739763
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 41.62376286987764,
+            "stdDev": 3.2372928030079207,
+            "count": 3024,
+            "stdError": 0.05886960046237921,
+            "ci95": [
+              41.50837845297137,
+              41.739147286783904
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": 1.6300111671214221,
+            "stdDev": 4.518824535918787,
+            "count": 1732,
+            "stdError": 0.10858042428170439,
+            "ci95": [
+              1.4171935355292815,
+              1.8428287987135628
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 40.52514101116456,
+            "stdDev": 4.608198920125585,
+            "count": 1732,
+            "stdError": 0.11072795368452885,
+            "ci95": [
+              40.30811422194288,
+              40.742167800386234
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Namangan\\Namangan_auxiliary_2018.json"
+    }
+  },
+  "Jizzakh": {
+    "2018": {
+      "city": "Jizzakh",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Jizzakh\\Jizzakh_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Jizzakh\\Jizzakh_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Jizzakh\\Jizzakh_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Jizzakh\\Jizzakh_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.27705242436230715,
+        "winter_ndvi_mean": 0.15121463413509104,
+        "ndvi_change_mean": 0.12578152161352518,
+        "summer_evi_mean": 0.21519549962444473,
+        "winter_evi_mean": 0.0953267596722608,
+        "evi_change_mean": 0.11982201437229272,
+        "summer_lst_mean": 44.806180783400094,
+        "winter_lst_mean": 3.926746764132996,
+        "lst_change_mean": 40.879729523874914,
+        "summer_biomass_t_per_ha": 4.7510081608135994,
+        "winter_biomass_t_per_ha": 2.3310506564440585,
+        "biomass_change_t_per_ha": 2.419957504369541
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.27705242436230715,
+            "stdDev": 0.113301425688119,
+            "count": 1312,
+            "stdError": 0.0031280123362987,
+            "ci95": [
+              0.2709215201831617,
+              0.2831833285414526
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.15121463413509104,
+            "stdDev": 0.12990604102353698,
+            "count": 1310,
+            "stdError": 0.0035891672782773936,
+            "ci95": [
+              0.14417986626966733,
+              0.15824940200051474
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.12578152161352518,
+            "stdDev": 0.14789017503457455,
+            "count": 1310,
+            "stdError": 0.004086049985286196,
+            "ci95": [
+              0.11777286364236424,
+              0.13379017958468611
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.21519549962444473,
+            "stdDev": 0.08548473594099701,
+            "count": 1312,
+            "stdError": 0.0023600524615173956,
+            "ci95": [
+              0.21056979679987065,
+              0.21982120244901882
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.0953267596722608,
+            "stdDev": 0.0377567372307615,
+            "count": 1310,
+            "stdError": 0.0010431789371412967,
+            "ci95": [
+              0.09328212895546385,
+              0.09737139038905775
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.11982201437229272,
+            "stdDev": 0.09564082829669253,
+            "count": 1310,
+            "stdError": 0.002642455490793073,
+            "ci95": [
+              0.1146428016103383,
+              0.12500122713424713
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 44.806180783400094,
+            "stdDev": 4.462796102893303,
+            "count": 1312,
+            "stdError": 0.12320834605084632,
+            "ci95": [
+              44.564692425140436,
+              45.04766914165975
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": 3.926746764132996,
+            "stdDev": 1.6698388904794623,
+            "count": 1309,
+            "stdError": 0.04615351141416722,
+            "ci95": [
+              3.836285881761228,
+              4.0172076465047635
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 40.879729523874914,
+            "stdDev": 3.9963026684802396,
+            "count": 1309,
+            "stdError": 0.11045580617134283,
+            "ci95": [
+              40.66323614377908,
+              41.09622290397075
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Jizzakh\\Jizzakh_auxiliary_2018.json"
+    }
+  },
+  "Qarshi": {
+    "2018": {
+      "city": "Qarshi",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Qarshi\\Qarshi_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Qarshi\\Qarshi_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Qarshi\\Qarshi_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Qarshi\\Qarshi_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.2745356651636894,
+        "winter_ndvi_mean": 0.14023661057311423,
+        "ndvi_change_mean": 0.13443800115124158,
+        "summer_evi_mean": 0.21708217190765905,
+        "winter_evi_mean": 0.09625517265937283,
+        "evi_change_mean": 0.1209186153109492,
+        "summer_lst_mean": 45.056712798293475,
+        "winter_lst_mean": 12.899735158865413,
+        "lst_change_mean": 32.16049595409025,
+        "summer_biomass_t_per_ha": 4.702608945455565,
+        "winter_biomass_t_per_ha": 2.1199348187137352,
+        "biomass_change_t_per_ha": 2.58267412674183
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.2745356651636894,
+            "stdDev": 0.09773525163824379,
+            "count": 1312,
+            "stdError": 0.0026982632474301014,
+            "ci95": [
+              0.2692470691987264,
+              0.2798242611286524
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.14023661057311423,
+            "stdDev": 0.03857499007482992,
+            "count": 1309,
+            "stdError": 0.001066193424330206,
+            "ci95": [
+              0.13814687146142704,
+              0.14232634968480143
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.13443800115124158,
+            "stdDev": 0.08038103996956304,
+            "count": 1309,
+            "stdError": 0.002221691725393126,
+            "ci95": [
+              0.13008348536947106,
+              0.1387925169330121
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.21708217190765905,
+            "stdDev": 0.07431866849452855,
+            "count": 1312,
+            "stdError": 0.002051780994425351,
+            "ci95": [
+              0.21306068115858537,
+              0.22110366265673273
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.09625517265937283,
+            "stdDev": 0.025183360945411466,
+            "count": 1309,
+            "stdError": 0.0006960554958133768,
+            "ci95": [
+              0.09489090388757862,
+              0.09761944143116705
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.1209186153109492,
+            "stdDev": 0.0648020591764557,
+            "count": 1309,
+            "stdError": 0.0017910964913527227,
+            "ci95": [
+              0.11740806618789787,
+              0.12442916443400054
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 45.056712798293475,
+            "stdDev": 3.3042194746207247,
+            "count": 1312,
+            "stdError": 0.09122249976714857,
+            "ci95": [
+              44.877916698749864,
+              45.235508897837086
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": 12.899735158865413,
+            "stdDev": 1.3768733009639877,
+            "count": 1309,
+            "stdError": 0.03805608910788816,
+            "ci95": [
+              12.825145224213951,
+              12.974325093516875
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 32.16049595409025,
+            "stdDev": 3.1382575021818857,
+            "count": 1309,
+            "stdError": 0.08673986710535833,
+            "ci95": [
+              31.990485814563748,
+              32.330506093616755
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Qarshi\\Qarshi_auxiliary_2018.json"
+    }
+  },
+  "Navoiy": {
+    "2018": {
+      "city": "Navoiy",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Navoiy\\Navoiy_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Navoiy\\Navoiy_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Navoiy\\Navoiy_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Navoiy\\Navoiy_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.22838442035032144,
+        "winter_ndvi_mean": 0.11204825343619733,
+        "ndvi_change_mean": 0.11649871240903412,
+        "summer_evi_mean": 0.17931587582561842,
+        "winter_evi_mean": 0.07402158102291304,
+        "evi_change_mean": 0.10541525763484888,
+        "summer_lst_mean": 48.91073893490615,
+        "winter_lst_mean": 11.883937901987474,
+        "lst_change_mean": 37.163745772666516,
+        "summer_biomass_t_per_ha": 3.815085006736951,
+        "winter_biomass_t_per_ha": 1.5778510276191793,
+        "biomass_change_t_per_ha": 2.2372339791177716
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.22838442035032144,
+            "stdDev": 0.1494438403667839,
+            "count": 2132,
+            "stdError": 0.0032365656397657944,
+            "ci95": [
+              0.2220407516963805,
+              0.2347280890042624
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.11204825343619733,
+            "stdDev": 0.0530510457280644,
+            "count": 2129,
+            "stdError": 0.001149757148136314,
+            "ci95": [
+              0.10979472942585015,
+              0.1143017774465445
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.11649871240903412,
+            "stdDev": 0.14333138983357255,
+            "count": 2129,
+            "stdError": 0.003106372131818019,
+            "ci95": [
+              0.1104102230306708,
+              0.12258720178739743
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.17931587582561842,
+            "stdDev": 0.10958628214071375,
+            "count": 2132,
+            "stdError": 0.002373354395174842,
+            "ci95": [
+              0.17466410121107573,
+              0.1839676504401611
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.07402158102291304,
+            "stdDev": 0.031856672779065044,
+            "count": 2129,
+            "stdError": 0.0006904187606653223,
+            "ci95": [
+              0.072668360252009,
+              0.07537480179381707
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.10541525763484888,
+            "stdDev": 0.11043434671090117,
+            "count": 2129,
+            "stdError": 0.0023934057809430354,
+            "ci95": [
+              0.10072418230420054,
+              0.11010633296549723
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 48.91073893490615,
+            "stdDev": 6.463294887859654,
+            "count": 2132,
+            "stdError": 0.13997818914703156,
+            "ci95": [
+              48.63638168417797,
+              49.18509618563433
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": 11.883937901987474,
+            "stdDev": 2.1130938910805366,
+            "count": 2090,
+            "stdError": 0.04622167200490621,
+            "ci95": [
+              11.793343424857857,
+              11.974532379117091
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 37.163745772666516,
+            "stdDev": 4.913225019992971,
+            "count": 2090,
+            "stdError": 0.10747154980618817,
+            "ci95": [
+              36.953101535046386,
+              37.374390010286646
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Navoiy\\Navoiy_auxiliary_2018.json"
+    }
+  },
+  "Termez": {
+    "2018": {
+      "city": "Termez",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Termez\\Termez_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Termez\\Termez_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Termez\\Termez_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Termez\\Termez_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.2402155031758226,
+        "winter_ndvi_mean": 0.11625816901035067,
+        "ndvi_change_mean": 0.12412904702588738,
+        "summer_evi_mean": 0.1825224723907201,
+        "winter_evi_mean": 0.07483197765781033,
+        "evi_change_mean": 0.10776939797694213,
+        "summer_lst_mean": 42.28610177558756,
+        "winter_lst_mean": 12.355388702791817,
+        "lst_change_mean": 29.96132161918592,
+        "summer_biomass_t_per_ha": 4.0426058303042804,
+        "winter_biomass_t_per_ha": 1.6588109425067437,
+        "biomass_change_t_per_ha": 2.383794887797537
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.2402155031758226,
+            "stdDev": 0.14491244054517355,
+            "count": 1280,
+            "stdError": 0.004050425848055059,
+            "ci95": [
+              0.23227666851363468,
+              0.24815433783801052
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.11625816901035067,
+            "stdDev": 0.11394993401219965,
+            "count": 1274,
+            "stdError": 0.0031924886653890996,
+            "ci95": [
+              0.11000089122618804,
+              0.1225154467945133
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.12412904702588738,
+            "stdDev": 0.09323606243372932,
+            "count": 1274,
+            "stdError": 0.0026121566028579173,
+            "ci95": [
+              0.11900922008428587,
+              0.1292488739674889
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.1825224723907201,
+            "stdDev": 0.10587509039619895,
+            "count": 1280,
+            "stdError": 0.00295929874062295,
+            "ci95": [
+              0.1767222468590991,
+              0.18832269792234108
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.07483197765781033,
+            "stdDev": 0.05814183976220265,
+            "count": 1274,
+            "stdError": 0.001628936129140968,
+            "ci95": [
+              0.07163926284469403,
+              0.07802469247092662
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.10776939797694213,
+            "stdDev": 0.07225198159391458,
+            "count": 1274,
+            "stdError": 0.002024254198039105,
+            "ci95": [
+              0.10380185974878547,
+              0.11173693620509878
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 42.28610177558756,
+            "stdDev": 7.401629594095125,
+            "count": 1280,
+            "stdError": 0.20688183645838593,
+            "ci95": [
+              41.880613376129126,
+              42.691590175045995
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": 12.355388702791817,
+            "stdDev": 2.231804947095733,
+            "count": 1270,
+            "stdError": 0.06262595699604173,
+            "ci95": [
+              12.232641827079576,
+              12.478135578504059
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 29.96132161918592,
+            "stdDev": 5.657937394397578,
+            "count": 1270,
+            "stdError": 0.15876555180547328,
+            "ci95": [
+              29.650141137647193,
+              30.272502100724648
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Termez\\Termez_auxiliary_2018.json"
+    }
+  },
+  "Gulistan": {
+    "2018": {
+      "city": "Gulistan",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Gulistan\\Gulistan_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Gulistan\\Gulistan_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Gulistan\\Gulistan_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Gulistan\\Gulistan_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.4005976494808844,
+        "winter_ndvi_mean": 0.14315639646386097,
+        "ndvi_change_mean": 0.25853416339617574,
+        "summer_evi_mean": 0.29746149349238127,
+        "winter_evi_mean": 0.08668486111145529,
+        "evi_change_mean": 0.21159926363813758,
+        "summer_lst_mean": 42.39706197510051,
+        "winter_lst_mean": -2.328214052894873,
+        "lst_change_mean": 44.725927592402535,
+        "summer_biomass_t_per_ha": 7.126877874632392,
+        "winter_biomass_t_per_ha": 2.176084547381942,
+        "biomass_change_t_per_ha": 4.95079332725045
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.4005976494808844,
+            "stdDev": 0.09765486866592697,
+            "count": 1344,
+            "stdError": 0.002663754926443938,
+            "ci95": [
+              0.39537668982505425,
+              0.4058186091367145
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.14315639646386097,
+            "stdDev": 0.05966358774945088,
+            "count": 1324,
+            "stdError": 0.0016397036849913886,
+            "ci95": [
+              0.13994257724127784,
+              0.1463702156864441
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.25853416339617574,
+            "stdDev": 0.1125863990313069,
+            "count": 1324,
+            "stdError": 0.003094154078477185,
+            "ci95": [
+              0.25246962140236046,
+              0.26459870538999103
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.29746149349238127,
+            "stdDev": 0.07297963683334395,
+            "count": 1344,
+            "stdError": 0.0019906827974951547,
+            "ci95": [
+              0.2935597552092908,
+              0.30136323177547175
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.08668486111145529,
+            "stdDev": 0.03651613940388278,
+            "count": 1324,
+            "stdError": 0.0010035542715541258,
+            "ci95": [
+              0.08471789473920921,
+              0.08865182748370137
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.21159926363813758,
+            "stdDev": 0.08104618279267908,
+            "count": 1324,
+            "stdError": 0.0022273505431437057,
+            "ci95": [
+              0.20723365657357593,
+              0.21596487070269924
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 42.39706197510051,
+            "stdDev": 2.639622491223938,
+            "count": 1344,
+            "stdError": 0.07200160638179526,
+            "ci95": [
+              42.25593882659219,
+              42.538185123608834
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": -2.328214052894873,
+            "stdDev": 0.6959752624134338,
+            "count": 1292,
+            "stdError": 0.019362549747729996,
+            "ci95": [
+              -2.3661646504004237,
+              -2.290263455389322
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 44.725927592402535,
+            "stdDev": 2.758515778111616,
+            "count": 1292,
+            "stdError": 0.07674396184480439,
+            "ci95": [
+              44.57550942718672,
+              44.87634575761835
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Gulistan\\Gulistan_auxiliary_2018.json"
+    }
+  },
+  "Nurafshon": {
+    "2018": {
+      "city": "Nurafshon",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nurafshon\\Nurafshon_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nurafshon\\Nurafshon_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nurafshon\\Nurafshon_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nurafshon\\Nurafshon_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.38571335169986615,
+        "winter_ndvi_mean": 0.134703487270493,
+        "ndvi_change_mean": 0.2510098644293726,
+        "summer_evi_mean": 0.28051128913867224,
+        "winter_evi_mean": 0.08276132421071448,
+        "evi_change_mean": 0.19774996492795796,
+        "summer_lst_mean": 40.45775685325452,
+        "winter_lst_mean": 0.41934497659095366,
+        "lst_change_mean": 40.03841187666356,
+        "summer_biomass_t_per_ha": 6.84064137884358,
+        "winter_biomass_t_per_ha": 2.0135286013556346,
+        "biomass_change_t_per_ha": 4.827112777487946
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.38571335169986615,
+            "stdDev": 0.12576880794553935,
+            "count": 1344,
+            "stdError": 0.0034306254909214143,
+            "ci95": [
+              0.3789893257376602,
+              0.3924373776620721
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.134703487270493,
+            "stdDev": 0.0687683927371761,
+            "count": 1344,
+            "stdError": 0.0018758116972533386,
+            "ci95": [
+              0.13102689634387646,
+              0.13838007819710954
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.2510098644293726,
+            "stdDev": 0.125184594550553,
+            "count": 1344,
+            "stdError": 0.003414689764108723,
+            "ci95": [
+              0.24431707249171952,
+              0.2577026563670257
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.28051128913867224,
+            "stdDev": 0.09069259702957468,
+            "count": 1344,
+            "stdError": 0.002473843397977102,
+            "ci95": [
+              0.2756625560786371,
+              0.2853600221987074
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.08276132421071448,
+            "stdDev": 0.027083585594044075,
+            "count": 1344,
+            "stdError": 0.0007387653635447768,
+            "ci95": [
+              0.08131334409816672,
+              0.08420930432326225
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.19774996492795796,
+            "stdDev": 0.08555745749730666,
+            "count": 1344,
+            "stdError": 0.002333770983627231,
+            "ci95": [
+              0.19317577380004858,
+              0.20232415605586734
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 40.45775685325452,
+            "stdDev": 3.40873825020551,
+            "count": 1344,
+            "stdError": 0.09298095866582184,
+            "ci95": [
+              40.27551417426951,
+              40.639999532239536
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": 0.41934497659095366,
+            "stdDev": 4.442927581120354,
+            "count": 1344,
+            "stdError": 0.12119078540292307,
+            "ci95": [
+              0.18181103720122446,
+              0.6568789159806828
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 40.03841187666356,
+            "stdDev": 5.674297555937946,
+            "count": 1344,
+            "stdError": 0.15477915515350332,
+            "ci95": [
+              39.73504473256269,
+              40.34177902076443
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Nurafshon\\Nurafshon_auxiliary_2018.json"
+    }
+  },
+  "Fergana": {
+    "2018": {
+      "city": "Fergana",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Fergana\\Fergana_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": null,
+        "ndvi_change_tif": null,
+        "evi_change_tif": null,
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Fergana\\Fergana_lst_summer_2018.tif",
+        "winter_lst_tif": null,
+        "lst_change_tif": null
+      },
+      "stats": {},
+      "stats_error": "list index out of range",
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Fergana\\Fergana_auxiliary_2018.json"
+    }
+  },
+  "Urgench": {
+    "2018": {
+      "city": "Urgench",
+      "year": 2018,
+      "generated": {
+        "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Urgench\\Urgench_ndvi_evi_summer_2018.tif",
+        "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Urgench\\Urgench_ndvi_evi_winter_2018.tif",
+        "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Urgench\\Urgench_ndvi_change_2018.tif",
+        "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Urgench\\Urgench_evi_change_2018.tif",
+        "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_lst_summer_2018.tif",
+        "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_lst_winter_2018.tif",
+        "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_lst_change_2018.tif"
+      },
+      "stats": {
+        "summer_ndvi_mean": 0.3780784488551417,
+        "winter_ndvi_mean": 0.11743306535731578,
+        "ndvi_change_mean": 0.26220145397607475,
+        "summer_evi_mean": 0.27615844073477747,
+        "winter_evi_mean": 0.08049960196381395,
+        "evi_change_mean": 0.19670443474781818,
+        "summer_lst_mean": 42.995509419507954,
+        "winter_lst_mean": -1.6058096799696102,
+        "lst_change_mean": 44.66364891479108,
+        "summer_biomass_t_per_ha": 6.693816324137341,
+        "winter_biomass_t_per_ha": 1.6814051030253032,
+        "biomass_change_t_per_ha": 5.012411221112037
+      },
+      "uncertainty": {
+        "summer_ndvi": {
+          "city": {
+            "mean": 0.3780784488551417,
+            "stdDev": 0.12375824127923739,
+            "count": 2160,
+            "stdError": 0.0026628533746133652,
+            "ci95": [
+              0.3728592562408995,
+              0.3832976414693839
+            ]
+          }
+        },
+        "winter_ndvi": {
+          "city": {
+            "mean": 0.11743306535731578,
+            "stdDev": 0.048968785879195974,
+            "count": 2144,
+            "stdError": 0.0010575646990022942,
+            "ci95": [
+              0.11536023854727129,
+              0.11950589216736027
+            ]
+          }
+        },
+        "ndvi_change": {
+          "city": {
+            "mean": 0.26220145397607475,
+            "stdDev": 0.11880467554133949,
+            "count": 2144,
+            "stdError": 0.0025657902002900316,
+            "ci95": [
+              0.25717250518350626,
+              0.26723040276864324
+            ]
+          }
+        },
+        "summer_evi": {
+          "city": {
+            "mean": 0.27615844073477747,
+            "stdDev": 0.08875982401210503,
+            "count": 2160,
+            "stdError": 0.0019098073345065775,
+            "ci95": [
+              0.27241521835914456,
+              0.27990166311041037
+            ]
+          }
+        },
+        "winter_evi": {
+          "city": {
+            "mean": 0.08049960196381395,
+            "stdDev": 0.03340491360210197,
+            "count": 2144,
+            "stdError": 0.0007214362530032297,
+            "ci95": [
+              0.07908558690792762,
+              0.08191361701970028
+            ]
+          }
+        },
+        "evi_change": {
+          "city": {
+            "mean": 0.19670443474781818,
+            "stdDev": 0.08730352420614647,
+            "count": 2144,
+            "stdError": 0.0018854689500916978,
+            "ci95": [
+              0.19300891560563846,
+              0.2003999538899979
+            ]
+          }
+        },
+        "summer_lst": {
+          "city": {
+            "mean": 42.995509419507954,
+            "stdDev": 4.0183118531778295,
+            "count": 2160,
+            "stdError": 0.08646030492903109,
+            "ci95": [
+              42.826047221847055,
+              43.16497161716885
+            ]
+          }
+        },
+        "winter_lst": {
+          "city": {
+            "mean": -1.6058096799696102,
+            "stdDev": 1.0345665354621607,
+            "count": 1888,
+            "stdError": 0.023809892326836772,
+            "ci95": [
+              -1.6524770689302102,
+              -1.5591422910090103
+            ]
+          }
+        },
+        "lst_change": {
+          "city": {
+            "mean": 44.66364891479108,
+            "stdDev": 4.246991434203831,
+            "count": 1888,
+            "stdError": 0.09774181291899109,
+            "ci95": [
+              44.47207496146986,
+              44.85522286811231
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Urgench\\Urgench_auxiliary_2018.json"
+    }
+  }
+}

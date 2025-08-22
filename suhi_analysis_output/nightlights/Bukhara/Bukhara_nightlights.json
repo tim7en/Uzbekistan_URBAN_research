@@ -1,0 +1,42 @@
+{
+  "city": "Bukhara",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 3.0612350219395266,
+          "stdDev": 4.7750379401058,
+          "count": 39663
+        },
+        "rural_ring": {
+          "mean": 0.5590271427363162,
+          "stdDev": 0.929449773240541,
+          "count": 451690
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 3.0612350219395266,
+            "stdDev": 4.7750379401058,
+            "count": 39663,
+            "stdError": 0.023976403935506842,
+            "ci95": [
+              3.0142412702259334,
+              3.10822877365312
+            ]
+          },
+          "rural_ring": {
+            "mean": 0.5590271427363162,
+            "stdDev": 0.929449773240541,
+            "count": 451690,
+            "stdError": 0.0013829474819785168,
+            "ci95": [
+              0.5563165656716382,
+              0.5617377198009941
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Bukhara\\viirs_2018.png"
+    }
+  }
+}

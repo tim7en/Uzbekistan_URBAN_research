@@ -1,0 +1,137 @@
+{
+  "city": "Samarkand",
+  "year": 2018,
+  "generated": {
+    "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_ndvi_evi_summer_2018.tif",
+    "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_ndvi_evi_winter_2018.tif",
+    "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_ndvi_change_2018.tif",
+    "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_evi_change_2018.tif",
+    "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_lst_summer_2018.tif",
+    "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_lst_winter_2018.tif",
+    "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_lst_change_2018.tif"
+  },
+  "stats": {
+    "summer_ndvi_mean": 0.32067448626449374,
+    "winter_ndvi_mean": 0.14744341718271187,
+    "ndvi_change_mean": 0.17412828481234285,
+    "summer_evi_mean": 0.24203426621515828,
+    "winter_evi_mean": 0.08634113199803627,
+    "evi_change_mean": 0.15629292951255,
+    "summer_lst_mean": 40.528478411949706,
+    "winter_lst_mean": 6.347825832971462,
+    "lst_change_mean": 34.192136138011016,
+    "summer_biomass_t_per_ha": 5.589893966624881,
+    "winter_biomass_t_per_ha": 2.2585272535136895,
+    "biomass_change_t_per_ha": 3.331366713111191
+  },
+  "uncertainty": {
+    "summer_ndvi": {
+      "city": {
+        "mean": 0.32067448626449374,
+        "stdDev": 0.1249191619589713,
+        "count": 2976,
+        "stdError": 0.0022898793390210407,
+        "ci95": [
+          0.3161863227600125,
+          0.32516264976897497
+        ]
+      }
+    },
+    "winter_ndvi": {
+      "city": {
+        "mean": 0.14744341718271187,
+        "stdDev": 0.06553301571512368,
+        "count": 2945,
+        "stdError": 0.0012075844286700058,
+        "ci95": [
+          0.14507655170251865,
+          0.14981028266290508
+        ]
+      }
+    },
+    "ndvi_change": {
+      "city": {
+        "mean": 0.17412828481234285,
+        "stdDev": 0.11241299558910452,
+        "count": 2945,
+        "stdError": 0.0020714472174401207,
+        "ci95": [
+          0.1700682482661602,
+          0.1781883213585255
+        ]
+      }
+    },
+    "summer_evi": {
+      "city": {
+        "mean": 0.24203426621515828,
+        "stdDev": 0.09278379643169883,
+        "count": 2976,
+        "stdError": 0.001700809508429646,
+        "ci95": [
+          0.23870067957863617,
+          0.2453678528516804
+        ]
+      }
+    },
+    "winter_evi": {
+      "city": {
+        "mean": 0.08634113199803627,
+        "stdDev": 0.03735373771781895,
+        "count": 2945,
+        "stdError": 0.0006883216273267229,
+        "ci95": [
+          0.0849920216084759,
+          0.08769024238759664
+        ]
+      }
+    },
+    "evi_change": {
+      "city": {
+        "mean": 0.15629292951255,
+        "stdDev": 0.08777758588027713,
+        "count": 2945,
+        "stdError": 0.0016174876852310712,
+        "ci95": [
+          0.1531226536494971,
+          0.1594632053756029
+        ]
+      }
+    },
+    "summer_lst": {
+      "city": {
+        "mean": 40.528478411949706,
+        "stdDev": 3.6578846916737326,
+        "count": 2976,
+        "stdError": 0.06705227963934067,
+        "ci95": [
+          40.3970559438566,
+          40.65990088004281
+        ]
+      }
+    },
+    "winter_lst": {
+      "city": {
+        "mean": 6.347825832971462,
+        "stdDev": 1.804022194917666,
+        "count": 2940,
+        "stdError": 0.03327118055764129,
+        "ci95": [
+          6.282614319078485,
+          6.413037346864439
+        ]
+      }
+    },
+    "lst_change": {
+      "city": {
+        "mean": 34.192136138011016,
+        "stdDev": 3.4540301605209516,
+        "count": 2940,
+        "stdError": 0.0637019108999799,
+        "ci95": [
+          34.067280392647056,
+          34.316991883374975
+        ]
+      }
+    }
+  }
+}

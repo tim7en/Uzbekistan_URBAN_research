@@ -1,0 +1,604 @@
+[
+  {
+    "city": "Tashkent",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 16.6121677681418,
+            "stdDev": 14.846667184734878,
+            "count": 91924
+          },
+          "rural_ring": {
+            "mean": 1.1736388623579699,
+            "stdDev": 1.5492384308701947,
+            "count": 564801
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 16.6121677681418,
+              "stdDev": 14.846667184734878,
+              "count": 91924,
+              "stdError": 0.048968242375093465,
+              "ci95": [
+                16.516190013086614,
+                16.708145523196983
+              ]
+            },
+            "rural_ring": {
+              "mean": 1.1736388623579699,
+              "stdDev": 1.5492384308701947,
+              "count": 564801,
+              "stdError": 0.002061439213925081,
+              "ci95": [
+                1.1695984414986766,
+                1.1776792832172631
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Tashkent\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Tashkent\\Tashkent_nightlights.json"
+  },
+  {
+    "city": "Nukus",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 1.7312316221885897,
+            "stdDev": 3.758878897307009,
+            "count": 41320
+          },
+          "rural_ring": {
+            "mean": 0.37573126123103195,
+            "stdDev": 0.415402671775104,
+            "count": 470648
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 1.7312316221885897,
+              "stdDev": 3.758878897307009,
+              "count": 41320,
+              "stdError": 0.01849175699029413,
+              "ci95": [
+                1.6949877784876133,
+                1.7674754658895662
+              ]
+            },
+            "rural_ring": {
+              "mean": 0.37573126123103195,
+              "stdDev": 0.415402671775104,
+              "count": 470648,
+              "stdError": 0.0006055098003760928,
+              "ci95": [
+                0.3745444620222948,
+                0.3769180604397691
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Nukus\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Nukus\\Nukus_nightlights.json"
+  },
+  {
+    "city": "Andijan",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 3.8999430389287393,
+            "stdDev": 5.0975986681756,
+            "count": 58177
+          },
+          "rural_ring": {
+            "mean": 1.1660605904165318,
+            "stdDev": 1.2048069794831595,
+            "count": 499260
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 3.8999430389287393,
+              "stdDev": 5.0975986681756,
+              "count": 58177,
+              "stdError": 0.021134402757174472,
+              "ci95": [
+                3.858519609524677,
+                3.9413664683328014
+              ]
+            },
+            "rural_ring": {
+              "mean": 1.1660605904165318,
+              "stdDev": 1.2048069794831595,
+              "count": 499260,
+              "stdError": 0.001705116623935288,
+              "ci95": [
+                1.1627185618336187,
+                1.1694026189994449
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\Andijan_nightlights.json"
+  },
+  {
+    "city": "Bukhara",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 3.0612350219395266,
+            "stdDev": 4.7750379401058,
+            "count": 39663
+          },
+          "rural_ring": {
+            "mean": 0.5590271427363162,
+            "stdDev": 0.929449773240541,
+            "count": 451690
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 3.0612350219395266,
+              "stdDev": 4.7750379401058,
+              "count": 39663,
+              "stdError": 0.023976403935506842,
+              "ci95": [
+                3.0142412702259334,
+                3.10822877365312
+              ]
+            },
+            "rural_ring": {
+              "mean": 0.5590271427363162,
+              "stdDev": 0.929449773240541,
+              "count": 451690,
+              "stdError": 0.0013829474819785168,
+              "ci95": [
+                0.5563165656716382,
+                0.5617377198009941
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Bukhara\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Bukhara\\Bukhara_nightlights.json"
+  },
+  {
+    "city": "Samarkand",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 4.945243708283391,
+            "stdDev": 6.8562976304428,
+            "count": 57213
+          },
+          "rural_ring": {
+            "mean": 0.7388855301295295,
+            "stdDev": 0.7181845641698847,
+            "count": 490987
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 4.945243708283391,
+              "stdDev": 6.8562976304428,
+              "count": 57213,
+              "stdError": 0.02866436342946926,
+              "ci95": [
+                4.889061555961631,
+                5.00142586060515
+              ]
+            },
+            "rural_ring": {
+              "mean": 0.7388855301295295,
+              "stdDev": 0.7181845641698847,
+              "count": 490987,
+              "stdError": 0.001024946200866379,
+              "ci95": [
+                0.7368766355758314,
+                0.7408944246832276
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Samarkand\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Samarkand\\Samarkand_nightlights.json"
+  },
+  {
+    "city": "Namangan",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 3.344812315480411,
+            "stdDev": 3.422186357695452,
+            "count": 58368
+          },
+          "rural_ring": {
+            "mean": 0.8337865564828467,
+            "stdDev": 0.9222185126412089,
+            "count": 500873
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 3.344812315480411,
+              "stdDev": 3.422186357695452,
+              "count": 58368,
+              "stdError": 0.014164989258356856,
+              "ci95": [
+                3.3170489365340314,
+                3.37257569442679
+              ]
+            },
+            "rural_ring": {
+              "mean": 0.8337865564828467,
+              "stdDev": 0.9222185126412089,
+              "count": 500873,
+              "stdError": 0.0013030768380923891,
+              "ci95": [
+                0.8312325258801856,
+                0.8363405870855078
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Namangan\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Namangan\\Namangan_nightlights.json"
+  },
+  {
+    "city": "Jizzakh",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 3.5890411880691993,
+            "stdDev": 4.446492220788209,
+            "count": 25388
+          },
+          "rural_ring": {
+            "mean": 0.4316182308107282,
+            "stdDev": 0.5145338522867756,
+            "count": 413599
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 3.5890411880691993,
+              "stdDev": 4.446492220788209,
+              "count": 25388,
+              "stdError": 0.027906366398180088,
+              "ci95": [
+                3.5343447099287664,
+                3.643737666209632
+              ]
+            },
+            "rural_ring": {
+              "mean": 0.4316182308107282,
+              "stdDev": 0.5145338522867756,
+              "count": 413599,
+              "stdError": 0.0008000630494526656,
+              "ci95": [
+                0.430050107233801,
+                0.4331863543876554
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Jizzakh\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Jizzakh\\Jizzakh_nightlights.json"
+  },
+  {
+    "city": "Qarshi",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 3.7350086331761236,
+            "stdDev": 4.189378170555312,
+            "count": 24929
+          },
+          "rural_ring": {
+            "mean": 1.110793490035346,
+            "stdDev": 9.208619744179936,
+            "count": 406220
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 3.7350086331761236,
+              "stdDev": 4.189378170555312,
+              "count": 24929,
+              "stdError": 0.02653365858196356,
+              "ci95": [
+                3.683002662355475,
+                3.7870146039967723
+              ]
+            },
+            "rural_ring": {
+              "mean": 1.110793490035346,
+              "stdDev": 9.208619744179936,
+              "count": 406220,
+              "stdError": 0.01444820479551208,
+              "ci95": [
+                1.0824750086361423,
+                1.1391119714345497
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Qarshi\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Qarshi\\Qarshi_nightlights.json"
+  },
+  {
+    "city": "Navoiy",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 3.1051381494557186,
+            "stdDev": 4.510511653826993,
+            "count": 39856
+          },
+          "rural_ring": {
+            "mean": 0.3810530082721408,
+            "stdDev": 0.46103772560514583,
+            "count": 453891
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 3.1051381494557186,
+              "stdDev": 4.510511653826993,
+              "count": 39856,
+              "stdError": 0.022593262809308033,
+              "ci95": [
+                3.0608553543494748,
+                3.1494209445619625
+              ]
+            },
+            "rural_ring": {
+              "mean": 0.3810530082721408,
+              "stdDev": 0.46103772560514583,
+              "count": 453891,
+              "stdError": 0.0006843222776879284,
+              "ci95": [
+                0.37971173660787244,
+                0.3823942799364091
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Navoiy\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Navoiy\\Navoiy_nightlights.json"
+  },
+  {
+    "city": "Termez",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 2.489771650664934,
+            "stdDev": 3.6926171805111947,
+            "count": 24383
+          },
+          "rural_ring": {
+            "mean": 0.4212234023670118,
+            "stdDev": 0.5250568204303311,
+            "count": 397237
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 2.489771650664934,
+              "stdDev": 3.6926171805111947,
+              "count": 24383,
+              "stdError": 0.023647798526955744,
+              "ci95": [
+                2.443421965552101,
+                2.5361213357777674
+              ]
+            },
+            "rural_ring": {
+              "mean": 0.4212234023670118,
+              "stdDev": 0.5250568204303311,
+              "count": 397237,
+              "stdError": 0.0008330699278721502,
+              "ci95": [
+                0.4195905853083824,
+                0.42285621942564117
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Termez\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Termez\\Termez_nightlights.json"
+  },
+  {
+    "city": "Gulistan",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 2.4995016870670725,
+            "stdDev": 4.783866674365438,
+            "count": 25514
+          },
+          "rural_ring": {
+            "mean": 0.5461276708253815,
+            "stdDev": 0.6791018462597214,
+            "count": 415919
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 2.4995016870670725,
+              "stdDev": 4.783866674365438,
+              "count": 25514,
+              "stdError": 0.02994951486067439,
+              "ci95": [
+                2.440800637940151,
+                2.5582027361939943
+              ]
+            },
+            "rural_ring": {
+              "mean": 0.5461276708253815,
+              "stdDev": 0.6791018462597214,
+              "count": 415919,
+              "stdError": 0.0010530052368739192,
+              "ci95": [
+                0.5440637805611086,
+                0.5481915610896544
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Gulistan\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Gulistan\\Gulistan_nightlights.json"
+  },
+  {
+    "city": "Nurafshon",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 1.5218104582160092,
+            "stdDev": 1.5235376265175753,
+            "count": 25725
+          },
+          "rural_ring": {
+            "mean": 2.7169658469761124,
+            "stdDev": 6.3286351540042,
+            "count": 419210
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 1.5218104582160092,
+              "stdDev": 1.5235376265175753,
+              "count": 25725,
+              "stdError": 0.00949894761582333,
+              "ci95": [
+                1.5031925208889956,
+                1.540428395543023
+              ]
+            },
+            "rural_ring": {
+              "mean": 2.7169658469761124,
+              "stdDev": 6.3286351540042,
+              "count": 419210,
+              "stdError": 0.00977449305431625,
+              "ci95": [
+                2.6978078405896526,
+                2.7361238533625722
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Nurafshon\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Nurafshon\\Nurafshon_nightlights.json"
+  },
+  {
+    "city": "Fergana",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 2.4598130689379913,
+            "stdDev": 2.7000265848914435,
+            "count": 57830
+          },
+          "rural_ring": {
+            "mean": 0.7268691150778261,
+            "stdDev": 0.8094622413009332,
+            "count": 496279
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 2.4598130689379913,
+              "stdDev": 2.7000265848914435,
+              "count": 57830,
+              "stdError": 0.01122771665516253,
+              "ci95": [
+                2.437806744293873,
+                2.48181939358211
+              ]
+            },
+            "rural_ring": {
+              "mean": 0.7268691150778261,
+              "stdDev": 0.8094622413009332,
+              "count": 496279,
+              "stdError": 0.0011490360273573468,
+              "ci95": [
+                0.7246170044642057,
+                0.7291212256914466
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Fergana\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Fergana\\Fergana_nightlights.json"
+  },
+  {
+    "city": "Urgench",
+    "years": {
+      "2018": {
+        "stats": {
+          "urban_core": {
+            "mean": 1.882122335490539,
+            "stdDev": 3.583288547343974,
+            "count": 40738
+          },
+          "rural_ring": {
+            "mean": 0.4253313967816915,
+            "stdDev": 0.46425449001204216,
+            "count": 463883
+          },
+          "uncertainty": {
+            "urban_core": {
+              "mean": 1.882122335490539,
+              "stdDev": 3.583288547343974,
+              "count": 40738,
+              "stdError": 0.01775341599818074,
+              "ci95": [
+                1.8473256401341047,
+                1.9169190308469732
+              ]
+            },
+            "rural_ring": {
+              "mean": 0.4253313967816915,
+              "stdDev": 0.46425449001204216,
+              "count": 463883,
+              "stdError": 0.0006816350031529343,
+              "ci95": [
+                0.42399539217551174,
+                0.4266674013878713
+              ]
+            }
+          }
+        },
+        "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Urgench\\viirs_2018.png"
+      }
+    },
+    "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Urgench\\Urgench_nightlights.json"
+  }
+]

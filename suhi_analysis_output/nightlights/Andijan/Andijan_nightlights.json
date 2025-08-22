@@ -1,0 +1,42 @@
+{
+  "city": "Andijan",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 3.8999430389287393,
+          "stdDev": 5.0975986681756,
+          "count": 58177
+        },
+        "rural_ring": {
+          "mean": 1.1660605904165318,
+          "stdDev": 1.2048069794831595,
+          "count": 499260
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 3.8999430389287393,
+            "stdDev": 5.0975986681756,
+            "count": 58177,
+            "stdError": 0.021134402757174472,
+            "ci95": [
+              3.858519609524677,
+              3.9413664683328014
+            ]
+          },
+          "rural_ring": {
+            "mean": 1.1660605904165318,
+            "stdDev": 1.2048069794831595,
+            "count": 499260,
+            "stdError": 0.001705116623935288,
+            "ci95": [
+              1.1627185618336187,
+              1.1694026189994449
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Andijan\\viirs_2018.png"
+    }
+  }
+}

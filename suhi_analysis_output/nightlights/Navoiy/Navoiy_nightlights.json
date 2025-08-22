@@ -1,0 +1,42 @@
+{
+  "city": "Navoiy",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 3.1051381494557186,
+          "stdDev": 4.510511653826993,
+          "count": 39856
+        },
+        "rural_ring": {
+          "mean": 0.3810530082721408,
+          "stdDev": 0.46103772560514583,
+          "count": 453891
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 3.1051381494557186,
+            "stdDev": 4.510511653826993,
+            "count": 39856,
+            "stdError": 0.022593262809308033,
+            "ci95": [
+              3.0608553543494748,
+              3.1494209445619625
+            ]
+          },
+          "rural_ring": {
+            "mean": 0.3810530082721408,
+            "stdDev": 0.46103772560514583,
+            "count": 453891,
+            "stdError": 0.0006843222776879284,
+            "ci95": [
+              0.37971173660787244,
+              0.3823942799364091
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Navoiy\\viirs_2018.png"
+    }
+  }
+}

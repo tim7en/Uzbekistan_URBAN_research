@@ -1,0 +1,478 @@
+{
+  "Tashkent": {
+    "2018": {
+      "city": "Tashkent",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 29.288706471989176,
+        "rural_mean": 29.396584921822644,
+        "suhi": -0.10787844983346773,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 29.288706471989176,
+            "stdDev": 2.448751298620553,
+            "count": 3728,
+            "stdError": 0.04010575786560089,
+            "ci95": [
+              29.2100991865726,
+              29.367313757405753
+            ]
+          },
+          "rural_ring": {
+            "mean": 29.396584921822644,
+            "stdDev": 2.6456386274235593,
+            "count": 129,
+            "stdError": 0.2329354927325152,
+            "ci95": [
+              28.940031356066914,
+              29.853138487578374
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Tashkent\\Tashkent_suhi_2018.json"
+    }
+  },
+  "Nukus": {
+    "2018": {
+      "city": "Nukus",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 37.89141087070459,
+        "rural_mean": 38.197846716669865,
+        "suhi": -0.3064358459652752,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 37.89141087070459,
+            "stdDev": 4.122996572285004,
+            "count": 1685,
+            "stdError": 0.10044146097667987,
+            "ci95": [
+              37.6945456071903,
+              38.08827613421888
+            ]
+          },
+          "rural_ring": {
+            "mean": 38.197846716669865,
+            "stdDev": 4.877777668020588,
+            "count": 90,
+            "stdError": 0.5141629116949906,
+            "ci95": [
+              37.19008740974768,
+              39.20560602359205
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Nukus\\Nukus_suhi_2018.json"
+    }
+  },
+  "Andijan": {
+    "2018": {
+      "city": "Andijan",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 38.69515962813053,
+        "rural_mean": 37.4970415679478,
+        "suhi": 1.1981180601827361,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 38.69515962813053,
+            "stdDev": 5.260570994296474,
+            "count": 2368,
+            "stdError": 0.10810406801378461,
+            "ci95": [
+              38.483275654823515,
+              38.90704360143755
+            ]
+          },
+          "rural_ring": {
+            "mean": 37.4970415679478,
+            "stdDev": 6.132342878653692,
+            "count": 101,
+            "stdError": 0.6101909227379807,
+            "ci95": [
+              36.301067359381356,
+              38.69301577651424
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Andijan\\Andijan_suhi_2018.json"
+    }
+  },
+  "Bukhara": {
+    "2018": {
+      "city": "Bukhara",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 34.02799553806071,
+        "rural_mean": 33.83641857258492,
+        "suhi": 0.1915769654757895,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 34.02799553806071,
+            "stdDev": 3.5617902101038412,
+            "count": 1615,
+            "stdError": 0.088630270045239,
+            "ci95": [
+              33.85428020877204,
+              34.20171086734938
+            ]
+          },
+          "rural_ring": {
+            "mean": 33.83641857258492,
+            "stdDev": 2.7625964993579815,
+            "count": 94,
+            "stdError": 0.2849400724277989,
+            "ci95": [
+              33.277936030626435,
+              34.3949011145434
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Bukhara\\Bukhara_suhi_2018.json"
+    }
+  },
+  "Samarkand": {
+    "2018": {
+      "city": "Samarkand",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 38.60250488021957,
+        "rural_mean": 37.600353747579526,
+        "suhi": 1.0021511326400443,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 38.60250488021957,
+            "stdDev": 3.3764370420139236,
+            "count": 2327,
+            "stdError": 0.06999394380666475,
+            "ci95": [
+              38.465316750358504,
+              38.739693010080636
+            ]
+          },
+          "rural_ring": {
+            "mean": 37.600353747579526,
+            "stdDev": 3.27091335490816,
+            "count": 105,
+            "stdError": 0.3192084581663205,
+            "ci95": [
+              36.97470516957354,
+              38.22600232558551
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Samarkand\\Samarkand_suhi_2018.json"
+    }
+  },
+  "Namangan": {
+    "2018": {
+      "city": "Namangan",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 37.650539706625004,
+        "rural_mean": 36.84811257053396,
+        "suhi": 0.8024271360910475,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 37.650539706625004,
+            "stdDev": 3.2438639478607927,
+            "count": 2373,
+            "stdError": 0.06659072785876274,
+            "ci95": [
+              37.52002188002183,
+              37.78105753322818
+            ]
+          },
+          "rural_ring": {
+            "mean": 36.84811257053396,
+            "stdDev": 4.0937166974737025,
+            "count": 102,
+            "stdError": 0.40533835296461723,
+            "ci95": [
+              36.05364939872331,
+              37.642575742344604
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Namangan\\Namangan_suhi_2018.json"
+    }
+  },
+  "Jizzakh": {
+    "2018": {
+      "city": "Jizzakh",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 37.42542304203883,
+        "rural_mean": 38.50609019646391,
+        "suhi": -1.080667154425079,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 37.42542304203883,
+            "stdDev": 3.716869455349721,
+            "count": 1040,
+            "stdError": 0.11525522909925962,
+            "ci95": [
+              37.19952279300428,
+              37.65132329107338
+            ]
+          },
+          "rural_ring": {
+            "mean": 38.50609019646391,
+            "stdDev": 4.289548394997285,
+            "count": 72,
+            "stdError": 0.5055281263884086,
+            "ci95": [
+              37.515255068742626,
+              39.49692532418519
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Jizzakh\\Jizzakh_suhi_2018.json"
+    }
+  },
+  "Qarshi": {
+    "2018": {
+      "city": "Qarshi",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 40.00274546279837,
+        "rural_mean": 40.138311803862216,
+        "suhi": -0.1355663410638428,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 40.00274546279837,
+            "stdDev": 2.618340350947916,
+            "count": 1024,
+            "stdError": 0.08182313596712237,
+            "ci95": [
+              39.84237211630281,
+              40.163118809293934
+            ]
+          },
+          "rural_ring": {
+            "mean": 40.138311803862216,
+            "stdDev": 3.8897841890535156,
+            "count": 65,
+            "stdError": 0.4824683494985523,
+            "ci95": [
+              39.19267383884505,
+              41.08394976887938
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Qarshi\\Qarshi_suhi_2018.json"
+    }
+  },
+  "Navoiy": {
+    "2018": {
+      "city": "Navoiy",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 37.82714657269594,
+        "rural_mean": 38.373776034831884,
+        "suhi": -0.5466294621359467,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 37.82714657269594,
+            "stdDev": 5.373128036432122,
+            "count": 1620,
+            "stdError": 0.13349643934746877,
+            "ci95": [
+              37.565493551574896,
+              38.08879959381698
+            ]
+          },
+          "rural_ring": {
+            "mean": 38.373776034831884,
+            "stdDev": 5.736527105292518,
+            "count": 93,
+            "stdError": 0.5948501503700098,
+            "ci95": [
+              37.207869740106666,
+              39.5396823295571
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Navoiy\\Navoiy_suhi_2018.json"
+    }
+  },
+  "Termez": {
+    "2018": {
+      "city": "Termez",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 36.982905901700065,
+        "rural_mean": 42.01099297884743,
+        "suhi": -5.028087077147369,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 36.982905901700065,
+            "stdDev": 5.575806884850648,
+            "count": 999,
+            "stdError": 0.17641072291759421,
+            "ci95": [
+              36.63714088478158,
+              37.32867091861855
+            ]
+          },
+          "rural_ring": {
+            "mean": 42.01099297884743,
+            "stdDev": 6.156385064810185,
+            "count": 69,
+            "stdError": 0.7411416679516626,
+            "ci95": [
+              40.558355309662176,
+              43.46363064803269
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Termez\\Termez_suhi_2018.json"
+    }
+  },
+  "Gulistan": {
+    "2018": {
+      "city": "Gulistan",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 33.52113548749289,
+        "rural_mean": 33.75870237440408,
+        "suhi": -0.2375668869111891,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 33.52113548749289,
+            "stdDev": 1.8805913841435336,
+            "count": 1048,
+            "stdError": 0.05809166185943164,
+            "ci95": [
+              33.40727583024841,
+              33.634995144737374
+            ]
+          },
+          "rural_ring": {
+            "mean": 33.75870237440408,
+            "stdDev": 2.2183305125115194,
+            "count": 67,
+            "stdError": 0.2710122061121701,
+            "ci95": [
+              33.22751845042423,
+              34.289886298383934
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Gulistan\\Gulistan_suhi_2018.json"
+    }
+  },
+  "Nurafshon": {
+    "2018": {
+      "city": "Nurafshon",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 31.552182186756404,
+        "rural_mean": 31.935174776171976,
+        "suhi": -0.3829925894155721,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 31.552182186756404,
+            "stdDev": 2.829700509680887,
+            "count": 1057,
+            "stdError": 0.08703681282994763,
+            "ci95": [
+              31.381590033609708,
+              31.7227743399031
+            ]
+          },
+          "rural_ring": {
+            "mean": 31.935174776171976,
+            "stdDev": 2.4051896718485466,
+            "count": 67,
+            "stdError": 0.29384068578126105,
+            "ci95": [
+              31.359247032040706,
+              32.51110252030325
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Nurafshon\\Nurafshon_suhi_2018.json"
+    }
+  },
+  "Fergana": {
+    "2018": {
+      "city": "Fergana",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 40.001962540361696,
+        "rural_mean": 39.505689572687444,
+        "suhi": 0.4962729676742512,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 40.001962540361696,
+            "stdDev": 4.25270095746868,
+            "count": 2350,
+            "stdError": 0.0877265224303662,
+            "ci95": [
+              39.83001855639818,
+              40.17390652432521
+            ]
+          },
+          "rural_ring": {
+            "mean": 39.505689572687444,
+            "stdDev": 4.0933575435820755,
+            "count": 109,
+            "stdError": 0.3920725450051196,
+            "ci95": [
+              38.73722738447741,
+              40.27415176089748
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Fergana\\Fergana_suhi_2018.json"
+    }
+  },
+  "Urgench": {
+    "2018": {
+      "city": "Urgench",
+      "year": 2018,
+      "stats": {
+        "urban_mean": 32.34957394750306,
+        "rural_mean": 31.34517515269752,
+        "suhi": 1.0043987948055388,
+        "uncertainty": {
+          "urban_core": {
+            "mean": 32.34957394750306,
+            "stdDev": 2.7352257019889934,
+            "count": 1662,
+            "stdError": 0.06709306915242383,
+            "ci95": [
+              32.21807153196431,
+              32.48107636304181
+            ]
+          },
+          "rural_ring": {
+            "mean": 31.34517515269752,
+            "stdDev": 2.078545008662426,
+            "count": 89,
+            "stdError": 0.22032533026799728,
+            "ci95": [
+              30.913337505372247,
+              31.777012800022796
+            ]
+          }
+        }
+      },
+      "summary_json": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\suhi\\Urgench\\Urgench_suhi_2018.json"
+    }
+  }
+}

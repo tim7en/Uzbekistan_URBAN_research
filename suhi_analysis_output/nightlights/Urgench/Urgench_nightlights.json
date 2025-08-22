@@ -1,0 +1,42 @@
+{
+  "city": "Urgench",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 1.882122335490539,
+          "stdDev": 3.583288547343974,
+          "count": 40738
+        },
+        "rural_ring": {
+          "mean": 0.4253313967816915,
+          "stdDev": 0.46425449001204216,
+          "count": 463883
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 1.882122335490539,
+            "stdDev": 3.583288547343974,
+            "count": 40738,
+            "stdError": 0.01775341599818074,
+            "ci95": [
+              1.8473256401341047,
+              1.9169190308469732
+            ]
+          },
+          "rural_ring": {
+            "mean": 0.4253313967816915,
+            "stdDev": 0.46425449001204216,
+            "count": 463883,
+            "stdError": 0.0006816350031529343,
+            "ci95": [
+              0.42399539217551174,
+              0.4266674013878713
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Urgench\\viirs_2018.png"
+    }
+  }
+}

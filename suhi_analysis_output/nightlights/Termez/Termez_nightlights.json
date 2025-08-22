@@ -1,0 +1,42 @@
+{
+  "city": "Termez",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 2.489771650664934,
+          "stdDev": 3.6926171805111947,
+          "count": 24383
+        },
+        "rural_ring": {
+          "mean": 0.4212234023670118,
+          "stdDev": 0.5250568204303311,
+          "count": 397237
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 2.489771650664934,
+            "stdDev": 3.6926171805111947,
+            "count": 24383,
+            "stdError": 0.023647798526955744,
+            "ci95": [
+              2.443421965552101,
+              2.5361213357777674
+            ]
+          },
+          "rural_ring": {
+            "mean": 0.4212234023670118,
+            "stdDev": 0.5250568204303311,
+            "count": 397237,
+            "stdError": 0.0008330699278721502,
+            "ci95": [
+              0.4195905853083824,
+              0.42285621942564117
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Termez\\viirs_2018.png"
+    }
+  }
+}

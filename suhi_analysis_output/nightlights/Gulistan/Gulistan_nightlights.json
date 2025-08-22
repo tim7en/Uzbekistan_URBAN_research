@@ -1,0 +1,42 @@
+{
+  "city": "Gulistan",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 2.4995016870670725,
+          "stdDev": 4.783866674365438,
+          "count": 25514
+        },
+        "rural_ring": {
+          "mean": 0.5461276708253815,
+          "stdDev": 0.6791018462597214,
+          "count": 415919
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 2.4995016870670725,
+            "stdDev": 4.783866674365438,
+            "count": 25514,
+            "stdError": 0.02994951486067439,
+            "ci95": [
+              2.440800637940151,
+              2.5582027361939943
+            ]
+          },
+          "rural_ring": {
+            "mean": 0.5461276708253815,
+            "stdDev": 0.6791018462597214,
+            "count": 415919,
+            "stdError": 0.0010530052368739192,
+            "ci95": [
+              0.5440637805611086,
+              0.5481915610896544
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Gulistan\\viirs_2018.png"
+    }
+  }
+}

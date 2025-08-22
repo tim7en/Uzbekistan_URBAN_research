@@ -1,0 +1,42 @@
+{
+  "city": "Qarshi",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 3.7350086331761236,
+          "stdDev": 4.189378170555312,
+          "count": 24929
+        },
+        "rural_ring": {
+          "mean": 1.110793490035346,
+          "stdDev": 9.208619744179936,
+          "count": 406220
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 3.7350086331761236,
+            "stdDev": 4.189378170555312,
+            "count": 24929,
+            "stdError": 0.02653365858196356,
+            "ci95": [
+              3.683002662355475,
+              3.7870146039967723
+            ]
+          },
+          "rural_ring": {
+            "mean": 1.110793490035346,
+            "stdDev": 9.208619744179936,
+            "count": 406220,
+            "stdError": 0.01444820479551208,
+            "ci95": [
+              1.0824750086361423,
+              1.1391119714345497
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Qarshi\\viirs_2018.png"
+    }
+  }
+}

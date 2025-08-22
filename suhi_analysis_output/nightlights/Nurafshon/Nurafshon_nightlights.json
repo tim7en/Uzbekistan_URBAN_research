@@ -1,0 +1,42 @@
+{
+  "city": "Nurafshon",
+  "years": {
+    "2018": {
+      "stats": {
+        "urban_core": {
+          "mean": 1.5218104582160092,
+          "stdDev": 1.5235376265175753,
+          "count": 25725
+        },
+        "rural_ring": {
+          "mean": 2.7169658469761124,
+          "stdDev": 6.3286351540042,
+          "count": 419210
+        },
+        "uncertainty": {
+          "urban_core": {
+            "mean": 1.5218104582160092,
+            "stdDev": 1.5235376265175753,
+            "count": 25725,
+            "stdError": 0.00949894761582333,
+            "ci95": [
+              1.5031925208889956,
+              1.540428395543023
+            ]
+          },
+          "rural_ring": {
+            "mean": 2.7169658469761124,
+            "stdDev": 6.3286351540042,
+            "count": 419210,
+            "stdError": 0.00977449305431625,
+            "ci95": [
+              2.6978078405896526,
+              2.7361238533625722
+            ]
+          }
+        }
+      },
+      "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlights\\Nurafshon\\viirs_2018.png"
+    }
+  }
+}

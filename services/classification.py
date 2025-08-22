@@ -68,7 +68,8 @@ def _load_classifications_at_scale(year: int, geometry: ee.Geometry, start_date:
             try:
                 # Set default projection for reduceResolution (ESRI data is in Web Mercator)
                 esri_proj = esri.setDefaultProjection('EPSG:3857', None, 10)
-                esri_mode = esri_proj.reduceResolution(ee.Reducer.mode(), maxPixels=1024)
+                # Increase maxPixels to support larger input neighborhoods for big city extents
+                esri_mode = esri_proj.reduceResolution(ee.Reducer.mode(), maxPixels=8192)
                 esri_agg = esri_mode.reproject(crs='EPSG:4326', scale=scale).rename('esri_full')
             except Exception:
                 # Fallback to simple reproject if reduceResolution fails
