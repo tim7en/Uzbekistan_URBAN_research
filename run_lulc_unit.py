@@ -14,7 +14,13 @@ It also runs an ESRI-based landcover change analysis using
 Defaults are safe: generation/export are opt-in. To run analysis-only call with
 `--analyze`.
 """
+import sys
 from pathlib import Path
+
+# Ensure repository root is on sys.path so local `services` package is importable
+ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT))
+
 import argparse
 import json
 import time
@@ -36,7 +42,7 @@ def parse_args():
     p.add_argument('--save-highres', action='store_true', help='Save high-resolution local GeoTIFFs (30m) - WARNING: Large files!')
     p.add_argument('--export-drive', action='store_true', help='Start Drive export tasks for detailed LULC')
     p.add_argument('--analyze', action='store_true', help='Run ESRI-based landcover change analysis')
-    p.add_argument('--cities', nargs='*', help='List of cities (default: first 14)')
+    p.add_argument('--cities', nargs='*', help='List of cities (default: all configured cities)')
     p.add_argument('--start-year', type=int, default=2017)
     p.add_argument('--end-year', type=int, default=2024)
     p.add_argument('--coarse-scale', type=int, default=200, help='Coarse local scale in meters')
@@ -50,7 +56,7 @@ def main():
     out_dirs = create_output_directories()
     base = out_dirs['base']
 
-    cities = args.cities if args.cities else list(UZBEKISTAN_CITIES.keys())[:14]
+    cities = args.cities if args.cities else list(UZBEKISTAN_CITIES.keys())
     start_year = args.start_year
     end_year = args.end_year
 
@@ -84,7 +90,8 @@ def main():
 
     # Save generation summary
     if any('coarse' in r or 'highres' in r or 'drive' in r for r in results):
-        gen_file = base / 'lulc_summary.json'
+        gen_file = base / 'reports' / 'lulc_summary.json'
+        gen_file.parent.mkdir(parents=True, exist_ok=True)
         with open(gen_file, 'w', encoding='utf-8') as f:
             json.dump(results, f, indent=2)
         print('Saved generation summary:', gen_file)
@@ -96,7 +103,8 @@ def main():
             # run detailed LULC analysis (time series, trends, comparisons vs ESRI)
             r = lulc_analysis.run_city_lulc_analysis(base, city, start_year, end_year)
             analysis_results.append(r)
-        analysis_file = base / 'lulc_analysis_summary.json'
+        analysis_file = base / 'reports' / 'lulc_analysis_summary.json'
+        analysis_file.parent.mkdir(parents=True, exist_ok=True)
         with open(analysis_file, 'w', encoding='utf-8') as f:
             json.dump(analysis_results, f, indent=2)
         print('Saved analysis summary:', analysis_file)

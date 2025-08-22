@@ -43,6 +43,59 @@ def _download_image_geturl(image, region, scale: int, out_path: Path, file_name:
         return None
 
 
+def generate_esri_only_local(base: Path, city: str, year: int, coarse_scale: int = 200) -> Dict[str, Any]:
+    """Generate only ESRI full and built maps locally (for smoke runs)."""
+    out: Dict[str, Any] = {'city': city, 'year': year, 'generated': {}}
+    city_info = UZBEKISTAN_CITIES.get(city)
+    if not city_info:
+        out['error'] = 'city not found'
+        return out
+    center = ee.Geometry.Point([city_info['lon'], city_info['lat']])
+    region = center.buffer(city_info['buffer_m']).bounds()
+    
+    # Load only ESRI classification
+    try:
+        esri = classification.load_esri_classification(year, region)
+        if esri is None:
+            out['error'] = 'ESRI classification not available'
+            return out
+        
+        # Process ESRI full and built maps
+        try:
+            esri_proj = esri.setDefaultProjection('EPSG:3857', None, 10)
+            # Increase maxPixels to support larger input neighborhoods for big city extents
+            esri_mode = esri_proj.reduceResolution(ee.Reducer.mode(), maxPixels=8192)
+            esri_agg = esri_mode.reproject(crs='EPSG:4326', scale=coarse_scale).rename('esri_full')
+        except Exception:
+            esri_agg = esri.reproject(crs='EPSG:4326', scale=coarse_scale).rename('esri_full')
+        
+        classifications = {
+            'esri_full': esri_agg.clip(region),
+            'esri_built': esri_agg.eq(7).rename('esri_built').clip(region)
+        }
+    except Exception as e:
+        out['error'] = f'ESRI loading failed: {e}'
+        return out
+
+    out_dir = base / 'lulc' / city
+    for name, img in classifications.items():
+        try:
+            fname = f"{name}_{year}_coarse"
+            p = _download_image_geturl(img, region, coarse_scale, out_dir, fname)
+            out['generated'][name] = str(p) if p else None
+            time.sleep(1)
+        except Exception as e:
+            out['generated'][name] = {'error': str(e)}
+        
+        # compute categorical uncertainty (histogram, entropy) and save
+        try:
+            cat_unc = error_assessment.compute_categorical_uncertainty(img, region, scale=coarse_scale, maxPixels=int(1e8))
+            out.setdefault('uncertainty', {})[name] = cat_unc
+        except Exception:
+            out.setdefault('uncertainty', {})[name] = None
+    return out
+
+
 def generate_coarse_local(base: Path, city: str, year: int, coarse_scale: int = 200) -> Dict[str, Any]:
     out: Dict[str, Any] = {'city': city, 'year': year, 'generated': {}}
     city_info = UZBEKISTAN_CITIES.get(city)
@@ -71,9 +124,59 @@ def generate_coarse_local(base: Path, city: str, year: int, coarse_scale: int = 
         # compute categorical uncertainty (histogram, entropy) and save
         try:
             cat_unc = error_assessment.compute_categorical_uncertainty(img, region, scale=coarse_scale, maxPixels=int(1e8))
+            # If EE returned an error or empty histogram, attempt a local fallback
+            if not cat_unc or (isinstance(cat_unc, dict) and any(v is None for v in (cat_unc.get('histogram'), cat_unc.get('proportions'), cat_unc.get('entropy')))):
+                # try compute from local tif if available
+                try:
+                    if p and p.exists():
+                        # local raster fallback
+                        try:
+                            import rasterio
+                            import numpy as _np
+                            with rasterio.open(p) as src:
+                                arr = src.read(1, masked=True)
+                                if hasattr(arr, 'compressed'):
+                                    data = arr.compressed()
+                                else:
+                                    data = arr[~arr.mask]
+                                if data.size > 0:
+                                    vals, counts = _np.unique(data.astype(_np.int64), return_counts=True)
+                                    hist = {int(int(v)): int(int(c)) for v, c in zip(vals, counts)}
+                                    total = sum(hist.values())
+                                    props = {k: v / total for k, v in hist.items()}
+                                    import math as _math
+                                    ent = -sum((p * _math.log(p) for p in props.values() if p > 0))
+                                    cat_unc = {'histogram': hist, 'proportions': props, 'entropy': float(ent)}
+                        except Exception:
+                            # leave cat_unc as returned by EE (may contain error)
+                            pass
+                except Exception:
+                    pass
             out.setdefault('uncertainty', {})[name] = cat_unc
-        except Exception:
-            out.setdefault('uncertainty', {})[name] = None
+        except Exception as e:
+            # on EE failure, attempt local fallback if file exists
+            local_res = None
+            try:
+                if 'p' in locals() and p and p.exists():
+                    import rasterio
+                    import numpy as _np
+                    with rasterio.open(p) as src:
+                        arr = src.read(1, masked=True)
+                        if hasattr(arr, 'compressed'):
+                            data = arr.compressed()
+                        else:
+                            data = arr[~arr.mask]
+                        if data.size > 0:
+                            vals, counts = _np.unique(data.astype(_np.int64), return_counts=True)
+                            hist = {int(int(v)): int(int(c)) for v, c in zip(vals, counts)}
+                            total = sum(hist.values())
+                            props = {k: v / total for k, v in hist.items()}
+                            import math as _math
+                            ent = -sum((p * _math.log(p) for p in props.values() if p > 0))
+                            local_res = {'histogram': hist, 'proportions': props, 'entropy': float(ent)}
+            except Exception:
+                local_res = {'error': str(e)}
+            out.setdefault('uncertainty', {})[name] = local_res
     return out
 
 

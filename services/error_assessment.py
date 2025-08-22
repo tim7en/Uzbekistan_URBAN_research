@@ -98,9 +98,38 @@ def compute_categorical_uncertainty(image: ee.Image, geom: ee.Geometry, scale: i
     """
     out = {'histogram': None, 'proportions': None, 'entropy': None}
     try:
-        hist_r = image.reduceRegion(reducer=ee.Reducer.frequencyHistogram(), geometry=geom, scale=scale, maxPixels=maxPixels, bestEffort=True)
-        hist_info = hist_r.getInfo() if hist_r else {}
-        hist = _extract_scalar(hist_info)
+        # Try a normal reduceRegion call first.
+        # If it fails with memory limits, retry with increasing tileScale.
+        hist_info = {}
+        try:
+            hist_r = image.reduceRegion(reducer=ee.Reducer.frequencyHistogram(), geometry=geom, scale=scale, maxPixels=maxPixels, bestEffort=True)
+            hist_info = hist_r.getInfo() if hist_r else {}
+        except Exception as e:
+            msg = str(e)
+            # Retry with tileScale attempts to reduce memory pressure on the server
+            for ts in (2, 4, 8, 16):
+                try:
+                    hist_r = image.reduceRegion(reducer=ee.Reducer.frequencyHistogram(), geometry=geom, scale=scale, maxPixels=maxPixels, bestEffort=True, tileScale=ts)
+                    hist_info = hist_r.getInfo() if hist_r else {}
+                    if hist_info:
+                        break
+                except Exception:
+                    hist_info = {}
+            if not hist_info:
+                # re-raise original to be caught by outer handler
+                raise
+
+        # hist_info is expected to be a dict like { '<band>': { '<class>': count, ... } }
+        hist = None
+        if isinstance(hist_info, dict) and hist_info:
+            # extract first value (the histogram dict) instead of using generic scalar extractor
+            try:
+                first_val = next(iter(hist_info.values()))
+                if isinstance(first_val, dict):
+                    hist = first_val
+            except Exception:
+                hist = None
+
         if isinstance(hist, dict):
             # convert keys to int where possible
             try:

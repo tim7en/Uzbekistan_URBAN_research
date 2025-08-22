@@ -5,74 +5,81 @@ is intentionally tiny so it's easy to run a quick smoke test or use as the
 CI entrypoint.
 """
 
-from services import gee, utils, pipeline, visualization, analyzer
+import argparse
+import subprocess
 from pathlib import Path
 
+from services import gee, utils
 
-def main() -> None:
-    print("COMPREHENSIVE SUHI ANALYSIS ORCHESTRATOR (minimal)")
+
+UNIT_RUNNERS = {
+    'nightlight': Path('run_nightlight_unit.py'),
+    'lulc': Path('run_lulc_unit.py'),
+    'suhi': Path('run_suhi_unit.py'),
+    'auxiliary': Path('run_auxiliary_unit.py'),
+    'spatial_relationships': Path('run_spatial_relationships_unit.py'),
+}
+
+
+def _run_script(path: Path, args: list) -> int:
+    cmd = ['python', str(path)] + args
+    print('Running:', ' '.join(cmd))
+    return subprocess.call(cmd)
+
+
+def main():
+    p = argparse.ArgumentParser(description='Run unit pipelines for SUHI project')
+    p.add_argument('--unit', choices=['nightlight', 'lulc', 'suhi', 'auxiliary', 'spatial_relationships', 'all'], default='all', help='Which unit to run')
+    p.add_argument('--start-year', type=int, default=2016)
+    p.add_argument('--end-year', type=int, default=2024)
+    p.add_argument('--cities', nargs='*', help='Cities to process (default: configured subset)')
+    p.add_argument('--highres', action='store_true', help='Include high-res outputs where supported')
+    p.add_argument('--export-drive', action='store_true', help='Start Drive exports for units that support it')
+    args = p.parse_args()
 
     if not gee.initialize_gee():
-        print("GEE initialization failed. Exiting.")
+        print('GEE initialization failed; aborting')
         return
 
-    gee.test_dataset_availability()
     utils.create_output_directories()
 
-    cities = list(utils.UZBEKISTAN_CITIES.keys())
-    if not cities:
-        print("No cities configured in services.utils.UZBEKISTAN_CITIES")
-        return
+    units = [args.unit] if args.unit != 'all' else ['nightlight', 'lulc', 'suhi', 'auxiliary', 'spatial_relationships']
+    for unit in units:
+        runner = UNIT_RUNNERS.get(unit)
+        if not runner or not runner.exists():
+            print(f"Runner script for unit '{unit}' not found: {runner}")
+            continue
 
-    # Create output directories
-    output_dir = Path("outputs")
-    visualization_dir = output_dir / "visualizations"
-    reports_dir = output_dir / "reports"
-    
-    output_dir.mkdir(exist_ok=True)
-    visualization_dir.mkdir(exist_ok=True)
-    reports_dir.mkdir(exist_ok=True)
+        common_args = [
+            '--start-year', str(args.start_year), '--end-year', str(args.end_year)
+        ]
+        if args.cities:
+            common_args += ['--cities'] + args.cities
+        if args.highres:
+            common_args += ['--save-highres']
+        if args.export_drive:
+            common_args += ['--export-drive']
 
-    # Run comprehensive analysis for multiple cities and years
-    print(f"\n🔍 Running analysis for {len(cities)} cities...")
-    
-    all_results = []
-    for city in cities[:3]:  # Limit to first 3 cities for demo
-        for year in [2017, 2024]:
-            print(f"\n📊 Analyzing {city} for {year}...")
-            
-            results = pipeline.run_comprehensive_analysis(city, year)
-            if results and 'error' not in results:
-                all_results.append(results)
-                
-                # Create individual visualizations
-                if 'day_night_analysis' in results:
-                    visualization.create_day_night_comparison_plot(
-                        results['day_night_analysis'], city, year, visualization_dir
-                    )
-    
-    # Create multi-city comparisons
-    if all_results:
-        print("\n📈 Creating comparative visualizations...")
-        visualization.create_multi_city_landcover_comparison(all_results, visualization_dir)
-        visualization.create_statistical_summary_plot(
-            {f"{r['city']}_{r['year']}": r for r in all_results}, 
-            visualization_dir
-        )
-    
-    # Run comprehensive statistical analysis
-    if output_dir.exists():
-        print("\n📊 Running comprehensive statistical analysis...")
-        data_analyzer = analyzer.SUHIAnalyzer(str(output_dir))
-        if data_analyzer.load_data():
-            data_analyzer.calculate_comparative_statistics()
-            data_analyzer.create_comprehensive_report()
-            data_analyzer.export_summary_statistics(reports_dir)
+        # Unit-specific flag mappings
+        if unit == 'nightlight':
+            # run generation + analysis for nightlight
+            ret = _run_script(runner, ['--generate', '--save-local-geotiff', '--export-drive', '--analyze'] + common_args)
+        elif unit == 'lulc':
+            ret = _run_script(runner, ['--generate', '--save-local', '--save-highres', '--analyze'] + common_args)
+        elif unit == 'suhi':
+            # SUHI runner is self-contained; pass common args if present (some flags ignored)
+            ret = _run_script(runner, common_args)
+        elif unit == 'auxiliary':
+            # Auxiliary/biodiversity-related runner is self-contained; run it
+            ret = _run_script(runner, common_args)
+        elif unit == 'spatial_relationships':
+            # Spatial relationships unit (vegetation vs built-up metrics)
+            ret = _run_script(runner, common_args)
+        else:
+            ret = 1
 
-    print(f"\n✅ Analysis complete! Check outputs in:")
-    print(f"   📊 Visualizations: {visualization_dir}")
-    print(f"   📋 Reports: {reports_dir}")
-    print(f"   📁 Raw data: {output_dir}")
+        if ret != 0:
+            print(f"Unit '{unit}' runner exited with code {ret}")
 
 
 if __name__ == '__main__':
