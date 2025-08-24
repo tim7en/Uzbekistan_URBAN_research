@@ -1,0 +1,137 @@
+{
+  "city": "Jizzakh",
+  "year": 2017,
+  "generated": {
+    "summer_veg_tif": "suhi_analysis_output\\vegetation\\Jizzakh\\Jizzakh_ndvi_evi_summer_2017.tif",
+    "winter_veg_tif": "suhi_analysis_output\\vegetation\\Jizzakh\\Jizzakh_ndvi_evi_winter_2017.tif",
+    "ndvi_change_tif": "suhi_analysis_output\\vegetation\\Jizzakh\\Jizzakh_ndvi_change_2017.tif",
+    "evi_change_tif": "suhi_analysis_output\\vegetation\\Jizzakh\\Jizzakh_evi_change_2017.tif",
+    "summer_lst_tif": "suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_lst_summer_2017.tif",
+    "winter_lst_tif": "suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_lst_winter_2017.tif",
+    "lst_change_tif": "suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_lst_change_2017.tif"
+  },
+  "stats": {
+    "summer_ndvi_mean": 0.2972152258581924,
+    "winter_ndvi_mean": 0.19900871461131028,
+    "ndvi_change_mean": 0.09818920199411105,
+    "summer_evi_mean": 0.23210741555812472,
+    "winter_evi_mean": 0.1107192048809445,
+    "evi_change_mean": 0.12138925522754948,
+    "summer_lst_mean": 44.93777395370123,
+    "winter_lst_mean": 1.0766327364738577,
+    "lst_change_mean": 44.017638726008194,
+    "summer_biomass_t_per_ha": 5.1387543434267755,
+    "winter_biomass_t_per_ha": 3.2501675886790435,
+    "biomass_change_t_per_ha": 1.888586754747732
+  },
+  "uncertainty": {
+    "summer_ndvi": {
+      "city": {
+        "mean": 0.2972152258581924,
+        "stdDev": 0.1608490739723489,
+        "count": 370596,
+        "stdError": 0.00026422152888137834,
+        "ci95": [
+          0.2966973516615849,
+          0.29773310005479986
+        ]
+      }
+    },
+    "winter_ndvi": {
+      "city": {
+        "mean": 0.19900871461131028,
+        "stdDev": 0.1354610748901922,
+        "count": 370454,
+        "stdError": 0.00022256013352295125,
+        "ci95": [
+          0.1985724967496053,
+          0.19944493247301526
+        ]
+      }
+    },
+    "ndvi_change": {
+      "city": {
+        "mean": 0.09818920199411105,
+        "stdDev": 0.18792309198154825,
+        "count": 370454,
+        "stdError": 0.00030875429327105854,
+        "ci95": [
+          0.09758404357929977,
+          0.09879436040892232
+        ]
+      }
+    },
+    "summer_evi": {
+      "city": {
+        "mean": 0.23210741555812472,
+        "stdDev": 0.11388221005066343,
+        "count": 370596,
+        "stdError": 0.00018707059300291195,
+        "ci95": [
+          0.231740757195839,
+          0.23247407392041045
+        ]
+      }
+    },
+    "winter_evi": {
+      "city": {
+        "mean": 0.1107192048809445,
+        "stdDev": 0.056403927143944634,
+        "count": 370436,
+        "stdError": 9.267289923068444e-05,
+        "ci95": [
+          0.11053756599845235,
+          0.11090084376343665
+        ]
+      }
+    },
+    "evi_change": {
+      "city": {
+        "mean": 0.12138925522754948,
+        "stdDev": 0.12263730046479887,
+        "count": 370436,
+        "stdError": 0.0002014957958316136,
+        "ci95": [
+          0.12099432346771952,
+          0.12178418698737944
+        ]
+      }
+    },
+    "summer_lst": {
+      "city": {
+        "mean": 44.93777395370123,
+        "stdDev": 4.967587722141026,
+        "count": 370596,
+        "stdError": 0.008160094369098456,
+        "ci95": [
+          44.9217801687378,
+          44.953767738664666
+        ]
+      }
+    },
+    "winter_lst": {
+      "city": {
+        "mean": 1.0766327364738577,
+        "stdDev": 1.266490280464233,
+        "count": 349146,
+        "stdError": 0.002143375813755375,
+        "ci95": [
+          1.072431719878897,
+          1.0808337530688183
+        ]
+      }
+    },
+    "lst_change": {
+      "city": {
+        "mean": 44.017638726008194,
+        "stdDev": 4.230768871540389,
+        "count": 349146,
+        "stdError": 0.007160045215289659,
+        "ci95": [
+          44.00360503738623,
+          44.03167241463016
+        ]
+      }
+    }
+  }
+}

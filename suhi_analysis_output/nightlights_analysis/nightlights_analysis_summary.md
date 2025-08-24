@@ -1,5 +1,5 @@
 # Nightlights Analysis Summary
-Generated: 2025-08-22T13:26:42.129139
+Generated: 2025-08-23T19:45:08.177946
 
 ## Trends (lit area km² per year)
 - Tashkent: slope = 1.9060 km²/year (n=9)

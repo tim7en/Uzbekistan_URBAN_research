@@ -1,0 +1,137 @@
+{
+  "city": "Samarkand",
+  "year": 2023,
+  "generated": {
+    "summer_veg_tif": "suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_ndvi_evi_summer_2023.tif",
+    "winter_veg_tif": "suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_ndvi_evi_winter_2023.tif",
+    "ndvi_change_tif": "suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_ndvi_change_2023.tif",
+    "evi_change_tif": "suhi_analysis_output\\vegetation\\Samarkand\\Samarkand_evi_change_2023.tif",
+    "summer_lst_tif": "suhi_analysis_output\\temperature\\Samarkand\\Samarkand_lst_summer_2023.tif",
+    "winter_lst_tif": "suhi_analysis_output\\temperature\\Samarkand\\Samarkand_lst_winter_2023.tif",
+    "lst_change_tif": "suhi_analysis_output\\temperature\\Samarkand\\Samarkand_lst_change_2023.tif"
+  },
+  "stats": {
+    "summer_ndvi_mean": 0.32982841933094265,
+    "winter_ndvi_mean": 0.013298746792377086,
+    "ndvi_change_mean": 0.31652932696413133,
+    "summer_evi_mean": 0.24848616358501535,
+    "winter_evi_mean": -0.14427183364775395,
+    "evi_change_mean": 0.39275429769396847,
+    "summer_lst_mean": 42.23175952390295,
+    "winter_lst_mean": -1.0214344168002802,
+    "lst_change_mean": 44.6156609763237,
+    "summer_biomass_t_per_ha": 5.765931140979665,
+    "winter_biomass_t_per_ha": 0.0,
+    "biomass_change_t_per_ha": 5.765931140979665
+  },
+  "uncertainty": {
+    "summer_ndvi": {
+      "city": {
+        "mean": 0.32982841933094265,
+        "stdDev": 0.17632020413628474,
+        "count": 829264,
+        "stdError": 0.00019362243337689967,
+        "ci95": [
+          0.32944891936152393,
+          0.33020791930036136
+        ]
+      }
+    },
+    "winter_ndvi": {
+      "city": {
+        "mean": 0.013298746792377086,
+        "stdDev": 0.07384952537843148,
+        "count": 829268,
+        "stdError": 8.109615339801275e-05,
+        "ci95": [
+          0.013139798331716981,
+          0.01345769525303719
+        ]
+      }
+    },
+    "ndvi_change": {
+      "city": {
+        "mean": 0.31652932696413133,
+        "stdDev": 0.188436803885089,
+        "count": 829264,
+        "stdError": 0.0002069280300843766,
+        "ci95": [
+          0.31612374802516596,
+          0.3169349059030967
+        ]
+      }
+    },
+    "summer_evi": {
+      "city": {
+        "mean": 0.24848616358501535,
+        "stdDev": 0.1334345243357409,
+        "count": 829264,
+        "stdError": 0.0001465283994249786,
+        "ci95": [
+          0.24819896792214238,
+          0.24877335924788832
+        ]
+      }
+    },
+    "winter_evi": {
+      "city": {
+        "mean": -0.14427183364775395,
+        "stdDev": 0.6458056884635354,
+        "count": 829268,
+        "stdError": 0.0007091766251519335,
+        "ci95": [
+          -0.14566181983305174,
+          -0.14288184746245616
+        ]
+      }
+    },
+    "evi_change": {
+      "city": {
+        "mean": 0.39275429769396847,
+        "stdDev": 0.6602430766310389,
+        "count": 829264,
+        "stdError": 0.0007250324586667432,
+        "ci95": [
+          0.39133323407498166,
+          0.3941753613129553
+        ]
+      }
+    },
+    "summer_lst": {
+      "city": {
+        "mean": 42.23175952390295,
+        "stdDev": 3.7589561572543486,
+        "count": 829264,
+        "stdError": 0.004127820981661908,
+        "ci95": [
+          42.2236689947789,
+          42.239850053027006
+        ]
+      }
+    },
+    "winter_lst": {
+      "city": {
+        "mean": -1.0214344168002802,
+        "stdDev": 1.2877558403948697,
+        "count": 34541,
+        "stdError": 0.006928928420528305,
+        "ci95": [
+          -1.0350151165045158,
+          -1.0078537170960447
+        ]
+      }
+    },
+    "lst_change": {
+      "city": {
+        "mean": 44.6156609763237,
+        "stdDev": 3.6977396604921906,
+        "count": 34541,
+        "stdError": 0.01989614228225332,
+        "ci95": [
+          44.57666453745048,
+          44.65465741519692
+        ]
+      }
+    }
+  }
+}

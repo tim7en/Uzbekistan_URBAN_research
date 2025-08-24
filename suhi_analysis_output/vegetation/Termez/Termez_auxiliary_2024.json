@@ -1,0 +1,137 @@
+{
+  "city": "Termez",
+  "year": 2024,
+  "generated": {
+    "summer_veg_tif": "suhi_analysis_output\\vegetation\\Termez\\Termez_ndvi_evi_summer_2024.tif",
+    "winter_veg_tif": "suhi_analysis_output\\vegetation\\Termez\\Termez_ndvi_evi_winter_2024.tif",
+    "ndvi_change_tif": "suhi_analysis_output\\vegetation\\Termez\\Termez_ndvi_change_2024.tif",
+    "evi_change_tif": "suhi_analysis_output\\vegetation\\Termez\\Termez_evi_change_2024.tif",
+    "summer_lst_tif": "suhi_analysis_output\\temperature\\Termez\\Termez_lst_summer_2024.tif",
+    "winter_lst_tif": "suhi_analysis_output\\temperature\\Termez\\Termez_lst_winter_2024.tif",
+    "lst_change_tif": "suhi_analysis_output\\temperature\\Termez\\Termez_lst_change_2024.tif"
+  },
+  "stats": {
+    "summer_ndvi_mean": 0.2622901247220208,
+    "winter_ndvi_mean": 0.13990932896062144,
+    "ndvi_change_mean": 0.1223816553661926,
+    "summer_evi_mean": 0.19912196204667992,
+    "winter_evi_mean": 0.09545824416812428,
+    "evi_change_mean": 0.10366421991942548,
+    "summer_lst_mean": 43.90061171998502,
+    "winter_lst_mean": 13.276896015803365,
+    "lst_change_mean": 30.63461920339027,
+    "summer_biomass_t_per_ha": 4.467117783115785,
+    "winter_biomass_t_per_ha": 2.1136409415504125,
+    "biomass_change_t_per_ha": 2.353476841565372
+  },
+  "uncertainty": {
+    "summer_ndvi": {
+      "city": {
+        "mean": 0.2622901247220208,
+        "stdDev": 0.1945459239609629,
+        "count": 356178,
+        "stdError": 0.0003259782249950999,
+        "ci95": [
+          0.2616512074010304,
+          0.2629290420430112
+        ]
+      }
+    },
+    "winter_ndvi": {
+      "city": {
+        "mean": 0.13990932896062144,
+        "stdDev": 0.1558558380554029,
+        "count": 356176,
+        "stdError": 0.0002611504319992065,
+        "ci95": [
+          0.139397474113903,
+          0.1404211838073399
+        ]
+      }
+    },
+    "ndvi_change": {
+      "city": {
+        "mean": 0.1223816553661926,
+        "stdDev": 0.16233760966086316,
+        "count": 356176,
+        "stdError": 0.0002720112215339843,
+        "ci95": [
+          0.12184851337198599,
+          0.1229147973603992
+        ]
+      }
+    },
+    "summer_evi": {
+      "city": {
+        "mean": 0.19912196204667992,
+        "stdDev": 0.1434547326495856,
+        "count": 356178,
+        "stdError": 0.00024037059304127026,
+        "ci95": [
+          0.19865083568431904,
+          0.1995930884090408
+        ]
+      }
+    },
+    "winter_evi": {
+      "city": {
+        "mean": 0.09545824416812428,
+        "stdDev": 0.09591902040711998,
+        "count": 356176,
+        "stdError": 0.00016072091959337247,
+        "ci95": [
+          0.09514323116572126,
+          0.09577325717052729
+        ]
+      }
+    },
+    "evi_change": {
+      "city": {
+        "mean": 0.10366421991942548,
+        "stdDev": 0.12485149504159289,
+        "count": 356176,
+        "stdError": 0.0002091998751709801,
+        "ci95": [
+          0.10325418816409036,
+          0.1040742516747606
+        ]
+      }
+    },
+    "summer_lst": {
+      "city": {
+        "mean": 43.90061171998502,
+        "stdDev": 8.524325134077019,
+        "count": 356178,
+        "stdError": 0.014283231022846407,
+        "ci95": [
+          43.87261658718025,
+          43.9286068527898
+        ]
+      }
+    },
+    "winter_lst": {
+      "city": {
+        "mean": 13.276896015803365,
+        "stdDev": 2.2889568466147723,
+        "count": 355938,
+        "stdError": 0.0038366344945168153,
+        "ci95": [
+          13.269376212194112,
+          13.284415819412617
+        ]
+      }
+    },
+    "lst_change": {
+      "city": {
+        "mean": 30.63461920339027,
+        "stdDev": 7.32540878831432,
+        "count": 355938,
+        "stdError": 0.012278482263765175,
+        "ci95": [
+          30.610553378153288,
+          30.65868502862725
+        ]
+      }
+    }
+  }
+}

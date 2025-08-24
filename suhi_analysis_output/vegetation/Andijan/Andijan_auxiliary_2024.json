@@ -1,0 +1,137 @@
+{
+  "city": "Andijan",
+  "year": 2024,
+  "generated": {
+    "summer_veg_tif": "suhi_analysis_output\\vegetation\\Andijan\\Andijan_ndvi_evi_summer_2024.tif",
+    "winter_veg_tif": "suhi_analysis_output\\vegetation\\Andijan\\Andijan_ndvi_evi_winter_2024.tif",
+    "ndvi_change_tif": "suhi_analysis_output\\vegetation\\Andijan\\Andijan_ndvi_change_2024.tif",
+    "evi_change_tif": "suhi_analysis_output\\vegetation\\Andijan\\Andijan_evi_change_2024.tif",
+    "summer_lst_tif": "suhi_analysis_output\\temperature\\Andijan\\Andijan_lst_summer_2024.tif",
+    "winter_lst_tif": "suhi_analysis_output\\temperature\\Andijan\\Andijan_lst_winter_2024.tif",
+    "lst_change_tif": "suhi_analysis_output\\temperature\\Andijan\\Andijan_lst_change_2024.tif"
+  },
+  "stats": {
+    "summer_ndvi_mean": 0.3837829095456649,
+    "winter_ndvi_mean": 0.20172464196481926,
+    "ndvi_change_mean": 0.18193692575025952,
+    "summer_evi_mean": 0.2741690296033292,
+    "winter_evi_mean": 0.09855092781836589,
+    "evi_change_mean": 0.1755211387748063,
+    "summer_lst_mean": 41.80907084617531,
+    "winter_lst_mean": 11.812456031360098,
+    "lst_change_mean": 30.00684118074306,
+    "summer_biomass_t_per_ha": 6.803517491262787,
+    "winter_biomass_t_per_ha": 3.3023969608619086,
+    "biomass_change_t_per_ha": 3.5011205304008786
+  },
+  "uncertainty": {
+    "summer_ndvi": {
+      "city": {
+        "mean": 0.3837829095456649,
+        "stdDev": 0.20537480003894418,
+        "count": 842652,
+        "stdError": 0.00022372938336346485,
+        "ci95": [
+          0.3833443999542725,
+          0.3842214191370573
+        ]
+      }
+    },
+    "winter_ndvi": {
+      "city": {
+        "mean": 0.20172464196481926,
+        "stdDev": 0.13147063965153455,
+        "count": 840888,
+        "stdError": 0.00014337046654874991,
+        "ci95": [
+          0.20144363585038372,
+          0.2020056480792548
+        ]
+      }
+    },
+    "ndvi_change": {
+      "city": {
+        "mean": 0.18193692575025952,
+        "stdDev": 0.20261585747775385,
+        "count": 840888,
+        "stdError": 0.00022095526494551076,
+        "ci95": [
+          0.1815038534309663,
+          0.18236999806955273
+        ]
+      }
+    },
+    "summer_evi": {
+      "city": {
+        "mean": 0.2741690296033292,
+        "stdDev": 0.15126729691278842,
+        "count": 842652,
+        "stdError": 0.00016478623012628052,
+        "ci95": [
+          0.2738460485922817,
+          0.27449201061437667
+        ]
+      }
+    },
+    "winter_evi": {
+      "city": {
+        "mean": 0.09855092781836589,
+        "stdDev": 0.07049465248334025,
+        "count": 840888,
+        "stdError": 7.68753483098347e-05,
+        "ci95": [
+          0.09840025213567861,
+          0.09870160350105316
+        ]
+      }
+    },
+    "evi_change": {
+      "city": {
+        "mean": 0.1755211387748063,
+        "stdDev": 0.156778278251922,
+        "count": 840888,
+        "stdError": 0.00017096878023309617,
+        "ci95": [
+          0.17518603996554943,
+          0.17585623758406316
+        ]
+      }
+    },
+    "summer_lst": {
+      "city": {
+        "mean": 41.80907084617531,
+        "stdDev": 5.8980335610594405,
+        "count": 842652,
+        "stdError": 0.006425147639450542,
+        "ci95": [
+          41.79647755680199,
+          41.82166413554863
+        ]
+      }
+    },
+    "winter_lst": {
+      "city": {
+        "mean": 11.812456031360098,
+        "stdDev": 1.2363987740748117,
+        "count": 840715,
+        "stdError": 0.0013484478889156386,
+        "ci95": [
+          11.809813073497823,
+          11.815098989222372
+        ]
+      }
+    },
+    "lst_change": {
+      "city": {
+        "mean": 30.00684118074306,
+        "stdDev": 5.922332940723543,
+        "count": 840715,
+        "stdError": 0.006459046643224021,
+        "ci95": [
+          29.99418144932234,
+          30.019500912163778
+        ]
+      }
+    }
+  }
+}

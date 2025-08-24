@@ -1,0 +1,1379 @@
+{
+  "per_year": {
+    "Tashkent": {
+      "2016": {
+        "city": "Tashkent",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 194,
+          "mean_patch_area_m2": 2195257.7319587627,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 153,
+          "mean_patch_area_m2": 413529.4117647059,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 977.9865680115222,
+            "stdDev": 960.2475895732922,
+            "count": 75476,
+            "stdError": 3.4952543731749866,
+            "ci95": [
+              971.1358694400992,
+              984.8372665829452
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 620.9675904304534,
+            "stdDev": 895.1846796847333,
+            "count": 119798,
+            "stdError": 2.5863533432110515,
+            "ci95": [
+              615.8983378777597,
+              626.036842983147
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 847.9463275569686
+      },
+      "2024": {
+        "city": "Tashkent",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 220,
+          "mean_patch_area_m2": 1679772.7272727273,
+          "median_patch_area_m2": 120000
+        },
+        "built_patches": {
+          "patch_count": 139,
+          "mean_patch_area_m2": 317482.0143884892,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 1288.056848928692,
+            "stdDev": 1487.7848111486373,
+            "count": 81384,
+            "stdError": 5.215195639607402,
+            "ci95": [
+              1277.8350654750616,
+              1298.2786323823225
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 879.3004639110684,
+            "stdDev": 1364.2319956812414,
+            "count": 119798,
+            "stdError": 3.9415173907894547,
+            "ci95": [
+              871.575089825121,
+              887.0258379970157
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 791.8535185745794
+      }
+    },
+    "Nukus": {
+      "2016": {
+        "city": "Nukus",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 37,
+          "mean_patch_area_m2": 2527027.027027027,
+          "median_patch_area_m2": 40000
+        },
+        "built_patches": {
+          "patch_count": 46,
+          "mean_patch_area_m2": 3086086.9565217393,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 769.066495659647,
+            "stdDev": 685.1272629524955,
+            "count": 14192,
+            "stdError": 5.751080522224502,
+            "ci95": [
+              757.7943778360869,
+              780.338613483207
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 211.63896643882393,
+            "stdDev": 489.26668754939976,
+            "count": 54000,
+            "stdError": 2.105468591925437,
+            "ci95": [
+              207.51224799865008,
+              215.76568487899777
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1076.4199794565973
+      },
+      "2024": {
+        "city": "Nukus",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 29,
+          "mean_patch_area_m2": 2192758.620689655,
+          "median_patch_area_m2": 50000
+        },
+        "built_patches": {
+          "patch_count": 45,
+          "mean_patch_area_m2": 3436222.222222222,
+          "median_patch_area_m2": 160000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 792.8779679340341,
+            "stdDev": 690.010700608093,
+            "count": 15460,
+            "stdError": 5.549464543903388,
+            "ci95": [
+              782.0010174279835,
+              803.7549184400848
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 231.57338905221172,
+            "stdDev": 514.1019582873363,
+            "count": 54000,
+            "stdError": 2.212342580777193,
+            "ci95": [
+              227.23719759388842,
+              235.90958051053502
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1061.958114084114
+      }
+    },
+    "Andijan": {
+      "2016": {
+        "city": "Andijan",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 51,
+          "mean_patch_area_m2": 2129019.6078431373,
+          "median_patch_area_m2": 200000
+        },
+        "built_patches": {
+          "patch_count": 109,
+          "mean_patch_area_m2": 983577.9816513761,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 725.4087664201766,
+            "stdDev": 866.622799350148,
+            "count": 29030,
+            "stdError": 5.086354111938327,
+            "ci95": [
+              715.4395123607775,
+              735.3780204795756
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 278.64468998689,
+            "stdDev": 641.2683170410546,
+            "count": 75915,
+            "stdError": 2.327426555351379,
+            "ci95": [
+              274.0829339384013,
+              283.2064460353787
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1456.1838724994093
+      },
+      "2024": {
+        "city": "Andijan",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 76,
+          "mean_patch_area_m2": 3495131.5789473685,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 119,
+          "mean_patch_area_m2": 1010168.0672268907,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 786.0384366860058,
+            "stdDev": 967.0472281626669,
+            "count": 32188,
+            "stdError": 5.390147976856606,
+            "ci95": [
+              775.4737466513668,
+              796.6031267206447
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 334.55820809279896,
+            "stdDev": 739.6808275316951,
+            "count": 75915,
+            "stdError": 2.684606045134357,
+            "ci95": [
+              329.29638024433564,
+              339.8200359412623
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1089.9885588139102
+      }
+    },
+    "Bukhara": {
+      "2016": {
+        "city": "Bukhara",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 21,
+          "mean_patch_area_m2": 170952.38095238095,
+          "median_patch_area_m2": 40000
+        },
+        "built_patches": {
+          "patch_count": 126,
+          "mean_patch_area_m2": 1526746.0317460317,
+          "median_patch_area_m2": 280000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 498.28736975076527,
+            "stdDev": 569.7599079346628,
+            "count": 19206,
+            "stdError": 4.11124562079419,
+            "ci95": [
+              490.22932833400864,
+              506.3454111675219
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 187.4082241736841,
+            "stdDev": 421.7617935310946,
+            "count": 51800,
+            "stdError": 1.853114932053833,
+            "ci95": [
+              183.77611890685858,
+              191.0403294405096
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1679.3846000549054
+      },
+      "2024": {
+        "city": "Bukhara",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 24,
+          "mean_patch_area_m2": 1709166.6666666667,
+          "median_patch_area_m2": 40000
+        },
+        "built_patches": {
+          "patch_count": 123,
+          "mean_patch_area_m2": 1654146.3414634147,
+          "median_patch_area_m2": 200000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 503.7700243114966,
+            "stdDev": 576.9963966716009,
+            "count": 20316,
+            "stdError": 4.048125787912637,
+            "ci95": [
+              495.83569776718787,
+              511.7043508558054
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 199.27676091746486,
+            "stdDev": 436.7261154596239,
+            "count": 51800,
+            "stdError": 1.9188643878820877,
+            "ci95": [
+              195.51578671721597,
+              203.03773511771374
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 2526.642505834395
+      }
+    },
+    "Samarkand": {
+      "2016": {
+        "city": "Samarkand",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 91,
+          "mean_patch_area_m2": 907142.8571428572,
+          "median_patch_area_m2": 60000
+        },
+        "built_patches": {
+          "patch_count": 134,
+          "mean_patch_area_m2": 554477.6119402985,
+          "median_patch_area_m2": 210000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 771.753588267033,
+            "stdDev": 869.8041023179303,
+            "count": 35259,
+            "stdError": 4.632190976078582,
+            "ci95": [
+              762.674493953919,
+              780.8326825801471
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 367.8303139876819,
+            "stdDev": 710.0469100736694,
+            "count": 74640,
+            "stdError": 2.5989697607046947,
+            "ci95": [
+              362.73633325670073,
+              372.9242947186631
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1071.7070548072816
+      },
+      "2024": {
+        "city": "Samarkand",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 93,
+          "mean_patch_area_m2": 2074408.6021505375,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 129,
+          "mean_patch_area_m2": 418682.17054263566,
+          "median_patch_area_m2": 160000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 807.7522649598062,
+            "stdDev": 874.4139117499698,
+            "count": 39875,
+            "stdError": 4.378916970241952,
+            "ci95": [
+              799.169587698132,
+              816.3349422214804
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 435.095280340162,
+            "stdDev": 754.2442388760849,
+            "count": 74640,
+            "stdError": 2.760744313106426,
+            "ci95": [
+              429.6842214864734,
+              440.5063391938506
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 866.9750441450938
+      }
+    },
+    "Namangan": {
+      "2016": {
+        "city": "Namangan",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 46,
+          "mean_patch_area_m2": 818478.2608695652,
+          "median_patch_area_m2": 120000
+        },
+        "built_patches": {
+          "patch_count": 78,
+          "mean_patch_area_m2": 1138461.5384615385,
+          "median_patch_area_m2": 120000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 611.4660777191366,
+            "stdDev": 542.9747604133347,
+            "count": 29888,
+            "stdError": 3.1407344272376325,
+            "ci95": [
+              605.3102382417509,
+              617.6219171965223
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 242.0271515456977,
+            "stdDev": 452.9029000054317,
+            "count": 75840,
+            "stdError": 1.6445835404553109,
+            "ci95": [
+              238.8037678064053,
+              245.25053528499012
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1503.2441391387977
+      },
+      "2024": {
+        "city": "Namangan",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 58,
+          "mean_patch_area_m2": 2076206.896551724,
+          "median_patch_area_m2": 120000
+        },
+        "built_patches": {
+          "patch_count": 110,
+          "mean_patch_area_m2": 914363.6363636364,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 731.5432740055854,
+            "stdDev": 633.630782295066,
+            "count": 35394,
+            "stdError": 3.3679950473332516,
+            "ci95": [
+              724.9420037128123,
+              738.1445442983586
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 343.036093993401,
+            "stdDev": 566.408289442347,
+            "count": 75840,
+            "stdError": 2.0567449446297648,
+            "ci95": [
+              339.00487390192666,
+              347.0673140848753
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1583.4116506402595
+      }
+    },
+    "Jizzakh": {
+      "2016": {
+        "city": "Jizzakh",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 28,
+          "mean_patch_area_m2": 6538571.428571428,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 38,
+          "mean_patch_area_m2": 3758157.8947368423,
+          "median_patch_area_m2": 120000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 545.9787825714928,
+            "stdDev": 413.243002103688,
+            "count": 14284,
+            "stdError": 3.457646476063627,
+            "ci95": [
+              539.2017954784081,
+              552.7557696645775
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 242.0756807936475,
+            "stdDev": 383.594696166848,
+            "count": 33280,
+            "stdError": 2.1027175277298586,
+            "ci95": [
+              237.954354439297,
+              246.19700714799802
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1342.8176888656867
+      },
+      "2024": {
+        "city": "Jizzakh",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 38,
+          "mean_patch_area_m2": 4392631.578947368,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 20,
+          "mean_patch_area_m2": 7961000.0,
+          "median_patch_area_m2": 200000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 634.3552779275112,
+            "stdDev": 517.7110667513248,
+            "count": 15922,
+            "stdError": 4.102878336202262,
+            "ci95": [
+              626.3136363885548,
+              642.3969194664677
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 313.59216964026615,
+            "stdDev": 479.20041404672804,
+            "count": 33280,
+            "stdError": 2.6267910374683225,
+            "ci95": [
+              308.4436592068282,
+              318.7406800737041
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1193.2393762647328
+      }
+    },
+    "Qarshi": {
+      "2016": {
+        "city": "Qarshi",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 33,
+          "mean_patch_area_m2": 5040303.03030303,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 25,
+          "mean_patch_area_m2": 6336000.0,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 655.0893988080089,
+            "stdDev": 590.4171633092187,
+            "count": 15872,
+            "stdError": 4.686440920210187,
+            "ci95": [
+              645.9039746043969,
+              664.2748230116209
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 318.56654951209055,
+            "stdDev": 524.5115315434701,
+            "count": 32844,
+            "stdError": 2.894189869281953,
+            "ci95": [
+              312.89393736829794,
+              324.23916165588315
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1346.6748301703112
+      },
+      "2024": {
+        "city": "Qarshi",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 29,
+          "mean_patch_area_m2": 5141724.137931035,
+          "median_patch_area_m2": 120000
+        },
+        "built_patches": {
+          "patch_count": 28,
+          "mean_patch_area_m2": 6317500.0,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 713.6477428651484,
+            "stdDev": 645.8027349003021,
+            "count": 17720,
+            "stdError": 4.851410469573137,
+            "ci95": [
+              704.1389783447851,
+              723.1565073855118
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 386.59430756022965,
+            "stdDev": 592.5522954655,
+            "count": 32844,
+            "stdError": 3.269630403566991,
+            "ci95": [
+              380.18583196923834,
+              393.00278315122097
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1499.5059698963457
+      }
+    },
+    "Navoiy": {
+      "2016": {
+        "city": "Navoiy",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 41,
+          "mean_patch_area_m2": 126341.46341463414,
+          "median_patch_area_m2": 40000
+        },
+        "built_patches": {
+          "patch_count": 68,
+          "mean_patch_area_m2": 2033382.3529411764,
+          "median_patch_area_m2": 240000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 437.00904347028353,
+            "stdDev": 367.9089162188455,
+            "count": 13854,
+            "stdError": 3.1257390710657993,
+            "ci95": [
+              430.88259489099454,
+              443.1354920495725
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 125.60402426304977,
+            "stdDev": 271.2618947520824,
+            "count": 52260,
+            "stdError": 1.1865993012519143,
+            "ci95": [
+              123.27828963259601,
+              127.92975889350352
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1370.7775514842322
+      },
+      "2024": {
+        "city": "Navoiy",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 36,
+          "mean_patch_area_m2": 143333.33333333334,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 70,
+          "mean_patch_area_m2": 2190142.8571428573,
+          "median_patch_area_m2": 240000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 546.5063511248079,
+            "stdDev": 577.309694710796,
+            "count": 15358,
+            "stdError": 4.658450863640874,
+            "ci95": [
+              537.3757874320718,
+              555.636914817544
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 165.73193144894591,
+            "stdDev": 403.19462501882026,
+            "count": 52260,
+            "stdError": 1.7637215899900622,
+            "ci95": [
+              162.2750371325654,
+              169.18882576532644
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1120.8201300084656
+      }
+    },
+    "Termez": {
+      "2016": {
+        "city": "Termez",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 56,
+          "mean_patch_area_m2": 3277142.8571428573,
+          "median_patch_area_m2": 110000
+        },
+        "built_patches": {
+          "patch_count": 64,
+          "mean_patch_area_m2": 1254531.25,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 479.39913570513755,
+            "stdDev": 496.1895024680552,
+            "count": 8036,
+            "stdError": 5.535127229290855,
+            "ci95": [
+              468.5502863357275,
+              490.2479850745476
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 173.24200526054298,
+            "stdDev": 338.32654851186095,
+            "count": 32000,
+            "stdError": 1.8913029026635033,
+            "ci95": [
+              169.53505157132253,
+              176.94895894976344
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 970.0414108086821
+      },
+      "2024": {
+        "city": "Termez",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 56,
+          "mean_patch_area_m2": 3177142.8571428573,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 71,
+          "mean_patch_area_m2": 1312394.366197183,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 443.02032493347065,
+            "stdDev": 407.318901955742,
+            "count": 9332,
+            "stdError": 4.216452374558675,
+            "ci95": [
+              434.75607827933567,
+              451.2845715876056
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 173.13578027825824,
+            "stdDev": 307.75259979536,
+            "count": 32000,
+            "stdError": 1.7203893334867821,
+            "ci95": [
+              169.76381718462414,
+              176.50774337189233
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 856.4057091864274
+      }
+    },
+    "Gulistan": {
+      "2016": {
+        "city": "Gulistan",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 5,
+          "mean_patch_area_m2": 48836000.0,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 41,
+          "mean_patch_area_m2": 2136097.56097561,
+          "median_patch_area_m2": 330000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 469.49755243694995,
+            "stdDev": 441.2907273106916,
+            "count": 8782,
+            "stdError": 4.708993440462439,
+            "ci95": [
+              460.26792529364354,
+              478.72717958025635
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 124.03719501191837,
+            "stdDev": 304.56592306402143,
+            "count": 33810,
+            "stdError": 1.6563752192536836,
+            "ci95": [
+              120.79069958218115,
+              127.2836904416556
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 3118.6708430784697
+      },
+      "2024": {
+        "city": "Gulistan",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 9,
+          "mean_patch_area_m2": 25664444.444444444,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 31,
+          "mean_patch_area_m2": 3187096.7741935486,
+          "median_patch_area_m2": 400000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 475.50249929930936,
+            "stdDev": 441.0645408485432,
+            "count": 9906,
+            "stdError": 4.431522742953485,
+            "ci95": [
+              466.8167147231205,
+              484.1882838754982
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 142.94397491852195,
+            "stdDev": 321.80745105150623,
+            "count": 33810,
+            "stdError": 1.7501428982285092,
+            "ci95": [
+              139.51369483799408,
+              146.3742549990498
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 2140.4827161284206
+      }
+    },
+    "Nurafshon": {
+      "2016": {
+        "city": "Nurafshon",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 17,
+          "mean_patch_area_m2": 14465294.11764706,
+          "median_patch_area_m2": 40000
+        },
+        "built_patches": {
+          "patch_count": 81,
+          "mean_patch_area_m2": 871358.024691358,
+          "median_patch_area_m2": 120000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 219.1909053876734,
+            "stdDev": 161.16629908353787,
+            "count": 7100,
+            "stdError": 1.9126920767132758,
+            "ci95": [
+              215.44202891731538,
+              222.93978185803144
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 70.60102546649547,
+            "stdDev": 158.9550501046675,
+            "count": 34132,
+            "stdError": 0.8603862511485163,
+            "ci95": [
+              68.91466841424437,
+              72.28738251874657
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1799.685152419317
+      },
+      "2024": {
+        "city": "Nurafshon",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 26,
+          "mean_patch_area_m2": 9061153.846153846,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 87,
+          "mean_patch_area_m2": 922643.6781609196,
+          "median_patch_area_m2": 120000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 232.45596797174954,
+            "stdDev": 182.16259313722307,
+            "count": 8068,
+            "stdError": 2.0280387795437615,
+            "ci95": [
+              228.48101196384377,
+              236.43092397965532
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 85.06180612737192,
+            "stdDev": 185.26074552085868,
+            "count": 34132,
+            "stdError": 1.002772785254153,
+            "ci95": [
+              83.09637146827379,
+              87.02724078647006
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1596.7633438756952
+      }
+    },
+    "Fergana": {
+      "2016": {
+        "city": "Fergana",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 57,
+          "mean_patch_area_m2": 222807.01754385966,
+          "median_patch_area_m2": 40000
+        },
+        "built_patches": {
+          "patch_count": 100,
+          "mean_patch_area_m2": 2636200.0,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 742.7394850524938,
+            "stdDev": 803.7699707496821,
+            "count": 26452,
+            "stdError": 4.941997480798344,
+            "ci95": [
+              733.053169990129,
+              752.4258001148586
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 263.2332288203346,
+            "stdDev": 592.367190653421,
+            "count": 75674,
+            "stdError": 2.1533650053570343,
+            "ci95": [
+              259.0126334098348,
+              267.4538242308344
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1144.9052545186175
+      },
+      "2024": {
+        "city": "Fergana",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 73,
+          "mean_patch_area_m2": 318082.19178082194,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 122,
+          "mean_patch_area_m2": 2425491.8032786883,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 746.6912897479014,
+            "stdDev": 807.171343837604,
+            "count": 29688,
+            "stdError": 4.684629668441615,
+            "ci95": [
+              737.5094155977558,
+              755.8731638980469
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 294.615631813672,
+            "stdDev": 623.4121508708981,
+            "count": 75674,
+            "stdError": 2.266219214671489,
+            "ci95": [
+              290.1738421529159,
+              299.0574214744281
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 806.8348845951105
+      }
+    },
+    "Urgench": {
+      "2016": {
+        "city": "Urgench",
+        "year": 2016,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 27,
+          "mean_patch_area_m2": 135925.92592592593,
+          "median_patch_area_m2": 80000
+        },
+        "built_patches": {
+          "patch_count": 134,
+          "mean_patch_area_m2": 1215074.6268656717,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 551.8034611352566,
+            "stdDev": 632.5417715542332,
+            "count": 16272,
+            "stdError": 4.95871037187831,
+            "ci95": [
+              542.0843888063752,
+              561.5225334641381
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 172.4927467206943,
+            "stdDev": 433.8087219426733,
+            "count": 53200,
+            "stdError": 1.8807993383150443,
+            "ci95": [
+              168.8063800175968,
+              176.1791134237918
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1525.49899832579
+      },
+      "2024": {
+        "city": "Urgench",
+        "year": 2024,
+        "scale": 100,
+        "veg_patches": {
+          "patch_count": 32,
+          "mean_patch_area_m2": 253125.0,
+          "median_patch_area_m2": 170000
+        },
+        "built_patches": {
+          "patch_count": 136,
+          "mean_patch_area_m2": 1313897.0588235294,
+          "median_patch_area_m2": 80000
+        },
+        "built_distance_stats": {
+          "city": {
+            "mean": 580.3607080646386,
+            "stdDev": 645.9251862533575,
+            "count": 17856,
+            "stdError": 4.833816173488962,
+            "ci95": [
+              570.8864283646003,
+              589.834987764677
+            ]
+          }
+        },
+        "vegetation_accessibility": {
+          "city": {
+            "mean": 196.8116823104182,
+            "stdDev": 463.9771683980774,
+            "count": 53200,
+            "stdError": 2.011596141747722,
+            "ci95": [
+              192.86895387259267,
+              200.75441074824374
+            ]
+          }
+        },
+        "edge_density_m_per_km2": 0.0,
+        "veg_patch_isolation_mean_m": 1657.114474387838
+      }
+    }
+  },
+  "temporal_changes": {
+    "Tashkent": {
+      "veg_patch_count_change": 26,
+      "veg_patch_count_pct": 13.402061855670103,
+      "veg_mean_patch_area_m2_change": -515485.00468603545,
+      "veg_mean_patch_area_m2_pct": -23.481753289445592,
+      "built_mean_distance_m_change": 310.07028091716984,
+      "built_mean_distance_m_pct": 31.704963141530257,
+      "veg_access_mean_m_change": 258.33287348061504,
+      "veg_access_mean_m_pct": 41.60166769759099,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": -56.092808982389215,
+      "veg_patch_isolation_mean_m_pct": -6.615136732061695
+    },
+    "Nukus": {
+      "veg_patch_count_change": -8,
+      "veg_patch_count_pct": -21.62162162162162,
+      "veg_mean_patch_area_m2_change": -334268.406337372,
+      "veg_mean_patch_area_m2_pct": -13.227733726719535,
+      "built_mean_distance_m_change": 23.811472274387143,
+      "built_mean_distance_m_pct": 3.0961525965272307,
+      "veg_access_mean_m_change": 19.934422613387795,
+      "veg_access_mean_m_pct": 9.419070102645776,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": -14.461865372483317,
+      "veg_patch_isolation_mean_m_pct": -1.3435151380025494
+    },
+    "Andijan": {
+      "veg_patch_count_change": 25,
+      "veg_patch_count_pct": 49.01960784313725,
+      "veg_mean_patch_area_m2_change": 1366111.9711042312,
+      "veg_mean_patch_area_m2_pct": 64.1662465705616,
+      "built_mean_distance_m_change": 60.62967026582919,
+      "built_mean_distance_m_pct": 8.358000767626624,
+      "veg_access_mean_m_change": 55.91351810590896,
+      "veg_access_mean_m_pct": 20.06624210514819,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": -366.19531368549906,
+      "veg_patch_isolation_mean_m_pct": -25.14760124742747
+    },
+    "Bukhara": {
+      "veg_patch_count_change": 3,
+      "veg_patch_count_pct": 14.285714285714285,
+      "veg_mean_patch_area_m2_change": 1538214.285714286,
+      "veg_mean_patch_area_m2_pct": 899.791086350975,
+      "built_mean_distance_m_change": 5.482654560731362,
+      "built_mean_distance_m_pct": 1.1002997253319287,
+      "veg_access_mean_m_change": 11.868536743780766,
+      "veg_access_mean_m_pct": 6.332986076844406,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": 847.2579057794894,
+      "veg_patch_isolation_mean_m_pct": 50.45049869766517
+    },
+    "Samarkand": {
+      "veg_patch_count_change": 2,
+      "veg_patch_count_pct": 2.197802197802198,
+      "veg_mean_patch_area_m2_change": 1167265.7450076803,
+      "veg_mean_patch_area_m2_pct": 128.67496401659466,
+      "built_mean_distance_m_change": 35.99867669277319,
+      "built_mean_distance_m_pct": 4.664529875864646,
+      "veg_access_mean_m_change": 67.26496635248009,
+      "veg_access_mean_m_pct": 18.286955640837338,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": -204.7320106621878,
+      "veg_patch_isolation_mean_m_pct": -19.10335569256876
+    },
+    "Namangan": {
+      "veg_patch_count_change": 12,
+      "veg_patch_count_pct": 26.08695652173913,
+      "veg_mean_patch_area_m2_change": 1257728.6356821589,
+      "veg_mean_patch_area_m2_pct": 153.66671246050282,
+      "built_mean_distance_m_change": 120.07719628644884,
+      "built_mean_distance_m_pct": 19.637589174914726,
+      "veg_access_mean_m_change": 101.00894244770328,
+      "veg_access_mean_m_pct": 41.734549947232495,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": 80.16751150146183,
+      "veg_patch_isolation_mean_m_pct": 5.33296684245777
+    },
+    "Jizzakh": {
+      "veg_patch_count_change": 10,
+      "veg_patch_count_pct": 35.714285714285715,
+      "veg_mean_patch_area_m2_change": -2145939.84962406,
+      "veg_mean_patch_area_m2_pct": -32.81970493198257,
+      "built_mean_distance_m_change": 88.37649535601838,
+      "built_mean_distance_m_pct": 16.186800325788482,
+      "veg_access_mean_m_change": 71.51648884661864,
+      "veg_access_mean_m_pct": 29.543029110628183,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": -149.57831260095395,
+      "veg_patch_isolation_mean_m_pct": -11.139137787744415
+    },
+    "Qarshi": {
+      "veg_patch_count_change": -4,
+      "veg_patch_count_pct": -12.121212121212121,
+      "veg_mean_patch_area_m2_change": 101421.10762800463,
+      "veg_mean_patch_area_m2_pct": 2.0122025802465897,
+      "built_mean_distance_m_change": 58.55834405713949,
+      "built_mean_distance_m_pct": 8.938985146713014,
+      "veg_access_mean_m_change": 68.0277580481391,
+      "veg_access_mean_m_pct": 21.354331819310254,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": 152.8311397260345,
+      "veg_patch_isolation_mean_m_pct": 11.348778212978575
+    },
+    "Navoiy": {
+      "veg_patch_count_change": -5,
+      "veg_patch_count_pct": -12.195121951219512,
+      "veg_mean_patch_area_m2_change": 16991.8699186992,
+      "veg_mean_patch_area_m2_pct": 13.449163449163462,
+      "built_mean_distance_m_change": 109.49730765452438,
+      "built_mean_distance_m_pct": 25.056073619211077,
+      "veg_access_mean_m_change": 40.12790718589615,
+      "veg_access_mean_m_pct": 31.947947067250926,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": -249.95742147576652,
+      "veg_patch_isolation_mean_m_pct": -18.234718040510728
+    },
+    "Termez": {
+      "veg_patch_count_change": 0,
+      "veg_patch_count_pct": 0.0,
+      "veg_mean_patch_area_m2_change": -100000.0,
+      "veg_mean_patch_area_m2_pct": -3.051438535309503,
+      "built_mean_distance_m_change": -36.378810771666906,
+      "built_mean_distance_m_pct": -7.588418097199553,
+      "veg_access_mean_m_change": -0.10622498228474342,
+      "veg_access_mean_m_pct": -0.061315950554248676,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": -113.63570162225471,
+      "veg_patch_isolation_mean_m_pct": -11.71452067469176
+    },
+    "Gulistan": {
+      "veg_patch_count_change": 4,
+      "veg_patch_count_pct": 80.0,
+      "veg_mean_patch_area_m2_change": -23171555.555555556,
+      "veg_mean_patch_area_m2_pct": -47.447693413784,
+      "built_mean_distance_m_change": 6.004946862359418,
+      "built_mean_distance_m_pct": 1.2790155840409494,
+      "veg_access_mean_m_change": 18.906779906603575,
+      "veg_access_mean_m_pct": 15.242830914377642,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": -978.1881269500491,
+      "veg_patch_isolation_mean_m_pct": -31.365545649712434
+    },
+    "Nurafshon": {
+      "veg_patch_count_change": 9,
+      "veg_patch_count_pct": 52.94117647058824,
+      "veg_mean_patch_area_m2_change": -5404140.271493213,
+      "veg_mean_patch_area_m2_pct": -37.359352858925874,
+      "built_mean_distance_m_change": 13.265062584076134,
+      "built_mean_distance_m_pct": 6.051830736596847,
+      "veg_access_mean_m_change": 14.460780660876452,
+      "veg_access_mean_m_pct": 20.482394646999825,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": -202.92180854362186,
+      "veg_patch_isolation_mean_m_pct": -11.275406049265564
+    },
+    "Fergana": {
+      "veg_patch_count_change": 16,
+      "veg_patch_count_pct": 28.07017543859649,
+      "veg_mean_patch_area_m2_change": 95275.17423696228,
+      "veg_mean_patch_area_m2_pct": 42.76129867328228,
+      "built_mean_distance_m_change": 3.9518046954075317,
+      "built_mean_distance_m_pct": 0.5320579792695731,
+      "veg_access_mean_m_change": 31.382402993337394,
+      "veg_access_mean_m_pct": 11.921900260835582,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": -338.0703699235071,
+      "veg_patch_isolation_mean_m_pct": -29.528239877425566
+    },
+    "Urgench": {
+      "veg_patch_count_change": 5,
+      "veg_patch_count_pct": 18.51851851851852,
+      "veg_mean_patch_area_m2_change": 117199.07407407407,
+      "veg_mean_patch_area_m2_pct": 86.22275204359673,
+      "built_mean_distance_m_change": 28.557246929382018,
+      "built_mean_distance_m_pct": 5.175256942141967,
+      "veg_access_mean_m_change": 24.318935589723907,
+      "veg_access_mean_m_pct": 14.09852648998737,
+      "edge_density_m_per_km2_change": 0.0,
+      "edge_density_m_per_km2_pct": null,
+      "veg_patch_isolation_mean_m_change": 131.61547606204817,
+      "veg_patch_isolation_mean_m_pct": 8.627699933365673
+    }
+  },
+  "analysis_period": "2016-2024"
+}
