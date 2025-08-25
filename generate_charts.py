@@ -1,25 +1,28 @@
 #!/usr/bin/env python3
 """
-Individual Chart Generator for SUHI Analysis (robust)
-- Auto-detect years from files
-- Safe JSON access for schema drifts
-- Graceful handling of missing data/exports
+Comprehensive Chart Generator for Uzbekistan URBAN Research SUHI Analysis
+- Load data from multiple JSON sources (SUHI, LULC, Nightlights, Temperature, Spatial)
+- Generate meaningful visualizations with confidence intervals
+- Support temporal analysis across all available years
+- Create publication-ready charts
 """
 
 import json
-import re
+import os
 from pathlib import Path
 from datetime import datetime
 import warnings
+from typing import Dict, List, Any, Optional, Tuple
 
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.io as pio
+import plotly.express as px
 
 # ----------------------------
-# Plotly config (robust)
+# Plotly config
 # ----------------------------
 warnings.filterwarnings("ignore")
 pio.templates.default = "plotly_white"
@@ -35,71 +38,53 @@ except Exception:
 def safe_write_image(fig, path, width, height, scale):
     """Write PNG if kaleido is available; otherwise skip without crashing."""
     if not _KALEIDO_OK:
+        print(f"Warning: Kaleido not available, skipping PNG export for {path}")
         return False
     try:
         fig.write_image(str(path), width=width, height=height, scale=scale)
         return True
-    except Exception:
+    except Exception as e:
+        print(f"Warning: Failed to save PNG {path}: {e}")
         return False
 
 
 # ----------------------------
-# Helpers
+# Helper Functions
 # ----------------------------
-def sget(obj, path, default=None):
-    """Safe nested-get: path like 'suhi_analysis.suhi'."""
-    cur = obj
-    for part in path.split("."):
-        if not isinstance(cur, dict) or part not in cur:
-            return default
-        cur = cur[part]
-    return cur
-
-
-def coalesce(*vals, default=None):
-    for v in vals:
-        if v is not None:
-            return v
-    return default
-
-
-def number_or_none(x):
+def safe_get(data: dict, key: str, default=None):
+    """Safely get a value from nested dictionary"""
     try:
-        return float(x)
-    except Exception:
-        return None
+        return data.get(key, default)
+    except (AttributeError, TypeError):
+        return default
 
 
-def extract_city_year(stem: str):
-    """
-    Match '<City>_<YEAR>_results' where YEAR is 4 digits.
-    Returns (city, year:int) or (None, None) if not matched.
-    """
-    m = re.match(r"^(?P<city>.+)_(?P<year>\d{4})_results$", stem)
-    if not m:
-        return None, None
-    return m.group("city"), int(m.group("year"))
+def safe_float(value, default=None):
+    """Safely convert value to float"""
+    try:
+        return float(value) if value is not None else default
+    except (ValueError, TypeError):
+        return default
 
 
-class SUHIChartGenerator:
-    def __init__(self, data_path, output_path):
-        self.data_path = Path(data_path)
-        self.output_path = Path(output_path)
+class ComprehensiveChartGenerator:
+    def __init__(self, base_path: str):
+        self.base_path = Path(base_path)
+        self.output_path = self.base_path / "plots"
         self.output_path.mkdir(parents=True, exist_ok=True)
-
-        # containers
-        self.cities_data = {}     # {city: {year: json}}
-        self.temporal_data = {}   # {city: temporal_json}
-        self.summary_stats = {}   # computed
-
-        # colors
-        self.colors = {
-            "primary_earliest": "#1f77b4",
-            "primary_latest": "#ff7f0e",
-            "positive": "#d62728",
-            "negative": "#2ca02c",
-            "neutral": "#7f7f7f",
-        }
+        
+        # Data containers
+        self.suhi_data = {}
+        self.lulc_data = []
+        self.nightlights_data = []
+        self.temperature_data = {}
+        self.spatial_data = {}
+        
+        # Analysis results
+        self.cities = set()
+        self.years = set()
+        
+        # Color palettes
         self.city_colors = {
             "Tashkent": "#1f77b4", "Samarkand": "#ff7f0e", "Bukhara": "#2ca02c",
             "Andijan": "#d62728", "Namangan": "#9467bd", "Fergana": "#8c564b",
@@ -107,597 +92,1215 @@ class SUHIChartGenerator:
             "Qarshi": "#17becf", "Jizzakh": "#ff9896", "Navoiy": "#98df8a",
             "Gulistan": "#c5b0d5", "Nurafshon": "#c49c94"
         }
-
-        # discovered years
-        self.earliest_year = None
-        self.latest_year = None
-
-    # ----------------------------
-    # Loading & Summary
-    # ----------------------------
-    def load_data(self):
-        print("Scanning data folder for *_results.json and *_annual_suhi_trends.json ...")
-        # Find all results files
-        results = list(self.data_path.glob("*_*_results.json"))
-        year_set = set()
-        for fp in results:
-            city, year = extract_city_year(fp.stem)
-            if not city or not year:
-                continue
-            year_set.add(year)
-            self.cities_data.setdefault(city, {})
-            try:
-                with open(fp, "r") as f:
-                    self.cities_data[city][year] = json.load(f)
-            except Exception as e:
-                print(f"  ! Failed to read {fp.name}: {e}")
-
-        # Find temporal trend files
-        for tf in self.data_path.glob("*_annual_suhi_trends.json"):
-            city = tf.stem.replace("_annual_suhi_trends", "")
-            try:
-                with open(tf, "r") as f:
-                    self.temporal_data[city] = json.load(f)
-            except Exception as e:
-                print(f"  ! Failed to read {tf.name}: {e}")
-
-        if not year_set:
-            raise RuntimeError("No *_results.json files found in the data folder.")
-
-        self.earliest_year = min(year_set)
-        self.latest_year = max(year_set)
-        print(f"Discovered years: {sorted(year_set)}")
-        print(f"Using earliest={self.earliest_year}, latest={self.latest_year}")
-
-        self._calculate_summary_stats()
-
-    def _calculate_summary_stats(self):
-        self.summary_stats = {
-            "suhi_comparison": {"cities": [], "suhi_earliest": [], "suhi_latest": []},
-            "urban_growth": {},  # city -> dict
-            "temperature_trends": {},  # city -> dict
+        
+        self.suhi_colors = {
+            "day": "#ff6b35",
+            "night": "#004e89",
+            "positive": "#d62728",
+            "negative": "#2ca02c",
+            "neutral": "#7f7f7f"
         }
+        
+    def load_all_data(self):
+        """Load all available data sources"""
+        print("Loading comprehensive SUHI analysis data...")
+        
+        # Load SUHI batch summary
+        suhi_file = self.base_path / "reports" / "suhi_batch_summary.json"
+        if suhi_file.exists():
+            with open(suhi_file, 'r') as f:
+                self.suhi_data = json.load(f)
+            print(f"✓ Loaded SUHI data for {len(self.suhi_data)} cities")
+            
+            # Extract cities and years
+            for city, years_data in self.suhi_data.items():
+                self.cities.add(city)
+                for year in years_data.keys():
+                    self.years.add(int(year))
+        
+        # Load LULC analysis summary
+        lulc_file = self.base_path / "reports" / "lulc_analysis_summary.json"
+        if lulc_file.exists():
+            with open(lulc_file, 'r') as f:
+                self.lulc_data = json.load(f)
+            print(f"✓ Loaded LULC data for {len(self.lulc_data)} cities")
+        
+        # Load nightlights summary
+        nightlights_file = self.base_path / "reports" / "nightlights_summary.json"
+        if nightlights_file.exists():
+            with open(nightlights_file, 'r') as f:
+                self.nightlights_data = json.load(f)
+            print(f"✓ Loaded nightlights data for {len(self.nightlights_data)} cities")
+        
+        # Load spatial relationships
+        spatial_file = self.base_path / "reports" / "spatial_relationships_report.json"
+        if spatial_file.exists():
+            with open(spatial_file, 'r') as f:
+                self.spatial_data = json.load(f)
+            print(f"✓ Loaded spatial relationships data")
+        
+        # Load temperature data
+        temp_dir = self.base_path / "temperature"
+        if temp_dir.exists():
+            for city_dir in temp_dir.iterdir():
+                if city_dir.is_dir():
+                    city = city_dir.name
+                    self.temperature_data[city] = {}
+                    for temp_file in city_dir.glob("*_temperature_stats_*.json"):
+                        year_str = temp_file.name.split('_')[-1].replace('.json', '')
+                        try:
+                            year = int(year_str)
+                            with open(temp_file, 'r') as f:
+                                self.temperature_data[city][year] = json.load(f)
+                        except (ValueError, json.JSONDecodeError):
+                            continue
+            print(f"✓ Loaded temperature data for {len(self.temperature_data)} cities")
+        
+        self.years = sorted(list(self.years))
+        self.cities = sorted(list(self.cities))
+        print(f"✓ Analysis scope: {len(self.cities)} cities, {len(self.years)} years ({min(self.years)}-{max(self.years)})")
 
-        for city, by_year in self.cities_data.items():
-            if self.earliest_year in by_year and self.latest_year in by_year:
-                j0 = by_year[self.earliest_year]
-                j1 = by_year[self.latest_year]
-
-                # Flexible SUHI value extraction
-                suhi0 = coalesce(
-                    sget(j0, "suhi_analysis.suhi"),
-                    sget(j0, "suhi.suhi"),
-                    sget(j0, "suhi_intensity"),
-                    default=None,
-                )
-                suhi1 = coalesce(
-                    sget(j1, "suhi_analysis.suhi"),
-                    sget(j1, "suhi.suhi"),
-                    sget(j1, "suhi_intensity"),
-                    default=None,
-                )
-                suhi0 = number_or_none(suhi0)
-                suhi1 = number_or_none(suhi1)
-                if suhi0 is None or suhi1 is None:
-                    continue
-
-                self.summary_stats["suhi_comparison"]["cities"].append(city)
-                self.summary_stats["suhi_comparison"]["suhi_earliest"].append(suhi0)
-                self.summary_stats["suhi_comparison"]["suhi_latest"].append(suhi1)
-
-                # Urban pixels (growth)
-                up0 = number_or_none(coalesce(
-                    sget(j0, "suhi_analysis.urban_pixels"),
-                    sget(j0, "urban.pixels"),
-                    sget(j0, "urban_pixels"),
-                ))
-                up1 = number_or_none(coalesce(
-                    sget(j1, "suhi_analysis.urban_pixels"),
-                    sget(j1, "urban.pixels"),
-                    sget(j1, "urban_pixels"),
-                ))
-                growth_rate = None
-                if up0 is not None and up1 is not None and up0 != 0:
-                    growth_rate = (up1 - up0) / up0 * 100.0
-
-                self.summary_stats["urban_growth"][city] = {
-                    "pixels_earliest": up0,
-                    "pixels_latest": up1,
-                    "growth_rate": growth_rate,
-                }
-
-        # Temperature trends (from temporal files)
-        for city, temporal in self.temporal_data.items():
-            trends = temporal.get("trends", temporal.get("summary", {}))
-            self.summary_stats["temperature_trends"][city] = {
-                "suhi_trend_per_year": number_or_none(coalesce(
-                    trends.get("suhi_trend_per_year"),
-                    trends.get("suhi_slope_per_year"),
-                    0
-                )) or 0.0,
-                "urban_temp_trend": number_or_none(coalesce(
-                    trends.get("urban_temp_trend_per_year"),
-                    trends.get("urban_slope_per_year"),
-                    0
-                )) or 0.0,
-                "r_squared": number_or_none(coalesce(
-                    trends.get("suhi_r_squared"),
-                    trends.get("r2"),
-                    trends.get("r_squared"),
-                    0
-                )) or 0.0,
-            }
-
-    # ----------------------------
-    # Charts
-    # ----------------------------
-    def create_suhi_comparison_chart(self):
-        cities = self.summary_stats["suhi_comparison"]["cities"]
-        s0 = self.summary_stats["suhi_comparison"]["suhi_earliest"]
-        s1 = self.summary_stats["suhi_comparison"]["suhi_latest"]
-        if not cities:
-            print("No cities with both earliest & latest years. Skipping comparison chart.")
+    def create_suhi_trends_with_confidence(self):
+        """Create SUHI trends over time with confidence intervals"""
+        if not self.suhi_data:
+            print("No SUHI data available")
             return None
-
-        fig = go.Figure()
-        fig.add_trace(go.Bar(
-            x=cities, y=s0, name=f"SUHI {self.earliest_year}",
-            marker_color=self.colors["primary_earliest"], opacity=0.85,
-            text=[f"{v:.2f}°C" for v in s0], textposition="auto",
-        ))
-        fig.add_trace(go.Bar(
-            x=cities, y=s1, name=f"SUHI {self.latest_year}",
-            marker_color=self.colors["primary_latest"], opacity=0.85,
-            text=[f"{v:.2f}°C" for v in s1], textposition="auto",
-        ))
+            
+        # Create subplots for day and night SUHI
+        fig = make_subplots(
+            rows=2, cols=1,
+            subplot_titles=("Daytime SUHI Trends with 95% Confidence Intervals", 
+                          "Nighttime SUHI Trends with 95% Confidence Intervals"),
+            vertical_spacing=0.1
+        )
+        
+        for i, (city, city_data) in enumerate(self.suhi_data.items()):
+            if len(city_data) < 2:  # Need at least 2 years for trends
+                continue
+                
+            years = []
+            suhi_day = []
+            suhi_night = []
+            suhi_day_ci_lower = []
+            suhi_day_ci_upper = []
+            suhi_night_ci_lower = []
+            suhi_night_ci_upper = []
+            
+            for year, data in sorted(city_data.items()):
+                years.append(int(year))
+                stats = data.get('stats', {})
+                
+                # Day SUHI
+                suhi_day.append(stats.get('suhi_day', 0))
+                
+                # Night SUHI
+                suhi_night.append(stats.get('suhi_night', 0))
+                
+                # Confidence intervals (calculate from uncertainty data)
+                unc_day = stats.get('uncertainty_day', {})
+                unc_night = stats.get('uncertainty_night', {})
+                
+                # Day CI (urban - rural with propagated uncertainty)
+                urban_day_ci = unc_day.get('urban_core', {}).get('ci95', [0, 0])
+                rural_day_ci = unc_day.get('rural_ring', {}).get('ci95', [0, 0])
+                day_ci_range = max(abs(urban_day_ci[1] - urban_day_ci[0]), abs(rural_day_ci[1] - rural_day_ci[0]))
+                suhi_day_ci_lower.append(stats.get('suhi_day', 0) - day_ci_range/2)
+                suhi_day_ci_upper.append(stats.get('suhi_day', 0) + day_ci_range/2)
+                
+                # Night CI
+                urban_night_ci = unc_night.get('urban_core', {}).get('ci95', [0, 0])
+                rural_night_ci = unc_night.get('rural_ring', {}).get('ci95', [0, 0])
+                night_ci_range = max(abs(urban_night_ci[1] - urban_night_ci[0]), abs(rural_night_ci[1] - rural_night_ci[0]))
+                suhi_night_ci_lower.append(stats.get('suhi_night', 0) - night_ci_range/2)
+                suhi_night_ci_upper.append(stats.get('suhi_night', 0) + night_ci_range/2)
+            
+            color = self.city_colors.get(city, f"hsl({i*30}, 70%, 50%)")
+            
+            # Day SUHI with confidence bands
+            fig.add_trace(go.Scatter(
+                x=years, y=suhi_day_ci_upper,
+                fill=None, mode='lines', line_color='rgba(0,0,0,0)',
+                showlegend=False, name=f'{city} CI Upper'
+            ), row=1, col=1)
+            
+            fig.add_trace(go.Scatter(
+                x=years, y=suhi_day_ci_lower,
+                fill='tonexty', mode='lines', line_color='rgba(0,0,0,0)',
+                name=f'{city} 95% CI', fillcolor=color.replace('rgb', 'rgba').replace(')', ', 0.2)'),
+                showlegend=False
+            ), row=1, col=1)
+            
+            fig.add_trace(go.Scatter(
+                x=years, y=suhi_day, mode='lines+markers',
+                name=f'{city}', line=dict(color=color, width=2),
+                marker=dict(size=6)
+            ), row=1, col=1)
+            
+            # Night SUHI with confidence bands
+            fig.add_trace(go.Scatter(
+                x=years, y=suhi_night_ci_upper,
+                fill=None, mode='lines', line_color='rgba(0,0,0,0)',
+                showlegend=False
+            ), row=2, col=1)
+            
+            fig.add_trace(go.Scatter(
+                x=years, y=suhi_night_ci_lower,
+                fill='tonexty', mode='lines', line_color='rgba(0,0,0,0)',
+                fillcolor=color.replace('rgb', 'rgba').replace(')', ', 0.2)'),
+                showlegend=False
+            ), row=2, col=1)
+            
+            fig.add_trace(go.Scatter(
+                x=years, y=suhi_night, mode='lines+markers',
+                line=dict(color=color, width=2), marker=dict(size=6),
+                showlegend=False
+            ), row=2, col=1)
+        
+        # Add zero reference lines
+        fig.add_hline(y=0, line_dash="dash", line_color="black", opacity=0.5, row=1, col=1)
+        fig.add_hline(y=0, line_dash="dash", line_color="black", opacity=0.5, row=2, col=1)
+        
         fig.update_layout(
             title=dict(
-                text=f"SUHI Intensity Comparison: {self.earliest_year} vs {self.latest_year}<br><sub>Uzbekistan Urban Centers</sub>",
+                text="Surface Urban Heat Island (SUHI) Temporal Trends with Uncertainty<br><sub>Uzbekistan Urban Centers (2016-2024)</sub>",
                 x=0.5, font=dict(size=18)
             ),
-            xaxis_title="Cities", yaxis_title="SUHI Intensity (°C)",
-            barmode="group", height=600, width=1000, template="plotly_white",
-            legend=dict(orientation="h", y=1.02, x=1, xanchor="right", yanchor="bottom")
+            height=800, width=1200,
+            showlegend=True,
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
         )
-        fig.add_hline(y=0, line_dash="dash", line_color="black", opacity=0.5)
-
-        html = self.output_path / "01_suhi_comparison_earliest_vs_latest.html"
-        png = self.output_path / "01_suhi_comparison_earliest_vs_latest.png"
-        fig.write_html(str(html))
-        safe_write_image(fig, png, width=1000, height=600, scale=2)
-        print(f"Saved: {html.name}")
+        
+        fig.update_xaxes(title_text="Year", row=2, col=1)
+        fig.update_yaxes(title_text="SUHI Daytime (°C)", row=1, col=1)
+        fig.update_yaxes(title_text="SUHI Nighttime (°C)", row=2, col=1)
+        
+        # Save
+        html_file = self.output_path / "01_suhi_trends_with_confidence.html"
+        png_file = self.output_path / "01_suhi_trends_with_confidence.png"
+        fig.write_html(str(html_file))
+        safe_write_image(fig, png_file, width=1200, height=800, scale=2)
+        print(f"✓ Saved SUHI trends chart: {html_file.name}")
         return fig
 
-    def create_suhi_change_chart(self):
-        cities = self.summary_stats["suhi_comparison"]["cities"]
-        s0 = self.summary_stats["suhi_comparison"]["suhi_earliest"]
-        s1 = self.summary_stats["suhi_comparison"]["suhi_latest"]
-        if not cities:
-            print("No cities with both earliest & latest years. Skipping change chart.")
+    def create_urban_heat_comparison(self):
+        """Compare urban vs rural temperatures with error bars"""
+        if not self.suhi_data:
             return None
-
-        delta = [b - a for a, b in zip(s0, s1)]
-        colors = [self.colors["positive"] if d > 0 else self.colors["negative"] for d in delta]
-
-        fig = go.Figure(go.Bar(
-            x=cities, y=delta, marker_color=colors, opacity=0.85,
-            text=[f"{d:+.3f}°C" for d in delta], textposition="auto",
-            hovertemplate="<b>%{x}</b><br>SUHI Change: %{y:.3f}°C<extra></extra>"
-        ))
-        fig.add_hline(y=0, line_dash="solid", line_color="black", line_width=1)
-        fig.update_layout(
-            title=dict(
-                text=f"SUHI Change Distribution ({self.latest_year} - {self.earliest_year})<br><sub>Red: Increase | Green: Decrease</sub>",
-                x=0.5, font=dict(size=18)
-            ),
-            xaxis_title="Cities", yaxis_title="SUHI Change (°C)",
-            height=600, width=1000, template="plotly_white"
-        )
-
-        html = self.output_path / "02_suhi_change_distribution.html"
-        png = self.output_path / "02_suhi_change_distribution.png"
-        fig.write_html(str(html))
-        safe_write_image(fig, png, width=1000, height=600, scale=2)
-        print(f"Saved: {html.name}")
-        return fig
-
-    def create_urban_growth_chart(self):
-        # Only cities with growth_rate present
-        rows = []
-        for city, d in self.summary_stats["urban_growth"].items():
-            if d.get("growth_rate") is not None:
-                rows.append((city, d["growth_rate"], d.get("pixels_earliest"), d.get("pixels_latest")))
-        if not rows:
-            print("No urban growth data. Skipping growth chart.")
-            return None
-
-        cities, growth_rates, p0, p1 = zip(*rows)
+            
+        cities = []
+        urban_day = []
+        rural_day = []
+        urban_night = []
+        rural_night = []
+        urban_day_err = []
+        rural_day_err = []
+        urban_night_err = []
+        rural_night_err = []
+        
+        # Use latest year data
+        latest_year = str(max(self.years))
+        
+        for city, city_data in self.suhi_data.items():
+            if latest_year not in city_data:
+                continue
+                
+            data = city_data[latest_year]
+            stats = data.get('stats', {})
+            
+            cities.append(city)
+            urban_day.append(stats.get('day_urban_mean', 0))
+            rural_day.append(stats.get('day_rural_mean', 0))
+            urban_night.append(stats.get('night_urban_mean', 0))
+            rural_night.append(stats.get('night_rural_mean', 0))
+            
+            # Error bars from uncertainty
+            unc_day = stats.get('uncertainty_day', {})
+            unc_night = stats.get('uncertainty_night', {})
+            
+            urban_day_err.append(unc_day.get('urban_core', {}).get('stdError', 0))
+            rural_day_err.append(unc_day.get('rural_ring', {}).get('stdError', 0))
+            urban_night_err.append(unc_night.get('urban_core', {}).get('stdError', 0))
+            rural_night_err.append(unc_night.get('rural_ring', {}).get('stdError', 0))
+        
         fig = make_subplots(
             rows=1, cols=2,
-            subplot_titles=("Urban Growth Rate (%)", f"Urban Area (Pixels): {self.earliest_year} vs {self.latest_year}"),
-            column_widths=[0.4, 0.6]
+            subplot_titles=(f"Daytime Temperatures ({latest_year})", f"Nighttime Temperatures ({latest_year})"),
+            shared_yaxes=False
         )
+        
+        # Daytime comparison
         fig.add_trace(go.Bar(
-            x=list(cities), y=list(growth_rates), name="Growth Rate",
-            marker_color=[self.city_colors.get(c, self.colors["neutral"]) for c in cities],
-            opacity=0.85, text=[f"{v:.1f}%" for v in growth_rates], textposition="auto"
+            x=cities, y=urban_day, name="Urban Core",
+            error_y=dict(type='data', array=urban_day_err, visible=True),
+            marker_color=self.suhi_colors['day'], opacity=0.8
         ), row=1, col=1)
-
+        
         fig.add_trace(go.Bar(
-            x=list(cities), y=list(p0), name=f"Urban Pixels {self.earliest_year}",
-            marker_color=self.colors["primary_earliest"], opacity=0.85
-        ), row=1, col=2)
+            x=cities, y=rural_day, name="Rural Ring",
+            error_y=dict(type='data', array=rural_day_err, visible=True),
+            marker_color="#ffb366", opacity=0.8
+        ), row=1, col=1)
+        
+        # Nighttime comparison
         fig.add_trace(go.Bar(
-            x=list(cities), y=list(p1), name=f"Urban Pixels {self.latest_year}",
-            marker_color=self.colors["primary_latest"], opacity=0.85
+            x=cities, y=urban_night, name="Urban Core",
+            error_y=dict(type='data', array=urban_night_err, visible=True),
+            marker_color=self.suhi_colors['night'], opacity=0.8,
+            showlegend=False
         ), row=1, col=2)
-
+        
+        fig.add_trace(go.Bar(
+            x=cities, y=rural_night, name="Rural Ring",
+            error_y=dict(type='data', array=rural_night_err, visible=True),
+            marker_color="#66b3ff", opacity=0.8,
+            showlegend=False
+        ), row=1, col=2)
+        
         fig.update_layout(
             title=dict(
-                text=f"Urban Area Expansion Analysis: {self.earliest_year}-{self.latest_year}<br><sub>Growth Rates and Absolute Changes</sub>",
+                text=f"Urban vs Rural Temperature Comparison ({latest_year})<br><sub>Land Surface Temperature with Standard Error Bars</sub>",
                 x=0.5, font=dict(size=18)
             ),
-            height=600, width=1200, template="plotly_white", barmode="group"
+            height=600, width=1200,
+            barmode='group'
         )
+        
         fig.update_xaxes(title_text="Cities", row=1, col=1)
-        fig.update_yaxes(title_text="Growth Rate (%)", row=1, col=1)
         fig.update_xaxes(title_text="Cities", row=1, col=2)
-        fig.update_yaxes(title_text="Urban Pixels", row=1, col=2)
-
-        html = self.output_path / "03_urban_growth_analysis.html"
-        png = self.output_path / "03_urban_growth_analysis.png"
-        fig.write_html(str(html))
-        safe_write_image(fig, png, width=1200, height=600, scale=2)
-        print(f"Saved: {html.name}")
+        fig.update_yaxes(title_text="Temperature (°C)", row=1, col=1)
+        fig.update_yaxes(title_text="Temperature (°C)", row=1, col=2)
+        
+        # Save
+        html_file = self.output_path / "02_urban_rural_temperature_comparison.html"
+        png_file = self.output_path / "02_urban_rural_temperature_comparison.png"
+        fig.write_html(str(html_file))
+        safe_write_image(fig, png_file, width=1200, height=600, scale=2)
+        print(f"✓ Saved temperature comparison chart: {html_file.name}")
         return fig
 
-    def create_temperature_trends_chart(self):
-        rows = []
-        for city, t in self.summary_stats["temperature_trends"].items():
-            rows.append((
-                city,
-                t.get("suhi_trend_per_year", 0.0) or 0.0,
-                t.get("urban_temp_trend", 0.0) or 0.0,
-                t.get("r_squared", 0.0) or 0.0,
-            ))
-        if not rows:
-            print("No temperature trend summaries. Skipping trends relationship chart.")
+    def create_lulc_change_analysis(self):
+        """Analyze land use land cover changes over time"""
+        if not self.lulc_data:
             return None
-
-        cities, suhi_tr, urban_tr, r2 = zip(*rows)
-        sizes = [max(10, r * 100) for r in r2]
-        fig = go.Figure(go.Scatter(
-            x=list(urban_tr), y=list(suhi_tr), mode="markers+text",
-            text=list(cities), textposition="top center",
-            marker=dict(size=sizes, color=list(r2), colorscale="Viridis",
-                        showscale=True, colorbar=dict(title="R²"), line=dict(width=1, color="black"), opacity=0.85),
-            hovertemplate="<b>%{text}</b><br>Urban Trend: %{x:.4f}°C/yr<br>SUHI Trend: %{y:.4f}°C/yr<br>R²: %{marker.color:.3f}<extra></extra>"
+            
+        # Focus on Built_Area and vegetation classes
+        years_range = [min(self.years), max(self.years)]
+        
+        cities = []
+        built_area_change = []
+        crops_change = []
+        trees_change = []
+        water_change = []
+        
+        for city_data in self.lulc_data:
+            city = city_data.get('city')
+            areas = city_data.get('areas_m2', {})
+            
+            if str(years_range[0]) in areas and str(years_range[1]) in areas:
+                cities.append(city)
+                
+                # Calculate percentage changes
+                start_data = areas[str(years_range[0])]
+                end_data = areas[str(years_range[1])]
+                
+                def calc_change(class_name):
+                    start_pct = start_data.get(class_name, {}).get('percentage', 0)
+                    end_pct = end_data.get(class_name, {}).get('percentage', 0)
+                    return end_pct - start_pct
+                
+                built_area_change.append(calc_change('Built_Area'))
+                crops_change.append(calc_change('Crops'))
+                trees_change.append(calc_change('Trees'))
+                water_change.append(calc_change('Water'))
+        
+        fig = go.Figure()
+        
+        # Create stacked bar chart
+        fig.add_trace(go.Bar(
+            x=cities, y=built_area_change, name="Built Area",
+            marker_color="#d62728", opacity=0.8
         ))
+        
+        fig.add_trace(go.Bar(
+            x=cities, y=crops_change, name="Crops",
+            marker_color="#2ca02c", opacity=0.8
+        ))
+        
+        fig.add_trace(go.Bar(
+            x=cities, y=trees_change, name="Trees",
+            marker_color="#8c564b", opacity=0.8
+        ))
+        
+        fig.add_trace(go.Bar(
+            x=cities, y=water_change, name="Water",
+            marker_color="#17becf", opacity=0.8
+        ))
+        
+        # Add zero reference line
         fig.add_hline(y=0, line_dash="dash", line_color="black", opacity=0.5)
-        fig.add_vline(x=0, line_dash="dash", line_color="black", opacity=0.5)
+        
         fig.update_layout(
             title=dict(
-                text=f"Temperature Trends Relationship ({self.earliest_year}-{self.latest_year})<br><sub>Point size indicates R²</sub>",
+                text=f"Land Use Land Cover Changes ({years_range[0]}-{years_range[1]})<br><sub>Percentage Point Changes in Area Coverage</sub>",
                 x=0.5, font=dict(size=18)
             ),
-            xaxis_title="Urban Temperature Trend (°C/year)",
-            yaxis_title="SUHI Trend (°C/year)",
-            height=600, width=1000, template="plotly_white",
+            xaxis_title="Cities",
+            yaxis_title="Change in Coverage (%)",
+            height=600, width=1000,
+            barmode='relative'
         )
-
-        html = self.output_path / "04_temperature_trends_relationship.html"
-        png = self.output_path / "04_temperature_trends_relationship.png"
-        fig.write_html(str(html))
-        safe_write_image(fig, png, width=1000, height=600, scale=2)
-        print(f"Saved: {html.name}")
+        
+        # Save
+        html_file = self.output_path / "03_lulc_change_analysis.html"
+        png_file = self.output_path / "03_lulc_change_analysis.png"
+        fig.write_html(str(html_file))
+        safe_write_image(fig, png_file, width=1000, height=600, scale=2)
+        print(f"✓ Saved LULC change analysis: {html_file.name}")
         return fig
 
-    def create_temporal_analysis_charts(self):
-        count = 0
-        for city, temporal in self.temporal_data.items():
-            data = temporal.get("data") or temporal.get("series") or temporal.get("time_series")
-            if not isinstance(data, list) or not data:
+    def create_nightlights_vs_suhi(self):
+        """Correlate nighttime lights with SUHI intensity"""
+        if not self.nightlights_data or not self.suhi_data:
+            return None
+            
+        # Prepare data for correlation
+        data_points = []
+        
+        for city_data in self.nightlights_data:
+            city = city_data.get('city')
+            years_data = city_data.get('years', {})
+            
+            if city not in self.suhi_data:
                 continue
-
-            years = [d.get("year") for d in data]
-            suhi_vals = [number_or_none(coalesce(d.get("suhi_intensity"), d.get("suhi"), d.get("suhi_mean"))) for d in data]
-            urb = [number_or_none(coalesce(d.get("urban_temp"), d.get("urban"), d.get("urban_mean"))) for d in data]
-            rur = [number_or_none(coalesce(d.get("rural_temp"), d.get("rural"), d.get("rural_mean"))) for d in data]
-
-            fig = make_subplots(specs=[[{"secondary_y": True}]])
+                
+            for year_str, night_data in years_data.items():
+                if year_str not in self.suhi_data[city]:
+                    continue
+                    
+                # Nightlights urban-rural difference
+                stats = night_data.get('stats', {})
+                urban_nl = stats.get('urban_core', {}).get('mean', 0)
+                rural_nl = stats.get('rural_ring', {}).get('mean', 0)
+                nl_difference = urban_nl - rural_nl
+                
+                # SUHI night
+                suhi_stats = self.suhi_data[city][year_str].get('stats', {})
+                suhi_night = suhi_stats.get('suhi_night', 0)
+                
+                data_points.append({
+                    'city': city,
+                    'year': int(year_str),
+                    'nightlights_diff': nl_difference,
+                    'suhi_night': suhi_night,
+                    'urban_nl': urban_nl,
+                    'rural_nl': rural_nl
+                })
+        
+        if not data_points:
+            return None
+            
+        df = pd.DataFrame(data_points)
+        
+        # Create scatter plot
+        fig = go.Figure()
+        
+        for city in df['city'].unique():
+            city_data = df[df['city'] == city]
+            color = self.city_colors.get(city, "#7f7f7f")
+            
             fig.add_trace(go.Scatter(
-                x=years, y=suhi_vals, mode="lines+markers", name="SUHI Intensity",
-                line=dict(color=self.city_colors.get(city, self.colors["primary_earliest"]), width=3),
-                marker=dict(size=8)
-            ), secondary_y=False)
-            if any(v is not None for v in urb):
-                fig.add_trace(go.Scatter(
-                    x=years, y=urb, mode="lines+markers", name="Urban Temperature",
-                    line=dict(color=self.colors["primary_latest"], width=2, dash="dash"),
-                    marker=dict(size=6, symbol="square")
-                ), secondary_y=True)
-            if any(v is not None for v in rur):
-                fig.add_trace(go.Scatter(
-                    x=years, y=rur, mode="lines+markers", name="Rural Temperature",
-                    line=dict(color=self.colors["negative"], width=2, dash="dash"),
-                    marker=dict(size=6, symbol="triangle-up")
-                ), secondary_y=True)
-
-            # Trend line (SUHI) if enough numeric points
-            xs = [x for x, y in zip(years, suhi_vals) if y is not None]
-            ys = [y for y in suhi_vals if y is not None]
-            if len(xs) >= 3:
-                z = np.polyfit(xs, ys, 1)
-                p = np.poly1d(z)
-                fig.add_trace(go.Scatter(
-                    x=xs, y=p(xs), mode="lines", name=f"SUHI Trend ({z[0]:.4f}°C/yr)",
-                    line=dict(color="red", width=2, dash="dot"), opacity=0.7
-                ), secondary_y=False)
-
-            fig.update_xaxes(title_text="Year")
-            fig.update_yaxes(title_text="SUHI Intensity (°C)", secondary_y=False)
-            fig.update_yaxes(title_text="Temperature (°C)", secondary_y=True)
-            fig.update_layout(
-                title=dict(
-                    text=f"{city} - Temporal SUHI Analysis ({self.earliest_year}-{self.latest_year})<br><sub>SUHI Evolution and Temperature Trends</sub>",
-                    x=0.5, font=dict(size=16)
+                x=city_data['nightlights_diff'],
+                y=city_data['suhi_night'],
+                mode='markers',
+                name=city,
+                marker=dict(
+                    color=color,
+                    size=8,
+                    opacity=0.7,
+                    line=dict(width=1, color='white')
                 ),
-                height=500, width=900, template="plotly_white", hovermode="x unified"
-            )
-
-            html = self.output_path / f"05_temporal_{city.lower()}_{self.earliest_year}_{self.latest_year}.html"
-            png = self.output_path / f"05_temporal_{city.lower()}_{self.earliest_year}_{self.latest_year}.png"
-            fig.write_html(str(html))
-            safe_write_image(fig, png, width=900, height=500, scale=2)
-            count += 1
-
-        print(f"Saved temporal charts for {count} cities")
-
-    def create_correlation_matrix_chart(self):
-        rows = []
-        comp = self.summary_stats["suhi_comparison"]
-        for city in comp["cities"]:
-            idx = comp["cities"].index(city)
-            s0 = comp["suhi_earliest"][idx]
-            s1 = comp["suhi_latest"][idx]
-            change = s1 - s0
-            ug = self.summary_stats["urban_growth"].get(city, {})
-            gr = ug.get("growth_rate")
-            tr = self.summary_stats["temperature_trends"].get(city, {})
-            slope = tr.get("suhi_trend_per_year", 0.0)
-            rows.append({
-                "SUHI_Earliest": s0,
-                "SUHI_Latest": s1,
-                "SUHI_Change": change,
-                "Urban_Growth_Rate": gr if gr is not None else np.nan,
-                "SUHI_Trend_Per_Year": slope if slope is not None else np.nan,
-            })
-        if not rows:
-            print("No correlation data. Skipping.")
-            return None
-
-        df = pd.DataFrame(rows)
-        corr = df.corr(numeric_only=True)
-        fig = go.Figure(go.Heatmap(
-            z=corr.values, x=corr.columns, y=corr.columns, colorscale="RdBu", zmid=0,
-            text=corr.values, texttemplate="%{text:.3f}", textfont={"size": 12},
-            hovertemplate="<b>%{y}</b> vs <b>%{x}</b><br>Correlation: %{z:.3f}<extra></extra>"
-        ))
+                text=city_data['year'],
+                hovertemplate=f"<b>{city}</b><br>" +
+                            "Year: %{text}<br>" +
+                            "Nightlights Diff: %{x:.2f}<br>" +
+                            "SUHI Night: %{y:.2f}°C<extra></extra>"
+            ))
+        
+        # Add trend line
+        if len(df) > 2:
+            z = np.polyfit(df['nightlights_diff'], df['suhi_night'], 1)
+            p = np.poly1d(z)
+            x_trend = np.linspace(df['nightlights_diff'].min(), df['nightlights_diff'].max(), 100)
+            
+            fig.add_trace(go.Scatter(
+                x=x_trend, y=p(x_trend),
+                mode='lines',
+                name=f'Trend (R² = {np.corrcoef(df["nightlights_diff"], df["suhi_night"])[0,1]**2:.3f})',
+                line=dict(color='red', dash='dash', width=2)
+            ))
+        
         fig.update_layout(
             title=dict(
-                text=f"Correlation Matrix: SUHI Variables ({self.earliest_year}-{self.latest_year})",
+                text="Nighttime Lights vs SUHI Nighttime Intensity<br><sub>Urban-Rural Difference in Nighttime Lights vs Nighttime SUHI</sub>",
                 x=0.5, font=dict(size=18)
             ),
-            height=600, width=700, template="plotly_white"
+            xaxis_title="Nighttime Lights Difference (Urban - Rural)",
+            yaxis_title="SUHI Nighttime Intensity (°C)",
+            height=600, width=1000
         )
-
-        html = self.output_path / "06_correlation_matrix.html"
-        png = self.output_path / "06_correlation_matrix.png"
-        fig.write_html(str(html))
-        safe_write_image(fig, png, width=700, height=600, scale=2)
-        print(f"Saved: {html.name}")
+        
+        # Save
+        html_file = self.output_path / "04_nightlights_vs_suhi.html"
+        png_file = self.output_path / "04_nightlights_vs_suhi.png"
+        fig.write_html(str(html_file))
+        safe_write_image(fig, png_file, width=1000, height=600, scale=2)
+        print(f"✓ Saved nightlights vs SUHI analysis: {html_file.name}")
         return fig
 
-    def create_statistical_summary_chart(self):
-        comp = self.summary_stats["suhi_comparison"]
-        if not comp["cities"]:
-            print("No comparison data for box plots. Skipping.")
+    def create_spatial_relationships_dashboard(self):
+        """Create comprehensive spatial relationships analysis"""
+        if not self.spatial_data:
             return None
-        s0, s1 = comp["suhi_earliest"], comp["suhi_latest"]
-        delta = [b - a for a, b in zip(s0, s1)]
-
-        fig = go.Figure()
-        fig.add_trace(go.Box(y=s0, name=f"SUHI {self.earliest_year}",
-                             marker_color=self.colors["primary_earliest"],
-                             boxpoints="all", jitter=0.3, pointpos=-1.8))
-        fig.add_trace(go.Box(y=s1, name=f"SUHI {self.latest_year}",
-                             marker_color=self.colors["primary_latest"],
-                             boxpoints="all", jitter=0.3, pointpos=-1.8))
-        fig.add_trace(go.Box(y=delta, name=f"SUHI Change ({self.latest_year}-{self.earliest_year})",
-                             marker_color="#9467bd", boxpoints="all", jitter=0.3, pointpos=-1.8))
-        fig.update_layout(
-            title=dict(
-                text=f"SUHI Statistical Distribution ({self.earliest_year}-{self.latest_year})<br><sub>Box plots with outliers</sub>",
-                x=0.5, font=dict(size=18)
-            ),
-            yaxis_title="Temperature (°C)", height=600, width=800, template="plotly_white"
-        )
-        fig.add_hline(y=0, line_dash="dash", line_color="black", opacity=0.5)
-
-        html = self.output_path / "07_statistical_summary.html"
-        png = self.output_path / "07_statistical_summary.png"
-        fig.write_html(str(html))
-        safe_write_image(fig, png, width=800, height=600, scale=2)
-        print(f"Saved: {html.name}")
-        return fig
-
-    def create_accuracy_assessment_chart(self):
-        cities, esa, ghsl, modis = [], [], [], []
-        for city, by_year in self.cities_data.items():
-            if self.latest_year not in by_year:
-                continue
-            acc = sget(by_year[self.latest_year], "accuracy_assessment", {})
-            if not isinstance(acc, dict) or not acc:
-                continue
-
-            def first_number(d):
-                if not isinstance(d, dict) or not d:
-                    return None
-                # use first numeric value found
-                for v in d.values():
-                    nv = number_or_none(v)
-                    if nv is not None:
-                        return nv
-                return None
-
-            cities.append(city)
-            esa.append(first_number(acc.get("esa_agreement")))
-            ghsl.append(first_number(acc.get("ghsl_agreement")))
-            modis.append(first_number(acc.get("modis_lc_agreement")))
-
-        if not cities:
-            print("No accuracy data for latest year. Skipping accuracy chart.")
+            
+        per_year_data = self.spatial_data.get('per_year', {})
+        if not per_year_data:
             return None
-
-        fig = go.Figure()
-        fig.add_trace(go.Bar(x=cities, y=esa, name="ESA Land Cover",
-                             marker_color=self.colors["primary_earliest"], opacity=0.85))
-        fig.add_trace(go.Bar(x=cities, y=ghsl, name="GHSL Built-up",
-                             marker_color=self.colors["primary_latest"], opacity=0.85))
-        fig.add_trace(go.Bar(x=cities, y=modis, name="MODIS Land Cover",
-                             marker_color=self.colors["negative"], opacity=0.85))
-        fig.update_layout(
-            title=dict(
-                text=f"Land Cover Classification Accuracy Assessment ({self.latest_year})",
-                x=0.5, font=dict(size=18)
-            ),
-            xaxis_title="Cities", yaxis_title="Agreement Score",
-            height=600, width=1000, template="plotly_white", barmode="group"
-        )
-
-        html = self.output_path / "08_accuracy_assessment_latest.html"
-        png = self.output_path / "08_accuracy_assessment_latest.png"
-        fig.write_html(str(html))
-        safe_write_image(fig, png, width=1000, height=600, scale=2)
-        print(f"Saved: {html.name}")
-        return fig
-
-    def create_comprehensive_overview_chart(self):
-        comp = self.summary_stats["suhi_comparison"]
-        if not comp["cities"]:
-            print("No comparison data. Skipping overview dashboard.")
-            return None
-
-        cities = comp["cities"]
-        s0, s1 = comp["suhi_earliest"], comp["suhi_latest"]
-        delta = [b - a for a, b in zip(s0, s1)]
-
+            
+        # Create 2x2 subplot
         fig = make_subplots(
             rows=2, cols=2,
             subplot_titles=(
-                f"SUHI Comparison ({self.earliest_year} vs {self.latest_year})",
-                "Urban Growth vs SUHI Change",
-                "Top 5 SUHI Increases",
-                "Top 5 SUHI Improvements",
+                "Vegetation Accessibility vs Built Distance",
+                "Vegetation Patch Isolation Changes",
+                "Urban Patch Size Distribution",
+                "Vegetation Patch Count Changes"
             ),
-            specs=[[{"type": "bar"}, {"type": "scatter"}],
+            specs=[[{"type": "scatter"}, {"type": "bar"}],
                    [{"type": "bar"}, {"type": "bar"}]]
         )
-
-        # Panel 1
-        fig.add_trace(go.Bar(x=cities[:7], y=s0[:7], name=str(self.earliest_year),
-                             marker_color=self.colors["primary_earliest"], opacity=0.85),
-                      row=1, col=1)
-        fig.add_trace(go.Bar(x=cities[:7], y=s1[:7], name=str(self.latest_year),
-                             marker_color=self.colors["primary_latest"], opacity=0.85),
-                      row=1, col=1)
-
-        # Panel 2
-        growth_rates = []
-        for c in cities:
-            gr = self.summary_stats["urban_growth"].get(c, {}).get("growth_rate")
-            growth_rates.append(gr if gr is not None else 0.0)
-        fig.add_trace(go.Scatter(
-            x=growth_rates[:len(delta)], y=delta, mode="markers+text",
-            text=cities, textposition="top center",
-            marker=dict(size=10, opacity=0.75), name="Cities", showlegend=False
+        
+        # Collect data for each analysis
+        cities = []
+        veg_access_2016 = []
+        veg_access_2024 = []
+        built_dist_2016 = []
+        built_dist_2024 = []
+        veg_isolation_2016 = []
+        veg_isolation_2024 = []
+        veg_patches_2016 = []
+        veg_patches_2024 = []
+        built_patch_size_2016 = []
+        built_patch_size_2024 = []
+        
+        for city, city_data in per_year_data.items():
+            if '2016' in city_data and '2024' in city_data:
+                cities.append(city)
+                
+                # Vegetation accessibility
+                veg_access_2016.append(city_data['2016'].get('vegetation_accessibility', {}).get('city', {}).get('mean', 0))
+                veg_access_2024.append(city_data['2024'].get('vegetation_accessibility', {}).get('city', {}).get('mean', 0))
+                
+                # Built distance
+                built_dist_2016.append(city_data['2016'].get('built_distance_stats', {}).get('city', {}).get('mean', 0))
+                built_dist_2024.append(city_data['2024'].get('built_distance_stats', {}).get('city', {}).get('mean', 0))
+                
+                # Vegetation isolation
+                veg_isolation_2016.append(city_data['2016'].get('veg_patch_isolation_mean_m', 0))
+                veg_isolation_2024.append(city_data['2024'].get('veg_patch_isolation_mean_m', 0))
+                
+                # Patch counts
+                veg_patches_2016.append(city_data['2016'].get('veg_patches', {}).get('patch_count', 0))
+                veg_patches_2024.append(city_data['2024'].get('veg_patches', {}).get('patch_count', 0))
+                
+                # Built patch sizes
+                built_patch_size_2016.append(city_data['2016'].get('built_patches', {}).get('mean_patch_area_m2', 0))
+                built_patch_size_2024.append(city_data['2024'].get('built_patches', {}).get('mean_patch_area_m2', 0))
+        
+        # Panel 1: Vegetation Accessibility vs Built Distance (2024)
+        for i, city in enumerate(cities):
+            color = self.city_colors.get(city, f"hsl({i*30}, 70%, 50%)")
+            fig.add_trace(go.Scatter(
+                x=[veg_access_2024[i]], y=[built_dist_2024[i]],
+                mode='markers+text', text=[city], textposition='top center',
+                marker=dict(size=10, color=color, opacity=0.7),
+                name=city, showlegend=False
+            ), row=1, col=1)
+        
+        # Panel 2: Vegetation Isolation Changes
+        isolation_change = [v24 - v16 for v24, v16 in zip(veg_isolation_2024, veg_isolation_2016)]
+        colors = ['red' if x > 0 else 'green' for x in isolation_change]
+        fig.add_trace(go.Bar(
+            x=cities, y=isolation_change,
+            marker_color=colors, opacity=0.7,
+            name="Isolation Change", showlegend=False
         ), row=1, col=2)
-
-        # Panel 3/4
-        pairs = list(zip(cities, delta))
-        top_inc = sorted(pairs, key=lambda x: x[1], reverse=True)[:5]
-        top_dec = sorted(pairs, key=lambda x: x[1])[:5]
-        fig.add_trace(go.Bar(x=[p[0] for p in top_inc], y=[p[1] for p in top_inc],
-                             marker_color=self.colors["positive"], opacity=0.85,
-                             name="Increases", showlegend=False), row=2, col=1)
-        fig.add_trace(go.Bar(x=[p[0] for p in top_dec], y=[p[1] for p in top_dec],
-                             marker_color=self.colors["negative"], opacity=0.85,
-                             name="Improvements", showlegend=False), row=2, col=2)
-
+        
+        # Panel 3: Built Patch Sizes
+        fig.add_trace(go.Bar(
+            x=cities, y=built_patch_size_2016,
+            name="2016", marker_color="#1f77b4", opacity=0.7
+        ), row=2, col=1)
+        fig.add_trace(go.Bar(
+            x=cities, y=built_patch_size_2024,
+            name="2024", marker_color="#ff7f0e", opacity=0.7
+        ), row=2, col=1)
+        
+        # Panel 4: Vegetation Patch Count Changes
+        patch_change = [v24 - v16 for v24, v16 in zip(veg_patches_2024, veg_patches_2016)]
+        colors = ['green' if x > 0 else 'red' for x in patch_change]
+        fig.add_trace(go.Bar(
+            x=cities, y=patch_change,
+            marker_color=colors, opacity=0.7,
+            name="Patch Count Change", showlegend=False
+        ), row=2, col=2)
+        
+        # Update layout
         fig.update_layout(
             title=dict(
-                text=f"SUHI Analysis Overview: {self.earliest_year}-{self.latest_year}",
-                x=0.5, font=dict(size=20)
+                text="Spatial Relationships Analysis Dashboard (2016-2024)<br><sub>Urban Green Space Accessibility and Fragmentation Metrics</sub>",
+                x=0.5, font=dict(size=18)
             ),
-            height=800, width=1200, template="plotly_white", showlegend=True
+            height=800, width=1200
         )
-        fig.update_xaxes(title_text="Cities", row=1, col=1)
-        fig.update_yaxes(title_text="SUHI (°C)", row=1, col=1)
-        fig.update_xaxes(title_text="Urban Growth (%)", row=1, col=2)
-        fig.update_yaxes(title_text="SUHI Change (°C)", row=1, col=2)
+        
+        # Update axes
+        fig.update_xaxes(title_text="Vegetation Accessibility (m)", row=1, col=1)
+        fig.update_yaxes(title_text="Built Distance (m)", row=1, col=1)
+        fig.update_xaxes(title_text="Cities", row=1, col=2)
+        fig.update_yaxes(title_text="Isolation Change (m)", row=1, col=2)
         fig.update_xaxes(title_text="Cities", row=2, col=1)
-        fig.update_yaxes(title_text="SUHI Change (°C)", row=2, col=1)
+        fig.update_yaxes(title_text="Mean Patch Area (m²)", row=2, col=1)
         fig.update_xaxes(title_text="Cities", row=2, col=2)
-        fig.update_yaxes(title_text="SUHI Change (°C)", row=2, col=2)
-
-        html = self.output_path / "09_comprehensive_overview.html"
-        png = self.output_path / "09_comprehensive_overview.png"
-        fig.write_html(str(html))
-        safe_write_image(fig, png, width=1200, height=800, scale=2)
-        print(f"Saved: {html.name}")
+        fig.update_yaxes(title_text="Patch Count Change", row=2, col=2)
+        
+        # Add reference lines
+        fig.add_hline(y=0, line_dash="dash", line_color="black", opacity=0.5, row=1, col=2)
+        fig.add_hline(y=0, line_dash="dash", line_color="black", opacity=0.5, row=2, col=2)
+        
+        # Save
+        html_file = self.output_path / "05_spatial_relationships_dashboard.html"
+        png_file = self.output_path / "05_spatial_relationships_dashboard.png"
+        fig.write_html(str(html_file))
+        safe_write_image(fig, png_file, width=1200, height=800, scale=2)
+        print(f"✓ Saved spatial relationships dashboard: {html_file.name}")
         return fig
 
-    # ----------------------------
-    # Orchestration
-    # ----------------------------
+    def create_comprehensive_suhi_analysis(self):
+        """Create comprehensive SUHI analysis with multiple variables"""
+        if not self.suhi_data:
+            return None
+            
+        # Prepare comprehensive dataset
+        analysis_data = []
+        
+        for city, city_data in self.suhi_data.items():
+            for year_str, data in city_data.items():
+                year = int(year_str)
+                stats = data.get('stats', {})
+                
+                row = {
+                    'city': city,
+                    'year': year,
+                    'suhi_day': stats.get('suhi_day', 0),
+                    'suhi_night': stats.get('suhi_night', 0),
+                    'suhi_day_night_diff': stats.get('suhi_day_night_diff', 0),
+                    'day_stronger_than_night': stats.get('day_stronger_than_night', False),
+                    'urban_day_temp': stats.get('day_urban_mean', 0),
+                    'rural_day_temp': stats.get('day_rural_mean', 0),
+                    'urban_night_temp': stats.get('night_urban_mean', 0),
+                    'rural_night_temp': stats.get('night_rural_mean', 0)
+                }
+                analysis_data.append(row)
+        
+        if not analysis_data:
+            return None
+            
+        df = pd.DataFrame(analysis_data)
+        
+        # Create comprehensive analysis figure
+        fig = make_subplots(
+            rows=3, cols=2,
+            subplot_titles=(
+                "SUHI Day vs Night Intensity",
+                "Day-Night SUHI Difference Distribution",
+                "Urban Temperature Evolution",
+                "SUHI Intensity Distribution by City",
+                "Temperature Range Analysis",
+                "SUHI Seasonal Patterns"
+            ),
+            specs=[[{"type": "scatter"}, {"type": "histogram"}],
+                   [{"type": "scatter"}, {"type": "box"}],
+                   [{"type": "bar"}, {"type": "scatter"}]]
+        )
+        
+        # Panel 1: Day vs Night SUHI
+        for city in df['city'].unique():
+            city_data = df[df['city'] == city]
+            color = self.city_colors.get(city, "#7f7f7f")
+            
+            fig.add_trace(go.Scatter(
+                x=city_data['suhi_day'], y=city_data['suhi_night'],
+                mode='markers', name=city,
+                marker=dict(color=color, size=6, opacity=0.7),
+                text=city_data['year'],
+                hovertemplate=f"<b>{city}</b><br>Year: %{{text}}<br>Day SUHI: %{{x:.2f}}°C<br>Night SUHI: %{{y:.2f}}°C<extra></extra>"
+            ), row=1, col=1)
+        
+        # Add diagonal line
+        min_val = min(df['suhi_day'].min(), df['suhi_night'].min())
+        max_val = max(df['suhi_day'].max(), df['suhi_night'].max())
+        fig.add_trace(go.Scatter(
+            x=[min_val, max_val], y=[min_val, max_val],
+            mode='lines', line=dict(color='black', dash='dash'),
+            name='Equal Day/Night', showlegend=False
+        ), row=1, col=1)
+        
+        # Panel 2: Day-Night Difference Distribution
+        fig.add_trace(go.Histogram(
+            x=df['suhi_day_night_diff'], name="Day-Night Diff",
+            marker_color="steelblue", opacity=0.7, showlegend=False
+        ), row=1, col=2)
+        
+        # Panel 3: Urban Temperature Evolution
+        avg_temps = df.groupby('year')[['urban_day_temp', 'urban_night_temp']].mean().reset_index()
+        fig.add_trace(go.Scatter(
+            x=avg_temps['year'], y=avg_temps['urban_day_temp'],
+            mode='lines+markers', name='Urban Day Temp',
+            line=dict(color='red', width=2), showlegend=False
+        ), row=2, col=1)
+        fig.add_trace(go.Scatter(
+            x=avg_temps['year'], y=avg_temps['urban_night_temp'],
+            mode='lines+markers', name='Urban Night Temp',
+            line=dict(color='blue', width=2), showlegend=False
+        ), row=2, col=1)
+        
+        # Panel 4: SUHI Distribution by City
+        for city in df['city'].unique():
+            city_data = df[df['city'] == city]
+            fig.add_trace(go.Box(
+                y=city_data['suhi_night'], name=city,
+                marker_color=self.city_colors.get(city, "#7f7f7f"),
+                showlegend=False
+            ), row=2, col=2)
+        
+        # Panel 5: Temperature Range Analysis
+        df['temp_range_urban'] = df['urban_day_temp'] - df['urban_night_temp']
+        df['temp_range_rural'] = df['rural_day_temp'] - df['rural_night_temp']
+        
+        avg_ranges = df.groupby('city')[['temp_range_urban', 'temp_range_rural']].mean()
+        fig.add_trace(go.Bar(
+            x=avg_ranges.index, y=avg_ranges['temp_range_urban'],
+            name='Urban Range', marker_color='orange', opacity=0.7, showlegend=False
+        ), row=3, col=1)
+        fig.add_trace(go.Bar(
+            x=avg_ranges.index, y=avg_ranges['temp_range_rural'],
+            name='Rural Range', marker_color='lightblue', opacity=0.7, showlegend=False
+        ), row=3, col=1)
+        
+        # Panel 6: SUHI vs Temperature Range
+        fig.add_trace(go.Scatter(
+            x=df['temp_range_urban'], y=df['suhi_night'],
+            mode='markers', marker=dict(color='purple', size=5, opacity=0.6),
+            name='SUHI vs Urban Range', showlegend=False
+        ), row=3, col=2)
+        
+        # Update layout
+        fig.update_layout(
+            title=dict(
+                text="Comprehensive SUHI Analysis Dashboard<br><sub>Multi-dimensional Analysis of Urban Heat Island Patterns</sub>",
+                x=0.5, font=dict(size=18)
+            ),
+            height=1000, width=1200,
+            showlegend=True,
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+        )
+        
+        # Update axes labels
+        fig.update_xaxes(title_text="SUHI Day (°C)", row=1, col=1)
+        fig.update_yaxes(title_text="SUHI Night (°C)", row=1, col=1)
+        fig.update_xaxes(title_text="Day-Night Difference (°C)", row=1, col=2)
+        fig.update_yaxes(title_text="Frequency", row=1, col=2)
+        fig.update_xaxes(title_text="Year", row=2, col=1)
+        fig.update_yaxes(title_text="Temperature (°C)", row=2, col=1)
+        fig.update_yaxes(title_text="SUHI Night (°C)", row=2, col=2)
+        fig.update_xaxes(title_text="Cities", row=3, col=1)
+        fig.update_yaxes(title_text="Temperature Range (°C)", row=3, col=1)
+        fig.update_xaxes(title_text="Urban Temp Range (°C)", row=3, col=2)
+        fig.update_yaxes(title_text="SUHI Night (°C)", row=3, col=2)
+        
+        # Save
+        html_file = self.output_path / "06_comprehensive_suhi_analysis.html"
+        png_file = self.output_path / "06_comprehensive_suhi_analysis.png"
+        fig.write_html(str(html_file))
+        safe_write_image(fig, png_file, width=1200, height=1000, scale=2)
+        print(f"✓ Saved comprehensive SUHI analysis: {html_file.name}")
+        return fig
+
+    def create_summary_statistics_table(self):
+        """Create a comprehensive summary statistics table"""
+        if not self.suhi_data:
+            return None
+            
+        # Prepare summary data
+        summary_data = []
+        
+        for city, city_data in self.suhi_data.items():
+            # Get earliest and latest year data
+            years = sorted([int(y) for y in city_data.keys()])
+            if len(years) < 2:
+                continue
+                
+            earliest_year = str(years[0])
+            latest_year = str(years[-1])
+            
+            earliest_data = city_data[earliest_year]['stats']
+            latest_data = city_data[latest_year]['stats']
+            
+            # Calculate changes
+            suhi_day_change = latest_data.get('suhi_day', 0) - earliest_data.get('suhi_day', 0)
+            suhi_night_change = latest_data.get('suhi_night', 0) - earliest_data.get('suhi_night', 0)
+            
+            summary_data.append({
+                'City': city,
+                'Years Analyzed': f"{years[0]}-{years[-1]}",
+                f'SUHI Day {years[0]} (°C)': f"{earliest_data.get('suhi_day', 0):.2f}",
+                f'SUHI Day {years[-1]} (°C)': f"{latest_data.get('suhi_day', 0):.2f}",
+                'SUHI Day Change (°C)': f"{suhi_day_change:+.2f}",
+                f'SUHI Night {years[0]} (°C)': f"{earliest_data.get('suhi_night', 0):.2f}",
+                f'SUHI Night {years[-1]} (°C)': f"{latest_data.get('suhi_night', 0):.2f}",
+                'SUHI Night Change (°C)': f"{suhi_night_change:+.2f}",
+                'Dominant Period': 'Night' if latest_data.get('suhi_night', 0) > abs(latest_data.get('suhi_day', 0)) else 'Day'
+            })
+        
+        if not summary_data:
+            return None
+            
+        df = pd.DataFrame(summary_data)
+        
+        # Create table visualization
+        fig = go.Figure(data=[go.Table(
+            header=dict(
+                values=list(df.columns),
+                fill_color='lightblue',
+                align='center',
+                font=dict(size=12, color='black')
+            ),
+            cells=dict(
+                values=[df[col] for col in df.columns],
+                fill_color='white',
+                align='center',
+                font=dict(size=11)
+            )
+        )])
+        
+        fig.update_layout(
+            title=dict(
+                text="SUHI Analysis Summary Statistics<br><sub>Temporal Changes in Urban Heat Island Intensity</sub>",
+                x=0.5, font=dict(size=16)
+            ),
+            height=400 + len(df) * 25,
+            width=1200
+        )
+        
+        # Save
+        html_file = self.output_path / "07_summary_statistics_table.html"
+        png_file = self.output_path / "07_summary_statistics_table.png"
+        fig.write_html(str(html_file))
+        safe_write_image(fig, png_file, width=1200, height=400 + len(df) * 25, scale=2)
+        print(f"✓ Saved summary statistics table: {html_file.name}")
+        return fig
+
+    def create_climate_impact_assessment(self):
+        """Create climate impact assessment based on temperature trends"""
+        if not self.suhi_data:
+            return None
+            
+        # Calculate temperature trends and heat stress indicators
+        analysis_data = []
+        
+        for city, city_data in self.suhi_data.items():
+            years = sorted([int(y) for y in city_data.keys()])
+            if len(years) < 3:  # Need at least 3 years for trend
+                continue
+                
+            urban_day_temps = []
+            urban_night_temps = []
+            suhi_values = []
+            
+            for year in years:
+                year_str = str(year)
+                if year_str in city_data:
+                    stats = city_data[year_str]['stats']
+                    urban_day_temps.append(stats.get('day_urban_mean', 0))
+                    urban_night_temps.append(stats.get('night_urban_mean', 0))
+                    suhi_values.append(stats.get('suhi_night', 0))
+            
+            if len(urban_day_temps) >= 3:
+                # Calculate trends
+                day_trend = np.polyfit(years, urban_day_temps, 1)[0]
+                night_trend = np.polyfit(years, urban_night_temps, 1)[0]
+                suhi_trend = np.polyfit(years, suhi_values, 1)[0]
+                
+                # Heat stress indicators
+                avg_day_temp = np.mean(urban_day_temps)
+                max_day_temp = np.max(urban_day_temps)
+                hot_days_threshold = 35  # °C
+                hot_days_count = sum(1 for temp in urban_day_temps if temp > hot_days_threshold)
+                
+                analysis_data.append({
+                    'city': city,
+                    'day_trend': day_trend,
+                    'night_trend': night_trend,
+                    'suhi_trend': suhi_trend,
+                    'avg_day_temp': avg_day_temp,
+                    'max_day_temp': max_day_temp,
+                    'hot_days_count': hot_days_count,
+                    'years_analyzed': len(years)
+                })
+        
+        if not analysis_data:
+            return None
+            
+        df = pd.DataFrame(analysis_data)
+        
+        # Create comprehensive climate impact visualization
+        fig = make_subplots(
+            rows=2, cols=2,
+            subplot_titles=(
+                "Temperature Trends (°C/decade)",
+                "Heat Stress Assessment",
+                "SUHI vs Temperature Trends",
+                "Climate Risk Classification"
+            ),
+            specs=[[{"type": "bar"}, {"type": "scatter"}],
+                   [{"type": "scatter"}, {"type": "bar"}]]
+        )
+        
+        # Panel 1: Temperature trends
+        fig.add_trace(go.Bar(
+            x=df['city'], y=df['day_trend'] * 10,  # Convert to per decade
+            name="Day Temperature Trend",
+            marker_color='red', opacity=0.7
+        ), row=1, col=1)
+        
+        fig.add_trace(go.Bar(
+            x=df['city'], y=df['night_trend'] * 10,  # Convert to per decade
+            name="Night Temperature Trend",
+            marker_color='blue', opacity=0.7
+        ), row=1, col=1)
+        
+        # Panel 2: Heat stress assessment
+        fig.add_trace(go.Scatter(
+            x=df['avg_day_temp'], y=df['hot_days_count'],
+            mode='markers+text', text=df['city'], textposition='top center',
+            marker=dict(
+                size=df['max_day_temp'], 
+                color=df['suhi_trend'], 
+                colorscale='Reds',
+                showscale=True,
+                colorbar=dict(title="SUHI Trend", x=0.48),
+                sizemode='diameter',
+                sizeref=2.*max(df['max_day_temp'])/(20.**2),
+                sizemin=4
+            ),
+            name="Heat Stress", showlegend=False
+        ), row=1, col=2)
+        
+        # Panel 3: SUHI vs Temperature trends correlation
+        fig.add_trace(go.Scatter(
+            x=df['day_trend'], y=df['suhi_trend'],
+            mode='markers+text', text=df['city'], textposition='top center',
+            marker=dict(
+                size=10, 
+                color=[self.city_colors.get(city, '#7f7f7f') for city in df['city']],
+                opacity=0.7
+            ),
+            name="SUHI vs Day Trend", showlegend=False
+        ), row=2, col=1)
+        
+        # Panel 4: Climate risk classification
+        # Risk score based on multiple factors
+        df['risk_score'] = (
+            (df['day_trend'] > 0.1).astype(int) * 2 +  # High day warming trend
+            (df['night_trend'] > 0.05).astype(int) * 2 +  # High night warming trend
+            (df['suhi_trend'] > 0.01).astype(int) * 3 +  # Increasing SUHI
+            (df['avg_day_temp'] > 40).astype(int) * 2 +  # High baseline temperature
+            (df['hot_days_count'] > 5).astype(int) * 1  # Many hot days
+        )
+        
+        risk_colors = ['green' if x <= 3 else 'orange' if x <= 6 else 'red' for x in df['risk_score']]
+        
+        fig.add_trace(go.Bar(
+            x=df['city'], y=df['risk_score'],
+            marker_color=risk_colors, opacity=0.7,
+            name="Climate Risk Score", showlegend=False
+        ), row=2, col=2)
+        
+        # Add reference lines
+        fig.add_hline(y=0, line_dash="dash", line_color="black", opacity=0.5, row=1, col=1)
+        fig.add_hline(y=35, line_dash="dash", line_color="red", opacity=0.5, row=1, col=2)
+        fig.add_vline(x=35, line_dash="dash", line_color="red", opacity=0.5, row=1, col=2)
+        fig.add_hline(y=0, line_dash="dash", line_color="black", opacity=0.5, row=2, col=1)
+        fig.add_vline(x=0, line_dash="dash", line_color="black", opacity=0.5, row=2, col=1)
+        
+        # Update layout
+        fig.update_layout(
+            title=dict(
+                text="Climate Impact Assessment Dashboard<br><sub>Temperature Trends, Heat Stress, and Risk Evaluation</sub>",
+                x=0.5, font=dict(size=18)
+            ),
+            height=800, width=1200
+        )
+        
+        # Update axes
+        fig.update_xaxes(title_text="Cities", row=1, col=1)
+        fig.update_yaxes(title_text="Temperature Trend (°C/decade)", row=1, col=1)
+        fig.update_xaxes(title_text="Average Day Temperature (°C)", row=1, col=2)
+        fig.update_yaxes(title_text="Hot Days Count (>35°C)", row=1, col=2)
+        fig.update_xaxes(title_text="Day Temperature Trend (°C/year)", row=2, col=1)
+        fig.update_yaxes(title_text="SUHI Trend (°C/year)", row=2, col=1)
+        fig.update_xaxes(title_text="Cities", row=2, col=2)
+        fig.update_yaxes(title_text="Climate Risk Score", row=2, col=2)
+        
+        # Save
+        html_file = self.output_path / "08_climate_impact_assessment.html"
+        png_file = self.output_path / "08_climate_impact_assessment.png"
+        fig.write_html(str(html_file))
+        safe_write_image(fig, png_file, width=1200, height=800, scale=2)
+        print(f"✓ Saved climate impact assessment: {html_file.name}")
+        return fig
+
+    def create_policy_recommendations_chart(self):
+        """Create policy recommendations based on analysis results"""
+        if not self.suhi_data:
+            return None
+            
+        # Analyze patterns for policy recommendations
+        recommendations = []
+        
+        for city, city_data in self.suhi_data.items():
+            years = sorted([int(y) for y in city_data.keys()])
+            if len(years) < 2:
+                continue
+                
+            latest_year = str(years[-1])
+            earliest_year = str(years[0])
+            
+            latest_stats = city_data[latest_year]['stats']
+            earliest_stats = city_data[earliest_year]['stats']
+            
+            # Calculate key indicators
+            current_suhi_night = latest_stats.get('suhi_night', 0)
+            current_suhi_day = latest_stats.get('suhi_day', 0)
+            suhi_change = current_suhi_night - earliest_stats.get('suhi_night', 0)
+            current_urban_temp = latest_stats.get('night_urban_mean', 0)
+            
+            # Determine priority level and recommendations
+            priority = "Low"
+            main_recommendations = []
+            
+            if current_suhi_night > 2.0:
+                priority = "High"
+                main_recommendations.append("Urban cooling strategies")
+                main_recommendations.append("Green infrastructure expansion")
+            elif current_suhi_night > 1.0:
+                priority = "Medium"
+                main_recommendations.append("Green roof initiatives")
+                main_recommendations.append("Cool pavement programs")
+            else:
+                priority = "Low"
+                main_recommendations.append("Preventive measures")
+                main_recommendations.append("Monitoring systems")
+            
+            if suhi_change > 0.1:
+                main_recommendations.append("Urgent intervention needed")
+                priority = "High"
+            
+            if abs(current_suhi_day) > 1.0:
+                main_recommendations.append("Shade structures")
+                main_recommendations.append("Albedo enhancement")
+            
+            if current_urban_temp > 25:  # High nighttime temperature
+                main_recommendations.append("Ventilation corridors")
+                main_recommendations.append("Water features")
+            
+            recommendations.append({
+                'city': city,
+                'priority': priority,
+                'current_suhi': current_suhi_night,
+                'suhi_change': suhi_change,
+                'recommendations': main_recommendations[:3],  # Top 3 recommendations
+                'urban_temp': current_urban_temp
+            })
+        
+        if not recommendations:
+            return None
+            
+        df = pd.DataFrame(recommendations)
+        
+        # Create policy recommendations visualization
+        fig = make_subplots(
+            rows=2, cols=2,
+            subplot_titles=(
+                "Priority Level Distribution",
+                "Intervention Urgency Matrix",
+                "Top Recommended Actions",
+                "Implementation Timeline"
+            ),
+            specs=[[{"type": "pie"}, {"type": "scatter"}],
+                   [{"type": "bar"}, {"type": "bar"}]]
+        )
+        
+        # Panel 1: Priority distribution
+        priority_counts = df['priority'].value_counts()
+        colors = {'High': 'red', 'Medium': 'orange', 'Low': 'green'}
+        
+        fig.add_trace(go.Pie(
+            labels=priority_counts.index,
+            values=priority_counts.values,
+            marker=dict(colors=[colors[p] for p in priority_counts.index]),
+            name="Priority Levels"
+        ), row=1, col=1)
+        
+        # Panel 2: Urgency matrix
+        urgency_colors = ['red' if p == 'High' else 'orange' if p == 'Medium' else 'green' 
+                         for p in df['priority']]
+        
+        fig.add_trace(go.Scatter(
+            x=df['current_suhi'], y=df['suhi_change'],
+            mode='markers+text', text=df['city'], textposition='top center',
+            marker=dict(
+                size=15, color=urgency_colors, opacity=0.7,
+                line=dict(width=2, color='white')
+            ),
+            name="Urgency Matrix", showlegend=False
+        ), row=1, col=2)
+        
+        # Panel 3: Top recommended actions
+        all_recommendations = []
+        for recs in df['recommendations']:
+            all_recommendations.extend(recs)
+        
+        rec_counts = pd.Series(all_recommendations).value_counts().head(8)
+        
+        fig.add_trace(go.Bar(
+            x=rec_counts.values, y=rec_counts.index,
+            orientation='h',
+            marker_color='steelblue', opacity=0.7,
+            name="Recommendations", showlegend=False
+        ), row=2, col=1)
+        
+        # Panel 4: Implementation timeline (based on priority)
+        timeline_data = {
+            'Immediate (0-1 year)': len(df[df['priority'] == 'High']),
+            'Short-term (1-3 years)': len(df[df['priority'] == 'Medium']),
+            'Long-term (3-5 years)': len(df[df['priority'] == 'Low'])
+        }
+        
+        fig.add_trace(go.Bar(
+            x=list(timeline_data.keys()), y=list(timeline_data.values()),
+            marker_color=['red', 'orange', 'green'], opacity=0.7,
+            name="Timeline", showlegend=False
+        ), row=2, col=2)
+        
+        # Add reference lines (only for specific subplot types that support them)
+        # Note: Cannot add lines to pie chart subplots
+        try:
+            fig.add_hline(y=0, line_dash="dash", line_color="black", opacity=0.5, row=1, col=2)
+            fig.add_vline(x=1.0, line_dash="dash", line_color="orange", opacity=0.5, row=1, col=2)
+            fig.add_vline(x=2.0, line_dash="dash", line_color="red", opacity=0.5, row=1, col=2)
+        except:
+            # Skip if subplot doesn't support lines (e.g., pie charts)
+            pass
+        
+        # Update layout
+        fig.update_layout(
+            title=dict(
+                text="SUHI Mitigation Policy Recommendations<br><sub>Evidence-Based Urban Planning Strategies</sub>",
+                x=0.5, font=dict(size=18)
+            ),
+            height=800, width=1200
+        )
+        
+        # Update axes
+        fig.update_xaxes(title_text="Current SUHI Night (°C)", row=1, col=2)
+        fig.update_yaxes(title_text="SUHI Change (°C)", row=1, col=2)
+        fig.update_xaxes(title_text="Number of Cities", row=2, col=1)
+        fig.update_yaxes(title_text="Recommended Actions", row=2, col=1)
+        fig.update_xaxes(title_text="Implementation Timeline", row=2, col=2)
+        fig.update_yaxes(title_text="Number of Cities", row=2, col=2)
+        
+        # Save
+        html_file = self.output_path / "09_policy_recommendations.html"
+        png_file = self.output_path / "09_policy_recommendations.png"
+        fig.write_html(str(html_file))
+        safe_write_image(fig, png_file, width=1200, height=800, scale=2)
+        print(f"✓ Saved policy recommendations chart: {html_file.name}")
+        return fig
+
     def generate_all_charts(self):
-        print("=" * 80)
-        print("GENERATING INDIVIDUAL PLOTLY CHARTS")
-        print("=" * 80)
-
-        self.load_data()
-
+        """Generate all comprehensive charts"""
+        print("="*80)
+        print("COMPREHENSIVE SUHI ANALYSIS CHART GENERATION")
+        print("="*80)
+        
+        # Load all data
+        self.load_all_data()
+        
+        if not any([self.suhi_data, self.lulc_data, self.nightlights_data, self.spatial_data]):
+            print("❌ No data available for analysis")
+            return
+        
+        # Generate all charts
         charts = []
-        charts.append(self.create_suhi_comparison_chart())
-        charts.append(self.create_suhi_change_chart())
-        charts.append(self.create_urban_growth_chart())
-        charts.append(self.create_temperature_trends_chart())
-        self.create_temporal_analysis_charts()  # per-city charts
-        charts.append(self.create_correlation_matrix_chart())
-        charts.append(self.create_statistical_summary_chart())
-        charts.append(self.create_accuracy_assessment_chart())
-        charts.append(self.create_comprehensive_overview_chart())
-
+        
+        print("\n📊 Generating charts...")
+        charts.append(self.create_suhi_trends_with_confidence())
+        charts.append(self.create_urban_heat_comparison())
+        charts.append(self.create_lulc_change_analysis())
+        charts.append(self.create_nightlights_vs_suhi())
+        charts.append(self.create_spatial_relationships_dashboard())
+        charts.append(self.create_comprehensive_suhi_analysis())
+        charts.append(self.create_summary_statistics_table())
+        charts.append(self.create_climate_impact_assessment())
+        charts.append(self.create_policy_recommendations_chart())
+        
         # Count outputs
         html_count = len(list(self.output_path.glob("*.html")))
         png_count = len(list(self.output_path.glob("*.png")))
-        print("=" * 80)
-        print("ALL CHARTS GENERATED")
-        print("=" * 80)
-        print(f"📁 Output: {self.output_path}")
-        print(f"📊 Files: {html_count} HTML + {png_count} PNG")
-        print("=" * 80)
+        
+        print("\n" + "="*80)
+        print("✅ CHART GENERATION COMPLETE")
+        print("="*80)
+        print(f"📁 Output Directory: {self.output_path}")
+        print(f"📊 Generated Files: {html_count} HTML + {png_count} PNG")
+        print(f"🏙️  Cities Analyzed: {len(self.cities)}")
+        print(f"📅 Years Covered: {min(self.years)}-{max(self.years)}")
+        print("\n📋 Generated Analysis Charts:")
+        print("   1. SUHI Temporal Trends with Confidence Intervals")
+        print("   2. Urban vs Rural Temperature Comparison")
+        print("   3. Land Use Land Cover Change Analysis")
+        print("   4. Nightlights vs SUHI Correlation")
+        print("   5. Spatial Relationships Dashboard")
+        print("   6. Comprehensive SUHI Multi-dimensional Analysis")
+        print("   7. Summary Statistics Table")
+        print("   8. Climate Impact Assessment")
+        print("   9. Policy Recommendations")
+        print("="*80)
+        
         return charts
 
 
 def main():
-    # --- EDIT THESE PATHS IF NEEDED ---
-    data_path = "/Users/timursabitov/Dev/Uzbekistan_URBAN_research/suhi_analysis_output/data"
-    output_path = "/Users/timursabitov/Dev/Uzbekistan_URBAN_research/reporting"
-    # -----------------------------------
-
-    gen = SUHIChartGenerator(data_path, output_path)
-    return gen.generate_all_charts()
+    """Main execution function"""
+    # Set base path to the suhi_analysis_output directory
+    base_path = "/Users/timursabitov/Dev/Uzbekistan_URBAN_research/suhi_analysis_output"
+    
+    # Create generator and run analysis
+    generator = ComprehensiveChartGenerator(base_path)
+    charts = generator.generate_all_charts()
+    
+    return charts
 
 
 if __name__ == "__main__":
