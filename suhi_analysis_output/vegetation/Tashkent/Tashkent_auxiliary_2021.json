@@ -2,13 +2,13 @@
   "city": "Tashkent",
   "year": 2021,
   "generated": {
-    "summer_veg_tif": "suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_ndvi_evi_summer_2021.tif",
-    "winter_veg_tif": "suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_ndvi_evi_winter_2021.tif",
-    "ndvi_change_tif": "suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_ndvi_change_2021.tif",
-    "evi_change_tif": "suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_evi_change_2021.tif",
-    "summer_lst_tif": "suhi_analysis_output\\temperature\\Tashkent\\Tashkent_lst_summer_2021.tif",
-    "winter_lst_tif": "suhi_analysis_output\\temperature\\Tashkent\\Tashkent_lst_winter_2021.tif",
-    "lst_change_tif": "suhi_analysis_output\\temperature\\Tashkent\\Tashkent_lst_change_2021.tif"
+    "summer_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_ndvi_evi_summer_2021.tif",
+    "winter_veg_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_ndvi_evi_winter_2021.tif",
+    "ndvi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_ndvi_change_2021.tif",
+    "evi_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\vegetation\\Tashkent\\Tashkent_evi_change_2021.tif",
+    "summer_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_lst_summer_2021.tif",
+    "winter_lst_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_lst_winter_2021.tif",
+    "lst_change_tif": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_lst_change_2021.tif"
   },
   "stats": {
     "summer_ndvi_mean": 0.3065703744649737,
@@ -17,9 +17,9 @@
     "summer_evi_mean": 0.22996928068243902,
     "winter_evi_mean": 0.08612517712552613,
     "evi_change_mean": 0.14452089627872883,
-    "summer_lst_mean": 42.81618502304299,
-    "winter_lst_mean": 11.142594799900936,
-    "lst_change_mean": 31.71121609021742,
+    "summer_lst_mean": 31.05743298058358,
+    "winter_lst_mean": 6.1268666796342615,
+    "lst_change_mean": 24.93056630094932,
     "summer_biomass_t_per_ha": 5.3186610474033404,
     "winter_biomass_t_per_ha": 2.3835833431670714,
     "biomass_change_t_per_ha": 2.935077704236269
@@ -99,37 +99,37 @@
     },
     "summer_lst": {
       "city": {
-        "mean": 42.81618502304299,
-        "stdDev": 3.3768879032056525,
+        "mean": 31.05743298058358,
+        "stdDev": 1.5864006844286267,
         "count": 1326648,
-        "stdError": 0.0029318300443478868,
+        "stdError": 0.0013773205751267867,
         "ci95": [
-          42.81043863615607,
-          42.82193140992991
+          31.05473343225633,
+          31.06013252891083
         ]
       }
     },
     "winter_lst": {
       "city": {
-        "mean": 11.142594799900936,
-        "stdDev": 2.1555880931594684,
-        "count": 1224070,
-        "stdError": 0.0019483305883854004,
+        "mean": 6.1268666796342615,
+        "stdDev": 0.8889352593992634,
+        "count": 1326648,
+        "stdError": 0.0007717777953224006,
         "ci95": [
-          11.1387760719477,
-          11.146413527854172
+          6.12535399515543,
+          6.128379364113093
         ]
       }
     },
     "lst_change": {
       "city": {
-        "mean": 31.71121609021742,
-        "stdDev": 3.5894044828693565,
-        "count": 1224070,
-        "stdError": 0.0032442870557017342,
+        "mean": 24.930566300949266,
+        "stdDev": 1.1807324621245938,
+        "count": 1326648,
+        "stdError": 0.00102511750641991,
         "ci95": [
-          31.704857287588244,
-          31.717574892846596
+          24.928557070636682,
+          24.93257553126185
         ]
       }
     }

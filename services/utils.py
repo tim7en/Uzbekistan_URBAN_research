@@ -38,7 +38,7 @@ UZBEKISTAN_CITIES = {
 
 
 ANALYSIS_CONFIG = {
-    "years": list(range(2016, 2024)),
+    "years": list(range(2016, 2025)),  # Updated to include 2024
     "warm_months": [6,7,8],
     "target_resolution_m": 100,
     "esri_weight": 0.5,
