@@ -35,7 +35,7 @@ class ClimateAssessmentReporter:
         # Generate text report
         self.generate_assessment_summary(city_risk_profiles)
         
-        print(f"✅ Reports generated and saved to: {self.output_path}")
+        print(f"[SUCCESS] Reports generated and saved to: {self.output_path}")
     
     def create_risk_assessment_dashboard(self, city_risk_profiles: Dict[str, ClimateRiskMetrics]):
         """Create comprehensive climate risk assessment dashboard"""

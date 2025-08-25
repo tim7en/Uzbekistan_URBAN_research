@@ -186,7 +186,7 @@ class ClimateDataLoader:
                         except (ValueError, json.JSONDecodeError) as e:
                             print(f"Warning: Could not load {temp_file}: {e}")
             
-            print(f"✓ Loaded temperature data for {len(self.temperature_data)} cities")
+            print(f"[OK] Loaded temperature data for {len(self.temperature_data)} cities")
     
     def _load_suhi_data(self):
         """Load SUHI data as fallback"""
@@ -194,7 +194,7 @@ class ClimateDataLoader:
         if suhi_file.exists():
             with open(suhi_file, 'r') as f:
                 self.suhi_data = json.load(f)
-            print(f"✓ Loaded SUHI data for {len(self.suhi_data)} cities")
+            print(f"[OK] Loaded SUHI data for {len(self.suhi_data)} cities")
         else:
             print("⚠️ SUHI data not found, using temperature data only")
     
@@ -204,7 +204,7 @@ class ClimateDataLoader:
         if lulc_file.exists():
             with open(lulc_file, 'r') as f:
                 self.lulc_data = json.load(f)
-            print(f"✓ Loaded LULC data for {len(self.lulc_data)} cities")
+            print(f"[OK] Loaded LULC data for {len(self.lulc_data)} cities")
         else:
             print("⚠️ LULC data not found")
     
@@ -214,7 +214,7 @@ class ClimateDataLoader:
         if spatial_file.exists():
             with open(spatial_file, 'r') as f:
                 self.spatial_data = json.load(f)
-            print(f"✓ Loaded spatial relationships data")
+            print(f"[OK] Loaded spatial relationships data")
         else:
             print("⚠️ Spatial relationships data not found")
     
@@ -224,7 +224,7 @@ class ClimateDataLoader:
         if nightlights_file.exists():
             with open(nightlights_file, 'r') as f:
                 self.nightlights_data = json.load(f)
-            print(f"✓ Loaded nightlights data for {len(self.nightlights_data)} cities")
+            print(f"[OK] Loaded nightlights data for {len(self.nightlights_data)} cities")
         else:
             print("⚠️ Nightlights data not found")
     
@@ -253,7 +253,7 @@ class ClimateDataLoader:
 
             self.population_data[city] = cp
 
-        print(f"✓ Initialized assessment for {len(self.population_data)} cities (populated from UZBEK_CITIES_DATA where available)")
+        print(f"[OK] Initialized assessment for {len(self.population_data)} cities (populated from UZBEK_CITIES_DATA where available)")
     
     def _initialize_data_cache(self):
         """Initialize data cache for percentile-based normalization"""
@@ -318,7 +318,7 @@ class ClimateDataLoader:
         self._cache['nightlights'] = nightlights
         self._cache['veg_patches'] = veg_patch_counts
         
-        print(f"✓ Initialized data cache for percentile normalization")
+        print(f"[OK] Initialized data cache for percentile normalization")
     
     @staticmethod
     def pct_norm(values, x, lo=0.1, hi=0.9, invert=False, fallback=0.0):
