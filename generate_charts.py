@@ -152,13 +152,21 @@ class ComprehensiveChartGenerator:
                             year = int(year_str)
                             with open(temp_file, 'r') as f:
                                 self.temperature_data[city][year] = json.load(f)
+                            # Record year from temperature data as fallback if SUHI years missing
+                            try:
+                                self.years.add(int(year))
+                            except Exception:
+                                pass
                         except (ValueError, json.JSONDecodeError):
                             continue
             print(f"✓ Loaded temperature data for {len(self.temperature_data)} cities")
         
-        self.years = sorted(list(self.years))
-        self.cities = sorted(list(self.cities))
-        print(f"✓ Analysis scope: {len(self.cities)} cities, {len(self.years)} years ({min(self.years)}-{max(self.years)})")
+        if self.years:
+            self.years = sorted(list(self.years))
+            self.cities = sorted(list(self.cities))
+            print(f"✓ Analysis scope: {len(self.cities)} cities, {len(self.years)} years ({min(self.years)}-{max(self.years)})")
+        else:
+            print(f"✓ Analysis scope: {len(self.cities)} cities, 0 years (no year data found)")
 
     def create_suhi_trends_with_confidence(self):
         """Create SUHI trends over time with confidence intervals"""
@@ -1293,11 +1301,18 @@ class ComprehensiveChartGenerator:
 
 def main():
     """Main execution function"""
-    # Set base path to the suhi_analysis_output directory
-    base_path = "/Users/timursabitov/Dev/Uzbekistan_URBAN_research/suhi_analysis_output"
-    
+    # Allow optional command-line argument for base path, otherwise use local suhi_analysis_output
+    import sys
+    script_dir = Path(__file__).resolve().parent
+    if len(sys.argv) > 1:
+        base_path = Path(sys.argv[1])
+    else:
+        base_path = script_dir / "suhi_analysis_output"
+
+    print(f"Using base path: {base_path}")
+
     # Create generator and run analysis
-    generator = ComprehensiveChartGenerator(base_path)
+    generator = ComprehensiveChartGenerator(str(base_path))
     charts = generator.generate_all_charts()
     
     return charts
