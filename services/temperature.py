@@ -8,6 +8,53 @@ from .utils import DATASETS, ANALYSIS_CONFIG, UZBEKISTAN_CITIES, GEE_CONFIG, mak
 from . import error_assessment
 
 
+def load_modis_lst_seasonal(start_date: str, end_date: str, geometry: ee.Geometry) -> Optional[ee.Image]:
+    """Load MODIS LST data for any season without warm month filtering.
+    
+    Returns a composite image with two bands:
+    - LST_Day_MODIS: Daytime land surface temperature in Celsius
+    - LST_Night_MODIS: Nighttime land surface temperature in Celsius
+    
+    This version does NOT filter by warm months, allowing winter analysis.
+    """
+    col = (ee.ImageCollection(DATASETS['modis_lst'])
+           .filterDate(start_date, end_date)
+           .filterBounds(geometry))
+    
+    if col.size().getInfo() == 0:
+        return None
+        
+    comp = col.median()
+    
+    try:
+        band_names = comp.bandNames().getInfo()
+    except Exception:
+        return None
+        
+    # Find day and night LST bands
+    day_bands = [b for b in band_names if 'Day' in b and 'LST' in b]
+    night_bands = [b for b in band_names if 'Night' in b and 'LST' in b]
+    
+    if not day_bands or not night_bands:
+        return None
+    
+    # Process day LST: scale from Kelvin*50 to Celsius
+    lst_day = (comp.select(day_bands[0])
+              .multiply(0.02)  # Scale factor to convert to Kelvin
+              .subtract(273.15)  # Convert Kelvin to Celsius
+              .rename('LST_Day_MODIS')
+              .clamp(-20, 60))  # Remove unrealistic values
+    
+    # Process night LST: scale from Kelvin*50 to Celsius  
+    lst_night = (comp.select(night_bands[0])
+                .multiply(0.02)  # Scale factor to convert to Kelvin
+                .subtract(273.15)  # Convert Kelvin to Celsius
+                .rename('LST_Night_MODIS') 
+                .clamp(-20, 50))  # Remove unrealistic values (night typically cooler)
+    
+    return ee.Image.cat([lst_day, lst_night]).clip(geometry)
+
+
 def load_modis_lst(start_date: str, end_date: str, geometry: ee.Geometry) -> Optional[ee.Image]:
     """Load MODIS LST data with day and night bands.
     
@@ -59,15 +106,38 @@ def load_modis_lst(start_date: str, end_date: str, geometry: ee.Geometry) -> Opt
 
 
 def load_landsat_thermal(start_date: str, end_date: str, geometry: ee.Geometry) -> Optional[ee.Image]:
-    def proc(img):
-        qa = img.select('QA_PIXEL')
-        mask = (qa.bitwiseAnd(1<<3).eq(0).And(qa.bitwiseAnd(1<<4).eq(0)).And(qa.bitwiseAnd(1<<5).eq(0)).And(qa.bitwiseAnd(1<<2).eq(0)))
-        st = img.select('ST_B10').multiply(0.00341802).add(149.0).subtract(273.15).rename('LST_Landsat').clamp(-20,60)
-        return st.updateMask(mask)
-    l8 = ee.ImageCollection(DATASETS['landsat8'])
-    l9 = ee.ImageCollection(DATASETS['landsat9'])
-    col = (l8.merge(l9).filterDate(start_date,end_date).filterBounds(geometry).filter(ee.Filter.lt('CLOUD_COVER', ANALYSIS_CONFIG['cloud_threshold'])).map(proc))
-    return col.median().clip(geometry)
+    """Load MODIS LST data for seasonal analysis (replaced Landsat thermal).
+    
+    Returns MODIS LST daily composite with day and night bands averaged.
+    This provides better temporal coverage than Landsat for seasonal analysis.
+    Now uses seasonal version that doesn't filter by warm months.
+    """
+    # Use MODIS LST without warm months filter for seasonal analysis
+    modis_lst = load_modis_lst_seasonal(start_date, end_date, geometry)
+    
+    if modis_lst is None:
+        return None
+    
+    try:
+        band_names = modis_lst.bandNames().getInfo()
+        if len(band_names) >= 2:
+            # Average day and night LST for a single temperature composite
+            day_band = band_names[0]
+            night_band = band_names[1]
+            
+            day_lst = modis_lst.select([day_band])
+            night_lst = modis_lst.select([night_band])
+            
+            # Create average of day and night temperatures
+            avg_lst = day_lst.add(night_lst).divide(2).rename('LST_MODIS_Average').clamp(-20, 60)
+            return avg_lst.clip(geometry)
+        elif len(band_names) >= 1:
+            # Use only available band if just one is present
+            return modis_lst.select([band_names[0]]).rename('LST_MODIS_Single').clamp(-20, 60).clip(geometry)
+        else:
+            return None
+    except Exception:
+        return None
 
 
 def compute_temperature_statistics(city: str, year: int, base_output_dir: Optional[Path] = None) -> Dict[str, Any]:

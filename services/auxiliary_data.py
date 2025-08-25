@@ -153,13 +153,15 @@ def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 3
         if verbose:
             print(f"[aux] {city} {year}: NDVI/EVI composite built in {time.time()-t0:.1f}s (server-side op)")
 
-        # Landsat thermal
+        # MODIS thermal (now using MODIS instead of Landsat)
         if verbose:
-            t1 = time.time(); print(f"[aux] {city} {year}: loading Landsat thermal {summer_start}..{summer_end}")
+            t1 = time.time(); print(f"[aux] {city} {year}: loading MODIS thermal {summer_start}..{summer_end}")
         summer_lst = load_landsat_thermal(summer_start, summer_end, region)
+        if verbose:
+            print(f"[aux] {city} {year}: loading MODIS thermal {winter_start}..{winter_end}")
         winter_lst = load_landsat_thermal(winter_start, winter_end, region)
         if verbose:
-            print(f"[aux] {city} {year}: Landsat thermal prepared in {time.time()-t1:.1f}s")
+            print(f"[aux] {city} {year}: MODIS thermal prepared in {time.time()-t1:.1f}s")
 
         # Compute change images
         ndvi_change = summer_veg.select('NDVI').subtract(winter_veg.select('NDVI')).rename('NDVI_change')
@@ -225,21 +227,54 @@ def run_city_auxiliary(base: Path, city: str, year: int, download_scale: int = 3
             stats['summer_evi_mean'] = _region_mean(summer_veg, 'EVI')
             stats['winter_evi_mean'] = _region_mean(winter_veg, 'EVI')
             stats['evi_change_mean'] = _region_mean(evi_change, 'EVI_change')
-            # LST bands: attempt to find numeric band name for landsat thermal
+            # LST bands: attempt to find numeric band name for MODIS thermal
             if summer_lst is not None:
-                lst_band = summer_lst.bandNames().getInfo()[0]
-                stats['summer_lst_mean'] = _region_mean(summer_lst, lst_band)
+                try:
+                    lst_band = summer_lst.bandNames().getInfo()[0]
+                    stats['summer_lst_mean'] = _region_mean(summer_lst, lst_band)
+                    if verbose:
+                        print(f"[aux] {city} {year}: summer LST mean = {stats['summer_lst_mean']:.2f}°C")
+                except Exception as e:
+                    stats['summer_lst_mean'] = None
+                    if verbose:
+                        print(f"[aux] {city} {year}: summer LST computation failed: {e}")
             else:
                 stats['summer_lst_mean'] = None
+                if verbose:
+                    print(f"[aux] {city} {year}: no summer LST data available")
+                    
             if winter_lst is not None:
-                lst_band_w = winter_lst.bandNames().getInfo()[0]
-                stats['winter_lst_mean'] = _region_mean(winter_lst, lst_band_w)
+                try:
+                    lst_band_w = winter_lst.bandNames().getInfo()[0]
+                    stats['winter_lst_mean'] = _region_mean(winter_lst, lst_band_w)
+                    if verbose:
+                        print(f"[aux] {city} {year}: winter LST mean = {stats['winter_lst_mean']:.2f}°C")
+                except Exception as e:
+                    stats['winter_lst_mean'] = None
+                    if verbose:
+                        print(f"[aux] {city} {year}: winter LST computation failed: {e}")
             else:
                 stats['winter_lst_mean'] = None
-            if lst_change is not None:
-                stats['lst_change_mean'] = _region_mean(lst_change, 'LST_change')
+                if verbose:
+                    print(f"[aux] {city} {year}: no winter LST data available")
+                    
+            # Compute LST change if both seasons available
+            if stats.get('summer_lst_mean') is not None and stats.get('winter_lst_mean') is not None:
+                stats['lst_change_mean'] = stats['summer_lst_mean'] - stats['winter_lst_mean']
+                if verbose:
+                    print(f"[aux] {city} {year}: LST change (summer-winter) = {stats['lst_change_mean']:.2f}°C")
+            elif lst_change is not None:
+                # Try to compute from change image if direct calculation failed
+                try:
+                    stats['lst_change_mean'] = _region_mean(lst_change, 'LST_change')
+                    if verbose:
+                        print(f"[aux] {city} {year}: LST change from difference image = {stats['lst_change_mean']:.2f}°C")
+                except Exception:
+                    stats['lst_change_mean'] = None
             else:
                 stats['lst_change_mean'] = None
+                if verbose:
+                    print(f"[aux] {city} {year}: LST change computation not possible")
 
             # Convert NDVI means to coarse biomass proxy (t/ha)
             try:
