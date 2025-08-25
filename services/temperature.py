@@ -5,18 +5,53 @@ from .utils import DATASETS, ANALYSIS_CONFIG
 
 
 def load_modis_lst(start_date: str, end_date: str, geometry: ee.Geometry) -> Optional[ee.Image]:
-    col = (ee.ImageCollection(DATASETS['modis_lst']).filterDate(start_date, end_date).filterBounds(geometry)
-           .filter(ee.Filter.calendarRange(ANALYSIS_CONFIG['warm_months'][0], ANALYSIS_CONFIG['warm_months'][-1], 'month')))
+    """Load MODIS LST data with day and night bands.
+    
+    Returns a composite image with two bands:
+    - LST_Day_MODIS: Daytime land surface temperature in Celsius
+    - LST_Night_MODIS: Nighttime land surface temperature in Celsius
+    
+    The function filters for warm months and applies proper scaling and unit conversion.
+    Temperature values are clamped to reasonable ranges to remove outliers.
+    """
+    col = (ee.ImageCollection(DATASETS['modis_lst'])
+           .filterDate(start_date, end_date)
+           .filterBounds(geometry)
+           .filter(ee.Filter.calendarRange(ANALYSIS_CONFIG['warm_months'][0], 
+                                         ANALYSIS_CONFIG['warm_months'][-1], 'month')))
+    
+    if col.size().getInfo() == 0:
+        return None
+        
     comp = col.median()
-    band_names = comp.bandNames().getInfo()
+    
+    try:
+        band_names = comp.bandNames().getInfo()
+    except Exception:
+        return None
+        
+    # Find day and night LST bands
     day_bands = [b for b in band_names if 'Day' in b and 'LST' in b]
     night_bands = [b for b in band_names if 'Night' in b and 'LST' in b]
-    if day_bands and night_bands:
-        lst_day = comp.select(day_bands[0]).multiply(0.02).subtract(273.15).rename('LST_Day_MODIS').clamp(-20,60)
-        lst_night = comp.select(night_bands[0]).multiply(0.02).subtract(273.15).rename('LST_Night_MODIS').clamp(-20,50)
-        return ee.Image.cat([lst_day, lst_night]).clip(geometry)
-    else:
+    
+    if not day_bands or not night_bands:
         return None
+    
+    # Process day LST: scale from Kelvin*50 to Celsius
+    lst_day = (comp.select(day_bands[0])
+              .multiply(0.02)  # Scale factor to convert to Kelvin
+              .subtract(273.15)  # Convert Kelvin to Celsius
+              .rename('LST_Day_MODIS')
+              .clamp(-20, 60))  # Remove unrealistic values
+    
+    # Process night LST: scale from Kelvin*50 to Celsius  
+    lst_night = (comp.select(night_bands[0])
+                .multiply(0.02)  # Scale factor to convert to Kelvin
+                .subtract(273.15)  # Convert Kelvin to Celsius
+                .rename('LST_Night_MODIS') 
+                .clamp(-20, 50))  # Remove unrealistic values (night typically cooler)
+    
+    return ee.Image.cat([lst_day, lst_night]).clip(geometry)
 
 
 def load_landsat_thermal(start_date: str, end_date: str, geometry: ee.Geometry) -> Optional[ee.Image]:

@@ -1,8 +1,11 @@
-"""SUHI unit: generate pixel SUHI maps per city/year using Landsat thermal composites
-and compute day/night SUHI using MODIS LST where available. Saves GeoTIFFs and JSON summaries.
+"""SUHI unit: generate pixel SUHI maps per city/year using MODIS LST composites (day and night)
+and compute comprehensive SUHI analysis. Saves GeoTIFFs and JSON summaries.
 
 This module reuses existing helpers: `services.temperature`, `services.classification`,
 `services.lulc._download_image_geturl`, and `services.suhi` computation helpers.
+
+Changed from Landsat thermal to MODIS LST data (MOD11A2) for better temporal coverage
+and dedicated day/night LST measurements.
 """
 import json
 from pathlib import Path
@@ -14,7 +17,7 @@ from . import lulc, classification, suhi as suhi_core
 from . import error_assessment
 from .utils import create_output_directories, make_json_safe, GEE_CONFIG
 from pathlib import Path
-from .temperature import load_landsat_thermal, load_modis_lst
+from .temperature import load_modis_lst
 from .utils import UZBEKISTAN_CITIES, create_output_directories, GEE_CONFIG, ANALYSIS_CONFIG, get_optimal_scale_for_city
 import math
 import time
@@ -88,109 +91,147 @@ def run_city_suhi(base: Path, city: str, year: int, download_scale: int = 30) ->
         classifications = {}
 
     try:
-        # Landsat thermal composite (daytime LST proxy)
-        landsat_lst = load_landsat_thermal(start_date, end_date, zones['urban_core'].buffer(ANALYSIS_CONFIG['rural_buffer_km']*1000))
+        # Primary SUHI analysis using MODIS LST data (day and night)
+        modis_lst = load_modis_lst(start_date, end_date, zones['urban_core'].buffer(ANALYSIS_CONFIG['rural_buffer_km']*1000))
 
         # Urban mask
         urban_mask = _make_urban_mask_from_classifications(classifications) if classifications else ee.Image.constant(0)
         rural_mask = urban_mask.Not()
 
-    # Compute pixel SUHI: subtract rural mean and mask to urban area
-        if landsat_lst is not None:
-            # compute rural mean on Earth Engine
+        # Process MODIS LST data for primary SUHI analysis
+        if modis_lst is not None:
             try:
-                band_names = landsat_lst.bandNames().getInfo()
-                band = band_names[0] if band_names else None
+                m_bands = modis_lst.bandNames().getInfo()
+                # expect day band first, night second
+                day_band = m_bands[0] if len(m_bands) > 0 else None
+                night_band = m_bands[1] if len(m_bands) > 1 else None
             except Exception:
-                band = None
-            if band is None:
-                out['warning'] = 'Could not determine Landsat LST band'
-            else:
-                # Use a larger scale for region statistics to avoid excessive computation
-                stats_scale = max(download_scale, 250)
+                day_band = None; night_band = None
+            
+            # Process day LST for primary SUHI
+            if day_band is not None:
+                day_lst = modis_lst.select([day_band])
+                # Use MODIS scale for region statistics to avoid excessive computation
+                stats_scale = max(GEE_CONFIG.get('scale_modis', 1000), 250)
                 try:
-                    rural_stats = landsat_lst.select([band]).updateMask(rural_mask).reduceRegion(reducer=ee.Reducer.mean(), geometry=zones['rural_ring'], scale=stats_scale, maxPixels=GEE_CONFIG['max_pixels'], bestEffort=True)
+                    rural_stats_day = day_lst.updateMask(rural_mask).reduceRegion(
+                        reducer=ee.Reducer.mean(), 
+                        geometry=zones['rural_ring'], 
+                        scale=stats_scale, 
+                        maxPixels=GEE_CONFIG['max_pixels'], 
+                        bestEffort=True
+                    )
                 except Exception:
-                    rural_stats = landsat_lst.select([band]).updateMask(rural_mask).reduceRegion(reducer=ee.Reducer.mean(), geometry=zones['rural_ring'], scale=stats_scale*2, maxPixels=GEE_CONFIG['max_pixels'], bestEffort=True)
-                rural_mean = rural_stats.get(band)
-                rural_mean_val = rural_mean.getInfo() if rural_mean else None
-            if rural_mean_val is not None:
-                suhi_img = landsat_lst.select(band).toFloat().subtract(float(rural_mean_val)).rename('SUHI_Landsat')
-                # mask to full extent (keep values everywhere but we will also save masked urban-only)
-                # Save full SUHI and urban-only SUHI
-                out_dir = base / 'suhi' / city
-                out_dir.mkdir(parents=True, exist_ok=True)
-
-                # Produce a small high-resolution urban tile limited to 2km radius to visualize details
-                try:
-                    # Use Drive export for the small urban tile to avoid client reprojection issues
-                    # Map export is intentionally disabled here. Use `export_suhi_tiles`
-                    # to create Drive export tasks for full maps. The inline export
-                    # caused large reprojection errors for big extents and is moved
-                    # to a separate function `export_suhi_tiles` (see README).
-                    #
-                    # small_region = center.buffer(min(city_info.get('buffer_m', 10000), 2000))
-                    # urban_suhi = suhi_img.updateMask(urban_mask).clip(small_region)
-                    # urban_fname = f"{city}_suhi_landsat_{year}_urban_small"
-                    # try:
-                    #     task = ee.batch.Export.image.toDrive(image=urban_suhi, description=urban_fname, folder='SUHI_Exports', fileNamePrefix=urban_fname, region=small_region.bounds().getInfo()['coordinates'], scale=download_scale, crs='EPSG:4326', maxPixels=1e13)
-                    #     task.start()
-                    #     out['generated']['suhi_urban_task'] = getattr(task, 'id', None)
-                    # except Exception:
-                    #     out['generated']['suhi_urban_task'] = None
-                    out['generated']['suhi_urban_task'] = None
-                except Exception:
-                    out['generated']['suhi_urban_task'] = None
-
-                # Zonal stats
-                try:
-                    urban_mean = landsat_lst.select([band]).updateMask(urban_mask).reduceRegion(reducer=ee.Reducer.mean(), geometry=zones['urban_core'], scale=download_scale, maxPixels=GEE_CONFIG['max_pixels']).get(band).getInfo()
-                    rural_mean = rural_mean_val
-                    out['stats']['landsat_urban_mean'] = float(urban_mean) if urban_mean is not None else None
-                    out['stats']['landsat_rural_mean'] = float(rural_mean) if rural_mean is not None else None
-                    out['stats']['suhi_mean'] = (float(urban_mean) - float(rural_mean)) if urban_mean is not None and rural_mean is not None else None
-                    # compute uncertainty for urban and rural zones on server-side
+                    rural_stats_day = day_lst.updateMask(rural_mask).reduceRegion(
+                        reducer=ee.Reducer.mean(), 
+                        geometry=zones['rural_ring'], 
+                        scale=stats_scale*2, 
+                        maxPixels=GEE_CONFIG['max_pixels'], 
+                        bestEffort=True
+                    )
+                rural_mean_day = rural_stats_day.get(day_band)
+                rural_mean_day_val = rural_mean_day.getInfo() if rural_mean_day else None
+                
+                if rural_mean_day_val is not None:
+                    suhi_day_img = day_lst.select(day_band).toFloat().subtract(float(rural_mean_day_val)).rename('SUHI_Day_MODIS')
+                    
+                    # Zonal stats for day LST
                     try:
-                        ua = error_assessment.compute_zonal_uncertainty(landsat_lst.select([band]), {'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, scale=max(download_scale, 250), maxPixels=GEE_CONFIG.get('max_pixels', int(1e8)))
-                        out['stats']['uncertainty'] = ua
+                        urban_mean_day = day_lst.select([day_band]).updateMask(urban_mask).reduceRegion(
+                            reducer=ee.Reducer.mean(), 
+                            geometry=zones['urban_core'], 
+                            scale=stats_scale, 
+                            maxPixels=GEE_CONFIG['max_pixels']
+                        ).get(day_band).getInfo()
+                        
+                        out['stats']['modis_day_urban_mean'] = float(urban_mean_day) if urban_mean_day is not None else None
+                        out['stats']['modis_day_rural_mean'] = float(rural_mean_day_val) if rural_mean_day_val is not None else None
+                        out['stats']['suhi_day_mean'] = (float(urban_mean_day) - float(rural_mean_day_val)) if urban_mean_day is not None and rural_mean_day_val is not None else None
+                        
+                        # compute uncertainty for day LST
+                        try:
+                            day_unc = error_assessment.compute_zonal_uncertainty(
+                                day_lst.select([day_band]), 
+                                {'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, 
+                                scale=stats_scale, 
+                                maxPixels=GEE_CONFIG.get('max_pixels', int(1e8))
+                            )
+                            out['stats']['uncertainty_day'] = day_unc
+                        except Exception:
+                            out['stats']['uncertainty_day'] = None
                     except Exception:
-                        out['stats']['uncertainty'] = None
-                except Exception:
-                    pass
+                        pass
+                else:
+                    out['warning'] = 'Could not compute rural mean for MODIS day LST'
             else:
-                out['warning'] = 'Could not compute rural mean for Landsat LST'
-        else:
-            out['warning'] = 'No Landsat LST available'
-
-        # Day/night SUHI using MODIS (if available)
-        try:
-            modis_lst = load_modis_lst(start_date, end_date, zones['urban_core'].buffer(ANALYSIS_CONFIG['rural_buffer_km']*1000))
-            if modis_lst is not None:
+                out['warning'] = 'No MODIS day LST band available'
+            
+            # Process night LST for SUHI
+            if night_band is not None:
+                night_lst = modis_lst.select([night_band])
                 try:
-                    m_bands = modis_lst.bandNames().getInfo()
-                    # expect day band first, night second — fall back if not
-                    day_band = m_bands[0] if len(m_bands) > 0 else None
-                    night_band = m_bands[1] if len(m_bands) > 1 else None
+                    rural_stats_night = night_lst.updateMask(rural_mask).reduceRegion(
+                        reducer=ee.Reducer.mean(), 
+                        geometry=zones['rural_ring'], 
+                        scale=stats_scale, 
+                        maxPixels=GEE_CONFIG['max_pixels'], 
+                        bestEffort=True
+                    )
                 except Exception:
-                    day_band = None; night_band = None
+                    rural_stats_night = night_lst.updateMask(rural_mask).reduceRegion(
+                        reducer=ee.Reducer.mean(), 
+                        geometry=zones['rural_ring'], 
+                        scale=stats_scale*2, 
+                        maxPixels=GEE_CONFIG['max_pixels'], 
+                        bestEffort=True
+                    )
+                rural_mean_night = rural_stats_night.get(night_band)
+                rural_mean_night_val = rural_mean_night.getInfo() if rural_mean_night else None
+                
+                if rural_mean_night_val is not None:
+                    suhi_night_img = night_lst.select(night_band).toFloat().subtract(float(rural_mean_night_val)).rename('SUHI_Night_MODIS')
+                    
+                    # Zonal stats for night LST
+                    try:
+                        urban_mean_night = night_lst.select([night_band]).updateMask(urban_mask).reduceRegion(
+                            reducer=ee.Reducer.mean(), 
+                            geometry=zones['urban_core'], 
+                            scale=stats_scale, 
+                            maxPixels=GEE_CONFIG['max_pixels']
+                        ).get(night_band).getInfo()
+                        
+                        out['stats']['modis_night_urban_mean'] = float(urban_mean_night) if urban_mean_night is not None else None
+                        out['stats']['modis_night_rural_mean'] = float(rural_mean_night_val) if rural_mean_night_val is not None else None
+                        out['stats']['suhi_night_mean'] = (float(urban_mean_night) - float(rural_mean_night_val)) if urban_mean_night is not None and rural_mean_night_val is not None else None
+                        
+                        # compute uncertainty for night LST
+                        try:
+                            night_unc = error_assessment.compute_zonal_uncertainty(
+                                night_lst.select([night_band]), 
+                                {'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, 
+                                scale=stats_scale, 
+                                maxPixels=GEE_CONFIG.get('max_pixels', int(1e8))
+                            )
+                            out['stats']['uncertainty_night'] = night_unc
+                        except Exception:
+                            out['stats']['uncertainty_night'] = None
+                    except Exception:
+                        pass
+                else:
+                    out['warning'] = 'Could not compute rural mean for MODIS night LST'
+            else:
+                out['warning'] = 'No MODIS night LST band available'
+                
+            # Day/night SUHI comparative analysis using MODIS
+            try:
                 day_img = modis_lst.select([day_band]).rename('LST_Day_MODIS') if day_band else None
                 night_img = modis_lst.select([night_band]).rename('LST_Night_MODIS') if night_band else None
-            else:
-                day_img = night_img = None
-            day_night_res = suhi_core.compute_day_night_suhi({'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, day_img, night_img, classifications)
-            out['day_night'] = day_night_res
-            # attach uncertainty for MODIS day/night if available
-            try:
-                if day_img is not None:
-                    day_unc = error_assessment.compute_zonal_uncertainty(day_img, {'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, scale=GEE_CONFIG.get('scale_modis', 1000), maxPixels=GEE_CONFIG.get('max_pixels', int(1e8)))
-                    out['day_night'].setdefault('uncertainty', {})['day'] = day_unc
-                if night_img is not None:
-                    night_unc = error_assessment.compute_zonal_uncertainty(night_img, {'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, scale=GEE_CONFIG.get('scale_modis', 1000), maxPixels=GEE_CONFIG.get('max_pixels', int(1e8)))
-                    out['day_night'].setdefault('uncertainty', {})['night'] = night_unc
-            except Exception:
-                pass
-        except Exception as e:
-            out['day_night_error'] = str(e)
+                day_night_res = suhi_core.compute_day_night_suhi({'urban_core': zones['urban_core'], 'rural_ring': zones['rural_ring']}, day_img, night_img, classifications)
+                out['day_night'] = day_night_res
+            except Exception as e:
+                out['day_night_error'] = str(e)
+        else:
+            out['warning'] = 'No MODIS LST data available'
 
     except Exception as e:
         # If the failure is due to large reprojection output, fall back to a safe
@@ -266,6 +307,7 @@ def run_city_suhi_stats(city: str, year: int, stats_scale: int = 500) -> Dict[st
 
     This helper is intended for quick tests: it avoids image exports and
     large reprojection operations by only running server-side reductions.
+    Now uses MODIS LST data (day and night) instead of Landsat thermal.
     """
     out: Dict[str, Any] = {'city': city, 'year': year, 'stats': {}}
     if city not in UZBEKISTAN_CITIES:
@@ -277,49 +319,118 @@ def run_city_suhi_stats(city: str, year: int, stats_scale: int = 500) -> Dict[st
     rural_ring = center.buffer(city_info['buffer_m'] + ANALYSIS_CONFIG['rural_buffer_km']*1000).difference(urban_core)
     start_date = f"{year}-01-01"
     end_date = f"{year}-12-31"
+    
     try:
-        landsat_lst = load_landsat_thermal(start_date, end_date, urban_core)
-        if landsat_lst is None:
-            out['error'] = 'No Landsat LST available'
+        # Use MODIS LST instead of Landsat thermal
+        modis_lst = load_modis_lst(start_date, end_date, urban_core.buffer(ANALYSIS_CONFIG['rural_buffer_km']*1000))
+        if modis_lst is None:
+            out['error'] = 'No MODIS LST data available'
             return out
-        # pick first band
+        
+        # Get day and night bands
         try:
-            band = landsat_lst.bandNames().getInfo()[0]
+            band_names = modis_lst.bandNames().getInfo()
+            day_band = band_names[0] if len(band_names) > 0 else None
+            night_band = band_names[1] if len(band_names) > 1 else None
         except Exception:
-            out['error'] = 'Could not read Landsat band names'
+            out['error'] = 'Could not read MODIS LST band names'
             return out
 
-        # compute urban and rural means at stats_scale
-        try:
-            urban_stats = landsat_lst.select([band]).reduceRegion(reducer=ee.Reducer.mean(), geometry=urban_core, scale=stats_scale, maxPixels=GEE_CONFIG['max_pixels'], bestEffort=True)
-            rural_stats = landsat_lst.select([band]).reduceRegion(reducer=ee.Reducer.mean(), geometry=rural_ring, scale=stats_scale, maxPixels=GEE_CONFIG['max_pixels'], bestEffort=True)
-            urban_mean = urban_stats.get(band).getInfo() if urban_stats else None
-            rural_mean = rural_stats.get(band).getInfo() if rural_stats else None
-            out['stats']['urban_mean'] = float(urban_mean) if urban_mean is not None else None
-            out['stats']['rural_mean'] = float(rural_mean) if rural_mean is not None else None
-            out['stats']['suhi'] = (out['stats']['urban_mean'] - out['stats']['rural_mean']) if out['stats']['urban_mean'] is not None and out['stats']['rural_mean'] is not None else None
-            
-            # Add uncertainty analysis for SUHI stats
+        # Use MODIS scale for statistics
+        modis_scale = max(stats_scale, GEE_CONFIG.get('scale_modis', 1000))
+        
+        # Process day LST
+        if day_band is not None:
+            day_lst = modis_lst.select([day_band])
             try:
-                zones = {'urban_core': urban_core, 'rural_ring': rural_ring}
-                uncertainty = error_assessment.compute_zonal_uncertainty(landsat_lst.select([band]), zones, scale=stats_scale, maxPixels=GEE_CONFIG['max_pixels'])
-                out['stats']['uncertainty'] = uncertainty
-            except Exception as unc_err:
-                out['stats']['uncertainty_error'] = str(unc_err)
-        except Exception as e:
-            out['error'] = str(e)
+                urban_stats_day = day_lst.reduceRegion(
+                    reducer=ee.Reducer.mean(), 
+                    geometry=urban_core, 
+                    scale=modis_scale, 
+                    maxPixels=GEE_CONFIG['max_pixels'], 
+                    bestEffort=True
+                )
+                rural_stats_day = day_lst.reduceRegion(
+                    reducer=ee.Reducer.mean(), 
+                    geometry=rural_ring, 
+                    scale=modis_scale, 
+                    maxPixels=GEE_CONFIG['max_pixels'], 
+                    bestEffort=True
+                )
+                urban_mean_day = urban_stats_day.get(day_band).getInfo() if urban_stats_day else None
+                rural_mean_day = rural_stats_day.get(day_band).getInfo() if rural_stats_day else None
+                
+                out['stats']['day_urban_mean'] = float(urban_mean_day) if urban_mean_day is not None else None
+                out['stats']['day_rural_mean'] = float(rural_mean_day) if rural_mean_day is not None else None
+                out['stats']['suhi_day'] = (out['stats']['day_urban_mean'] - out['stats']['day_rural_mean']) if out['stats']['day_urban_mean'] is not None and out['stats']['day_rural_mean'] is not None else None
+                
+            except Exception as e:
+                out['day_error'] = str(e)
+        
+        # Process night LST
+        if night_band is not None:
+            night_lst = modis_lst.select([night_band])
+            try:
+                urban_stats_night = night_lst.reduceRegion(
+                    reducer=ee.Reducer.mean(), 
+                    geometry=urban_core, 
+                    scale=modis_scale, 
+                    maxPixels=GEE_CONFIG['max_pixels'], 
+                    bestEffort=True
+                )
+                rural_stats_night = night_lst.reduceRegion(
+                    reducer=ee.Reducer.mean(), 
+                    geometry=rural_ring, 
+                    scale=modis_scale, 
+                    maxPixels=GEE_CONFIG['max_pixels'], 
+                    bestEffort=True
+                )
+                urban_mean_night = urban_stats_night.get(night_band).getInfo() if urban_stats_night else None
+                rural_mean_night = rural_stats_night.get(night_band).getInfo() if rural_stats_night else None
+                
+                out['stats']['night_urban_mean'] = float(urban_mean_night) if urban_mean_night is not None else None
+                out['stats']['night_rural_mean'] = float(rural_mean_night) if rural_mean_night is not None else None
+                out['stats']['suhi_night'] = (out['stats']['night_urban_mean'] - out['stats']['night_rural_mean']) if out['stats']['night_urban_mean'] is not None and out['stats']['night_rural_mean'] is not None else None
+                
+            except Exception as e:
+                out['night_error'] = str(e)
+        
+        # Add day-night difference analysis
+        if 'suhi_day' in out['stats'] and 'suhi_night' in out['stats']:
+            if out['stats']['suhi_day'] is not None and out['stats']['suhi_night'] is not None:
+                out['stats']['suhi_day_night_diff'] = out['stats']['suhi_day'] - out['stats']['suhi_night']
+                out['stats']['day_stronger_than_night'] = out['stats']['suhi_day'] > out['stats']['suhi_night']
+            
+        # Add uncertainty analysis for MODIS LST
+        try:
+            zones = {'urban_core': urban_core, 'rural_ring': rural_ring}
+            if day_band is not None:
+                day_uncertainty = error_assessment.compute_zonal_uncertainty(
+                    day_lst, zones, scale=modis_scale, maxPixels=GEE_CONFIG['max_pixels']
+                )
+                out['stats']['uncertainty_day'] = day_uncertainty
+            if night_band is not None:
+                night_uncertainty = error_assessment.compute_zonal_uncertainty(
+                    night_lst, zones, scale=modis_scale, maxPixels=GEE_CONFIG['max_pixels']
+                )
+                out['stats']['uncertainty_night'] = night_uncertainty
+        except Exception as unc_err:
+            out['stats']['uncertainty_error'] = str(unc_err)
+            
     except Exception as e:
         out['error'] = str(e)
     return out
 
 
-def export_suhi_tiles(base: Path, city: str, year: int, tile_size_m: int = 5000, scale: int = 30, overlap_m: int = 250) -> Dict[str, Any]:
+def export_suhi_tiles(base: Path, city: str, year: int, tile_size_m: int = 5000, scale: int = 1000, overlap_m: int = 250) -> Dict[str, Any]:
     """Export SUHI map in tiles to Google Drive. Returns task ids and summary.
+    Now uses MODIS LST data (day and night) instead of Landsat thermal.
 
     Notes:
     - Requires GEE and Drive export enabled for the authenticated account.
     - This will create multiple ee.batch.Export.image.toDrive tasks; monitor them in the GEE Task Manager or Drive.
     - tile_size_m controls approximate tile side in meters. overlap_m controls tile overlap to avoid edge artifacts.
+    - Default scale is now 1000m to match MODIS LST resolution.
     """
     out: Dict[str, Any] = {'city': city, 'year': year, 'generated': {'tile_tasks': []}, 'stats': {}}
     if city not in UZBEKISTAN_CITIES:
@@ -329,42 +440,61 @@ def export_suhi_tiles(base: Path, city: str, year: int, tile_size_m: int = 5000,
     lon = city_info['lon']; lat = city_info['lat']
     buffer_m = city_info['buffer_m'] + ANALYSIS_CONFIG['rural_buffer_km'] * 1000
 
-    # compute SUHI image (reuse logic from run_city_suhi)
+    # compute SUHI image using MODIS LST (reuse logic from run_city_suhi)
     start_date = f"{year}-01-01"; end_date = f"{year}-12-31"
     try:
         classifications = classification.load_all_classifications(year, ee.Geometry.Point([lon, lat]).buffer(city_info['buffer_m'] + ANALYSIS_CONFIG['rural_buffer_km']*1000), start_date, end_date)
     except Exception:
         classifications = {}
-    landsat_lst = load_landsat_thermal(start_date, end_date, ee.Geometry.Point([lon, lat]).buffer(buffer_m))
-    if landsat_lst is None:
-        out['error'] = 'No Landsat LST available for export'
+    
+    modis_lst = load_modis_lst(start_date, end_date, ee.Geometry.Point([lon, lat]).buffer(buffer_m))
+    if modis_lst is None:
+        out['error'] = 'No MODIS LST data available for export'
         return out
-    # determine band and rural mean
+    
+    # determine day and night bands
     try:
-        band = landsat_lst.bandNames().getInfo()[0]
+        band_names = modis_lst.bandNames().getInfo()
+        day_band = band_names[0] if len(band_names) > 0 else None
+        night_band = band_names[1] if len(band_names) > 1 else None
     except Exception:
-        out['error'] = 'Could not determine Landsat band for export'
+        out['error'] = 'Could not determine MODIS LST bands for export'
         return out
+    
+    if day_band is None:
+        out['error'] = 'No day LST band available for export'
+        return out
+        
     # create urban/rural masks
     if classifications:
         urban_mask = _make_urban_mask_from_classifications(classifications)
     else:
         urban_mask = ee.Image.constant(0)
     rural_mask = urban_mask.Not()
+    
+    # Compute rural mean for day LST
+    day_lst = modis_lst.select([day_band])
     try:
-        rural_stats = landsat_lst.select([band]).updateMask(rural_mask).reduceRegion(reducer=ee.Reducer.mean(), geometry=ee.Geometry.Point([lon, lat]).buffer(buffer_m).difference(ee.Geometry.Point([lon, lat]).buffer(city_info['buffer_m'])), scale=max(scale, 250), maxPixels=GEE_CONFIG['max_pixels'], bestEffort=True)
-        rural_mean = rural_stats.get(band).getInfo()
+        rural_stats = day_lst.updateMask(rural_mask).reduceRegion(
+            reducer=ee.Reducer.mean(), 
+            geometry=ee.Geometry.Point([lon, lat]).buffer(buffer_m).difference(ee.Geometry.Point([lon, lat]).buffer(city_info['buffer_m'])), 
+            scale=max(scale, GEE_CONFIG.get('scale_modis', 1000)), 
+            maxPixels=GEE_CONFIG['max_pixels'], 
+            bestEffort=True
+        )
+        rural_mean = rural_stats.get(day_band).getInfo()
     except Exception:
         rural_mean = None
+        
     if rural_mean is None:
         # Try a stats-only fallback to get a coarse rural mean
         try:
-            stats_res = run_city_suhi_stats(city, year, stats_scale=max(scale, 250))
+            stats_res = run_city_suhi_stats(city, year, stats_scale=max(scale, GEE_CONFIG.get('scale_modis', 1000)))
             rm = None
             if isinstance(stats_res, dict):
                 stats = stats_res.get('stats', {})
-                # try expected keys
-                rm = stats.get('rural_mean') or stats.get('landsat_rural_mean') or stats.get('rural')
+                # try expected keys for day rural mean
+                rm = stats.get('day_rural_mean') or stats.get('rural_mean')
             if rm is not None:
                 rural_mean = float(rm)
             else:
@@ -373,7 +503,9 @@ def export_suhi_tiles(base: Path, city: str, year: int, tile_size_m: int = 5000,
         except Exception as e:
             out['error'] = f'Could not compute rural mean for SUHI export: {e}'
             return out
-    suhi_img = landsat_lst.select([band]).toFloat().subtract(float(rural_mean)).rename('SUHI_Landsat')
+    
+    # Create SUHI image using day LST
+    suhi_img = day_lst.toFloat().subtract(float(rural_mean)).rename('SUHI_Day_MODIS')
 
     # compute bounding box in degrees using approximate meters->degrees conversion
     lat_rad = math.radians(lat)
@@ -400,7 +532,7 @@ def export_suhi_tiles(base: Path, city: str, year: int, tile_size_m: int = 5000,
             tile_maxy = min(y + dy, max_lat)
             geom = ee.Geometry.Rectangle([tile_minx, tile_miny, tile_maxx, tile_maxy])
             tile_img = suhi_img.clip(geom).updateMask(urban_mask)
-            fname = f"{city}_suhi_{year}_tile_{ix}_{iy}"
+            fname = f"{city}_suhi_modis_{year}_tile_{ix}_{iy}"
             try:
                 task = ee.batch.Export.image.toDrive(image=tile_img, description=fname, folder='SUHI_Exports', fileNamePrefix=fname, region=geom.bounds().getInfo()['coordinates'], scale=scale, crs='EPSG:4326', maxPixels=1e13)
                 task.start()

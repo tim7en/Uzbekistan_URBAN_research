@@ -19,7 +19,7 @@ from services.utils import UZBEKISTAN_CITIES
 def parse_args():
     p = argparse.ArgumentParser(description='SUHI unit runner')
     p.add_argument('--cities', nargs='*', help='List of cities (default: all configured cities)')
-    p.add_argument('--start-year', type=int, default=2017)
+    p.add_argument('--start-year', type=int, default=2016)
     p.add_argument('--end-year', type=int, default=2024)
     p.add_argument('--download-scale', type=int, default=100, help='Download scale in meters')
     return p.parse_args()
