@@ -17,7 +17,7 @@ from . import lulc, classification, suhi as suhi_core
 from . import error_assessment
 from .utils import create_output_directories, make_json_safe, GEE_CONFIG
 from pathlib import Path
-from .temperature import load_modis_lst
+from .temperature import load_modis_lst, compute_temperature_statistics
 from .utils import UZBEKISTAN_CITIES, create_output_directories, GEE_CONFIG, ANALYSIS_CONFIG, get_optimal_scale_for_city
 import math
 import time
@@ -230,6 +230,15 @@ def run_city_suhi(base: Path, city: str, year: int, download_scale: int = 30) ->
                 out['day_night'] = day_night_res
             except Exception as e:
                 out['day_night_error'] = str(e)
+            
+            # Compute comprehensive temperature statistics
+            try:
+                temp_stats = compute_temperature_statistics(city, year, base)
+                out['temperature_statistics'] = temp_stats
+                print(f"✅ Temperature statistics computed for {city} {year}")
+            except Exception as e:
+                out['temperature_statistics_error'] = str(e)
+                print(f"⚠️ Failed to compute temperature statistics for {city} {year}: {e}")
         else:
             out['warning'] = 'No MODIS LST data available'
 
@@ -286,6 +295,16 @@ def run_batch(cities: Optional[List[str]] = None, years: Optional[List[int]] = N
         for y in years:
             # Use stats-only run to avoid large reprojection/export issues.
             res = run_city_suhi_stats(city, y, stats_scale=max(download_scale, 250))
+            
+            # Compute comprehensive temperature statistics
+            try:
+                temp_stats = compute_temperature_statistics(city, y, base_dirs['base'])
+                res['temperature_statistics'] = temp_stats
+                print(f"✅ Temperature statistics computed for {city} {y}")
+            except Exception as e:
+                res['temperature_statistics_error'] = str(e)
+                print(f"⚠️ Failed to compute temperature statistics for {city} {y}: {e}")
+            
             # Save per-city/year JSON summary for easy reporting
             save_dir = base_dirs['base'] / 'suhi' / city
             save_dir.mkdir(parents=True, exist_ok=True)
