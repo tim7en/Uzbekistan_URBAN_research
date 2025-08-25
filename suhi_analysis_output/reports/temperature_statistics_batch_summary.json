@@ -1,14 +1,1290 @@
 {
-  "total_cities": 1,
-  "total_years": 1,
-  "successful_computations": 1,
+  "total_cities": 14,
+  "total_years": 9,
+  "successful_computations": 126,
   "failed_computations": 0,
   "results": {
     "Tashkent": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 28.73,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 20.97,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 18.86,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 20.25,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
       "2020": {
         "status": "success",
-        "computation_time_seconds": 33.01,
+        "computation_time_seconds": 18.91,
         "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 21.17,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 21.94,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 20.83,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 22.12,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Tashkent\\Tashkent_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Nukus": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 23.8,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 20.8,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 21.06,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 22.27,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 20.79,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 22.77,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 23.88,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 22.49,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 22.35,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nukus\\Nukus_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Andijan": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 22.72,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 23.87,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 22.17,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 22.11,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 22.77,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 23.44,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 23.58,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 22.97,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 22.33,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Andijan\\Andijan_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Bukhara": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 21.51,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 22.79,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 22.72,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 23.66,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 22.06,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 23.21,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 26.7,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 21.37,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 21.37,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Bukhara\\Bukhara_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Samarkand": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 22.79,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 21.13,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 21.89,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 21.32,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 22.41,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 22.8,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 21.41,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 21.26,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 22.12,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Samarkand\\Samarkand_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Namangan": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 21.3,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 21.1,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 30.99,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 21.95,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 20.8,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 21.84,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 29.49,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 20.86,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 21.54,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Namangan\\Namangan_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Jizzakh": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 20.81,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 21.01,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 25.4,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 20.86,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 21.93,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 20.97,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 21.13,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 20.57,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 22.0,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Qarshi": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 21.22,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 36.6,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 21.13,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 20.53,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 21.08,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 21.15,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 21.94,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 22.29,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 21.03,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Qarshi\\Qarshi_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Navoiy": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 21.14,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 21.2,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 20.59,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 21.5,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 21.91,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 20.78,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 20.27,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 20.67,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 20.58,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Navoiy\\Navoiy_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Termez": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 20.64,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 20.14,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 20.89,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 21.16,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 21.0,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 20.69,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 20.5,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 22.06,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 21.19,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Termez\\Termez_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Gulistan": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 23.17,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 21.47,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 22.36,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 22.17,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 21.49,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 20.63,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 20.76,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 22.57,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 24.46,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Gulistan\\Gulistan_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Nurafshon": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 21.5,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 20.95,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 21.3,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 20.46,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 20.52,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 21.13,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 21.96,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 20.76,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 21.16,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Fergana": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 20.56,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Fergana\\Fergana_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 20.17,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Fergana\\Fergana_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 20.7,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Fergana\\Fergana_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 21.09,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Fergana\\Fergana_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 21.64,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Fergana\\Fergana_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 21.55,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Fergana\\Fergana_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 20.85,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Fergana\\Fergana_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 20.72,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Fergana\\Fergana_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 22.36,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Fergana\\Fergana_temperature_stats_2024.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      }
+    },
+    "Urgench": {
+      "2016": {
+        "status": "success",
+        "computation_time_seconds": 21.37,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_temperature_stats_2016.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2017": {
+        "status": "success",
+        "computation_time_seconds": 22.99,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_temperature_stats_2017.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2018": {
+        "status": "success",
+        "computation_time_seconds": 21.76,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_temperature_stats_2018.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2019": {
+        "status": "success",
+        "computation_time_seconds": 20.74,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_temperature_stats_2019.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2020": {
+        "status": "success",
+        "computation_time_seconds": 23.91,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_temperature_stats_2020.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2021": {
+        "status": "success",
+        "computation_time_seconds": 22.09,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_temperature_stats_2021.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2022": {
+        "status": "success",
+        "computation_time_seconds": 22.02,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_temperature_stats_2022.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2023": {
+        "status": "success",
+        "computation_time_seconds": 22.28,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_temperature_stats_2023.json",
+        "has_monthly_stats": false,
+        "has_annual_summary": false,
+        "has_uncertainty": true,
+        "has_confidence_intervals": true,
+        "has_day_night_analysis": true
+      },
+      "2024": {
+        "status": "success",
+        "computation_time_seconds": 21.14,
+        "output_file": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\temperature\\Urgench\\Urgench_temperature_stats_2024.json",
         "has_monthly_stats": false,
         "has_annual_summary": false,
         "has_uncertainty": true,
