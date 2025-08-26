@@ -117,4 +117,4 @@ print(dplyr::glimpse(suhi_df))
 
 # Optional: save to CSV
 dir.create("out", showWarnings = FALSE, recursive = TRUE)
-write.csv(suhi_df, file = "out/suhi_batch_summary_flat.csv", row.names = FALSE)
+write.csv(suhi_df, file = "suhi_analysis_output/out/suhi_batch_summary_flat.csv", row.names = FALSE)
