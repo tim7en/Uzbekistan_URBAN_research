@@ -54,5 +54,251 @@
         ]
       }
     }
+  },
+  "temperature_statistics": {
+    "city": "Termez",
+    "year": 2018,
+    "metadata": {
+      "urban_buffer_m": 8000,
+      "rural_buffer_m": 25000,
+      "center_coordinates": [
+        67.2783,
+        37.2242
+      ],
+      "analysis_months": [
+        6,
+        7,
+        8
+      ],
+      "collection_dates": "2018-06-01 to 2018-08-31",
+      "optimization_note": "Focused on summer months only for efficiency"
+    },
+    "summer_season_summary": {
+      "focus_months": [
+        6,
+        7,
+        8
+      ],
+      "urban": {
+        "day": {
+          "mean": 39.12903688363851,
+          "std_dev": 5.076878601078721,
+          "min": 30.150000000000034,
+          "max": 53.59000000000003,
+          "p5": 31.696666666666676,
+          "p10": 32.29780323450138,
+          "p25": 35.31000000000003,
+          "median": 40.31000000000004,
+          "p75": 41.93125000000003,
+          "p90": 44.02000000000004,
+          "p95": 45.84000000000003,
+          "count": 284
+        },
+        "night": {
+          "mean": 23.209964544014095,
+          "std_dev": 1.0730395917589313,
+          "min": 20.890000000000043,
+          "max": 25.970000000000027,
+          "p5": 21.860000000000014,
+          "p10": 22.010000000000048,
+          "p25": 22.512827050997828,
+          "median": 23.04504950495051,
+          "p75": 23.77000000000004,
+          "p90": 24.750000000000057,
+          "p95": 25.423333333333346,
+          "count": 284
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 48.622931457962906,
+          "std_dev": 6.543728939035144,
+          "min": 29.500000000000057,
+          "max": 57.34000000000003,
+          "p5": 36.680000000000035,
+          "p10": 38.79938896067937,
+          "p25": 43.31248775710092,
+          "median": 50.94169445389593,
+          "p75": 54.31239562261652,
+          "p90": 54.928788502684604,
+          "p95": 55.43767864829966,
+          "count": 4171
+        },
+        "night": {
+          "mean": 24.520916505401967,
+          "std_dev": 1.7570202477876102,
+          "min": 18.470000000000027,
+          "max": 26.700000000000045,
+          "p5": 21.345396567718023,
+          "p10": 21.718998023414958,
+          "p25": 23.028502062837195,
+          "median": 25.154652066115744,
+          "p75": 26.09902110106301,
+          "p90": 26.344666666666697,
+          "p95": 26.458858350951413,
+          "count": 4171
+        }
+      },
+      "urban_rural_difference": {
+        "day": -9.493894574324393,
+        "night": -1.3109519613878717
+      }
+    },
+    "uncertainty": {
+      "urban": {
+        "day": {
+          "mean": 39.12903688363851,
+          "stdDev": 4.633092932183545,
+          "count": 251,
+          "stdError": 0.2924382327826243,
+          "ci95": [
+            38.55585794738457,
+            39.70221581989246
+          ]
+        },
+        "night": {
+          "mean": 23.209964544014095,
+          "stdDev": 1.021343528928954,
+          "count": 251,
+          "stdError": 0.06446663191001151,
+          "ci95": [
+            23.083609945470474,
+            23.336319142557716
+          ]
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 48.622931457962906,
+          "stdDev": 6.564920122425673,
+          "count": 4010,
+          "stdError": 0.1036709933698508,
+          "ci95": [
+            48.419736310958,
+            48.82612660496781
+          ]
+        },
+        "night": {
+          "mean": 24.520916505401967,
+          "stdDev": 1.7632811111389148,
+          "count": 4010,
+          "stdError": 0.027845137636575295,
+          "ci95": [
+            24.46634003563428,
+            24.575492975169656
+          ]
+        }
+      },
+      "spatial_uncertainty": {},
+      "temporal_uncertainty": {
+        "urban": {
+          "day": {},
+          "night": {}
+        },
+        "rural": {
+          "day": {},
+          "night": {}
+        }
+      }
+    },
+    "confidence_intervals": {
+      "urban": {
+        "day": {
+          "mean": 39.12903688363851,
+          "standard_error": 0.3012573202318547,
+          "margin_of_error": 0.5904643476544352,
+          "lower_bound": 38.53857253598408,
+          "upper_bound": 39.719501231292945,
+          "sample_count": 284
+        },
+        "night": {
+          "mean": 23.209964544014095,
+          "standard_error": 0.06367318530076599,
+          "margin_of_error": 0.12479944318950134,
+          "lower_bound": 23.085165100824593,
+          "upper_bound": 23.334763987203598,
+          "sample_count": 284
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 48.622931457962906,
+          "standard_error": 0.1013223388873546,
+          "margin_of_error": 0.19859178421921503,
+          "lower_bound": 48.42433967374369,
+          "upper_bound": 48.821523242182124,
+          "sample_count": 4171
+        },
+        "night": {
+          "mean": 24.520916505401967,
+          "standard_error": 0.027205497452119313,
+          "margin_of_error": 0.05332277500615385,
+          "lower_bound": 24.467593730395812,
+          "upper_bound": 24.574239280408122,
+          "sample_count": 4171
+        }
+      },
+      "urban_rural_difference": {
+        "day": {
+          "difference_mean": -9.493894574324393,
+          "standard_error": 0.3178398800510757,
+          "margin_of_error": 0.6229661649001084,
+          "lower_bound": -10.116860739224501,
+          "upper_bound": -8.870928409424286
+        },
+        "night": {
+          "difference_mean": -1.3109519613878717,
+          "standard_error": 0.06924170432595483,
+          "margin_of_error": 0.13571374047887147,
+          "lower_bound": -1.4466657018667433,
+          "upper_bound": -1.1752382209090002
+        }
+      },
+      "confidence_level": 0.95
+    },
+    "day_night_analysis": {
+      "urban": {
+        "day_temperature": {
+          "mean": 39.12903688363851,
+          "std_dev": 5.076878601078721
+        },
+        "night_temperature": {
+          "mean": 23.209964544014095,
+          "std_dev": 1.0730395917589313
+        },
+        "day_night_difference": {
+          "mean": 15.919072339624412,
+          "std_dev": 4.507146164075012
+        }
+      },
+      "rural": {
+        "day_temperature": {
+          "mean": 48.622931457962906,
+          "std_dev": 6.543728939035144
+        },
+        "night_temperature": {
+          "mean": 24.520916505401967,
+          "std_dev": 1.7570202477876102
+        },
+        "day_night_difference": {
+          "mean": 24.102014952560822,
+          "std_dev": 5.121638827826504
+        }
+      },
+      "urban_rural_comparison": {
+        "day_difference": -9.493894574324393,
+        "night_difference": -1.3109519613878717
+      },
+      "day_night_differences": {
+        "urban_day_night_range": 15.919072339624412,
+        "rural_day_night_range": 24.102014952560822,
+        "urban_rural_day_night_difference": -8.18294261293641,
+        "interpretation": {
+          "urban_has_larger_day_night_range": false,
+          "urban_day_night_range_larger_by": null
+        }
+      }
+    },
+    "output_file": "suhi_analysis_output\\temperature\\Termez\\Termez_temperature_stats_2018.json"
   }
 }

@@ -54,5 +54,251 @@
         ]
       }
     }
+  },
+  "temperature_statistics": {
+    "city": "Namangan",
+    "year": 2021,
+    "metadata": {
+      "urban_buffer_m": 12000,
+      "rural_buffer_m": 25000,
+      "center_coordinates": [
+        71.6726,
+        40.9983
+      ],
+      "analysis_months": [
+        6,
+        7,
+        8
+      ],
+      "collection_dates": "2021-06-01 to 2021-08-31",
+      "optimization_note": "Focused on summer months only for efficiency"
+    },
+    "summer_season_summary": {
+      "focus_months": [
+        6,
+        7,
+        8
+      ],
+      "urban": {
+        "day": {
+          "mean": 37.46272380637696,
+          "std_dev": 2.698650414761647,
+          "min": 32.23000000000002,
+          "max": 44.25000000000006,
+          "p5": 33.5338390928726,
+          "p10": 34.02824186991873,
+          "p25": 35.026298888431484,
+          "median": 37.34318750000003,
+          "p75": 39.86799373040753,
+          "p90": 41.02875000000003,
+          "p95": 41.53333333333336,
+          "count": 647
+        },
+        "night": {
+          "mean": 21.555811002808547,
+          "std_dev": 1.0423043263288954,
+          "min": 19.510000000000048,
+          "max": 23.890000000000043,
+          "p5": 20.005064562410382,
+          "p10": 20.327467725918613,
+          "p25": 20.72750000000002,
+          "median": 21.360000000000014,
+          "p75": 22.363333333333344,
+          "p90": 23.105000000000018,
+          "p95": 23.417142857142874,
+          "count": 647
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 37.330272007717035,
+          "std_dev": 3.3460417676712924,
+          "min": 30.560000000000002,
+          "max": 49.920000000000016,
+          "p5": 33.55593705106439,
+          "p10": 34.060981787732906,
+          "p25": 34.928363174182174,
+          "median": 36.31056873811233,
+          "p75": 39.196238307008166,
+          "p90": 42.431890351472425,
+          "p95": 44.039189497716926,
+          "count": 5257
+        },
+        "night": {
+          "mean": 20.466017877544505,
+          "std_dev": 1.065376710370774,
+          "min": 16.590000000000032,
+          "max": 24.450000000000045,
+          "p5": 18.515472255017755,
+          "p10": 18.9808737365085,
+          "p25": 19.91879227053142,
+          "median": 20.516341293248377,
+          "p75": 21.08238450769953,
+          "p90": 21.700578368223344,
+          "p95": 22.108571428571445,
+          "count": 5257
+        }
+      },
+      "urban_rural_difference": {
+        "day": 0.13245179865992185,
+        "night": 1.0897931252640412
+      }
+    },
+    "uncertainty": {
+      "urban": {
+        "day": {
+          "mean": 37.46272380637696,
+          "stdDev": 2.6627351089908644,
+          "count": 593,
+          "stdError": 0.10934542525734334,
+          "ci95": [
+            37.24840677287256,
+            37.67704083988135
+          ]
+        },
+        "night": {
+          "mean": 21.555811002808547,
+          "stdDev": 1.0468708422366002,
+          "count": 593,
+          "stdError": 0.042989832915545555,
+          "ci95": [
+            21.47155093029408,
+            21.640071075323014
+          ]
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 37.330272007717035,
+          "stdDev": 3.3259400400664916,
+          "count": 5051,
+          "stdError": 0.04679783170289153,
+          "ci95": [
+            37.23854825757937,
+            37.4219957578547
+          ]
+        },
+        "night": {
+          "mean": 20.466017877544505,
+          "stdDev": 1.0552362709296348,
+          "count": 5051,
+          "stdError": 0.014847762983954649,
+          "ci95": [
+            20.436916262095956,
+            20.495119492993055
+          ]
+        }
+      },
+      "spatial_uncertainty": {},
+      "temporal_uncertainty": {
+        "urban": {
+          "day": {},
+          "night": {}
+        },
+        "rural": {
+          "day": {},
+          "night": {}
+        }
+      }
+    },
+    "confidence_intervals": {
+      "urban": {
+        "day": {
+          "mean": 37.46272380637696,
+          "standard_error": 0.10609489541547133,
+          "margin_of_error": 0.20794599501432381,
+          "lower_bound": 37.254777811362636,
+          "upper_bound": 37.67066980139128,
+          "sample_count": 647
+        },
+        "night": {
+          "mean": 21.555811002808547,
+          "standard_error": 0.0409772113824252,
+          "margin_of_error": 0.0803153343095534,
+          "lower_bound": 21.475495668498993,
+          "upper_bound": 21.6361263371181,
+          "sample_count": 647
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 37.330272007717035,
+          "standard_error": 0.04614900792304127,
+          "margin_of_error": 0.09045205552916089,
+          "lower_bound": 37.23981995218787,
+          "upper_bound": 37.4207240632462,
+          "sample_count": 5257
+        },
+        "night": {
+          "mean": 20.466017877544505,
+          "standard_error": 0.014693802905557291,
+          "margin_of_error": 0.02879985369489229,
+          "lower_bound": 20.437218023849614,
+          "upper_bound": 20.494817731239397,
+          "sample_count": 5257
+        }
+      },
+      "urban_rural_difference": {
+        "day": {
+          "difference_mean": 0.13245179865992185,
+          "standard_error": 0.11569726775296263,
+          "margin_of_error": 0.22676664479580674,
+          "lower_bound": -0.0943148461358849,
+          "upper_bound": 0.3592184434557286
+        },
+        "night": {
+          "difference_mean": 1.0897931252640412,
+          "standard_error": 0.04353205366746808,
+          "margin_of_error": 0.08532282518823744,
+          "lower_bound": 1.0044703000758037,
+          "upper_bound": 1.1751159504522786
+        }
+      },
+      "confidence_level": 0.95
+    },
+    "day_night_analysis": {
+      "urban": {
+        "day_temperature": {
+          "mean": 37.46272380637696,
+          "std_dev": 2.698650414761647
+        },
+        "night_temperature": {
+          "mean": 21.555811002808547,
+          "std_dev": 1.0423043263288954
+        },
+        "day_night_difference": {
+          "mean": 15.906912803568487,
+          "std_dev": 2.187076055696089
+        }
+      },
+      "rural": {
+        "day_temperature": {
+          "mean": 37.330272007717035,
+          "std_dev": 3.3460417676712924
+        },
+        "night_temperature": {
+          "mean": 20.466017877544505,
+          "std_dev": 1.065376710370774
+        },
+        "day_night_difference": {
+          "mean": 16.864254130172604,
+          "std_dev": 3.5904566018917046
+        }
+      },
+      "urban_rural_comparison": {
+        "day_difference": 0.13245179865992185,
+        "night_difference": 1.0897931252640412
+      },
+      "day_night_differences": {
+        "urban_day_night_range": 15.906912803568487,
+        "rural_day_night_range": 16.864254130172604,
+        "urban_rural_day_night_difference": -0.9573413266041175,
+        "interpretation": {
+          "urban_has_larger_day_night_range": false,
+          "urban_day_night_range_larger_by": null
+        }
+      }
+    },
+    "output_file": "suhi_analysis_output\\temperature\\Namangan\\Namangan_temperature_stats_2021.json"
   }
 }

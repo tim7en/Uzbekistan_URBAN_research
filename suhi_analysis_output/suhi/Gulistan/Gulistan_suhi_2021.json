@@ -54,5 +54,251 @@
         ]
       }
     }
+  },
+  "temperature_statistics": {
+    "city": "Gulistan",
+    "year": 2021,
+    "metadata": {
+      "urban_buffer_m": 8000,
+      "rural_buffer_m": 25000,
+      "center_coordinates": [
+        68.781,
+        40.491
+      ],
+      "analysis_months": [
+        6,
+        7,
+        8
+      ],
+      "collection_dates": "2021-06-01 to 2021-08-31",
+      "optimization_note": "Focused on summer months only for efficiency"
+    },
+    "summer_season_summary": {
+      "focus_months": [
+        6,
+        7,
+        8
+      ],
+      "urban": {
+        "day": {
+          "mean": 38.65721967517682,
+          "std_dev": 1.3561792610822903,
+          "min": 34.74000000000001,
+          "max": 41.700000000000045,
+          "p5": 36.650000000000034,
+          "p10": 37.01000000000005,
+          "p25": 37.75753384912964,
+          "median": 38.690000000000055,
+          "p75": 39.49000000000001,
+          "p90": 40.253166089965454,
+          "p95": 40.960000000000036,
+          "count": 298
+        },
+        "night": {
+          "mean": 21.54523777418196,
+          "std_dev": 0.77762405518951,
+          "min": 19.850000000000023,
+          "max": 23.74000000000001,
+          "p5": 20.430000000000003,
+          "p10": 20.662445887445912,
+          "p25": 20.980000000000018,
+          "median": 21.443333333333385,
+          "p75": 22.02333333333337,
+          "p90": 22.650000000000034,
+          "p95": 22.99000000000001,
+          "count": 298
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 39.2978348230152,
+          "std_dev": 2.3862479575523587,
+          "min": 28.950000000000045,
+          "max": 47.83000000000004,
+          "p5": 35.80883231083846,
+          "p10": 36.93748889938597,
+          "p25": 37.92914497733591,
+          "median": 39.06037776341311,
+          "p75": 40.55825238879739,
+          "p90": 42.43489699898275,
+          "p95": 43.549444444444475,
+          "count": 4369
+        },
+        "night": {
+          "mean": 21.07375398921738,
+          "std_dev": 0.8652642106335082,
+          "min": 18.230000000000018,
+          "max": 25.99000000000001,
+          "p5": 20.05084171779142,
+          "p10": 20.2649813956151,
+          "p25": 20.549912166882894,
+          "median": 20.91880165109717,
+          "p75": 21.448002249402553,
+          "p90": 22.143150183150222,
+          "p95": 22.608181818181833,
+          "count": 4369
+        }
+      },
+      "urban_rural_difference": {
+        "day": -0.6406151478383819,
+        "night": 0.47148378496457966
+      }
+    },
+    "uncertainty": {
+      "urban": {
+        "day": {
+          "mean": 38.65721967517682,
+          "stdDev": 1.2948626112337815,
+          "count": 257,
+          "stdError": 0.0807713104951851,
+          "ci95": [
+            38.498907906606256,
+            38.81553144374738
+          ]
+        },
+        "night": {
+          "mean": 21.54523777418196,
+          "stdDev": 0.7837964417035346,
+          "count": 257,
+          "stdError": 0.04889187872799535,
+          "ci95": [
+            21.44940969187509,
+            21.64106585648883
+          ]
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 39.2978348230152,
+          "stdDev": 2.3769139956410967,
+          "count": 4194,
+          "stdError": 0.036702804868766446,
+          "ci95": [
+            39.22589732547242,
+            39.369772320557985
+          ]
+        },
+        "night": {
+          "mean": 21.07375398921738,
+          "stdDev": 0.8624745801414815,
+          "count": 4194,
+          "stdError": 0.01331778780269501,
+          "ci95": [
+            21.047651125124098,
+            21.099856853310662
+          ]
+        }
+      },
+      "spatial_uncertainty": {},
+      "temporal_uncertainty": {
+        "urban": {
+          "day": {},
+          "night": {}
+        },
+        "rural": {
+          "day": {},
+          "night": {}
+        }
+      }
+    },
+    "confidence_intervals": {
+      "urban": {
+        "day": {
+          "mean": 38.65721967517682,
+          "standard_error": 0.07856135524257045,
+          "margin_of_error": 0.15398025627543807,
+          "lower_bound": 38.50323941890138,
+          "upper_bound": 38.81119993145226,
+          "sample_count": 298
+        },
+        "night": {
+          "mean": 21.54523777418196,
+          "standard_error": 0.04504655202893891,
+          "margin_of_error": 0.08829124197672027,
+          "lower_bound": 21.45694653220524,
+          "upper_bound": 21.63352901615868,
+          "sample_count": 298
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 39.2978348230152,
+          "standard_error": 0.03610144183757546,
+          "margin_of_error": 0.0707588260016479,
+          "lower_bound": 39.22707599701355,
+          "upper_bound": 39.36859364901685,
+          "sample_count": 4369
+        },
+        "night": {
+          "mean": 21.07375398921738,
+          "standard_error": 0.013090544708674028,
+          "margin_of_error": 0.025657467629001094,
+          "lower_bound": 21.04809652158838,
+          "upper_bound": 21.09941145684638,
+          "sample_count": 4369
+        }
+      },
+      "urban_rural_difference": {
+        "day": {
+          "difference_mean": -0.6406151478383819,
+          "standard_error": 0.0864592426539881,
+          "margin_of_error": 0.16946011560181667,
+          "lower_bound": -0.8100752634401986,
+          "upper_bound": -0.47115503223656524
+        },
+        "night": {
+          "difference_mean": 0.47148378496457966,
+          "standard_error": 0.04691006512962537,
+          "margin_of_error": 0.09194372765406572,
+          "lower_bound": 0.37954005731051393,
+          "upper_bound": 0.5634275126186454
+        }
+      },
+      "confidence_level": 0.95
+    },
+    "day_night_analysis": {
+      "urban": {
+        "day_temperature": {
+          "mean": 38.65721967517682,
+          "std_dev": 1.3561792610822903
+        },
+        "night_temperature": {
+          "mean": 21.54523777418196,
+          "std_dev": 0.77762405518951
+        },
+        "day_night_difference": {
+          "mean": 17.111981900994856,
+          "std_dev": 1.3038393911002941
+        }
+      },
+      "rural": {
+        "day_temperature": {
+          "mean": 39.2978348230152,
+          "std_dev": 2.3862479575523587
+        },
+        "night_temperature": {
+          "mean": 21.07375398921738,
+          "std_dev": 0.8652642106335082
+        },
+        "day_night_difference": {
+          "mean": 18.224080833797917,
+          "std_dev": 2.5230076267544703
+        }
+      },
+      "urban_rural_comparison": {
+        "day_difference": -0.6406151478383819,
+        "night_difference": 0.47148378496457966
+      },
+      "day_night_differences": {
+        "urban_day_night_range": 17.111981900994856,
+        "rural_day_night_range": 18.224080833797917,
+        "urban_rural_day_night_difference": -1.112098932803061,
+        "interpretation": {
+          "urban_has_larger_day_night_range": false,
+          "urban_day_night_range_larger_by": null
+        }
+      }
+    },
+    "output_file": "suhi_analysis_output\\temperature\\Gulistan\\Gulistan_temperature_stats_2021.json"
   }
 }

@@ -54,5 +54,251 @@
         ]
       }
     }
+  },
+  "temperature_statistics": {
+    "city": "Jizzakh",
+    "year": 2016,
+    "metadata": {
+      "urban_buffer_m": 8000,
+      "rural_buffer_m": 25000,
+      "center_coordinates": [
+        67.8422,
+        40.1158
+      ],
+      "analysis_months": [
+        6,
+        7,
+        8
+      ],
+      "collection_dates": "2016-06-01 to 2016-08-31",
+      "optimization_note": "Focused on summer months only for efficiency"
+    },
+    "summer_season_summary": {
+      "focus_months": [
+        6,
+        7,
+        8
+      ],
+      "urban": {
+        "day": {
+          "mean": 41.951591169379235,
+          "std_dev": 2.661859153609282,
+          "min": 36.460000000000036,
+          "max": 47.24000000000001,
+          "p5": 38.77067061143988,
+          "p10": 39.22208776595747,
+          "p25": 40.0806422018349,
+          "median": 41.086000000000034,
+          "p75": 43.985000000000014,
+          "p90": 46.22000000000003,
+          "p95": 46.543063209076195,
+          "count": 297
+        },
+        "night": {
+          "mean": 22.22915295358652,
+          "std_dev": 1.1470265293726356,
+          "min": 19.720000000000027,
+          "max": 23.950000000000045,
+          "p5": 20.235750000000014,
+          "p10": 20.517758620689694,
+          "p25": 21.256666666666717,
+          "median": 22.52000000000004,
+          "p75": 23.142229020979062,
+          "p90": 23.606666666666683,
+          "p95": 23.765000000000043,
+          "count": 297
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 41.961416351195695,
+          "std_dev": 3.22991227537204,
+          "min": 29.04000000000002,
+          "max": 50.93000000000001,
+          "p5": 37.58133333333335,
+          "p10": 38.562357693447986,
+          "p25": 39.81258435446636,
+          "median": 41.55753954548595,
+          "p75": 44.32575000000001,
+          "p90": 46.07260946745565,
+          "p95": 47.178646927730064,
+          "count": 4338
+        },
+        "night": {
+          "mean": 20.609108326083447,
+          "std_dev": 1.4204523844153891,
+          "min": 13.29000000000002,
+          "max": 25.510000000000048,
+          "p5": 18.57579106737325,
+          "p10": 19.345387969924836,
+          "p25": 19.964345698970508,
+          "median": 20.407660782029502,
+          "p75": 21.215345771648785,
+          "p90": 22.457917007025035,
+          "p95": 23.213937472671656,
+          "count": 4338
+        }
+      },
+      "urban_rural_difference": {
+        "day": -0.00982518181645986,
+        "night": 1.6200446275030735
+      }
+    },
+    "uncertainty": {
+      "urban": {
+        "day": {
+          "mean": 41.951591169379235,
+          "stdDev": 2.5361440717604413,
+          "count": 259,
+          "stdError": 0.1575883248415116,
+          "ci95": [
+            41.64271805268987,
+            42.2604642860686
+          ]
+        },
+        "night": {
+          "mean": 22.22915295358652,
+          "stdDev": 1.096304269732276,
+          "count": 259,
+          "stdError": 0.06812103275496609,
+          "ci95": [
+            22.09563572938679,
+            22.362670177786253
+          ]
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 41.961416351195695,
+          "stdDev": 3.196746746115482,
+          "count": 4176,
+          "stdError": 0.049468414007192055,
+          "ci95": [
+            41.864458259741596,
+            42.05837444264979
+          ]
+        },
+        "night": {
+          "mean": 20.609108326083447,
+          "stdDev": 1.4027054112675963,
+          "count": 4176,
+          "stdError": 0.021706321309009746,
+          "ci95": [
+            20.566563936317788,
+            20.651652715849107
+          ]
+        }
+      },
+      "spatial_uncertainty": {},
+      "temporal_uncertainty": {
+        "urban": {
+          "day": {},
+          "night": {}
+        },
+        "rural": {
+          "day": {},
+          "night": {}
+        }
+      }
+    },
+    "confidence_intervals": {
+      "urban": {
+        "day": {
+          "mean": 41.951591169379235,
+          "standard_error": 0.15445673398150722,
+          "margin_of_error": 0.30273519860375414,
+          "lower_bound": 41.64885597077548,
+          "upper_bound": 42.25432636798299,
+          "sample_count": 297
+        },
+        "night": {
+          "mean": 22.22915295358652,
+          "standard_error": 0.06655722985072927,
+          "margin_of_error": 0.13045217050742938,
+          "lower_bound": 22.098700783079092,
+          "upper_bound": 22.35960512409395,
+          "sample_count": 297
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 41.961416351195695,
+          "standard_error": 0.04903949092815994,
+          "margin_of_error": 0.09611740221919349,
+          "lower_bound": 41.8652989489765,
+          "upper_bound": 42.05753375341489,
+          "sample_count": 4338
+        },
+        "night": {
+          "mean": 20.609108326083447,
+          "standard_error": 0.02156661106574419,
+          "margin_of_error": 0.042270557688858616,
+          "lower_bound": 20.56683776839459,
+          "upper_bound": 20.651378883772306,
+          "sample_count": 4338
+        }
+      },
+      "urban_rural_difference": {
+        "day": {
+          "difference_mean": -0.00982518181645986,
+          "standard_error": 0.1620547880894828,
+          "margin_of_error": 0.31762738465538626,
+          "lower_bound": -0.3274525664718461,
+          "upper_bound": 0.3078022028389264
+        },
+        "night": {
+          "difference_mean": 1.6200446275030735,
+          "standard_error": 0.06996415909781156,
+          "margin_of_error": 0.13712975183171067,
+          "lower_bound": 1.4829148756713628,
+          "upper_bound": 1.7571743793347843
+        }
+      },
+      "confidence_level": 0.95
+    },
+    "day_night_analysis": {
+      "urban": {
+        "day_temperature": {
+          "mean": 41.951591169379235,
+          "std_dev": 2.661859153609282
+        },
+        "night_temperature": {
+          "mean": 22.22915295358652,
+          "std_dev": 1.1470265293726356
+        },
+        "day_night_difference": {
+          "mean": 19.722438215792646,
+          "std_dev": 2.0683542407593762
+        }
+      },
+      "rural": {
+        "day_temperature": {
+          "mean": 41.961416351195695,
+          "std_dev": 3.22991227537204
+        },
+        "night_temperature": {
+          "mean": 20.609108326083447,
+          "std_dev": 1.4204523844153891
+        },
+        "day_night_difference": {
+          "mean": 21.352308025112258,
+          "std_dev": 2.433944738173026
+        }
+      },
+      "urban_rural_comparison": {
+        "day_difference": -0.00982518181645986,
+        "night_difference": 1.6200446275030735
+      },
+      "day_night_differences": {
+        "urban_day_night_range": 19.722438215792646,
+        "rural_day_night_range": 21.352308025112258,
+        "urban_rural_day_night_difference": -1.6298698093196116,
+        "interpretation": {
+          "urban_has_larger_day_night_range": false,
+          "urban_day_night_range_larger_by": null
+        }
+      }
+    },
+    "output_file": "suhi_analysis_output\\temperature\\Jizzakh\\Jizzakh_temperature_stats_2016.json"
   }
 }

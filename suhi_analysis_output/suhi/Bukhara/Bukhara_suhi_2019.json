@@ -54,5 +54,251 @@
         ]
       }
     }
+  },
+  "temperature_statistics": {
+    "city": "Bukhara",
+    "year": 2019,
+    "metadata": {
+      "urban_buffer_m": 10000,
+      "rural_buffer_m": 25000,
+      "center_coordinates": [
+        64.4286,
+        39.7748
+      ],
+      "analysis_months": [
+        6,
+        7,
+        8
+      ],
+      "collection_dates": "2019-06-01 to 2019-08-31",
+      "optimization_note": "Focused on summer months only for efficiency"
+    },
+    "summer_season_summary": {
+      "focus_months": [
+        6,
+        7,
+        8
+      ],
+      "urban": {
+        "day": {
+          "mean": 39.00267765439994,
+          "std_dev": 1.3917703743052683,
+          "min": 36.49000000000001,
+          "max": 42.960000000000036,
+          "p5": 37.396666666666704,
+          "p10": 37.50704853273143,
+          "p25": 37.92088480222069,
+          "median": 38.54000000000002,
+          "p75": 39.860000000000014,
+          "p90": 41.272500000000036,
+          "p95": 41.950000000000045,
+          "count": 448
+        },
+        "night": {
+          "mean": 21.81066236459126,
+          "std_dev": 1.151009329407245,
+          "min": 20.05000000000001,
+          "max": 25.210000000000036,
+          "p5": 20.47625000000002,
+          "p10": 20.574916452442206,
+          "p25": 20.889119076549253,
+          "median": 21.50991666666671,
+          "p75": 22.29666666666668,
+          "p90": 23.66500000000002,
+          "p95": 24.370000000000005,
+          "count": 448
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 43.66903454839048,
+          "std_dev": 6.470920392445422,
+          "min": 26.870000000000005,
+          "max": 57.960000000000036,
+          "p5": 36.93313033049044,
+          "p10": 37.555251043147386,
+          "p25": 38.31061618315905,
+          "median": 41.57065052950077,
+          "p75": 48.95572139303486,
+          "p90": 53.5599620673305,
+          "p95": 55.56635748235633,
+          "count": 4746
+        },
+        "night": {
+          "mean": 22.031053021853822,
+          "std_dev": 1.4750803216098456,
+          "min": 19.160000000000025,
+          "max": 26.640000000000043,
+          "p5": 20.171680261011435,
+          "p10": 20.392338507761707,
+          "p25": 20.86079550595688,
+          "median": 21.700955961331942,
+          "p75": 23.050076291079826,
+          "p90": 24.30333333333334,
+          "p95": 24.698724727838307,
+          "count": 4746
+        }
+      },
+      "urban_rural_difference": {
+        "day": -4.666356893990539,
+        "night": -0.22039065726256268
+      }
+    },
+    "uncertainty": {
+      "urban": {
+        "day": {
+          "mean": 39.00267765439994,
+          "stdDev": 1.3994184557832687,
+          "count": 404,
+          "stdError": 0.06962367040852928,
+          "ci95": [
+            38.86621526039922,
+            39.139140048400655
+          ]
+        },
+        "night": {
+          "mean": 21.81066236459126,
+          "stdDev": 1.1807500245714955,
+          "count": 404,
+          "stdError": 0.058744509339499824,
+          "ci95": [
+            21.69552312628584,
+            21.92580160289668
+          ]
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 43.66903454839048,
+          "stdDev": 6.442455709776375,
+          "count": 4554,
+          "stdError": 0.09546736339234078,
+          "ci95": [
+            43.48191851614149,
+            43.856150580639465
+          ]
+        },
+        "night": {
+          "mean": 22.031053021853822,
+          "stdDev": 1.4692882096109503,
+          "count": 4554,
+          "stdError": 0.021772609351765223,
+          "ci95": [
+            21.98837870752436,
+            22.073727336183282
+          ]
+        }
+      },
+      "spatial_uncertainty": {},
+      "temporal_uncertainty": {
+        "urban": {
+          "day": {},
+          "night": {}
+        },
+        "rural": {
+          "day": {},
+          "night": {}
+        }
+      }
+    },
+    "confidence_intervals": {
+      "urban": {
+        "day": {
+          "mean": 39.00267765439994,
+          "standard_error": 0.06575496950926821,
+          "margin_of_error": 0.12887974023816567,
+          "lower_bound": 38.87379791416177,
+          "upper_bound": 39.13155739463811,
+          "sample_count": 448
+        },
+        "night": {
+          "mean": 21.81066236459126,
+          "standard_error": 0.05438007932726417,
+          "margin_of_error": 0.10658495548143777,
+          "lower_bound": 21.70407740910982,
+          "upper_bound": 21.917247320072697,
+          "sample_count": 448
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 43.66903454839048,
+          "standard_error": 0.09392953883061354,
+          "margin_of_error": 0.18410189610800254,
+          "lower_bound": 43.484932652282474,
+          "upper_bound": 43.85313644449848,
+          "sample_count": 4746
+        },
+        "night": {
+          "mean": 22.031053021853822,
+          "standard_error": 0.021411732171621598,
+          "margin_of_error": 0.04196699505637833,
+          "lower_bound": 21.989086026797445,
+          "upper_bound": 22.0730200169102,
+          "sample_count": 4746
+        }
+      },
+      "urban_rural_difference": {
+        "day": {
+          "difference_mean": -4.666356893990539,
+          "standard_error": 0.1146580755119173,
+          "margin_of_error": 0.2247298280033579,
+          "lower_bound": -4.891086721993897,
+          "upper_bound": -4.441627065987181
+        },
+        "night": {
+          "difference_mean": -0.22039065726256268,
+          "standard_error": 0.05844360788169053,
+          "margin_of_error": 0.11454947144811344,
+          "lower_bound": -0.33494012871067613,
+          "upper_bound": -0.10584118581444925
+        }
+      },
+      "confidence_level": 0.95
+    },
+    "day_night_analysis": {
+      "urban": {
+        "day_temperature": {
+          "mean": 39.00267765439994,
+          "std_dev": 1.3917703743052683
+        },
+        "night_temperature": {
+          "mean": 21.81066236459126,
+          "std_dev": 1.151009329407245
+        },
+        "day_night_difference": {
+          "mean": 17.192015289808737,
+          "std_dev": 0.9480704505575501
+        }
+      },
+      "rural": {
+        "day_temperature": {
+          "mean": 43.66903454839048,
+          "std_dev": 6.470920392445422
+        },
+        "night_temperature": {
+          "mean": 22.031053021853822,
+          "std_dev": 1.4750803216098456
+        },
+        "day_night_difference": {
+          "mean": 21.63798152653669,
+          "std_dev": 5.6926442556808485
+        }
+      },
+      "urban_rural_comparison": {
+        "day_difference": -4.666356893990539,
+        "night_difference": -0.22039065726256268
+      },
+      "day_night_differences": {
+        "urban_day_night_range": 17.192015289808737,
+        "rural_day_night_range": 21.63798152653669,
+        "urban_rural_day_night_difference": -4.445966236727955,
+        "interpretation": {
+          "urban_has_larger_day_night_range": false,
+          "urban_day_night_range_larger_by": null
+        }
+      }
+    },
+    "output_file": "suhi_analysis_output\\temperature\\Bukhara\\Bukhara_temperature_stats_2019.json"
   }
 }

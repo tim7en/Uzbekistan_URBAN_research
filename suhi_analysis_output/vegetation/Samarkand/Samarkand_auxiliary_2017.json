@@ -17,9 +17,9 @@
     "summer_evi_mean": 0.26460747939649726,
     "winter_evi_mean": 0.08950913216499642,
     "evi_change_mean": 0.1751294149365343,
-    "summer_lst_mean": 40.8852406194469,
-    "winter_lst_mean": null,
-    "lst_change_mean": null,
+    "summer_lst_mean": 28.98857054056313,
+    "winter_lst_mean": 1.9381108847822313,
+    "lst_change_mean": 27.0504596557809,
     "summer_biomass_t_per_ha": 6.1004607026182835,
     "winter_biomass_t_per_ha": 2.4232674449038516,
     "biomass_change_t_per_ha": 3.677193257714432
@@ -99,37 +99,37 @@
     },
     "summer_lst": {
       "city": {
-        "mean": 40.8852406194469,
-        "stdDev": 3.97164402139237,
+        "mean": 28.98857054056313,
+        "stdDev": 1.5601096533079777,
         "count": 829268,
-        "stdError": 0.004361369299946838,
+        "stdError": 0.0017131984412094192,
         "ci95": [
-          40.876692335619,
-          40.893788903274796
+          28.98521267161836,
+          28.991928409507903
         ]
       }
     },
     "winter_lst": {
       "city": {
-        "mean": null,
-        "stdDev": null,
-        "count": 0,
-        "stdError": null,
+        "mean": 1.9381108847822313,
+        "stdDev": 0.9467476732814327,
+        "count": 829268,
+        "stdError": 0.0010396491263580474,
         "ci95": [
-          null,
-          null
+          1.9360731724945694,
+          1.940148597069893
         ]
       }
     },
     "lst_change": {
       "city": {
-        "mean": null,
-        "stdDev": null,
-        "count": 0,
-        "stdError": null,
+        "mean": 27.050459655834498,
+        "stdDev": 1.732365945251755,
+        "count": 829268,
+        "stdError": 0.0019023577161493951,
         "ci95": [
-          null,
-          null
+          27.046731034710845,
+          27.05418827695815
         ]
       }
     }

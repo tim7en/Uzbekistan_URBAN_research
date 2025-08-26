@@ -54,5 +54,251 @@
         ]
       }
     }
+  },
+  "temperature_statistics": {
+    "city": "Nurafshon",
+    "year": 2018,
+    "metadata": {
+      "urban_buffer_m": 8000,
+      "rural_buffer_m": 25000,
+      "center_coordinates": [
+        69.3417,
+        41.0167
+      ],
+      "analysis_months": [
+        6,
+        7,
+        8
+      ],
+      "collection_dates": "2018-06-01 to 2018-08-31",
+      "optimization_note": "Focused on summer months only for efficiency"
+    },
+    "summer_season_summary": {
+      "focus_months": [
+        6,
+        7,
+        8
+      ],
+      "urban": {
+        "day": {
+          "mean": 37.46978372673764,
+          "std_dev": 1.850352544496509,
+          "min": 30.32000000000005,
+          "max": 40.370000000000005,
+          "p5": 32.81,
+          "p10": 35.53333333333336,
+          "p25": 37.015136986301414,
+          "median": 37.83415647921765,
+          "p75": 38.64000000000005,
+          "p90": 39.29750489236792,
+          "p95": 39.64954022988508,
+          "count": 295
+        },
+        "night": {
+          "mean": 19.703368214519326,
+          "std_dev": 0.9049518470314314,
+          "min": 18.130000000000052,
+          "max": 23.32000000000005,
+          "p5": 18.54666666666668,
+          "p10": 18.730000000000018,
+          "p25": 19.115714285714294,
+          "median": 19.54807553956836,
+          "p75": 20.120000000000005,
+          "p90": 20.900000000000034,
+          "p95": 21.305000000000007,
+          "count": 295
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 40.160710482969165,
+          "std_dev": 3.3199046783126884,
+          "min": 30.82000000000005,
+          "max": 49.120000000000005,
+          "p5": 36.43976952184385,
+          "p10": 37.05875881637618,
+          "p25": 38.05984265499557,
+          "median": 39.061565782891485,
+          "p75": 41.801315789473705,
+          "p90": 45.81937238493726,
+          "p95": 47.28695196942001,
+          "count": 4399
+        },
+        "night": {
+          "mean": 20.024118846887273,
+          "std_dev": 1.174297725008829,
+          "min": 17.930000000000007,
+          "max": 24.05000000000001,
+          "p5": 18.67048862364791,
+          "p10": 18.828649567117118,
+          "p25": 19.170593067396894,
+          "median": 19.730076991210755,
+          "p75": 20.611961589209805,
+          "p90": 21.79656480505797,
+          "p95": 22.54909090909092,
+          "count": 4399
+        }
+      },
+      "urban_rural_difference": {
+        "day": -2.6909267562315264,
+        "night": -0.32075063236794676
+      }
+    },
+    "uncertainty": {
+      "urban": {
+        "day": {
+          "mean": 37.46978372673764,
+          "stdDev": 1.8936190419747958,
+          "count": 268,
+          "stdError": 0.1156711930902899,
+          "ci95": [
+            37.243068188280674,
+            37.6964992651946
+          ]
+        },
+        "night": {
+          "mean": 19.703368214519326,
+          "stdDev": 0.917278148772636,
+          "count": 268,
+          "stdError": 0.056031680877866606,
+          "ci95": [
+            19.593546119998706,
+            19.813190309039946
+          ]
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 40.160710482969165,
+          "stdDev": 3.3055637407300105,
+          "count": 4225,
+          "stdError": 0.0508548267804617,
+          "ci95": [
+            40.06103502247946,
+            40.26038594345887
+          ]
+        },
+        "night": {
+          "mean": 20.024118846887273,
+          "stdDev": 1.169822274012787,
+          "count": 4225,
+          "stdError": 0.01799726575404288,
+          "ci95": [
+            19.98884420600935,
+            20.059393487765195
+          ]
+        }
+      },
+      "spatial_uncertainty": {},
+      "temporal_uncertainty": {
+        "urban": {
+          "day": {},
+          "night": {}
+        },
+        "rural": {
+          "day": {},
+          "night": {}
+        }
+      }
+    },
+    "confidence_intervals": {
+      "urban": {
+        "day": {
+          "mean": 37.46978372673764,
+          "standard_error": 0.10773169023597791,
+          "margin_of_error": 0.2111541128625167,
+          "lower_bound": 37.25862961387512,
+          "upper_bound": 37.680937839600155,
+          "sample_count": 295
+        },
+        "night": {
+          "mean": 19.703368214519326,
+          "standard_error": 0.05268833355721103,
+          "margin_of_error": 0.10326913377213362,
+          "lower_bound": 19.600099080747192,
+          "upper_bound": 19.80663734829146,
+          "sample_count": 295
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 40.160710482969165,
+          "standard_error": 0.0500551345781014,
+          "margin_of_error": 0.09810806377307875,
+          "lower_bound": 40.06260241919609,
+          "upper_bound": 40.25881854674224,
+          "sample_count": 4399
+        },
+        "night": {
+          "mean": 20.024118846887273,
+          "standard_error": 0.017705216370835518,
+          "margin_of_error": 0.03470222408683762,
+          "lower_bound": 19.989416622800434,
+          "upper_bound": 20.058821070974112,
+          "sample_count": 4399
+        }
+      },
+      "urban_rural_difference": {
+        "day": {
+          "difference_mean": -2.6909267562315264,
+          "standard_error": 0.1187923969735965,
+          "margin_of_error": 0.23283309806824914,
+          "lower_bound": -2.9237598542997754,
+          "upper_bound": -2.4580936581632775
+        },
+        "night": {
+          "difference_mean": -0.32075063236794676,
+          "standard_error": 0.05558358732372383,
+          "margin_of_error": 0.1089438311544987,
+          "lower_bound": -0.42969446352244545,
+          "upper_bound": -0.21180680121344808
+        }
+      },
+      "confidence_level": 0.95
+    },
+    "day_night_analysis": {
+      "urban": {
+        "day_temperature": {
+          "mean": 37.46978372673764,
+          "std_dev": 1.850352544496509
+        },
+        "night_temperature": {
+          "mean": 19.703368214519326,
+          "std_dev": 0.9049518470314314
+        },
+        "day_night_difference": {
+          "mean": 17.766415512218313,
+          "std_dev": 2.513720622960271
+        }
+      },
+      "rural": {
+        "day_temperature": {
+          "mean": 40.160710482969165,
+          "std_dev": 3.3199046783126884
+        },
+        "night_temperature": {
+          "mean": 20.024118846887273,
+          "std_dev": 1.174297725008829
+        },
+        "day_night_difference": {
+          "mean": 20.13659163608183,
+          "std_dev": 3.0227247651407847
+        }
+      },
+      "urban_rural_comparison": {
+        "day_difference": -2.6909267562315264,
+        "night_difference": -0.32075063236794676
+      },
+      "day_night_differences": {
+        "urban_day_night_range": 17.766415512218313,
+        "rural_day_night_range": 20.13659163608183,
+        "urban_rural_day_night_difference": -2.3701761238635157,
+        "interpretation": {
+          "urban_has_larger_day_night_range": false,
+          "urban_day_night_range_larger_by": null
+        }
+      }
+    },
+    "output_file": "suhi_analysis_output\\temperature\\Nurafshon\\Nurafshon_temperature_stats_2018.json"
   }
 }

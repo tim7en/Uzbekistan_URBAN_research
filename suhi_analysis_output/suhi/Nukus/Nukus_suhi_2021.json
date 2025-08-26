@@ -54,5 +54,251 @@
         ]
       }
     }
+  },
+  "temperature_statistics": {
+    "city": "Nukus",
+    "year": 2021,
+    "metadata": {
+      "urban_buffer_m": 10000,
+      "rural_buffer_m": 25000,
+      "center_coordinates": [
+        59.6103,
+        42.4731
+      ],
+      "analysis_months": [
+        6,
+        7,
+        8
+      ],
+      "collection_dates": "2021-06-01 to 2021-08-31",
+      "optimization_note": "Focused on summer months only for efficiency"
+    },
+    "summer_season_summary": {
+      "focus_months": [
+        6,
+        7,
+        8
+      ],
+      "urban": {
+        "day": {
+          "mean": 43.17242507090717,
+          "std_dev": 4.406677347177524,
+          "min": 34.80000000000001,
+          "max": 53.05000000000001,
+          "p5": 36.031499436302184,
+          "p10": 37.43237704918037,
+          "p25": 39.64750736015707,
+          "median": 43.06500000000004,
+          "p75": 46.54728682170546,
+          "p90": 48.77000000000004,
+          "p95": 50.189340659340715,
+          "count": 462
+        },
+        "night": {
+          "mean": 23.201851490212498,
+          "std_dev": 0.9414615773430955,
+          "min": 21.090000000000032,
+          "max": 25.180000000000007,
+          "p5": 21.630000000000052,
+          "p10": 21.89627737226281,
+          "p25": 22.474921232876735,
+          "median": 23.263750000000044,
+          "p75": 23.91764044943822,
+          "p90": 24.36500000000001,
+          "p95": 24.700000000000045,
+          "count": 462
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 42.391875230395165,
+          "std_dev": 4.428236621145098,
+          "min": 33.58000000000004,
+          "max": 53.51000000000005,
+          "p5": 36.69084943371089,
+          "p10": 37.55677542621989,
+          "p25": 39.30217815448588,
+          "median": 41.19531911301216,
+          "p75": 44.680281306715095,
+          "p90": 49.80503607788871,
+          "p95": 51.05836309523813,
+          "count": 4938
+        },
+        "night": {
+          "mean": 22.00060444937422,
+          "std_dev": 1.2218692062187029,
+          "min": 19.390000000000043,
+          "max": 25.640000000000043,
+          "p5": 20.265685981308447,
+          "p10": 20.581730205278628,
+          "p25": 21.169659833295835,
+          "median": 21.765364229221603,
+          "p75": 22.639289176090514,
+          "p90": 23.82888888888893,
+          "p95": 24.42166666666668,
+          "count": 4938
+        }
+      },
+      "urban_rural_difference": {
+        "day": 0.7805498405120019,
+        "night": 1.201247040838279
+      }
+    },
+    "uncertainty": {
+      "urban": {
+        "day": {
+          "mean": 43.17242507090717,
+          "stdDev": 4.244299980523869,
+          "count": 424,
+          "stdError": 0.20612142833430228,
+          "ci95": [
+            42.76842707137193,
+            43.5764230704424
+          ]
+        },
+        "night": {
+          "mean": 23.201851490212498,
+          "stdDev": 0.9461238681056022,
+          "count": 424,
+          "stdError": 0.04594783685648701,
+          "ci95": [
+            23.111793729973783,
+            23.291909250451212
+          ]
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 42.391875230395165,
+          "stdDev": 4.454480975411391,
+          "count": 4739,
+          "stdError": 0.0647073708362224,
+          "ci95": [
+            42.26504878355617,
+            42.51870167723416
+          ]
+        },
+        "night": {
+          "mean": 22.00060444937422,
+          "stdDev": 1.2272749393464792,
+          "count": 4739,
+          "stdError": 0.01782783113378563,
+          "ci95": [
+            21.965661900352,
+            22.035546998396438
+          ]
+        }
+      },
+      "spatial_uncertainty": {},
+      "temporal_uncertainty": {
+        "urban": {
+          "day": {},
+          "night": {}
+        },
+        "rural": {
+          "day": {},
+          "night": {}
+        }
+      }
+    },
+    "confidence_intervals": {
+      "urban": {
+        "day": {
+          "mean": 43.17242507090717,
+          "standard_error": 0.20501718459346535,
+          "margin_of_error": 0.40183368180319207,
+          "lower_bound": 42.77059138910398,
+          "upper_bound": 43.57425875271036,
+          "sample_count": 462
+        },
+        "night": {
+          "mean": 23.201851490212498,
+          "standard_error": 0.04380075662072946,
+          "margin_of_error": 0.08584948297662974,
+          "lower_bound": 23.116002007235867,
+          "upper_bound": 23.28770097318913,
+          "sample_count": 462
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 42.391875230395165,
+          "standard_error": 0.0630166448160012,
+          "margin_of_error": 0.12351262383936233,
+          "lower_bound": 42.268362606555804,
+          "upper_bound": 42.515387854234525,
+          "sample_count": 4938
+        },
+        "night": {
+          "mean": 22.00060444937422,
+          "standard_error": 0.01738798180120338,
+          "margin_of_error": 0.03408044433035863,
+          "lower_bound": 21.96652400504386,
+          "upper_bound": 22.03468489370458,
+          "sample_count": 4938
+        }
+      },
+      "urban_rural_difference": {
+        "day": {
+          "difference_mean": 0.7805498405120019,
+          "standard_error": 0.2144834340980606,
+          "margin_of_error": 0.42038753083219876,
+          "lower_bound": 0.36016230967980317,
+          "upper_bound": 1.2009373713442006
+        },
+        "night": {
+          "difference_mean": 1.201247040838279,
+          "standard_error": 0.04712587603076844,
+          "margin_of_error": 0.09236671702030615,
+          "lower_bound": 1.1088803238179727,
+          "upper_bound": 1.2936137578585851
+        }
+      },
+      "confidence_level": 0.95
+    },
+    "day_night_analysis": {
+      "urban": {
+        "day_temperature": {
+          "mean": 43.17242507090717,
+          "std_dev": 4.406677347177524
+        },
+        "night_temperature": {
+          "mean": 23.201851490212498,
+          "std_dev": 0.9414615773430955
+        },
+        "day_night_difference": {
+          "mean": 19.970573580694673,
+          "std_dev": 3.9975061352242793
+        }
+      },
+      "rural": {
+        "day_temperature": {
+          "mean": 42.391875230395165,
+          "std_dev": 4.428236621145098
+        },
+        "night_temperature": {
+          "mean": 22.00060444937422,
+          "std_dev": 1.2218692062187029
+        },
+        "day_night_difference": {
+          "mean": 20.39127078102087,
+          "std_dev": 3.7388045877936493
+        }
+      },
+      "urban_rural_comparison": {
+        "day_difference": 0.7805498405120019,
+        "night_difference": 1.201247040838279
+      },
+      "day_night_differences": {
+        "urban_day_night_range": 19.970573580694673,
+        "rural_day_night_range": 20.39127078102087,
+        "urban_rural_day_night_difference": -0.42069720032619884,
+        "interpretation": {
+          "urban_has_larger_day_night_range": false,
+          "urban_day_night_range_larger_by": null
+        }
+      }
+    },
+    "output_file": "suhi_analysis_output\\temperature\\Nukus\\Nukus_temperature_stats_2021.json"
   }
 }

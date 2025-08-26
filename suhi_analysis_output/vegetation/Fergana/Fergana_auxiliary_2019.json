@@ -7,9 +7,135 @@
     "ndvi_change_tif": null,
     "evi_change_tif": null,
     "summer_lst_tif": "suhi_analysis_output\\temperature\\Fergana\\Fergana_lst_summer_2019.tif",
-    "winter_lst_tif": null,
-    "lst_change_tif": null
+    "winter_lst_tif": "suhi_analysis_output\\temperature\\Fergana\\Fergana_lst_winter_2019.tif",
+    "lst_change_tif": "suhi_analysis_output\\temperature\\Fergana\\Fergana_lst_change_2019.tif"
   },
-  "stats": {},
-  "stats_error": "list index out of range"
+  "stats": {
+    "summer_ndvi_mean": 0.33305522338105703,
+    "winter_ndvi_mean": null,
+    "ndvi_change_mean": null,
+    "summer_evi_mean": 0.25010240291483604,
+    "winter_evi_mean": null,
+    "evi_change_mean": null,
+    "summer_lst_mean": 30.749422474454402,
+    "winter_lst_mean": 3.412360271364076,
+    "lst_change_mean": 27.337062203090326,
+    "summer_biomass_t_per_ha": 5.827985065020328,
+    "winter_biomass_t_per_ha": null,
+    "biomass_change_t_per_ha": null
+  },
+  "uncertainty": {
+    "summer_ndvi": {
+      "city": {
+        "mean": 0.33305522338105703,
+        "stdDev": 0.1887258703083038,
+        "count": 837045,
+        "stdError": 0.0002062799576293738,
+        "ci95": [
+          0.33265091466410346,
+          0.3334595320980106
+        ]
+      }
+    },
+    "winter_ndvi": {
+      "city": {
+        "mean": null,
+        "stdDev": null,
+        "count": null,
+        "stdError": null,
+        "ci95": [
+          null,
+          null
+        ],
+        "error": "Image.select: Band pattern 'NDVI' was applied to an Image with no bands. See https://developers.google.com/earth-engine/guides/debugging#no-bands"
+      }
+    },
+    "ndvi_change": {
+      "city": {
+        "mean": null,
+        "stdDev": null,
+        "count": null,
+        "stdError": null,
+        "ci95": [
+          null,
+          null
+        ],
+        "error": "Image.select: Band pattern 'NDVI' was applied to an Image with no bands. See https://developers.google.com/earth-engine/guides/debugging#no-bands"
+      }
+    },
+    "summer_evi": {
+      "city": {
+        "mean": 0.25010240291483604,
+        "stdDev": 0.14036955546022098,
+        "count": 837045,
+        "stdError": 0.00015342584408532147,
+        "ci95": [
+          0.2498016882604288,
+          0.25040311756924327
+        ]
+      }
+    },
+    "winter_evi": {
+      "city": {
+        "mean": null,
+        "stdDev": null,
+        "count": null,
+        "stdError": null,
+        "ci95": [
+          null,
+          null
+        ],
+        "error": "Image.select: Band pattern 'EVI' was applied to an Image with no bands. See https://developers.google.com/earth-engine/guides/debugging#no-bands"
+      }
+    },
+    "evi_change": {
+      "city": {
+        "mean": null,
+        "stdDev": null,
+        "count": null,
+        "stdError": null,
+        "ci95": [
+          null,
+          null
+        ],
+        "error": "Image.select: Band pattern 'EVI' was applied to an Image with no bands. See https://developers.google.com/earth-engine/guides/debugging#no-bands"
+      }
+    },
+    "summer_lst": {
+      "city": {
+        "mean": 30.749422474454402,
+        "stdDev": 1.6572123951231357,
+        "count": 837045,
+        "stdError": 0.0018113558151324227,
+        "ci95": [
+          30.745872217056743,
+          30.75297273185206
+        ]
+      }
+    },
+    "winter_lst": {
+      "city": {
+        "mean": 3.412360271364076,
+        "stdDev": 1.0815274152813072,
+        "count": 837045,
+        "stdError": 0.0011821242579768253,
+        "ci95": [
+          3.410043307818442,
+          3.4146772349097105
+        ]
+      }
+    },
+    "lst_change": {
+      "city": {
+        "mean": 27.337062203062196,
+        "stdDev": 1.933882688170828,
+        "count": 837045,
+        "stdError": 0.002113760229715076,
+        "ci95": [
+          27.332919233011953,
+          27.34120517311244
+        ]
+      }
+    }
+  }
 }

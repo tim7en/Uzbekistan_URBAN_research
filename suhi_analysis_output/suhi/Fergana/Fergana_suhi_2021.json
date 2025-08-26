@@ -54,5 +54,251 @@
         ]
       }
     }
+  },
+  "temperature_statistics": {
+    "city": "Fergana",
+    "year": 2021,
+    "metadata": {
+      "urban_buffer_m": 12000,
+      "rural_buffer_m": 25000,
+      "center_coordinates": [
+        71.7843,
+        40.3842
+      ],
+      "analysis_months": [
+        6,
+        7,
+        8
+      ],
+      "collection_dates": "2021-06-01 to 2021-08-31",
+      "optimization_note": "Focused on summer months only for efficiency"
+    },
+    "summer_season_summary": {
+      "focus_months": [
+        6,
+        7,
+        8
+      ],
+      "urban": {
+        "day": {
+          "mean": 38.810291908979345,
+          "std_dev": 2.716688594287457,
+          "min": 33.29000000000002,
+          "max": 46.49000000000001,
+          "p5": 34.903581890812276,
+          "p10": 35.64000000000004,
+          "p25": 36.96368929198365,
+          "median": 38.52547300215986,
+          "p75": 39.95800000000004,
+          "p90": 42.710000000000036,
+          "p95": 44.660000000000025,
+          "count": 641
+        },
+        "night": {
+          "mean": 21.46386444272532,
+          "std_dev": 1.2297845450857061,
+          "min": 18.760000000000048,
+          "max": 24.33000000000004,
+          "p5": 19.545000000000016,
+          "p10": 19.92500000000001,
+          "p25": 20.58200000000004,
+          "median": 21.298741362290237,
+          "p75": 22.45166666666671,
+          "p90": 23.170000000000016,
+          "p95": 23.4214864864865,
+          "count": 641
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 37.84533446888434,
+          "std_dev": 3.7856348339828774,
+          "min": 25.28000000000003,
+          "max": 47.43000000000001,
+          "p5": 33.561358885017455,
+          "p10": 34.18496855345917,
+          "p25": 35.058199240927216,
+          "median": 36.30806783224955,
+          "p75": 40.685000000000045,
+          "p90": 44.05804393420909,
+          "p95": 44.81349171870758,
+          "count": 5210
+        },
+        "night": {
+          "mean": 20.34911994538066,
+          "std_dev": 1.5597135172921703,
+          "min": 12.28000000000003,
+          "max": 25.060000000000002,
+          "p5": 17.085733544805745,
+          "p10": 18.529037273695447,
+          "p25": 20.035718025919607,
+          "median": 20.594900096680682,
+          "p75": 21.213915301469378,
+          "p90": 21.847914713541677,
+          "p95": 22.093401179695963,
+          "count": 5210
+        }
+      },
+      "urban_rural_difference": {
+        "day": 0.9649574400950058,
+        "night": 1.1147444973446596
+      }
+    },
+    "uncertainty": {
+      "urban": {
+        "day": {
+          "mean": 38.810291908979345,
+          "stdDev": 2.6815718957795722,
+          "count": 590,
+          "stdError": 0.11039856785053372,
+          "ci95": [
+            38.5939107159923,
+            39.02667310196639
+          ]
+        },
+        "night": {
+          "mean": 21.46386444272532,
+          "stdDev": 1.2016894361712764,
+          "count": 590,
+          "stdError": 0.04947277116202647,
+          "ci95": [
+            21.36689781124775,
+            21.56083107420289
+          ]
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 37.84533446888434,
+          "stdDev": 3.788373547090134,
+          "count": 4994,
+          "stdError": 0.05360786687163638,
+          "ci95": [
+            37.74026304981593,
+            37.95040588795275
+          ]
+        },
+        "night": {
+          "mean": 20.34911994538066,
+          "stdDev": 1.5138870459126996,
+          "count": 4994,
+          "stdError": 0.02142245325261532,
+          "ci95": [
+            20.307131937005536,
+            20.391107953755785
+          ]
+        }
+      },
+      "spatial_uncertainty": {},
+      "temporal_uncertainty": {
+        "urban": {
+          "day": {},
+          "night": {}
+        },
+        "rural": {
+          "day": {},
+          "night": {}
+        }
+      }
+    },
+    "confidence_intervals": {
+      "urban": {
+        "day": {
+          "mean": 38.810291908979345,
+          "standard_error": 0.10730274809056449,
+          "margin_of_error": 0.2103133862575064,
+          "lower_bound": 38.59997852272184,
+          "upper_bound": 39.02060529523685,
+          "sample_count": 641
+        },
+        "night": {
+          "mean": 21.46386444272532,
+          "standard_error": 0.0485735691328331,
+          "margin_of_error": 0.09520419550035288,
+          "lower_bound": 21.368660247224966,
+          "upper_bound": 21.559068638225675,
+          "sample_count": 641
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 37.84533446888434,
+          "standard_error": 0.05244690413743831,
+          "margin_of_error": 0.1027959321093791,
+          "lower_bound": 37.74253853677496,
+          "upper_bound": 37.94813040099372,
+          "sample_count": 5210
+        },
+        "night": {
+          "mean": 20.34911994538066,
+          "standard_error": 0.021608567363383256,
+          "margin_of_error": 0.04235279203223118,
+          "lower_bound": 20.306767153348428,
+          "upper_bound": 20.391472737412894,
+          "sample_count": 5210
+        }
+      },
+      "urban_rural_difference": {
+        "day": {
+          "difference_mean": 0.9649574400950058,
+          "standard_error": 0.11943432296198939,
+          "margin_of_error": 0.2340912730054992,
+          "lower_bound": 0.7308661670895067,
+          "upper_bound": 1.199048713100505
+        },
+        "night": {
+          "difference_mean": 1.1147444973446596,
+          "standard_error": 0.05316316207488028,
+          "margin_of_error": 0.10419979766676535,
+          "lower_bound": 1.0105446996778942,
+          "upper_bound": 1.218944295011425
+        }
+      },
+      "confidence_level": 0.95
+    },
+    "day_night_analysis": {
+      "urban": {
+        "day_temperature": {
+          "mean": 38.810291908979345,
+          "std_dev": 2.716688594287457
+        },
+        "night_temperature": {
+          "mean": 21.46386444272532,
+          "std_dev": 1.2297845450857061
+        },
+        "day_night_difference": {
+          "mean": 17.346427466254074,
+          "std_dev": 2.6285572153153725
+        }
+      },
+      "rural": {
+        "day_temperature": {
+          "mean": 37.84533446888434,
+          "std_dev": 3.7856348339828774
+        },
+        "night_temperature": {
+          "mean": 20.34911994538066,
+          "std_dev": 1.5597135172921703
+        },
+        "day_night_difference": {
+          "mean": 17.496214523503546,
+          "std_dev": 3.8389192008398894
+        }
+      },
+      "urban_rural_comparison": {
+        "day_difference": 0.9649574400950058,
+        "night_difference": 1.1147444973446596
+      },
+      "day_night_differences": {
+        "urban_day_night_range": 17.346427466254074,
+        "rural_day_night_range": 17.496214523503546,
+        "urban_rural_day_night_difference": -0.1497870572494726,
+        "interpretation": {
+          "urban_has_larger_day_night_range": false,
+          "urban_day_night_range_larger_by": null
+        }
+      }
+    },
+    "output_file": "suhi_analysis_output\\temperature\\Fergana\\Fergana_temperature_stats_2021.json"
   }
 }

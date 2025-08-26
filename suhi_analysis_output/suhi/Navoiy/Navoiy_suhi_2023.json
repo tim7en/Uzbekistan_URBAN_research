@@ -54,5 +54,251 @@
         ]
       }
     }
+  },
+  "temperature_statistics": {
+    "city": "Navoiy",
+    "year": 2023,
+    "metadata": {
+      "urban_buffer_m": 10000,
+      "rural_buffer_m": 25000,
+      "center_coordinates": [
+        65.3686,
+        40.103
+      ],
+      "analysis_months": [
+        6,
+        7,
+        8
+      ],
+      "collection_dates": "2023-06-01 to 2023-08-31",
+      "optimization_note": "Focused on summer months only for efficiency"
+    },
+    "summer_season_summary": {
+      "focus_months": [
+        6,
+        7,
+        8
+      ],
+      "urban": {
+        "day": {
+          "mean": 44.08216454683084,
+          "std_dev": 4.486342271920084,
+          "min": 36.74000000000001,
+          "max": 51.360000000000014,
+          "p5": 37.923333333333346,
+          "p10": 38.53000000000003,
+          "p25": 40.40400000000003,
+          "median": 42.700000000000045,
+          "p75": 48.910238805970174,
+          "p90": 50.14349489795923,
+          "p95": 50.5241554321967,
+          "count": 449
+        },
+        "night": {
+          "mean": 22.686587369700042,
+          "std_dev": 1.2396490148072385,
+          "min": 20.120000000000005,
+          "max": 25.54000000000002,
+          "p5": 20.510000000000048,
+          "p10": 21.010000000000048,
+          "p25": 21.633333333333383,
+          "median": 22.798694316436265,
+          "p75": 23.61698937426211,
+          "p90": 24.44500000000005,
+          "p95": 24.952500000000043,
+          "count": 449
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 46.99285933831791,
+          "std_dev": 3.9665278480684023,
+          "min": 35.960000000000036,
+          "max": 52.22000000000003,
+          "p5": 38.8132700205339,
+          "p10": 39.690673922603374,
+          "p25": 45.6808874801902,
+          "median": 48.68830974054621,
+          "p75": 49.688523059866974,
+          "p90": 50.306670879488536,
+          "p95": 50.67963566565263,
+          "count": 4768
+        },
+        "night": {
+          "mean": 23.00805542674892,
+          "std_dev": 1.2584617490160643,
+          "min": 18.77000000000004,
+          "max": 26.630000000000052,
+          "p5": 20.670000000000016,
+          "p10": 21.20141313383213,
+          "p25": 22.23212462227781,
+          "median": 23.227772128255705,
+          "p75": 23.8913818017612,
+          "p90": 24.328323903818994,
+          "p95": 24.83000000000004,
+          "count": 4768
+        }
+      },
+      "urban_rural_difference": {
+        "day": -2.9106947914870744,
+        "night": -0.3214680570488788
+      }
+    },
+    "uncertainty": {
+      "urban": {
+        "day": {
+          "mean": 44.08216454683084,
+          "stdDev": 4.427048834657481,
+          "count": 408,
+          "stdError": 0.21917157631369272,
+          "ci95": [
+            43.652588257256,
+            44.51174083640568
+          ]
+        },
+        "night": {
+          "mean": 22.686587369700042,
+          "stdDev": 1.2719914032534652,
+          "count": 408,
+          "stdError": 0.06297295813094353,
+          "ci95": [
+            22.56316037176339,
+            22.810014367636693
+          ]
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 46.99285933831791,
+          "stdDev": 3.953393411801367,
+          "count": 4575,
+          "stdError": 0.05844865004910483,
+          "ci95": [
+            46.87829998422167,
+            47.10741869241416
+          ]
+        },
+        "night": {
+          "mean": 23.00805542674892,
+          "stdDev": 1.259601528543059,
+          "count": 4575,
+          "stdError": 0.018622484856518455,
+          "ci95": [
+            22.971555356430144,
+            23.044555497067698
+          ]
+        }
+      },
+      "spatial_uncertainty": {},
+      "temporal_uncertainty": {
+        "urban": {
+          "day": {},
+          "night": {}
+        },
+        "rural": {
+          "day": {},
+          "night": {}
+        }
+      }
+    },
+    "confidence_intervals": {
+      "urban": {
+        "day": {
+          "mean": 44.08216454683084,
+          "standard_error": 0.21172358214349374,
+          "margin_of_error": 0.4149782210012477,
+          "lower_bound": 43.66718632582959,
+          "upper_bound": 44.49714276783209,
+          "sample_count": 449
+        },
+        "night": {
+          "mean": 22.686587369700042,
+          "standard_error": 0.05850265407933564,
+          "margin_of_error": 0.11466520199549786,
+          "lower_bound": 22.571922167704546,
+          "upper_bound": 22.80125257169554,
+          "sample_count": 449
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 46.99285933831791,
+          "standard_error": 0.05744369721134197,
+          "margin_of_error": 0.11258964653423026,
+          "lower_bound": 46.88026969178368,
+          "upper_bound": 47.105448984852146,
+          "sample_count": 4768
+        },
+        "night": {
+          "mean": 23.00805542674892,
+          "standard_error": 0.018225182938710074,
+          "margin_of_error": 0.03572135855987175,
+          "lower_bound": 22.97233406818905,
+          "upper_bound": 23.043776785308793,
+          "sample_count": 4768
+        }
+      },
+      "urban_rural_difference": {
+        "day": {
+          "difference_mean": -2.9106947914870744,
+          "standard_error": 0.2193778785223822,
+          "margin_of_error": 0.4299806419038691,
+          "lower_bound": -3.3406754333909436,
+          "upper_bound": -2.4807141495832052
+        },
+        "night": {
+          "difference_mean": -0.3214680570488788,
+          "standard_error": 0.06127575236156514,
+          "margin_of_error": 0.12010047462866767,
+          "lower_bound": -0.4415685316775465,
+          "upper_bound": -0.20136758242021113
+        }
+      },
+      "confidence_level": 0.95
+    },
+    "day_night_analysis": {
+      "urban": {
+        "day_temperature": {
+          "mean": 44.08216454683084,
+          "std_dev": 4.486342271920084
+        },
+        "night_temperature": {
+          "mean": 22.686587369700042,
+          "std_dev": 1.2396490148072385
+        },
+        "day_night_difference": {
+          "mean": 21.395577177130843,
+          "std_dev": 3.88083090978647
+        }
+      },
+      "rural": {
+        "day_temperature": {
+          "mean": 46.99285933831791,
+          "std_dev": 3.9665278480684023
+        },
+        "night_temperature": {
+          "mean": 23.00805542674892,
+          "std_dev": 1.2584617490160643
+        },
+        "day_night_difference": {
+          "mean": 23.984803911568832,
+          "std_dev": 3.285442964089397
+        }
+      },
+      "urban_rural_comparison": {
+        "day_difference": -2.9106947914870744,
+        "night_difference": -0.3214680570488788
+      },
+      "day_night_differences": {
+        "urban_day_night_range": 21.395577177130843,
+        "rural_day_night_range": 23.984803911568832,
+        "urban_rural_day_night_difference": -2.5892267344379896,
+        "interpretation": {
+          "urban_has_larger_day_night_range": false,
+          "urban_day_night_range_larger_by": null
+        }
+      }
+    },
+    "output_file": "suhi_analysis_output\\temperature\\Navoiy\\Navoiy_temperature_stats_2023.json"
   }
 }

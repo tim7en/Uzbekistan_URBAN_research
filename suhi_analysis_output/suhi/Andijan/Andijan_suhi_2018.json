@@ -54,5 +54,251 @@
         ]
       }
     }
+  },
+  "temperature_statistics": {
+    "city": "Andijan",
+    "year": 2018,
+    "metadata": {
+      "urban_buffer_m": 12000,
+      "rural_buffer_m": 25000,
+      "center_coordinates": [
+        72.3442,
+        40.7821
+      ],
+      "analysis_months": [
+        6,
+        7,
+        8
+      ],
+      "collection_dates": "2018-06-01 to 2018-08-31",
+      "optimization_note": "Focused on summer months only for efficiency"
+    },
+    "summer_season_summary": {
+      "focus_months": [
+        6,
+        7,
+        8
+      ],
+      "urban": {
+        "day": {
+          "mean": 38.36115960091491,
+          "std_dev": 3.1017582355498434,
+          "min": 33.440000000000055,
+          "max": 47.64000000000004,
+          "p5": 34.99000000000001,
+          "p10": 35.407303921568655,
+          "p25": 36.20506265664164,
+          "median": 37.47000000000003,
+          "p75": 40.02000000000004,
+          "p90": 43.170000000000016,
+          "p95": 45.230192307692334,
+          "count": 644
+        },
+        "night": {
+          "mean": 21.80371964599426,
+          "std_dev": 0.8632292148027916,
+          "min": 19.760000000000048,
+          "max": 23.920000000000016,
+          "p5": 20.44566817667049,
+          "p10": 20.665946111451337,
+          "p25": 21.075000000000045,
+          "median": 21.76658284023673,
+          "p75": 22.420000000000016,
+          "p90": 23.04267857142859,
+          "p95": 23.326000000000043,
+          "count": 644
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 37.096486852091765,
+          "std_dev": 3.3409938988747974,
+          "min": 31.170000000000016,
+          "max": 50.01000000000005,
+          "p5": 34.31887096774196,
+          "p10": 34.688575805572185,
+          "p25": 35.18630979028208,
+          "median": 35.927775135364705,
+          "p75": 37.29936170212768,
+          "p90": 42.29470644543717,
+          "p95": 45.30757833089315,
+          "count": 5245
+        },
+        "night": {
+          "mean": 20.803073297270664,
+          "std_dev": 0.8325870524738181,
+          "min": 18.49000000000001,
+          "max": 23.57000000000005,
+          "p5": 19.518571028299288,
+          "p10": 19.763312909906816,
+          "p25": 20.228761608052253,
+          "median": 20.764412049237766,
+          "p75": 21.328509036144627,
+          "p90": 21.91798279779294,
+          "p95": 22.295933786078116,
+          "count": 5245
+        }
+      },
+      "urban_rural_difference": {
+        "day": 1.2646727488231448,
+        "night": 1.0006463487235955
+      }
+    },
+    "uncertainty": {
+      "urban": {
+        "day": {
+          "mean": 38.36115960091491,
+          "stdDev": 2.98854272911709,
+          "count": 591,
+          "stdError": 0.12293222131934602,
+          "ci95": [
+            38.12021244712899,
+            38.60210675470083
+          ]
+        },
+        "night": {
+          "mean": 21.80371964599426,
+          "stdDev": 0.8743217451124824,
+          "count": 591,
+          "stdError": 0.035964790875263206,
+          "ci95": [
+            21.733228655878744,
+            21.874210636109776
+          ]
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 37.096486852091765,
+          "stdDev": 3.2790180123003414,
+          "count": 5033,
+          "stdError": 0.04622004214456578,
+          "ci95": [
+            37.005895569488416,
+            37.18707813469511
+          ]
+        },
+        "night": {
+          "mean": 20.803073297270664,
+          "stdDev": 0.829444224181032,
+          "count": 5033,
+          "stdError": 0.011691593902321783,
+          "ci95": [
+            20.780157773222115,
+            20.825988821319214
+          ]
+        }
+      },
+      "spatial_uncertainty": {},
+      "temporal_uncertainty": {
+        "urban": {
+          "day": {},
+          "night": {}
+        },
+        "rural": {
+          "day": {},
+          "night": {}
+        }
+      }
+    },
+    "confidence_intervals": {
+      "urban": {
+        "day": {
+          "mean": 38.36115960091491,
+          "standard_error": 0.12222639715373315,
+          "margin_of_error": 0.23956373842131698,
+          "lower_bound": 38.12159586249359,
+          "upper_bound": 38.60072333933623,
+          "sample_count": 644
+        },
+        "night": {
+          "mean": 21.80371964599426,
+          "standard_error": 0.0340159963577844,
+          "margin_of_error": 0.06667135286125742,
+          "lower_bound": 21.737048293133004,
+          "upper_bound": 21.870390998855516,
+          "sample_count": 644
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 37.096486852091765,
+          "standard_error": 0.04613206935668871,
+          "margin_of_error": 0.09041885593910987,
+          "lower_bound": 37.00606799615265,
+          "upper_bound": 37.18690570803088,
+          "sample_count": 5245
+        },
+        "night": {
+          "mean": 20.803073297270664,
+          "standard_error": 0.01149626871905957,
+          "margin_of_error": 0.022532686689356755,
+          "lower_bound": 20.78054061058131,
+          "upper_bound": 20.82560598396002,
+          "sample_count": 5245
+        }
+      },
+      "urban_rural_difference": {
+        "day": {
+          "difference_mean": 1.2646727488231448,
+          "standard_error": 0.13064248919977162,
+          "margin_of_error": 0.2560592788315524,
+          "lower_bound": 1.0086134699915925,
+          "upper_bound": 1.5207320276546972
+        },
+        "night": {
+          "difference_mean": 1.0006463487235955,
+          "standard_error": 0.03590615828341469,
+          "margin_of_error": 0.07037607023549279,
+          "lower_bound": 0.9302702784881027,
+          "upper_bound": 1.0710224189590882
+        }
+      },
+      "confidence_level": 0.95
+    },
+    "day_night_analysis": {
+      "urban": {
+        "day_temperature": {
+          "mean": 38.36115960091491,
+          "std_dev": 3.1017582355498434
+        },
+        "night_temperature": {
+          "mean": 21.80371964599426,
+          "std_dev": 0.8632292148027916
+        },
+        "day_night_difference": {
+          "mean": 16.5574399549206,
+          "std_dev": 2.7422900599529476
+        }
+      },
+      "rural": {
+        "day_temperature": {
+          "mean": 37.096486852091765,
+          "std_dev": 3.3409938988747974
+        },
+        "night_temperature": {
+          "mean": 20.803073297270664,
+          "std_dev": 0.8325870524738181
+        },
+        "day_night_difference": {
+          "mean": 16.29341355482104,
+          "std_dev": 3.0326956471101747
+        }
+      },
+      "urban_rural_comparison": {
+        "day_difference": 1.2646727488231448,
+        "night_difference": 1.0006463487235955
+      },
+      "day_night_differences": {
+        "urban_day_night_range": 16.5574399549206,
+        "rural_day_night_range": 16.29341355482104,
+        "urban_rural_day_night_difference": 0.26402640009956,
+        "interpretation": {
+          "urban_has_larger_day_night_range": true,
+          "urban_day_night_range_larger_by": 0.26402640009956
+        }
+      }
+    },
+    "output_file": "suhi_analysis_output\\temperature\\Andijan\\Andijan_temperature_stats_2018.json"
   }
 }

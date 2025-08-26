@@ -54,5 +54,251 @@
         ]
       }
     }
+  },
+  "temperature_statistics": {
+    "city": "Samarkand",
+    "year": 2019,
+    "metadata": {
+      "urban_buffer_m": 12000,
+      "rural_buffer_m": 25000,
+      "center_coordinates": [
+        66.9597,
+        39.6542
+      ],
+      "analysis_months": [
+        6,
+        7,
+        8
+      ],
+      "collection_dates": "2019-06-01 to 2019-08-31",
+      "optimization_note": "Focused on summer months only for efficiency"
+    },
+    "summer_season_summary": {
+      "focus_months": [
+        6,
+        7,
+        8
+      ],
+      "urban": {
+        "day": {
+          "mean": 39.246795043784786,
+          "std_dev": 1.9957767474076018,
+          "min": 34.27000000000004,
+          "max": 44.83000000000004,
+          "p5": 35.58151241534993,
+          "p10": 36.610000000000014,
+          "p25": 37.90717171717174,
+          "median": 39.352367688022305,
+          "p75": 40.58707064905231,
+          "p90": 41.59333333333336,
+          "p95": 42.28000000000003,
+          "count": 633
+        },
+        "night": {
+          "mean": 20.520632739872926,
+          "std_dev": 1.1053436036946926,
+          "min": 18.170000000000016,
+          "max": 22.930000000000007,
+          "p5": 18.797364620938644,
+          "p10": 19.11000000000001,
+          "p25": 19.636666666666713,
+          "median": 20.416872586872607,
+          "p75": 21.421000000000014,
+          "p90": 22.010000000000048,
+          "p95": 22.390000000000043,
+          "count": 633
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 38.50804871362566,
+          "std_dev": 2.941527821423276,
+          "min": 30.510000000000048,
+          "max": 46.83000000000004,
+          "p5": 34.433928571428616,
+          "p10": 35.06037139497893,
+          "p25": 36.56008517434125,
+          "median": 38.057468758309035,
+          "p75": 39.94234483992134,
+          "p90": 43.31803510482693,
+          "p95": 44.30112924805996,
+          "count": 5145
+        },
+        "night": {
+          "mean": 19.540037198372335,
+          "std_dev": 1.2860268266512236,
+          "min": 12.57000000000005,
+          "max": 23.27000000000004,
+          "p5": 17.91500000000002,
+          "p10": 18.409429954288843,
+          "p25": 18.851996171027423,
+          "median": 19.41000111398892,
+          "p75": 20.149757913043537,
+          "p90": 21.28333333333335,
+          "p95": 21.96590207032537,
+          "count": 5145
+        }
+      },
+      "urban_rural_difference": {
+        "day": 0.7387463301591239,
+        "night": 0.9805955415005911
+      }
+    },
+    "uncertainty": {
+      "urban": {
+        "day": {
+          "mean": 39.246795043784786,
+          "stdDev": 1.9531119654512372,
+          "count": 580,
+          "stdError": 0.08109856018948959,
+          "ci95": [
+            39.08784186581339,
+            39.405748221756184
+          ]
+        },
+        "night": {
+          "mean": 20.520632739872926,
+          "stdDev": 1.103076809645247,
+          "count": 580,
+          "stdError": 0.04580277148626106,
+          "ci95": [
+            20.430859307759853,
+            20.610406171986
+          ]
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 38.50804871362566,
+          "stdDev": 2.9418120191429793,
+          "count": 4953,
+          "stdError": 0.041800430445847386,
+          "ci95": [
+            38.426119869951805,
+            38.58997755729952
+          ]
+        },
+        "night": {
+          "mean": 19.540037198372335,
+          "stdDev": 1.2770900866296486,
+          "count": 4953,
+          "stdError": 0.018146270051203194,
+          "ci95": [
+            19.50447050907198,
+            19.575603887672692
+          ]
+        }
+      },
+      "spatial_uncertainty": {},
+      "temporal_uncertainty": {
+        "urban": {
+          "day": {},
+          "night": {}
+        },
+        "rural": {
+          "day": {},
+          "night": {}
+        }
+      }
+    },
+    "confidence_intervals": {
+      "urban": {
+        "day": {
+          "mean": 39.246795043784786,
+          "standard_error": 0.07932500413110277,
+          "margin_of_error": 0.15547700809696144,
+          "lower_bound": 39.09131803568783,
+          "upper_bound": 39.402272051881745,
+          "sample_count": 633
+        },
+        "night": {
+          "mean": 20.520632739872926,
+          "standard_error": 0.043933464022598,
+          "margin_of_error": 0.08610958948429208,
+          "lower_bound": 20.434523150388635,
+          "upper_bound": 20.606742329357218,
+          "sample_count": 633
+        }
+      },
+      "rural": {
+        "day": {
+          "mean": 38.50804871362566,
+          "standard_error": 0.041009103078673066,
+          "margin_of_error": 0.0803778420341992,
+          "lower_bound": 38.42767087159146,
+          "upper_bound": 38.588426555659865,
+          "sample_count": 5145
+        },
+        "night": {
+          "mean": 19.540037198372335,
+          "standard_error": 0.01792905248489571,
+          "margin_of_error": 0.03514094287039559,
+          "lower_bound": 19.50489625550194,
+          "upper_bound": 19.57517814124273,
+          "sample_count": 5145
+        }
+      },
+      "urban_rural_difference": {
+        "day": {
+          "difference_mean": 0.7387463301591239,
+          "standard_error": 0.0892983920108123,
+          "margin_of_error": 0.1750248483411921,
+          "lower_bound": 0.5637214818179318,
+          "upper_bound": 0.9137711785003161
+        },
+        "night": {
+          "difference_mean": 0.9805955415005911,
+          "standard_error": 0.047451029325306086,
+          "margin_of_error": 0.09300401747759993,
+          "lower_bound": 0.8875915240229912,
+          "upper_bound": 1.073599558978191
+        }
+      },
+      "confidence_level": 0.95
+    },
+    "day_night_analysis": {
+      "urban": {
+        "day_temperature": {
+          "mean": 39.246795043784786,
+          "std_dev": 1.9957767474076018
+        },
+        "night_temperature": {
+          "mean": 20.520632739872926,
+          "std_dev": 1.1053436036946926
+        },
+        "day_night_difference": {
+          "mean": 18.726162303911984,
+          "std_dev": 1.2588387852154403
+        }
+      },
+      "rural": {
+        "day_temperature": {
+          "mean": 38.50804871362566,
+          "std_dev": 2.941527821423276
+        },
+        "night_temperature": {
+          "mean": 19.540037198372335,
+          "std_dev": 1.2860268266512236
+        },
+        "day_night_difference": {
+          "mean": 18.968011515253288,
+          "std_dev": 2.3034146654700733
+        }
+      },
+      "urban_rural_comparison": {
+        "day_difference": 0.7387463301591239,
+        "night_difference": 0.9805955415005911
+      },
+      "day_night_differences": {
+        "urban_day_night_range": 18.726162303911984,
+        "rural_day_night_range": 18.968011515253288,
+        "urban_rural_day_night_difference": -0.24184921134130377,
+        "interpretation": {
+          "urban_has_larger_day_night_range": false,
+          "urban_day_night_range_larger_by": null
+        }
+      }
+    },
+    "output_file": "suhi_analysis_output\\temperature\\Samarkand\\Samarkand_temperature_stats_2019.json"
   }
 }
