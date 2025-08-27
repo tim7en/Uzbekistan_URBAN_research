@@ -16,6 +16,7 @@ class ClimateRiskMetrics:
     """Climate risk assessment metrics for a city"""
     city: str
     population: Optional[int] = None
+    gdp_per_capita_usd: Optional[float] = None
     
     # IPCC AR6 Core Components
     hazard_score: float = 0.0
@@ -137,6 +138,7 @@ class IPCCRiskAssessmentService:
         population_data = self.data['population_data'].get(city)
         if population_data:
             metrics.population = population_data.population_2024
+            metrics.gdp_per_capita_usd = population_data.gdp_per_capita_usd
         
         # Calculate IPCC AR6 components with individual sub-components
         metrics = self._calculate_hazard_components(city, metrics)
@@ -170,6 +172,9 @@ class IPCCRiskAssessmentService:
             self.adaptive_capacity_weights['greenspace'] * metrics.greenspace_adaptive_capacity +
             self.adaptive_capacity_weights['services'] * metrics.services_adaptive_capacity
         )
+        
+        # Apply region-specific corrections for known data gaps
+        metrics = self._apply_regional_corrections(city, metrics)
         
         # Calculate composite scores
         metrics.overall_risk_score = self._calculate_overall_risk(metrics)
@@ -912,3 +917,127 @@ class IPCCRiskAssessmentService:
                 green_capacity = (green_capacity * 0.6 + accessibility_score * 0.4)
         
         return green_capacity
+    
+    def _apply_regional_corrections(self, city: str, metrics: ClimateRiskMetrics) -> ClimateRiskMetrics:
+        """Apply region-specific corrections for known data gaps and local hazards"""
+        
+        # Nukus-specific corrections for water scarcity and Aral Sea impacts
+        if city == "Nukus":
+            # Water scarcity vulnerability (major gap in current framework)
+            water_stress_penalty = 0.15  # Severe groundwater depletion and Aral Sea crisis
+            
+            # Healthcare access vulnerability (limited medical infrastructure)
+            healthcare_penalty = 0.08  # Lower hospital density in Karakalpakstan
+            
+            # Environmental disaster impacts (Aral Sea proximity)
+            aral_sea_penalty = 0.12  # Dust storms, contamination, ecosystem collapse
+            
+            # Apply corrections to vulnerability (where most gaps exist)
+            total_penalty = water_stress_penalty + healthcare_penalty + aral_sea_penalty
+            metrics.vulnerability_score = min(1.0, metrics.vulnerability_score + total_penalty)
+            
+            # Also increase dust hazard due to Aral Sea
+            metrics.dust_hazard = min(1.0, metrics.dust_hazard + 0.20)
+            
+            # Recalculate hazard score with updated dust component
+            metrics.hazard_score = (
+                self.hazard_weights['heat'] * metrics.heat_hazard +
+                self.hazard_weights['dry'] * metrics.dry_hazard +
+                self.hazard_weights['pluv'] * metrics.pluvial_hazard +
+                self.hazard_weights['dust'] * metrics.dust_hazard
+            )
+            
+            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability, +0.20 dust hazard")
+        
+        # Termez-specific corrections for border challenges and extreme poverty
+        elif city == "Termez":
+            # Border instability and security challenges
+            border_penalty = 0.15  # Afghanistan proximity, migration pressures
+            
+            # Extreme economic vulnerability (lowest GDP per capita)
+            poverty_penalty = 0.10  # $634 USD per capita, severe resource constraints
+            
+            # Remote location and infrastructure gaps
+            infrastructure_penalty = 0.08  # Poor connectivity, limited services
+            
+            total_penalty = border_penalty + poverty_penalty + infrastructure_penalty
+            metrics.vulnerability_score = min(1.0, metrics.vulnerability_score + total_penalty)
+            
+            # Increase exposure due to cross-border pressures
+            metrics.exposure_score = min(1.0, metrics.exposure_score + 0.15)
+            
+            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability, +0.15 exposure")
+        
+        # Urgench-specific corrections for Aral Sea impacts and irrigation dependence
+        elif city == "Urgench":
+            # Irrigation system vulnerability
+            irrigation_penalty = 0.12  # Khorezm canal system deterioration
+            
+            # Aral Sea environmental impacts
+            aral_penalty = 0.08  # Dust storms, soil salinization
+            
+            total_penalty = irrigation_penalty + aral_penalty
+            metrics.vulnerability_score = min(1.0, metrics.vulnerability_score + total_penalty)
+            
+            # Increase dust hazard due to Aral Sea proximity
+            metrics.dust_hazard = min(1.0, metrics.dust_hazard + 0.15)
+            
+            # Recalculate hazard score
+            metrics.hazard_score = (
+                self.hazard_weights['heat'] * metrics.heat_hazard +
+                self.hazard_weights['dry'] * metrics.dry_hazard +
+                self.hazard_weights['pluv'] * metrics.pluvial_hazard +
+                self.hazard_weights['dust'] * metrics.dust_hazard
+            )
+            
+            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability, +0.15 dust hazard")
+        
+        # Namangan-specific corrections for seismic risks and population pressure
+        elif city == "Namangan":
+            # Seismic and landslide vulnerability
+            seismic_penalty = 0.10  # Fergana Valley earthquake zone
+            
+            # Population density stress with limited resources
+            density_penalty = 0.12  # Highest population with low GDP per capita
+            
+            total_penalty = seismic_penalty + density_penalty
+            metrics.vulnerability_score = min(1.0, metrics.vulnerability_score + total_penalty)
+            
+            # Increase overall hazard for geological risks
+            metrics.hazard_score = min(1.0, metrics.hazard_score + 0.10)
+            
+            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability, +0.10 hazard")
+        
+        # Fergana-specific corrections for seismic risks and water conflicts
+        elif city == "Fergana":
+            # Seismic vulnerability and industrial pollution
+            seismic_pollution_penalty = 0.08  # Fergana Valley risks + Soviet legacy
+            
+            # Water allocation conflicts and border tensions
+            conflict_penalty = 0.10  # Transboundary water disputes
+            
+            total_penalty = seismic_pollution_penalty + conflict_penalty
+            metrics.vulnerability_score = min(1.0, metrics.vulnerability_score + total_penalty)
+            
+            # Increase hazard for seismic and pollution risks
+            metrics.hazard_score = min(1.0, metrics.hazard_score + 0.08)
+            
+            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability, +0.08 hazard")
+        
+        # Samarkand-specific corrections for heritage vulnerability and water scarcity
+        elif city == "Samarkand":
+            # Cultural heritage climate vulnerability
+            heritage_penalty = 0.05  # UNESCO sites at risk from climate change
+            
+            # Tourism economic vulnerability
+            tourism_penalty = 0.05  # Economic dependence on climate-sensitive tourism
+            
+            # Zerafshan river depletion
+            water_penalty = 0.03  # Regional water stress
+            
+            total_penalty = heritage_penalty + tourism_penalty + water_penalty
+            metrics.vulnerability_score = min(1.0, metrics.vulnerability_score + total_penalty)
+            
+            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability")
+        
+        return metrics

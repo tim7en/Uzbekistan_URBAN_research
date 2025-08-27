@@ -431,6 +431,7 @@ class ClimateAssessmentReporter:
                 f.write(f"  Vulnerability: {metrics.vulnerability_score:.3f}\n")
                 f.write(f"  Adaptive Capacity: {metrics.adaptive_capacity_score:.3f}\n")
                 f.write(f"  Population: {metrics.population:,}\n" if metrics.population else "  Population: N/A\n")
+                f.write(f"  GDP per capita: ${metrics.gdp_per_capita_usd:.0f} USD\n" if metrics.gdp_per_capita_usd else "  GDP per capita: N/A\n")
                 f.write(f"  Temperature Trend: {metrics.temperature_trend:.4f} °C/year\n")
         
         print(f"✓ Saved detailed text report: {report_file.name}")
