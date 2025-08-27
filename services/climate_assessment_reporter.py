@@ -436,30 +436,41 @@ class ClimateAssessmentReporter:
         print(f"✓ Saved detailed text report: {report_file.name}")
     
     def _calculate_priority_scores(self, city_risk_profiles: Dict[str, ClimateRiskMetrics]) -> List[float]:
-        """Calculate priority scores for cities using quantile-based approach"""
+        """Calculate priority scores for cities using IPCC AR6 framework approach"""
         cities = list(city_risk_profiles.keys())
         overall_risk_scores = [city_risk_profiles[city].overall_risk_score for city in cities]
         adaptive_capacity_scores = [city_risk_profiles[city].adaptive_capacity_score for city in cities]
         populations = [city_risk_profiles[city].population or 0 for city in cities]
         
-        def qscale(series, x, lo=0.1, hi=0.9):
-            s = pd.Series(series)
-            a, b = s.quantile(lo), s.quantile(hi)
-            if a == b: 
-                return 0.5
-            return float(np.clip((x - a) / (b - a), 0, 1))
-
-        risk_q  = [qscale(overall_risk_scores, r) for r in overall_risk_scores]
-        ac_gap  = [1 - a for a in adaptive_capacity_scores]  # low AC => high gap
-        ac_q    = [qscale(ac_gap, g) for g in ac_gap]
-        pop_q   = [qscale(populations, p) for p in populations]
-
-        # priority scoring (geometric-ish mix)
-        alpha, beta = 0.8, 0.6   # emphasis on risk, then AC gap
-        priority_scores = [
-            (rq ** alpha) * (aq ** beta) * (max(0.2, pq) ** 0.4)  # ensure small cities not zeroed
-            for rq, aq, pq in zip(risk_q, ac_q, pop_q)
-        ]
+        # Normalize components using min-max scaling (0-1 range)
+        def normalize(values):
+            if not values or max(values) == min(values):
+                return [0.5] * len(values)
+            vmin, vmax = min(values), max(values)
+            return [(v - vmin) / (vmax - vmin) for v in values]
+        
+        # Normalize each component
+        risk_norm = normalize(overall_risk_scores)
+        
+        # Adaptive capacity gap (higher gap = more vulnerable)
+        ac_gap = [1 - ac for ac in adaptive_capacity_scores]
+        ac_gap_norm = normalize(ac_gap)
+        
+        # Population exposure (log scale to prevent extreme dominance)
+        import math
+        pop_log = [math.log(max(1000, p)) for p in populations]  # Min 1000 to avoid log issues
+        pop_norm = normalize(pop_log)
+        
+        # Improved priority formula with more balanced weights
+        # Priority = Risk (50%) + AC_Gap (30%) + Population (20%)
+        # This maintains transparency while balancing factors appropriately
+        priority_scores = []
+        for i in range(len(cities)):
+            # Weighted combination with risk as primary factor
+            priority = (0.50 * risk_norm[i] +      # Risk is most important
+                       0.30 * ac_gap_norm[i] +     # Adaptive capacity gap significant  
+                       0.20 * pop_norm[i])         # Population adds context
+            priority_scores.append(priority)
         
         return priority_scores
     
