@@ -100,34 +100,23 @@ CITY_TO_REGION = {
     "Nurafshon": "Tashkent Region",
 }
 
-# Base city data (populations and urban area) - we'll populate gdp_per_capita from region GRP
+# Base city data with actual GDP per capita from official data
 UZBEK_CITIES_DATA = {
-    "Tashkent":  {"pop_2024": 3095498, "area_km2": 450.0,  "gdp_per_capita": None},
-    "Samarkand": {"pop_2024": 584326,  "area_km2": 110.6,  "gdp_per_capita": None},
-    "Bukhara":   {"pop_2024": 294684,  "area_km2": 104.7,  "gdp_per_capita": None},
-    "Andijan":   {"pop_2024": 480240,  "area_km2": 96.86,  "gdp_per_capita": None},
-    "Namangan":  {"pop_2024": 695770,  "area_km2": 168.8,  "gdp_per_capita": None},
-    "Fergana":   {"pop_2024": 321429,  "area_km2": 101.9,  "gdp_per_capita": None},
-    "Nukus":     {"pop_2024": 339624,  "area_km2": 215.7,  "gdp_per_capita": None},
-    "Urgench":   {"pop_2024": 152816,  "area_km2": 38.14,  "gdp_per_capita": None},
-    "Termez":    {"pop_2024": 201490,  "area_km2": 49.50,  "gdp_per_capita": None},
-    "Qarshi":    {"pop_2024": 294832,  "area_km2": 75.92,  "gdp_per_capita": None},
-    "Jizzakh":   {"pop_2024": 195781,  "area_km2": 55.41,  "gdp_per_capita": None},
-    "Navoiy":    {"pop_2024": 161238,  "area_km2": 52.82,  "gdp_per_capita": None},
-    "Gulistan":  {"pop_2024": 99156,   "area_km2": 31.62,  "gdp_per_capita": None},
-    "Nurafshon": {"pop_2024": 55826,   "area_km2": 10.66,  "gdp_per_capita": None},
+    "Tashkent":   {"pop_2024": 3058400, "area_km2": 450.0,  "gdp_per_capita": 3323.1},
+    "Samarkand":  {"pop_2024": 585200,  "area_km2": 110.6,  "gdp_per_capita": 883.9},
+    "Bukhara":    {"pop_2024": 269500,  "area_km2": 104.7,  "gdp_per_capita": 1135.5},
+    "Andijan":    {"pop_2024": 480800,  "area_km2": 96.86,  "gdp_per_capita": 917.8},
+    "Namangan":   {"pop_2024": 696500,  "area_km2": 168.8,  "gdp_per_capita": 745.6},
+    "Fergana":    {"pop_2024": 321800,  "area_km2": 101.9,  "gdp_per_capita": 810.2},
+    "Nukus":      {"pop_2024": 339200,  "area_km2": 215.7,  "gdp_per_capita": 865.4},
+    "Urgench":    {"pop_2024": 153100,  "area_km2": 38.14,  "gdp_per_capita": 823.9},
+    "Termez":     {"pop_2024": 201600,  "area_km2": 49.50,  "gdp_per_capita": 633.9},
+    "Qarshi":     {"pop_2024": 295600,  "area_km2": 75.92,  "gdp_per_capita": 787.3},
+    "Jizzakh":    {"pop_2024": 195800,  "area_km2": 55.41,  "gdp_per_capita": 948.0},
+    "Navoiy":     {"pop_2024": 161300,  "area_km2": 52.82,  "gdp_per_capita": 4816.3},
+    "Gulistan":   {"pop_2024": 77300,   "area_km2": 31.62,  "gdp_per_capita": 1112.6},
+    "Nurafshon":  {"pop_2024": 56200,   "area_km2": 10.66,  "gdp_per_capita": 1972.3},
 }
-
-# Fill gdp_per_capita using region GRP per capita (USD, 2024)
-for city_name, rec in UZBEK_CITIES_DATA.items():
-    region = CITY_TO_REGION.get(city_name)
-    if region is None:
-        continue
-    if region == "SPECIAL_TASHKENT":
-        rec["gdp_per_capita"] = round(TASHKENT_WEIGHTED_GRP_PC_USD_2024, 0) if TASHKENT_WEIGHTED_GRP_PC_USD_2024 is not None else None
-    else:
-        rec["gdp_per_capita"] = REGION_GRP_PC_USD_2024.get(region, None)
-
 
 class ClimateDataLoader:
     """Service for loading and preprocessing climate assessment data"""
