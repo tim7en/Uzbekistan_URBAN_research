@@ -23,6 +23,28 @@ class ClimateRiskMetrics:
     vulnerability_score: float = 0.0
     adaptive_capacity_score: float = 0.0
     
+    # Individual hazard components
+    heat_hazard: float = 0.0
+    dry_hazard: float = 0.0
+    dust_hazard: float = 0.0
+    pluvial_hazard: float = 0.0
+    
+    # Individual exposure components
+    population_exposure: float = 0.0
+    gdp_exposure: float = 0.0
+    viirs_exposure: float = 0.0
+    
+    # Individual vulnerability components
+    income_vulnerability: float = 0.0
+    veg_access_vulnerability: float = 0.0
+    fragmentation_vulnerability: float = 0.0
+    bio_trend_vulnerability: float = 0.0
+    
+    # Individual adaptive capacity components
+    gdp_adaptive_capacity: float = 0.0
+    greenspace_adaptive_capacity: float = 0.0
+    services_adaptive_capacity: float = 0.0
+    
     # Composite scores
     overall_risk_score: float = 0.0
     adaptability_score: float = 0.0
@@ -50,12 +72,34 @@ class IPCCRiskAssessmentService:
             'urban_expansion': {'low': 0.02, 'medium': 0.05, 'high': 0.08, 'very_high': 0.12}  # fraction/year
         }
         
-        # Component weights for overall risk calculation (IPCC AR6 approach)
-        self.component_weights = {
-            'hazard': 0.3,
-            'exposure': 0.25,
-            'vulnerability': 0.25,
-            'adaptive_capacity': 0.2  # Negative weight (higher capacity = lower risk)
+        # IPCC AR6 hazard weights (from specification)
+        self.hazard_weights = {
+            'heat': 0.60,
+            'dry': 0.25,
+            'pluv': 0.10,
+            'dust': 0.05
+        }
+        
+        # IPCC AR6 exposure weights (from specification)
+        self.exposure_weights = {
+            'population': 0.60,
+            'gdp': 0.25,
+            'viirs': 0.15
+        }
+        
+        # IPCC AR6 vulnerability weights (from specification)
+        self.vulnerability_weights = {
+            'income_inv': 0.40,
+            'veg_access': 0.30,
+            'fragment': 0.20,
+            'delta_bio_veg': 0.10
+        }
+        
+        # IPCC AR6 adaptive capacity weights (from specification)
+        self.adaptive_capacity_weights = {
+            'gdp_pc': 0.50,
+            'greenspace': 0.30,
+            'services': 0.20
         }
     
     def assess_all_cities(self) -> Dict[str, ClimateRiskMetrics]:
@@ -94,11 +138,38 @@ class IPCCRiskAssessmentService:
         if population_data:
             metrics.population = population_data.population_2024
         
-        # Calculate IPCC AR6 components
-        metrics.hazard_score = self.calculate_hazard_score(city)
-        metrics.exposure_score = self.calculate_exposure_score(city)
-        metrics.vulnerability_score = self.calculate_vulnerability_score(city)
-        metrics.adaptive_capacity_score = self.calculate_adaptive_capacity_score(city)
+        # Calculate IPCC AR6 components with individual sub-components
+        metrics = self._calculate_hazard_components(city, metrics)
+        metrics = self._calculate_exposure_components(city, metrics)
+        metrics = self._calculate_vulnerability_components(city, metrics)
+        metrics = self._calculate_adaptive_capacity_components(city, metrics)
+        
+        # Calculate composite scores using IPCC AR6 weights
+        metrics.hazard_score = (
+            self.hazard_weights['heat'] * metrics.heat_hazard +
+            self.hazard_weights['dry'] * metrics.dry_hazard +
+            self.hazard_weights['pluv'] * metrics.pluvial_hazard +
+            self.hazard_weights['dust'] * metrics.dust_hazard
+        )
+        
+        metrics.exposure_score = (
+            self.exposure_weights['population'] * metrics.population_exposure +
+            self.exposure_weights['gdp'] * metrics.gdp_exposure +
+            self.exposure_weights['viirs'] * metrics.viirs_exposure
+        )
+        
+        metrics.vulnerability_score = (
+            self.vulnerability_weights['income_inv'] * metrics.income_vulnerability +
+            self.vulnerability_weights['veg_access'] * metrics.veg_access_vulnerability +
+            self.vulnerability_weights['fragment'] * metrics.fragmentation_vulnerability +
+            self.vulnerability_weights['delta_bio_veg'] * metrics.bio_trend_vulnerability
+        )
+        
+        metrics.adaptive_capacity_score = (
+            self.adaptive_capacity_weights['gdp_pc'] * metrics.gdp_adaptive_capacity +
+            self.adaptive_capacity_weights['greenspace'] * metrics.greenspace_adaptive_capacity +
+            self.adaptive_capacity_weights['services'] * metrics.services_adaptive_capacity
+        )
         
         # Calculate composite scores
         metrics.overall_risk_score = self._calculate_overall_risk(metrics)
@@ -409,27 +480,108 @@ class IPCCRiskAssessmentService:
     
     def _calculate_overall_risk(self, metrics: ClimateRiskMetrics) -> float:
         """Calculate overall risk score using IPCC AR6 framework"""
-        # Risk = (Hazard × Exposure × Vulnerability) / Adaptive Capacity
-        # Implemented as weighted combination to avoid zero-product issues
-        
-        risk_components = (
-            self.component_weights['hazard'] * metrics.hazard_score +
-            self.component_weights['exposure'] * metrics.exposure_score +
-            self.component_weights['vulnerability'] * metrics.vulnerability_score
-        )
-        
-        # Adaptive capacity reduces risk
-        adaptive_factor = 1.0 - (self.component_weights['adaptive_capacity'] * metrics.adaptive_capacity_score)
-        
-        overall_risk = risk_components * adaptive_factor
+        # Risk = H × E × V (multiplicative formula from IPCC AR6)
+        overall_risk = metrics.hazard_score * metrics.exposure_score * metrics.vulnerability_score
         return min(1.0, max(0.0, overall_risk))
     
     def _calculate_adaptability_score(self, metrics: ClimateRiskMetrics) -> float:
-        """Calculate adaptability score (inverse of vulnerability + adaptive capacity)"""
-        # Higher adaptive capacity and lower vulnerability = higher adaptability
-        adaptability = (metrics.adaptive_capacity_score * 0.6 + 
-                       (1.0 - metrics.vulnerability_score) * 0.4)
-        return min(1.0, adaptability)
+        """Calculate adaptability score using IPCC AR6 framework"""
+        # Adaptability = AC / (1 + Risk) from Eq. 65
+        # Use a small epsilon to avoid division by zero
+        adaptability = metrics.adaptive_capacity_score / (1.0 + metrics.overall_risk_score + 1e-6)
+        return min(1.0, max(0.0, adaptability))
+    
+    def _calculate_hazard_components(self, city: str, metrics: ClimateRiskMetrics) -> ClimateRiskMetrics:
+        """Calculate individual hazard components using IPCC AR6 framework"""
+        # Heat hazard (H_heat): summer mean LST, day/night SUHI
+        metrics.heat_hazard = self._calculate_heat_hazard(city)
+        
+        # Dry/ecological stress (H_dry): low NDVI/EVI, negative seasonal changes
+        metrics.dry_hazard = self._calculate_dry_hazard(city)
+        
+        # Dust proxy (H_dust): bare/low-veg share and vegetation fragmentation
+        metrics.dust_hazard = self._calculate_dust_hazard(city)
+        
+        # Pluvial proxy (H_pluv): built-up share and edge density
+        metrics.pluvial_hazard = self._calculate_pluvial_hazard(city)
+        
+        return metrics
+    
+    def _calculate_exposure_components(self, city: str, metrics: ClimateRiskMetrics) -> ClimateRiskMetrics:
+        """Calculate individual exposure components using IPCC AR6 framework"""
+        population_data = self.data['population_data'].get(city)
+        if not population_data:
+            return metrics
+        
+        # Population exposure (E_pop)
+        metrics.population_exposure = self.data_loader.pct_norm(
+            self.data['cache']['population'], 
+            population_data.population_2024
+        )
+        
+        # GDP exposure (E_gdp) - composition-weighted City GDP
+        city_gdp = population_data.population_2024 * population_data.gdp_per_capita_usd
+        if 'city_gdp' not in self.data['cache']:
+            # Initialize city_gdp cache if not present
+            city_gdps = []
+            for pop_data in self.data['population_data'].values():
+                if pop_data.population_2024 and pop_data.gdp_per_capita_usd:
+                    city_gdps.append(pop_data.population_2024 * pop_data.gdp_per_capita_usd)
+            self.data['cache']['city_gdp'] = city_gdps
+        
+        metrics.gdp_exposure = self.data_loader.pct_norm(
+            self.data['cache']['city_gdp'], 
+            city_gdp
+        )
+        
+        # VIIRS exposure (E_viirs) - urban radiance
+        metrics.viirs_exposure = self._calculate_viirs_exposure(city)
+        
+        return metrics
+    
+    def _calculate_vulnerability_components(self, city: str, metrics: ClimateRiskMetrics) -> ClimateRiskMetrics:
+        """Calculate individual vulnerability components using IPCC AR6 framework"""
+        population_data = self.data['population_data'].get(city)
+        if not population_data:
+            return metrics
+        
+        # Income vulnerability (V_income_inv) - inverted GDP per capita
+        metrics.income_vulnerability = self.data_loader.pct_norm(
+            self.data['cache']['gdp'], 
+            population_data.gdp_per_capita_usd, 
+            invert=True
+        )
+        
+        # Vegetation access vulnerability (V_veg_access)
+        metrics.veg_access_vulnerability = self._calculate_veg_access_vulnerability(city)
+        
+        # Fragmentation vulnerability (V_fragment)
+        metrics.fragmentation_vulnerability = self._calculate_fragmentation_vulnerability(city)
+        
+        # Biomass/vegetation trend vulnerability (V_delta_bio_veg)
+        metrics.bio_trend_vulnerability = self._calculate_bio_trend_vulnerability(city)
+        
+        return metrics
+    
+    def _calculate_adaptive_capacity_components(self, city: str, metrics: ClimateRiskMetrics) -> ClimateRiskMetrics:
+        """Calculate individual adaptive capacity components using IPCC AR6 framework"""
+        population_data = self.data['population_data'].get(city)
+        if not population_data:
+            return metrics
+        
+        # GDP per capita adaptive capacity (AC_gdp_pc)
+        metrics.gdp_adaptive_capacity = self.data_loader.pct_norm(
+            self.data['cache']['gdp'], 
+            population_data.gdp_per_capita_usd
+        )
+        
+        # Greenspace adaptive capacity (AC_greenspace)
+        metrics.greenspace_adaptive_capacity = self._calculate_greenspace_adaptive_capacity(city)
+        
+        # Services adaptive capacity (AC_services) - VIIRS as proxy
+        metrics.services_adaptive_capacity = self._calculate_viirs_exposure(city)
+        
+        return metrics
     
     def _populate_supporting_metrics(self, city: str, metrics: ClimateRiskMetrics):
         """Populate supporting metrics for detailed analysis"""
@@ -482,3 +634,281 @@ class IPCCRiskAssessmentService:
                 self.data['cache']['gdp'], 
                 population_data.gdp_per_capita_usd
             )
+    
+    # Individual hazard calculation methods
+    def _calculate_heat_hazard(self, city: str) -> float:
+        """Calculate heat hazard component (H_heat)"""
+        # Use existing heat hazard calculation from calculate_hazard_score
+        return self.calculate_hazard_score(city)
+    
+    def _calculate_dry_hazard(self, city: str) -> float:
+        """Calculate dry/ecological stress hazard (H_dry)"""
+        # Based on low NDVI/EVI in summer, negative seasonal changes
+        dry_score = 0.0
+        
+        # Initialize cache for bare/sparse percentages if needed
+        if 'bare_sparse_pct' not in self.data['cache']:
+            bare_sparse_pcts = []
+            for lulc_city in self.data['lulc_data']:
+                areas = lulc_city.get('areas_m2', {})
+                if areas:
+                    years = sorted([int(y) for y in areas.keys()])
+                    if years:
+                        latest_year = str(years[-1])
+                        bare_pct = areas[latest_year].get('Bare_Ground', {}).get('percentage', 0)
+                        sparse_pct = areas[latest_year].get('Sparse_Vegetation', {}).get('percentage', 0)
+                        bare_sparse_pcts.append(bare_pct + sparse_pct)
+            self.data['cache']['bare_sparse_pct'] = bare_sparse_pcts
+        
+        # Check LULC data for vegetation indicators
+        for lulc_city in self.data['lulc_data']:
+            if lulc_city.get('city') == city:
+                areas = lulc_city.get('areas_m2', {})
+                if areas:
+                    years = sorted([int(y) for y in areas.keys()])
+                    if len(years) >= 2:
+                        # Recent year vegetation
+                        latest_year = str(years[-1])
+                        veg_areas = areas[latest_year]
+                        
+                        # Calculate vegetation stress indicators
+                        bare_pct = veg_areas.get('Bare_Ground', {}).get('percentage', 0)
+                        sparse_veg_pct = veg_areas.get('Sparse_Vegetation', {}).get('percentage', 0)
+                        
+                        # Higher bare/sparse = higher dry hazard
+                        dry_score = self.data_loader.pct_norm(
+                            self.data['cache']['bare_sparse_pct'], 
+                            bare_pct + sparse_veg_pct
+                        )
+                        
+                        # Add trend component if multiple years available
+                        if len(years) >= 3:
+                            # Check vegetation trend over time
+                            veg_trends = []
+                            for year in years[-3:]:  # Last 3 years
+                                year_data = areas[str(year)]
+                                total_veg = (year_data.get('Trees', {}).get('percentage', 0) + 
+                                           year_data.get('Crops', {}).get('percentage', 0) +
+                                           year_data.get('Grass', {}).get('percentage', 0))
+                                veg_trends.append(total_veg)
+                            
+                            if len(veg_trends) >= 3:
+                                try:
+                                    veg_trend = np.polyfit(range(len(veg_trends)), veg_trends, 1)[0]
+                                    # Negative trend = higher dry hazard
+                                    if veg_trend < 0:
+                                        trend_penalty = min(0.3, abs(veg_trend) * 0.1)
+                                        dry_score = min(1.0, dry_score + trend_penalty)
+                                except:
+                                    pass
+                break
+        
+        return dry_score
+    
+    def _calculate_dust_hazard(self, city: str) -> float:
+        """Calculate dust proxy hazard (H_dust)"""
+        # Based on bare/low-veg share and vegetation patch isolation
+        dust_score = 0.0
+        
+        # Initialize cache for bare percentages if needed
+        if 'bare_pct' not in self.data['cache']:
+            bare_pcts = []
+            for lulc_city in self.data['lulc_data']:
+                areas = lulc_city.get('areas_m2', {})
+                if areas:
+                    years = sorted([int(y) for y in areas.keys()])
+                    if years:
+                        latest_year = str(years[-1])
+                        bare_pct = areas[latest_year].get('Bare_Ground', {}).get('percentage', 0)
+                        bare_pcts.append(bare_pct)
+            self.data['cache']['bare_pct'] = bare_pcts
+        
+        # Bare ground and fragmentation from LULC
+        for lulc_city in self.data['lulc_data']:
+            if lulc_city.get('city') == city:
+                areas = lulc_city.get('areas_m2', {})
+                if areas:
+                    years = sorted([int(y) for y in areas.keys()])
+                    if years:
+                        latest_year = str(years[-1])
+                        bare_pct = areas[latest_year].get('Bare_Ground', {}).get('percentage', 0)
+                        dust_score = self.data_loader.pct_norm(
+                            self.data['cache']['bare_pct'], bare_pct
+                        )
+                break
+        
+        # Add fragmentation component from spatial data
+        spatial_city_data = self.data['spatial_data'].get('per_year', {}).get(city, {})
+        if spatial_city_data:
+            years = sorted([int(y) for y in spatial_city_data.keys()])
+            if years:
+                latest_year = str(years[-1])
+                patch_data = spatial_city_data[latest_year].get('veg_patches', {})
+                
+                # Higher isolation/fragmentation = higher dust risk
+                patch_count = patch_data.get('patch_count', 0)
+                if patch_count > 0:
+                    # More, smaller patches = more fragmentation
+                    fragmentation_score = self.data_loader.pct_norm(
+                        self.data['cache']['veg_patches'], patch_count
+                    )
+                    dust_score = (dust_score * 0.7 + fragmentation_score * 0.3)
+        
+        return min(1.0, dust_score)
+    
+    def _calculate_pluvial_hazard(self, city: str) -> float:
+        """Calculate pluvial proxy hazard (H_pluv)"""
+        # Based on built-up share and edge density (imperviousness/flow concentration)
+        pluvial_score = 0.0
+        
+        # Built-up percentage from LULC
+        for lulc_city in self.data['lulc_data']:
+            if lulc_city.get('city') == city:
+                areas = lulc_city.get('areas_m2', {})
+                if areas:
+                    years = sorted([int(y) for y in areas.keys()])
+                    if years:
+                        latest_year = str(years[-1])
+                        built_pct = areas[latest_year].get('Built_Area', {}).get('percentage', 0)
+                        pluvial_score = self.data_loader.pct_norm(
+                            self.data['cache']['built_pct'], built_pct
+                        )
+                break
+        
+        return pluvial_score
+    
+    def _calculate_viirs_exposure(self, city: str) -> float:
+        """Calculate VIIRS exposure component"""
+        viirs_score = 0.0
+        for nl_city in self.data['nightlights_data']:
+            if nl_city.get('city') == city:
+                years_data = nl_city.get('years', {})
+                if years_data:
+                    years = sorted([int(y) for y in years_data.keys()])
+                    if years:
+                        latest_year = str(years[-1])
+                        urban_nl = years_data[latest_year].get('stats', {}).get('urban_core', {}).get('mean', 0)
+                        viirs_score = self.data_loader.pct_norm(
+                            self.data['cache']['nightlights'], urban_nl
+                        )
+                break
+        return viirs_score
+    
+    def _calculate_veg_access_vulnerability(self, city: str) -> float:
+        """Calculate vegetation access vulnerability"""
+        veg_vuln = 0.0
+        spatial_city_data = self.data['spatial_data'].get('per_year', {}).get(city, {})
+        if spatial_city_data:
+            years = sorted([int(y) for y in spatial_city_data.keys()])
+            if years:
+                latest_year = str(years[-1])
+                veg_distance_m = spatial_city_data[latest_year].get('vegetation_accessibility', {}).get('city', {}).get('mean', 1000)
+                
+                # Higher distance = higher vulnerability
+                max_distance = 2000  # 2km as maximum reasonable distance
+                veg_vuln = min(1.0, veg_distance_m / max_distance)
+        
+        return veg_vuln
+    
+    def _calculate_fragmentation_vulnerability(self, city: str) -> float:
+        """Calculate fragmentation vulnerability"""
+        frag_vuln = 0.0
+        spatial_city_data = self.data['spatial_data'].get('per_year', {}).get(city, {})
+        if spatial_city_data:
+            years = sorted([int(y) for y in spatial_city_data.keys()])
+            if years:
+                latest_year = str(years[-1])
+                patch_data = spatial_city_data[latest_year].get('veg_patches', {})
+                
+                # More patches with smaller average size = higher fragmentation
+                patch_count = patch_data.get('patch_count', 0)
+                if patch_count > 0:
+                    frag_vuln = self.data_loader.pct_norm(
+                        self.data['cache']['veg_patches'], patch_count
+                    )
+        
+        return frag_vuln
+    
+    def _calculate_bio_trend_vulnerability(self, city: str) -> float:
+        """Calculate biomass/vegetation trend vulnerability"""
+        bio_vuln = 0.0
+        
+        # Check vegetation trends from LULC data
+        for lulc_city in self.data['lulc_data']:
+            if lulc_city.get('city') == city:
+                areas = lulc_city.get('areas_m2', {})
+                if areas:
+                    years = sorted([int(y) for y in areas.keys()])
+                    if len(years) >= 3:
+                        # Calculate vegetation trend over time
+                        veg_percentages = []
+                        for year in years:
+                            year_data = areas[str(year)]
+                            total_veg = (year_data.get('Trees', {}).get('percentage', 0) + 
+                                       year_data.get('Crops', {}).get('percentage', 0) +
+                                       year_data.get('Grass', {}).get('percentage', 0))
+                            veg_percentages.append(total_veg)
+                        
+                        try:
+                            veg_trend = np.polyfit(years, veg_percentages, 1)[0]
+                            # Negative trend = higher vulnerability
+                            if veg_trend < 0:
+                                bio_vuln = min(1.0, abs(veg_trend) * 2.0)  # Scale factor
+                        except:
+                            pass
+                break
+        
+        return bio_vuln
+    
+    def _calculate_greenspace_adaptive_capacity(self, city: str) -> float:
+        """Calculate greenspace adaptive capacity"""
+        green_capacity = 0.0
+        
+        # Vegetation percentage from LULC
+        for lulc_city in self.data['lulc_data']:
+            if lulc_city.get('city') == city:
+                areas = lulc_city.get('areas_m2', {})
+                if areas:
+                    years = sorted([int(y) for y in areas.keys()])
+                    if years:
+                        latest_year = str(years[-1])
+                        year_data = areas[latest_year]
+                        total_green = (year_data.get('Trees', {}).get('percentage', 0) + 
+                                     year_data.get('Crops', {}).get('percentage', 0) +
+                                     year_data.get('Grass', {}).get('percentage', 0))
+                        
+                        # Initialize cache for green percentages if needed
+                        if 'green_pct' not in self.data['cache']:
+                            green_pcts = []
+                            for lulc_city_cache in self.data['lulc_data']:
+                                areas_cache = lulc_city_cache.get('areas_m2', {})
+                                if areas_cache:
+                                    years_cache = sorted([int(y) for y in areas_cache.keys()])
+                                    if years_cache:
+                                        latest_year_cache = str(years_cache[-1])
+                                        year_data_cache = areas_cache[latest_year_cache]
+                                        total_green_cache = (year_data_cache.get('Trees', {}).get('percentage', 0) + 
+                                                           year_data_cache.get('Crops', {}).get('percentage', 0) +
+                                                           year_data_cache.get('Grass', {}).get('percentage', 0))
+                                        green_pcts.append(total_green_cache)
+                            self.data['cache']['green_pct'] = green_pcts
+                        
+                        green_capacity = self.data_loader.pct_norm(
+                            self.data['cache']['green_pct'], total_green
+                        )
+                break
+        
+        # Combine with accessibility if available
+        spatial_city_data = self.data['spatial_data'].get('per_year', {}).get(city, {})
+        if spatial_city_data:
+            years = sorted([int(y) for y in spatial_city_data.keys()])
+            if years:
+                latest_year = str(years[-1])
+                veg_distance_m = spatial_city_data[latest_year].get('vegetation_accessibility', {}).get('city', {}).get('mean', 1000)
+                
+                # Better accessibility = higher adaptive capacity
+                max_walking_distance = 1000
+                accessibility_score = max(0.0, 1.0 - (veg_distance_m / max_walking_distance))
+                green_capacity = (green_capacity * 0.6 + accessibility_score * 0.4)
+        
+        return green_capacity
