@@ -46,6 +46,10 @@ class ClimateRiskMetrics:
     healthcare_access_vulnerability: float = 0.0
     education_access_vulnerability: float = 0.0
     sanitation_vulnerability: float = 0.0
+    utilization_rate_vulnerability: float = 0.0
+    overcrowding_vulnerability: float = 0.0
+    building_age_vulnerability: float = 0.0
+    renovation_vulnerability: float = 0.0
     
     # Individual adaptive capacity components
     gdp_adaptive_capacity: float = 0.0
@@ -107,7 +111,11 @@ class IPCCRiskAssessmentService:
             'water_access': 0.15,      # Social sector: water infrastructure vulnerability
             'healthcare_access': 0.05, # Social sector: healthcare access vulnerability
             'education_access': 0.03,  # Social sector: education access vulnerability
-            'sanitation': 0.02         # Social sector: sanitation vulnerability
+            'sanitation': 0.02,        # Social sector: sanitation vulnerability
+            'utilization_rate': 0.08,  # Social sector: school utilization rate vulnerability
+            'overcrowding': 0.07,      # Social sector: school overcrowding vulnerability
+            'building_age': 0.03,      # Social sector: building age vulnerability
+            'renovation': 0.02         # Social sector: renovation status vulnerability
         }
         
         # IPCC AR6 adaptive capacity weights (from specification)
@@ -196,7 +204,7 @@ class IPCCRiskAssessmentService:
             )
         
         # Apply region-specific corrections for known data gaps
-        metrics = self._apply_regional_corrections(city, metrics)
+        #metrics = self._apply_regional_corrections(city, metrics)
         
         # Calculate composite scores
         metrics.overall_risk_score = self._calculate_overall_risk(metrics)
@@ -571,6 +579,72 @@ class IPCCRiskAssessmentService:
         except:
             return 0.5
     
+    def _calculate_utilization_rate_vulnerability(self, per_capita: Dict[str, Any]) -> float:
+        """Calculate utilization rate vulnerability from per capita metrics"""
+        try:
+            # utilization_rate is in percentage (e.g., 145.1 for 145.1%)
+            utilization_rate_pct = per_capita.get('utilization_rate', 85.0)
+            utilization_rate = utilization_rate_pct / 100.0  # Convert to decimal (0.0-1.0+ range)
+            
+            # Schools with multiple shifts effectively increase capacity, reducing overcrowding risk
+            # Optimal utilization is around 0.8-0.95 (80-95%)
+            # Under-utilization (< 50%) indicates inefficient infrastructure
+            # Over-utilization (> 100%) after accounting for shifts indicates true overcrowding
+            
+            if utilization_rate < 0.5:  # Under 50% utilization
+                # Under-utilization vulnerability
+                vulnerability = (0.5 - utilization_rate) * 1.5  # Scale 0.5->0 to 0->0.75
+            elif utilization_rate <= 1.0:  # 50-100% utilization (good range)
+                # Minimal vulnerability in optimal range
+                vulnerability = 0.1
+            else:  # Over 100% utilization (true overcrowding despite shifts)
+                # Overcrowding vulnerability increases more gradually
+                excess = utilization_rate - 1.0
+                vulnerability = 0.3 + min(0.7, excess * 1.0)  # Scale 0->0.7 to 0.3->1.0
+            
+            return min(1.0, max(0.0, vulnerability))
+        except:
+            return 0.5
+    
+    def _calculate_overcrowding_vulnerability(self, per_capita: Dict[str, Any]) -> float:
+        """Calculate overcrowding vulnerability from per capita metrics"""
+        try:
+            overcrowding_index = per_capita.get('overcrowding_index', 0.0)
+            
+            # Higher overcrowding index = higher vulnerability
+            # Scale: 0.0 = no overcrowding (0.0 vulnerability), 1.0 = severe overcrowding (1.0 vulnerability)
+            vulnerability = overcrowding_index
+            
+            return min(1.0, max(0.0, vulnerability))
+        except:
+            return 0.5
+    
+    def _calculate_building_age_vulnerability(self, per_capita: Dict[str, Any]) -> float:
+        """Calculate building age vulnerability from per capita metrics"""
+        try:
+            building_age_vulnerability = per_capita.get('building_age_vulnerability', 0.0)
+            
+            # Building age vulnerability is already calculated in social sector analysis
+            # Scale: 0.0 = modern buildings (0.0 vulnerability), 1.0 = very old buildings (1.0 vulnerability)
+            vulnerability = building_age_vulnerability
+            
+            return min(1.0, max(0.0, vulnerability))
+        except:
+            return 0.5
+    
+    def _calculate_renovation_vulnerability(self, per_capita: Dict[str, Any]) -> float:
+        """Calculate renovation status vulnerability from per capita metrics"""
+        try:
+            renovation_coverage = per_capita.get('renovation_coverage', 0.0)
+            
+            # Lower renovation coverage = higher vulnerability
+            # Scale: 1.0 = fully renovated (0.0 vulnerability), 0.0 = no renovations (1.0 vulnerability)
+            vulnerability = 1.0 - renovation_coverage
+            
+            return min(1.0, max(0.0, vulnerability))
+        except:
+            return 0.5
+    
     def _calculate_social_infrastructure_capacity(self, per_capita: Dict[str, Any]) -> float:
         """Calculate social infrastructure adaptive capacity from per capita metrics"""
         try:
@@ -643,6 +717,10 @@ class IPCCRiskAssessmentService:
         metrics.healthcare_access_vulnerability = self._calculate_healthcare_access_vulnerability(per_capita)
         metrics.education_access_vulnerability = self._calculate_education_access_vulnerability(per_capita)
         metrics.sanitation_vulnerability = self._calculate_sanitation_vulnerability(sanitation_indicators)
+        metrics.utilization_rate_vulnerability = self._calculate_utilization_rate_vulnerability(per_capita)
+        metrics.overcrowding_vulnerability = self._calculate_overcrowding_vulnerability(per_capita)
+        metrics.building_age_vulnerability = self._calculate_building_age_vulnerability(per_capita)
+        metrics.renovation_vulnerability = self._calculate_renovation_vulnerability(per_capita)
         
         # Calculate social sector adaptive capacity components
         metrics.social_infrastructure_capacity = self._calculate_social_infrastructure_capacity(per_capita)
@@ -657,7 +735,11 @@ class IPCCRiskAssessmentService:
             self.vulnerability_weights['water_access'] * metrics.water_access_vulnerability +
             self.vulnerability_weights['healthcare_access'] * metrics.healthcare_access_vulnerability +
             self.vulnerability_weights['education_access'] * metrics.education_access_vulnerability +
-            self.vulnerability_weights['sanitation'] * metrics.sanitation_vulnerability
+            self.vulnerability_weights['sanitation'] * metrics.sanitation_vulnerability +
+            self.vulnerability_weights['utilization_rate'] * metrics.utilization_rate_vulnerability +
+            self.vulnerability_weights['overcrowding'] * metrics.overcrowding_vulnerability +
+            self.vulnerability_weights['building_age'] * metrics.building_age_vulnerability +
+            self.vulnerability_weights['renovation'] * metrics.renovation_vulnerability
         )
         
         metrics.adaptive_capacity_score = (
