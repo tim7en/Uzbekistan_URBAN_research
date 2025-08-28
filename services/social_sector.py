@@ -137,6 +137,7 @@ def analyze_city_social_sector(city: str, external_data: Dict[str, Any]) -> Dict
                         "enrolled_students": int(properties.get('umumiy_uquvchi', 0)) if properties.get('umumiy_uquvchi') else 0,
                         "shifts": int(properties.get('smena', 1)) if properties.get('smena') else 1,
                         "construction_year": properties.get('qurilish_yili', ''),
+                        "renovation_year": properties.get('kapital_tamir', ''),
                         "building_material": properties.get('material_sten', ''),
                         "sanitation": {
                             "electricity": properties.get('elektr_kun_davomida', ''),
@@ -338,8 +339,10 @@ def _calculate_infrastructure_quality(schools: List[Dict[str, Any]]) -> Dict[str
 
     quality = {
         "modern_buildings": 0.0,  # Built after 2000
+        "recently_renovated": 0.0,  # Renovated after 2010
         "brick_construction": 0.0,
-        "multiple_shifts": 0.0
+        "multiple_shifts": 0.0,
+        "building_age_vulnerability": 0.0  # Combined age and renovation assessment
     }
 
     total_schools = len(schools)
@@ -353,6 +356,14 @@ def _calculate_infrastructure_quality(schools: List[Dict[str, Any]]) -> Dict[str
         except (ValueError, TypeError):
             pass
 
+        # Renovation year
+        try:
+            reno_year = int(school.get('renovation_year', 0))
+            if reno_year >= 2010:
+                quality["recently_renovated"] += 1
+        except (ValueError, TypeError):
+            pass
+
         # Building material
         if school.get('building_material') == 'gisht':
             quality["brick_construction"] += 1
@@ -362,8 +373,11 @@ def _calculate_infrastructure_quality(schools: List[Dict[str, Any]]) -> Dict[str
             quality["multiple_shifts"] += 1
 
     # Convert to percentages
-    for key in quality:
+    for key in ["modern_buildings", "recently_renovated", "brick_construction", "multiple_shifts"]:
         quality[key] = round((quality[key] / total_schools) * 100, 1) if total_schools > 0 else 0.0
+
+    # Calculate building age vulnerability index
+    quality["building_age_vulnerability"] = _calculate_building_age_vulnerability(schools)
 
     return quality
 
@@ -428,6 +442,58 @@ def _analyze_water_by_district(schools: List[Dict[str, Any]]) -> Dict[str, Any]:
         }
 
     return result
+
+
+def _calculate_building_age_vulnerability(schools: List[Dict[str, Any]]) -> float:
+    """Calculate building age vulnerability index for climate risk assessment.
+
+    Vulnerability scoring based on building age and renovation status:
+    - Recently renovated (2010+): Low vulnerability (0.1)
+    - Modern buildings (2000-2009): Moderate vulnerability (0.3)
+    - Older buildings with recent renovation: Moderate vulnerability (0.4)
+    - Older buildings without renovation: High vulnerability (0.7)
+    - Very old buildings: Extreme vulnerability (0.9)
+
+    Returns: Vulnerability index from 0.0 (no vulnerability) to 1.0 (extreme vulnerability)
+    """
+    if not schools:
+        return 0.0
+
+    total_vulnerability = 0.0
+    current_year = 2024  # Use current year for age calculation
+
+    for school in schools:
+        try:
+            construction_year = int(school.get('construction_year', 0))
+            renovation_year = int(school.get('renovation_year', 0)) if school.get('renovation_year') else 0
+
+            building_age = current_year - construction_year
+            years_since_renovation = current_year - renovation_year if renovation_year > 0 else float('inf')
+
+            # Determine vulnerability based on age and renovation status
+            if renovation_year >= 2010:
+                # Recently renovated - low vulnerability
+                vulnerability = 0.1
+            elif construction_year >= 2000:
+                # Modern building - moderate vulnerability
+                vulnerability = 0.3
+            elif renovation_year > 0 and renovation_year >= 2000:
+                # Older building but renovated recently - moderate vulnerability
+                vulnerability = 0.4
+            elif building_age > 50:
+                # Very old building - extreme vulnerability
+                vulnerability = 0.9
+            else:
+                # Older building without recent renovation - high vulnerability
+                vulnerability = 0.7
+
+            total_vulnerability += vulnerability
+
+        except (ValueError, TypeError):
+            # If we can't parse the years, assume moderate vulnerability
+            total_vulnerability += 0.5
+
+    return round(total_vulnerability / len(schools), 3)
 
 
 def _calculate_per_capita_metrics(summary: Dict[str, Any], population: int) -> Dict[str, Any]:

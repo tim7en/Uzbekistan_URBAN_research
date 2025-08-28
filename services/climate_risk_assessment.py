@@ -46,6 +46,7 @@ class ClimateRiskMetrics:
     healthcare_access_vulnerability: float = 0.0
     education_access_vulnerability: float = 0.0
     sanitation_vulnerability: float = 0.0
+    building_age_vulnerability: float = 0.0
     
     # Individual adaptive capacity components
     gdp_adaptive_capacity: float = 0.0
@@ -100,14 +101,15 @@ class IPCCRiskAssessmentService:
         
         # IPCC AR6 vulnerability weights (from specification)
         self.vulnerability_weights = {
-            'income_inv': 0.30,
-            'veg_access': 0.20,
-            'fragment': 0.15,
-            'delta_bio_veg': 0.10,
-            'water_access': 0.15,      # Social sector: water infrastructure vulnerability
-            'healthcare_access': 0.05, # Social sector: healthcare access vulnerability
-            'education_access': 0.03,  # Social sector: education access vulnerability
-            'sanitation': 0.02         # Social sector: sanitation vulnerability
+            'income_inv': 0.25,
+            'veg_access': 0.15,
+            'fragment': 0.10,
+            'delta_bio_veg': 0.08,
+            'water_access': 0.18,      # Social sector: water infrastructure vulnerability
+            'healthcare_access': 0.08, # Social sector: healthcare access vulnerability
+            'education_access': 0.06,  # Social sector: education access vulnerability
+            'sanitation': 0.04,        # Social sector: sanitation vulnerability
+            'building_age': 0.06       # Social sector: building age and renovation vulnerability
         }
         
         # IPCC AR6 adaptive capacity weights (from specification)
@@ -196,7 +198,7 @@ class IPCCRiskAssessmentService:
             )
         
         # Apply region-specific corrections for known data gaps
-        metrics = self._apply_regional_corrections(city, metrics)
+        #metrics = self._apply_regional_corrections(city, metrics)
         
         # Calculate composite scores
         metrics.overall_risk_score = self._calculate_overall_risk(metrics)
@@ -509,7 +511,10 @@ class IPCCRiskAssessmentService:
         """Calculate water access vulnerability from sanitation indicators"""
         try:
             # Extract water source distribution
-            water_sources = sanitation_indicators.get('water_source_distribution', {})
+            water_sources = sanitation_indicators.get('water_sources', {})
+            
+            # Get electricity access percentage
+            electricity_access_pct = sanitation_indicators.get('electricity_access', 0.0)
             
             # Calculate vulnerability based on water source quality
             # Higher vulnerability for carried/none sources, lower for centralized
@@ -523,14 +528,21 @@ class IPCCRiskAssessmentService:
                 return 0.5  # Default moderate vulnerability
             
             # Vulnerability weights: centralized (0.1), local (0.3), carried (0.7), none (1.0)
-            vulnerability = (
+            water_vulnerability = (
                 centralized * 0.1 +
                 local * 0.3 +
                 carried * 0.7 +
                 none * 1.0
             ) / total
             
-            return min(1.0, max(0.0, vulnerability))
+            # Adjust for electricity access (critical for water systems)
+            # Low electricity access increases water system vulnerability
+            electricity_penalty = (100.0 - electricity_access_pct) / 100.0 * 0.2
+            
+            # Combine water source and electricity vulnerabilities
+            combined_vulnerability = water_vulnerability + electricity_penalty
+            
+            return min(1.0, max(0.0, combined_vulnerability))
         except:
             return 0.5  # Default moderate vulnerability
     
@@ -637,12 +649,14 @@ class IPCCRiskAssessmentService:
         # Extract per capita metrics
         per_capita = social_data.get('per_capita_metrics', {})
         sanitation_indicators = social_data.get('sanitation_indicators', {})
+        infrastructure_quality = social_data.get('infrastructure_quality', {})
         
         # Calculate social sector vulnerability components
         metrics.water_access_vulnerability = self._calculate_water_access_vulnerability(sanitation_indicators)
         metrics.healthcare_access_vulnerability = self._calculate_healthcare_access_vulnerability(per_capita)
         metrics.education_access_vulnerability = self._calculate_education_access_vulnerability(per_capita)
         metrics.sanitation_vulnerability = self._calculate_sanitation_vulnerability(sanitation_indicators)
+        metrics.building_age_vulnerability = infrastructure_quality.get('building_age_vulnerability', 0.0)
         
         # Calculate social sector adaptive capacity components
         metrics.social_infrastructure_capacity = self._calculate_social_infrastructure_capacity(per_capita)
@@ -657,7 +671,8 @@ class IPCCRiskAssessmentService:
             self.vulnerability_weights['water_access'] * metrics.water_access_vulnerability +
             self.vulnerability_weights['healthcare_access'] * metrics.healthcare_access_vulnerability +
             self.vulnerability_weights['education_access'] * metrics.education_access_vulnerability +
-            self.vulnerability_weights['sanitation'] * metrics.sanitation_vulnerability
+            self.vulnerability_weights['sanitation'] * metrics.sanitation_vulnerability +
+            self.vulnerability_weights['building_age'] * metrics.building_age_vulnerability
         )
         
         metrics.adaptive_capacity_score = (
