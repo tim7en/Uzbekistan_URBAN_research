@@ -126,3 +126,92 @@ Tashkent: H=0.587, E=1.000, V=0.432, AC=0.715, Risk=0.254
 6. **Seasonal Capability**: Framework ready for seasonal processing
 
 The implementation now provides a comprehensive, scientifically sound climate risk assessment that fully aligns with the IPCC AR6 framework for Uzbekistan's urban context.
+
+## 10. Water Scarcity Assessment Integration
+
+**New Feature**: Comprehensive water scarcity risk assessment module
+
+### Implementation Details
+
+The water scarcity assessment evaluates water-related risks using IPCC AR6 water hazard indicators:
+
+```python
+# Water Scarcity Assessment Components
+water_supply_risk = 0.60 * supply_indicators + 0.40 * surface_water_change
+water_demand_risk = 0.70 * cropland_demand + 0.30 * population_pressure  
+overall_water_scarcity_score = 0.60 * supply_risk + 0.40 * demand_risk
+```
+
+### Water Scarcity Indicators
+
+**Supply-side indicators** (60% weight):
+- **Aridity Index** (AI): P/PET ratio (lower = drier baseline)
+- **Climatic Water Deficit** (CWD): Unmet water demand (higher = greater deficit)
+- **Drought Frequency**: Fraction of months with PDSI ≤ -2
+
+**Surface water indicators**:
+- **JRC GSW Change**: Surface water area change (negative = loss)
+
+**Demand proxies** (40% weight):
+- **Cropland Fraction**: ESA WorldCover agricultural land %
+- **Population Density**: GPW population pressure indicator
+
+**External benchmarks**:
+- **Aqueduct BWS Score**: WRI baseline water stress (1-5 scale)
+
+### Risk Classification
+
+```python
+if score >= 0.7: "Critical"
+elif score >= 0.5: "High" 
+elif score >= 0.3: "Moderate"
+else: "Low"
+```
+
+### Usage
+
+```bash
+# Run water scarcity assessment for all cities
+python run_water_scarcity_unit.py --assess --export-json
+
+# Run for specific cities with verbose output
+python run_water_scarcity_unit.py --assess --cities Tashkent Nukus --verbose
+
+# Generate summary report only
+python run_water_scarcity_unit.py --summary
+```
+
+### Uzbekistan Results
+
+Recent assessment shows concerning water scarcity patterns:
+
+```
+Total Cities: 14
+Average Score: 0.516 (High risk)
+Risk Distribution: High (11 cities), Moderate (3 cities)
+
+Top Risk Cities:
+1. Nukus: 0.553 (High) - Aral Sea region water stress
+2. Urgench: 0.553 (High) - Khorezm region irrigation demands  
+3. Andijan: 0.524 (High) - Fergana Valley agriculture
+4. Namangan: 0.524 (High) - Dense population pressure
+5. Fergana: 0.524 (High) - Regional water competition
+```
+
+### Integration with Climate Risk Framework
+
+Water scarcity metrics are integrated into the main `ClimateRiskMetrics` dataclass:
+
+```python
+@dataclass
+class ClimateRiskMetrics:
+    # ... existing climate components ...
+    
+    # Water scarcity components
+    water_supply_risk: float = 0.0
+    water_demand_risk: float = 0.0  
+    overall_water_scarcity_score: float = 0.0
+    water_scarcity_level: str = "Unknown"
+```
+
+This enables comprehensive multi-hazard risk assessment including both climate and water-related vulnerabilities for Uzbekistan's urban areas.

@@ -48,6 +48,17 @@ class ClimateRiskMetrics:
     sanitation_vulnerability: float = 0.0
     building_age_vulnerability: float = 0.0
     
+    # Water Scarcity Components
+    water_supply_risk: float = 0.0
+    water_demand_risk: float = 0.0
+    overall_water_scarcity_score: float = 0.0
+    water_scarcity_level: str = "Unknown"
+    aridity_index: float = 0.0
+    climatic_water_deficit: float = 0.0
+    drought_frequency: float = 0.0
+    surface_water_change: float = 0.0
+    cropland_fraction: float = 0.0
+    
     # Individual adaptive capacity components
     gdp_adaptive_capacity: float = 0.0
     greenspace_adaptive_capacity: float = 0.0
@@ -77,6 +88,9 @@ class IPCCRiskAssessmentService:
         self.data_loader = data_loader
         self.data = data_loader.load_all_data()
         
+        # Load water scarcity data
+        self.water_scarcity_data = self._load_water_scarcity_data()
+        
         # IPCC AR6 risk thresholds and weights
         self.risk_thresholds = {
             'heat_stress': {'low': 1.0, 'medium': 2.0, 'high': 3.0, 'very_high': 4.0},
@@ -101,15 +115,16 @@ class IPCCRiskAssessmentService:
         
         # IPCC AR6 vulnerability weights (from specification)
         self.vulnerability_weights = {
-            'income_inv': 0.25,
-            'veg_access': 0.15,
-            'fragment': 0.10,
-            'delta_bio_veg': 0.08,
-            'water_access': 0.18,      # Social sector: water infrastructure vulnerability
-            'healthcare_access': 0.08, # Social sector: healthcare access vulnerability
-            'education_access': 0.06,  # Social sector: education access vulnerability
-            'sanitation': 0.04,        # Social sector: sanitation vulnerability
-            'building_age': 0.06       # Social sector: building age and renovation vulnerability
+            'income_inv': 0.20,
+            'veg_access': 0.12,
+            'fragment': 0.08,
+            'delta_bio_veg': 0.06,
+            'water_scarcity': 0.22,    # Water scarcity vulnerability (critical for arid regions)
+            'water_access': 0.14,      # Social sector: water infrastructure vulnerability
+            'healthcare_access': 0.06, # Social sector: healthcare access vulnerability
+            'education_access': 0.05,  # Social sector: education access vulnerability
+            'sanitation': 0.03,        # Social sector: sanitation vulnerability
+            'building_age': 0.04       # Social sector: building age and renovation vulnerability
         }
         
         # IPCC AR6 adaptive capacity weights (from specification)
@@ -121,11 +136,38 @@ class IPCCRiskAssessmentService:
             'water_system': 0.05           # Social sector: water system resilience
         }
     
+    def _load_water_scarcity_data(self) -> Dict[str, Dict]:
+        """Load water scarcity assessment data from the water scarcity service"""
+        try:
+            from .water_scarcity_gee import WaterScarcityGEEAssessment
+            
+            water_service = WaterScarcityGEEAssessment(self.data_loader)
+            water_data = water_service.assess_all_cities_water_scarcity()
+            
+            # Convert to dictionary format for easy lookup
+            water_dict = {}
+            for city, assessment in water_data.items():
+                water_dict[city] = {
+                    'water_scarcity_index': assessment.overall_water_scarcity_score,
+                    'drought_frequency': assessment.drought_frequency,
+                    'water_stress_level': assessment.aqueduct_bws_score,
+                    'irrigation_demand': assessment.cropland_fraction,
+                    'surface_water_availability': assessment.surface_water_change
+                }
+            
+            print(f"Loaded water scarcity data for {len(water_dict)} cities")
+            return water_dict
+            
+        except Exception as e:
+            print(f"Warning: Could not load water scarcity data: {e}")
+            return {}
+    
     def assess_all_cities(self) -> Dict[str, ClimateRiskMetrics]:
         """Run full climate risk assessment for all cities"""
         print("Running IPCC AR6-based climate risk assessment...")
         
-        all_cities = set(self.data['temperature_data'].keys()) | set(self.data['suhi_data'].keys())
+        # Assess all cities from population data (which includes all UZBEKISTAN_CITIES)
+        all_cities = list(self.data['population_data'].keys())
         
         results = {}
         for city in all_cities:
@@ -188,7 +230,8 @@ class IPCCRiskAssessmentService:
                 self.vulnerability_weights['income_inv'] * metrics.income_vulnerability +
                 self.vulnerability_weights['veg_access'] * metrics.veg_access_vulnerability +
                 self.vulnerability_weights['fragment'] * metrics.fragmentation_vulnerability +
-                self.vulnerability_weights['delta_bio_veg'] * metrics.bio_trend_vulnerability
+                self.vulnerability_weights['delta_bio_veg'] * metrics.bio_trend_vulnerability +
+                self.vulnerability_weights['water_scarcity'] * metrics.water_scarcity_vulnerability
             )
             
             metrics.adaptive_capacity_score = (
@@ -458,9 +501,16 @@ class IPCCRiskAssessmentService:
                 # Higher distance = higher vulnerability
                 green_vulnerability = 1.0 - accessibility_score
         
+        # Water scarcity vulnerability
+        water_vulnerability = 0.0
+        if city in self.water_scarcity_data:
+            water_data = self.water_scarcity_data[city]
+            # Use water scarcity index as vulnerability (higher scarcity = higher vulnerability)
+            water_vulnerability = water_data.get('water_scarcity_index', 0.0)
+        
         # Weighted vulnerability score
-        vulnerability_score = (0.5 * gdp_vulnerability + 0.3 * built_vulnerability + 
-                              0.2 * green_vulnerability)
+        vulnerability_score = (0.4 * gdp_vulnerability + 0.25 * built_vulnerability + 
+                              0.15 * green_vulnerability + 0.2 * water_vulnerability)
         
         return min(1.0, vulnerability_score)
     
@@ -786,6 +836,9 @@ class IPCCRiskAssessmentService:
         # Biomass/vegetation trend vulnerability (V_delta_bio_veg)
         metrics.bio_trend_vulnerability = self._calculate_bio_trend_vulnerability(city)
         
+        # Water scarcity vulnerability (V_water_scarcity)
+        metrics.water_scarcity_vulnerability = self._calculate_water_scarcity_vulnerability(city)
+        
         return metrics
     
     def _calculate_adaptive_capacity_components(self, city: str, metrics: ClimateRiskMetrics) -> ClimateRiskMetrics:
@@ -863,11 +916,19 @@ class IPCCRiskAssessmentService:
     # Individual hazard calculation methods
     def _calculate_heat_hazard(self, city: str) -> float:
         """Calculate heat hazard component (H_heat)"""
+        # Use climatological estimation when temperature data is unavailable
+        if not self.data['temperature_data'].get(city) and not self.data['suhi_data'].get(city):
+            return self._estimate_climatological_heat_hazard(city)
+
         # Use existing heat hazard calculation from calculate_hazard_score
         return self.calculate_hazard_score(city)
     
     def _calculate_dry_hazard(self, city: str) -> float:
         """Calculate dry/ecological stress hazard (H_dry)"""
+        # Use climatological estimation when LULC data is unavailable
+        if not self.data['lulc_data']:
+            return self._estimate_climatological_dry_hazard(city)
+        
         # Based on low NDVI/EVI in summer, negative seasonal changes
         dry_score = 0.0
         
@@ -932,6 +993,10 @@ class IPCCRiskAssessmentService:
     
     def _calculate_dust_hazard(self, city: str) -> float:
         """Calculate dust proxy hazard (H_dust)"""
+        # Use climatological estimation when LULC data is unavailable
+        if not self.data['lulc_data']:
+            return self._estimate_climatological_dust_hazard(city)
+        
         # Based on bare/low-veg share and vegetation patch isolation
         dust_score = 0.0
         
@@ -983,6 +1048,10 @@ class IPCCRiskAssessmentService:
     
     def _calculate_pluvial_hazard(self, city: str) -> float:
         """Calculate pluvial proxy hazard (H_pluv)"""
+        # Use climatological estimation when LULC data is unavailable
+        if not self.data['lulc_data']:
+            return self._estimate_climatological_pluvial_hazard(city)
+        
         # Based on built-up share and edge density (imperviousness/flow concentration)
         pluvial_score = 0.0
         
@@ -1084,6 +1153,29 @@ class IPCCRiskAssessmentService:
                 break
         
         return bio_vuln
+    
+    def _calculate_water_scarcity_vulnerability(self, city: str) -> float:
+        """Calculate water scarcity vulnerability based on water scarcity assessment"""
+        if city not in self.water_scarcity_data:
+            return 0.5  # Default moderate vulnerability if no data
+        
+        water_data = self.water_scarcity_data[city]
+        
+        # Use water scarcity index as primary vulnerability indicator
+        water_scarcity_index = water_data.get('water_scarcity_index', 0.0)
+        
+        # Additional factors from drought frequency and water stress
+        drought_frequency = water_data.get('drought_frequency', 0.0)
+        water_stress_level = water_data.get('water_stress_level', 0.0)
+        
+        # Combine factors: higher scarcity, more frequent droughts, higher stress = higher vulnerability
+        combined_vulnerability = (
+            0.5 * water_scarcity_index +
+            0.3 * drought_frequency +
+            0.2 * water_stress_level
+        )
+        
+        return min(1.0, combined_vulnerability)
     
     def _calculate_greenspace_adaptive_capacity(self, city: str) -> float:
         """Calculate greenspace adaptive capacity"""
@@ -1312,3 +1404,184 @@ class IPCCRiskAssessmentService:
             print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability")
         
         return metrics
+
+    def _estimate_climatological_heat_hazard(self, city: str) -> float:
+        """Estimate heat hazard based on climatological knowledge of Uzbekistan"""
+        from .utils import UZBEKISTAN_CITIES
+
+        if city not in UZBEKISTAN_CITIES:
+            return 0.3  # Default moderate heat hazard
+
+        city_info = UZBEKISTAN_CITIES[city]
+        lat, lon = city_info['lat'], city_info['lon']
+
+        # Uzbekistan climate characteristics
+        # Northern cities (cooler summers) vs Southern cities (hotter summers)
+        # Western cities (arid) vs Eastern cities (relatively more moderate)
+
+        base_heat_hazard = 0.0
+
+        # Latitude-based heat intensity (southern cities hotter)
+        if lat < 39.0:  # Southern cities (Termez, Qarshi, Bukhara)
+            base_heat_hazard = 0.8
+        elif lat < 40.5:  # Central cities (Samarkand, Jizzakh, Navoiy)
+            base_heat_hazard = 0.7
+        elif lat < 41.5:  # Northern cities (Tashkent, Nurafshon, Andijan)
+            base_heat_hazard = 0.6
+        else:  # Northernmost cities (Namangan, Fergana, Urgench)
+            base_heat_hazard = 0.5
+
+        # Longitude-based aridity adjustment (western cities more arid/hot)
+        if lon < 65.0:  # Western cities (more arid)
+            base_heat_hazard += 0.1
+        elif lon > 70.0:  # Eastern cities (Fergana Valley - more moderate)
+            base_heat_hazard -= 0.1
+
+        # City-specific adjustments based on known climate patterns
+        city_adjustments = {
+            'Tashkent': 0.0,    # Capital, some urban cooling
+            'Samarkand': 0.05,  # Historic city, moderate climate
+            'Bukhara': 0.1,     # Desert climate, very hot
+            'Khiva': 0.15,      # Arid desert climate
+            'Urgench': 0.15,    # Arid desert climate
+            'Nukus': 0.2,       # Extreme desert climate
+            'Termez': 0.1,      # Southern desert climate
+            'Qarshi': 0.1,      # Southern desert climate
+            'Andijan': -0.05,   # Fergana Valley, more moderate
+            'Fergana': -0.05,   # Fergana Valley, more moderate
+            'Namangan': -0.05,  # Fergana Valley, more moderate
+        }
+
+        adjustment = city_adjustments.get(city, 0.0)
+        heat_hazard = max(0.0, min(1.0, base_heat_hazard + adjustment))
+
+        return heat_hazard
+
+    def _estimate_climatological_dry_hazard(self, city: str) -> float:
+        """Estimate dry/ecological hazard based on aridity patterns"""
+        from .utils import UZBEKISTAN_CITIES
+
+        if city not in UZBEKISTAN_CITIES:
+            return 0.4  # Default moderate dry hazard
+
+        city_info = UZBEKISTAN_CITIES[city]
+        lat, lon = city_info['lat'], city_info['lon']
+
+        # Aridity increases from east to west and north to south
+        base_dry_hazard = 0.0
+
+        # Longitude-based aridity (western cities more arid)
+        if lon < 60.0:  # Extreme west (Nukus, Urgench)
+            base_dry_hazard = 0.9
+        elif lon < 65.0:  # Western cities
+            base_dry_hazard = 0.8
+        elif lon < 68.0:  # Central cities
+            base_dry_hazard = 0.6
+        elif lon < 70.0:  # Eastern cities
+            base_dry_hazard = 0.4
+        else:  # Fergana Valley (more precipitation)
+            base_dry_hazard = 0.3
+
+        # Latitude adjustment (southern cities slightly more arid)
+        if lat < 39.0:
+            base_dry_hazard += 0.1
+
+        # City-specific adjustments
+        city_adjustments = {
+            'Nukus': 0.1,       # Aral Sea region, extremely arid
+            'Urgench': 0.1,     # Khorezm region, very arid
+            'Bukhara': 0.05,    # Kyzylkum desert influence
+            'Navoiy': 0.05,     # Desert mining region
+            'Andijan': -0.1,    # Fergana Valley, irrigated agriculture
+            'Fergana': -0.1,    # Fergana Valley, irrigated agriculture
+            'Namangan': -0.1,   # Fergana Valley, irrigated agriculture
+            'Tashkent': -0.05,  # Better water infrastructure
+        }
+
+        adjustment = city_adjustments.get(city, 0.0)
+        dry_hazard = max(0.0, min(1.0, base_dry_hazard + adjustment))
+
+        return dry_hazard
+
+    def _estimate_climatological_dust_hazard(self, city: str) -> float:
+        """Estimate dust hazard based on desert proximity and wind patterns"""
+        from .utils import UZBEKISTAN_CITIES
+
+        if city not in UZBEKISTAN_CITIES:
+            return 0.3  # Default moderate dust hazard
+
+        city_info = UZBEKISTAN_CITIES[city]
+        lat, lon = city_info['lat'], city_info['lon']
+
+        # Dust hazard based on proximity to deserts and wind patterns
+        base_dust_hazard = 0.0
+
+        # Western cities near Kyzylkum and Aral Sea deserts
+        if lon < 65.0:
+            base_dust_hazard = 0.8
+        elif lon < 68.0:
+            base_dust_hazard = 0.6
+        else:
+            base_dust_hazard = 0.4
+
+        # Southern cities affected by desert winds
+        if lat < 39.0:
+            base_dust_hazard += 0.1
+
+        # City-specific adjustments
+        city_adjustments = {
+            'Nukus': 0.2,       # Near Aral Sea disaster zone
+            'Urgench': 0.1,     # Khorezm desert winds
+            'Bukhara': 0.1,     # Kyzylkum desert proximity
+            'Navoiy': 0.1,      # Desert mining operations
+            'Tashkent': -0.1,   # Urban area, less dust
+            'Andijan': -0.1,    # Mountain-protected valley
+            'Fergana': -0.1,    # Mountain-protected valley
+            'Namangan': -0.1,   # Mountain-protected valley
+        }
+
+        adjustment = city_adjustments.get(city, 0.0)
+        dust_hazard = max(0.0, min(1.0, base_dust_hazard + adjustment))
+
+        return dust_hazard
+
+    def _estimate_climatological_pluvial_hazard(self, city: str) -> float:
+        """Estimate pluvial (heavy rain) hazard based on climate patterns"""
+        from .utils import UZBEKISTAN_CITIES
+
+        if city not in UZBEKISTAN_CITIES:
+            return 0.2  # Default low pluvial hazard
+
+        city_info = UZBEKISTAN_CITIES[city]
+        lat, lon = city_info['lat'], city_info['lon']
+
+        # Pluvial hazard based on monsoon influence and topography
+        base_pluvial_hazard = 0.0
+
+        # Eastern cities (Fergana Valley) get more precipitation
+        if lon > 70.0:
+            base_pluvial_hazard = 0.5
+        elif lon > 68.0:
+            base_pluvial_hazard = 0.3
+        else:
+            base_pluvial_hazard = 0.2
+
+        # Northern cities slightly more precipitation
+        if lat > 40.5:
+            base_pluvial_hazard += 0.1
+
+        # City-specific adjustments
+        city_adjustments = {
+            'Andijan': 0.1,     # Fergana Valley, more rainfall
+            'Fergana': 0.1,     # Fergana Valley, more rainfall
+            'Namangan': 0.1,    # Fergana Valley, more rainfall
+            'Tashkent': 0.05,   # Moderate rainfall
+            'Nukus': -0.1,      # Extremely arid
+            'Urgench': -0.1,    # Very arid
+            'Bukhara': -0.05,   # Desert climate
+        }
+
+        adjustment = city_adjustments.get(city, 0.0)
+        pluvial_hazard = max(0.0, min(1.0, base_pluvial_hazard + adjustment))
+
+        return pluvial_hazard

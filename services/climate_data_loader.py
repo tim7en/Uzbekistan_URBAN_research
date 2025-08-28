@@ -219,30 +219,20 @@ class ClimateDataLoader:
     
     def _initialize_population_data(self):
         """Initialize population data for cities"""
-        all_cities = set(self.temperature_data.keys()) | set(self.suhi_data.keys())
-
-        for city in all_cities:
-            # Prefer explicit data from UZBEK_CITIES_DATA when available
-            info = UZBEK_CITIES_DATA.get(city)
-            if info:
-                pop = info.get('pop_2024')
-                area = info.get('area_km2')
-                gdp = info.get('gdp_per_capita')
-                density = None
-                if pop and area:
-                    density = pop / area if area > 0 else None
-                cp = CityPopulationData(city=city,
-                                        population_2024=pop,
-                                        density_per_km2=density,
-                                        gdp_per_capita_usd=gdp,
-                                        urban_area_km2=area)
-            else:
-                # fallback to default behavior
-                cp = CityPopulationData(city=city)
-
+        from .utils import UZBEKISTAN_CITIES
+        
+        # Initialize population data for all cities in UZBEKISTAN_CITIES
+        for city, info in UZBEKISTAN_CITIES.items():
+            pop = info.get('population')
+            gdp = 2000  # Default GDP per capita for Uzbekistan
+            
+            cp = CityPopulationData(city=city,
+                                    population_2024=pop,
+                                    gdp_per_capita_usd=gdp)
+            
             self.population_data[city] = cp
 
-        print(f"[OK] Initialized assessment for {len(self.population_data)} cities (populated from UZBEK_CITIES_DATA where available)")
+        print(f"[OK] Initialized assessment for {len(self.population_data)} cities (populated from UZBEKISTAN_CITIES where available)")
     
     def _initialize_data_cache(self):
         """Initialize data cache for percentile-based normalization"""
