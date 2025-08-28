@@ -41,10 +41,20 @@ class ClimateRiskMetrics:
     fragmentation_vulnerability: float = 0.0
     bio_trend_vulnerability: float = 0.0
     
+    # Social Sector Vulnerability Components
+    water_access_vulnerability: float = 0.0
+    healthcare_access_vulnerability: float = 0.0
+    education_access_vulnerability: float = 0.0
+    sanitation_vulnerability: float = 0.0
+    
     # Individual adaptive capacity components
     gdp_adaptive_capacity: float = 0.0
     greenspace_adaptive_capacity: float = 0.0
     services_adaptive_capacity: float = 0.0
+    
+    # Social Sector Adaptive Capacity Components
+    social_infrastructure_capacity: float = 0.0
+    water_system_capacity: float = 0.0
     
     # Composite scores
     overall_risk_score: float = 0.0
@@ -90,17 +100,23 @@ class IPCCRiskAssessmentService:
         
         # IPCC AR6 vulnerability weights (from specification)
         self.vulnerability_weights = {
-            'income_inv': 0.40,
-            'veg_access': 0.30,
-            'fragment': 0.20,
-            'delta_bio_veg': 0.10
+            'income_inv': 0.30,
+            'veg_access': 0.20,
+            'fragment': 0.15,
+            'delta_bio_veg': 0.10,
+            'water_access': 0.15,      # Social sector: water infrastructure vulnerability
+            'healthcare_access': 0.05, # Social sector: healthcare access vulnerability
+            'education_access': 0.03,  # Social sector: education access vulnerability
+            'sanitation': 0.02         # Social sector: sanitation vulnerability
         }
         
         # IPCC AR6 adaptive capacity weights (from specification)
         self.adaptive_capacity_weights = {
-            'gdp_pc': 0.50,
-            'greenspace': 0.30,
-            'services': 0.20
+            'gdp_pc': 0.40,
+            'greenspace': 0.25,
+            'services': 0.15,
+            'social_infrastructure': 0.15,  # Social sector: schools, hospitals per capita
+            'water_system': 0.05           # Social sector: water system resilience
         }
     
     def assess_all_cities(self) -> Dict[str, ClimateRiskMetrics]:
@@ -146,32 +162,38 @@ class IPCCRiskAssessmentService:
         metrics = self._calculate_vulnerability_components(city, metrics)
         metrics = self._calculate_adaptive_capacity_components(city, metrics)
         
-        # Calculate composite scores using IPCC AR6 weights
-        metrics.hazard_score = (
-            self.hazard_weights['heat'] * metrics.heat_hazard +
-            self.hazard_weights['dry'] * metrics.dry_hazard +
-            self.hazard_weights['pluv'] * metrics.pluvial_hazard +
-            self.hazard_weights['dust'] * metrics.dust_hazard
-        )
+        # Load and integrate social sector data
+        social_data = self._load_social_sector_data(city)
+        if social_data:
+            metrics = self._integrate_social_sector_data(city, metrics, social_data)
         
-        metrics.exposure_score = (
-            self.exposure_weights['population'] * metrics.population_exposure +
-            self.exposure_weights['gdp'] * metrics.gdp_exposure +
-            self.exposure_weights['viirs'] * metrics.viirs_exposure
-        )
-        
-        metrics.vulnerability_score = (
-            self.vulnerability_weights['income_inv'] * metrics.income_vulnerability +
-            self.vulnerability_weights['veg_access'] * metrics.veg_access_vulnerability +
-            self.vulnerability_weights['fragment'] * metrics.fragmentation_vulnerability +
-            self.vulnerability_weights['delta_bio_veg'] * metrics.bio_trend_vulnerability
-        )
-        
-        metrics.adaptive_capacity_score = (
-            self.adaptive_capacity_weights['gdp_pc'] * metrics.gdp_adaptive_capacity +
-            self.adaptive_capacity_weights['greenspace'] * metrics.greenspace_adaptive_capacity +
-            self.adaptive_capacity_weights['services'] * metrics.services_adaptive_capacity
-        )
+        # Calculate composite scores using IPCC AR6 weights (only if social sector data not integrated)
+        if not social_data:
+            metrics.hazard_score = (
+                self.hazard_weights['heat'] * metrics.heat_hazard +
+                self.hazard_weights['dry'] * metrics.dry_hazard +
+                self.hazard_weights['pluv'] * metrics.pluvial_hazard +
+                self.hazard_weights['dust'] * metrics.dust_hazard
+            )
+            
+            metrics.exposure_score = (
+                self.exposure_weights['population'] * metrics.population_exposure +
+                self.exposure_weights['gdp'] * metrics.gdp_exposure +
+                self.exposure_weights['viirs'] * metrics.viirs_exposure
+            )
+            
+            metrics.vulnerability_score = (
+                self.vulnerability_weights['income_inv'] * metrics.income_vulnerability +
+                self.vulnerability_weights['veg_access'] * metrics.veg_access_vulnerability +
+                self.vulnerability_weights['fragment'] * metrics.fragmentation_vulnerability +
+                self.vulnerability_weights['delta_bio_veg'] * metrics.bio_trend_vulnerability
+            )
+            
+            metrics.adaptive_capacity_score = (
+                self.adaptive_capacity_weights['gdp_pc'] * metrics.gdp_adaptive_capacity +
+                self.adaptive_capacity_weights['greenspace'] * metrics.greenspace_adaptive_capacity +
+                self.adaptive_capacity_weights['services'] * metrics.services_adaptive_capacity
+            )
         
         # Apply region-specific corrections for known data gaps
         metrics = self._apply_regional_corrections(city, metrics)
@@ -482,6 +504,189 @@ class IPCCRiskAssessmentService:
                            0.2 * size_capacity)
         
         return min(1.0, adaptive_capacity)
+    
+    def _calculate_water_access_vulnerability(self, sanitation_indicators: Dict[str, Any]) -> float:
+        """Calculate water access vulnerability from sanitation indicators"""
+        try:
+            # Extract water source distribution
+            water_sources = sanitation_indicators.get('water_source_distribution', {})
+            
+            # Calculate vulnerability based on water source quality
+            # Higher vulnerability for carried/none sources, lower for centralized
+            centralized = water_sources.get('centralized', 0)
+            local = water_sources.get('local', 0)
+            carried = water_sources.get('carried', 0)
+            none = water_sources.get('none', 0)
+            
+            total = centralized + local + carried + none
+            if total == 0:
+                return 0.5  # Default moderate vulnerability
+            
+            # Vulnerability weights: centralized (0.1), local (0.3), carried (0.7), none (1.0)
+            vulnerability = (
+                centralized * 0.1 +
+                local * 0.3 +
+                carried * 0.7 +
+                none * 1.0
+            ) / total
+            
+            return min(1.0, max(0.0, vulnerability))
+        except:
+            return 0.5  # Default moderate vulnerability
+    
+    def _calculate_healthcare_access_vulnerability(self, per_capita: Dict[str, Any]) -> float:
+        """Calculate healthcare access vulnerability from per capita metrics"""
+        try:
+            hospitals_per_1000 = per_capita.get('hospitals_per_1000', 0)
+            
+            # Lower healthcare access = higher vulnerability
+            # Scale: 0 hospitals/1000 = 1.0 vulnerability, 0.5 hospitals/1000 = 0.0 vulnerability
+            vulnerability = max(0.0, 1.0 - (hospitals_per_1000 * 2))
+            return min(1.0, vulnerability)
+        except:
+            return 0.5
+    
+    def _calculate_education_access_vulnerability(self, per_capita: Dict[str, Any]) -> float:
+        """Calculate education access vulnerability from per capita metrics"""
+        try:
+            schools_per_1000 = per_capita.get('schools_per_1000', 0)
+            kindergartens_per_1000 = per_capita.get('kindergartens_per_1000', 0)
+            
+            # Combined education access metric
+            education_access = (schools_per_1000 + kindergartens_per_1000) / 2
+            
+            # Lower education access = higher vulnerability
+            # Scale: 0 education/1000 = 1.0 vulnerability, 0.4 education/1000 = 0.0 vulnerability
+            vulnerability = max(0.0, 1.0 - (education_access * 2.5))
+            return min(1.0, vulnerability)
+        except:
+            return 0.5
+    
+    def _calculate_sanitation_vulnerability(self, sanitation_indicators: Dict[str, Any]) -> float:
+        """Calculate sanitation vulnerability from sanitation indicators"""
+        try:
+            # Use water vulnerability as proxy for sanitation vulnerability
+            # Areas with poor water access typically have poor sanitation
+            return self._calculate_water_access_vulnerability(sanitation_indicators)
+        except:
+            return 0.5
+    
+    def _calculate_social_infrastructure_capacity(self, per_capita: Dict[str, Any]) -> float:
+        """Calculate social infrastructure adaptive capacity from per capita metrics"""
+        try:
+            hospitals_per_1000 = per_capita.get('hospitals_per_1000', 0)
+            schools_per_1000 = per_capita.get('schools_per_1000', 0)
+            kindergartens_per_1000 = per_capita.get('kindergartens_per_1000', 0)
+            
+            # Combined social infrastructure metric
+            social_infra = hospitals_per_1000 + schools_per_1000 + kindergartens_per_1000
+            
+            # Higher social infrastructure = higher adaptive capacity
+            # Scale: 0 social infra/1000 = 0.0 capacity, 1.0 social infra/1000 = 1.0 capacity
+            capacity = min(1.0, social_infra)
+            return max(0.0, capacity)
+        except:
+            return 0.5
+    
+    def _calculate_water_system_capacity(self, sanitation_indicators: Dict[str, Any]) -> float:
+        """Calculate water system adaptive capacity from sanitation indicators"""
+        try:
+            # Extract water source distribution
+            water_sources = sanitation_indicators.get('water_source_distribution', {})
+            
+            centralized = water_sources.get('centralized', 0)
+            local = water_sources.get('local', 0)
+            carried = water_sources.get('carried', 0)
+            none = water_sources.get('none', 0)
+            
+            total = centralized + local + carried + none
+            if total == 0:
+                return 0.5
+            
+            # Capacity weights: centralized (1.0), local (0.7), carried (0.3), none (0.0)
+            capacity = (
+                centralized * 1.0 +
+                local * 0.7 +
+                carried * 0.3 +
+                none * 0.0
+            ) / total
+            
+            return min(1.0, max(0.0, capacity))
+        except:
+            return 0.5
+    
+    def _load_social_sector_data(self, city: str) -> Optional[Dict[str, Any]]:
+        """Load social sector data for a city"""
+        try:
+            import json
+            from pathlib import Path
+            
+            social_file = Path('suhi_analysis_output/social_sector') / f'{city}_social_sector.json'
+            if social_file.exists():
+                with open(social_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    return data.get('summary', {})
+            return None
+        except Exception as e:
+            print(f"Warning: Could not load social sector data for {city}: {e}")
+            return None
+    
+    def _integrate_social_sector_data(self, city: str, metrics: ClimateRiskMetrics, social_data: Dict[str, Any]) -> ClimateRiskMetrics:
+        """Integrate social sector data into climate risk metrics"""
+        
+        # Extract per capita metrics
+        per_capita = social_data.get('per_capita_metrics', {})
+        sanitation_indicators = social_data.get('sanitation_indicators', {})
+        
+        # Calculate social sector vulnerability components
+        metrics.water_access_vulnerability = self._calculate_water_access_vulnerability(sanitation_indicators)
+        metrics.healthcare_access_vulnerability = self._calculate_healthcare_access_vulnerability(per_capita)
+        metrics.education_access_vulnerability = self._calculate_education_access_vulnerability(per_capita)
+        metrics.sanitation_vulnerability = self._calculate_sanitation_vulnerability(sanitation_indicators)
+        
+        # Calculate social sector adaptive capacity components
+        metrics.social_infrastructure_capacity = self._calculate_social_infrastructure_capacity(per_capita)
+        metrics.water_system_capacity = self._calculate_water_system_capacity(sanitation_indicators)
+        
+        # Recalculate composite scores with social sector components
+        metrics.vulnerability_score = (
+            self.vulnerability_weights['income_inv'] * metrics.income_vulnerability +
+            self.vulnerability_weights['veg_access'] * metrics.veg_access_vulnerability +
+            self.vulnerability_weights['fragment'] * metrics.fragmentation_vulnerability +
+            self.vulnerability_weights['delta_bio_veg'] * metrics.bio_trend_vulnerability +
+            self.vulnerability_weights['water_access'] * metrics.water_access_vulnerability +
+            self.vulnerability_weights['healthcare_access'] * metrics.healthcare_access_vulnerability +
+            self.vulnerability_weights['education_access'] * metrics.education_access_vulnerability +
+            self.vulnerability_weights['sanitation'] * metrics.sanitation_vulnerability
+        )
+        
+        metrics.adaptive_capacity_score = (
+            self.adaptive_capacity_weights['gdp_pc'] * metrics.gdp_adaptive_capacity +
+            self.adaptive_capacity_weights['greenspace'] * metrics.greenspace_adaptive_capacity +
+            self.adaptive_capacity_weights['services'] * metrics.services_adaptive_capacity +
+            self.adaptive_capacity_weights['social_infrastructure'] * metrics.social_infrastructure_capacity +
+            self.adaptive_capacity_weights['water_system'] * metrics.water_system_capacity
+        )
+        
+        # Recalculate overall risk with updated components
+        metrics.overall_risk_score = self._calculate_overall_risk(metrics)
+        metrics.adaptability_score = self._calculate_adaptability_score(metrics)
+        
+        # Recalculate composite hazard and exposure scores to ensure consistency
+        metrics.hazard_score = (
+            self.hazard_weights['heat'] * metrics.heat_hazard +
+            self.hazard_weights['dry'] * metrics.dry_hazard +
+            self.hazard_weights['pluv'] * metrics.pluvial_hazard +
+            self.hazard_weights['dust'] * metrics.dust_hazard
+        )
+        
+        metrics.exposure_score = (
+            self.exposure_weights['population'] * metrics.population_exposure +
+            self.exposure_weights['gdp'] * metrics.gdp_exposure +
+            self.exposure_weights['viirs'] * metrics.viirs_exposure
+        )
+        
+        return metrics
     
     def _calculate_overall_risk(self, metrics: ClimateRiskMetrics) -> float:
         """Calculate overall risk score using IPCC AR6 framework"""
@@ -947,7 +1152,38 @@ class IPCCRiskAssessmentService:
                 self.hazard_weights['dust'] * metrics.dust_hazard
             )
             
-            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability, +0.20 dust hazard")
+        # Nukus-specific corrections for water scarcity and Aral Sea impacts
+        if city == "Nukus":
+            # Water scarcity vulnerability (major gap in current framework)
+            water_stress_penalty = 0.15  # Severe groundwater depletion and Aral Sea crisis
+            
+            # Healthcare access vulnerability (limited medical infrastructure)
+            healthcare_penalty = 0.08  # Lower hospital density in Karakalpakstan
+            
+            # Environmental disaster impacts (Aral Sea proximity)
+            aral_sea_penalty = 0.12  # Dust storms, contamination, ecosystem collapse
+            
+            # Apply corrections to vulnerability (where most gaps exist)
+            total_penalty = water_stress_penalty + healthcare_penalty + aral_sea_penalty
+            metrics.vulnerability_score = min(1.0, metrics.vulnerability_score + total_penalty)
+            
+            # Also increase dust hazard due to Aral Sea
+            metrics.dust_hazard = min(1.0, metrics.dust_hazard + 0.20)
+            
+            # Recalculate hazard score with updated dust component
+            metrics.hazard_score = (
+                self.hazard_weights['heat'] * metrics.heat_hazard +
+                self.hazard_weights['dry'] * metrics.dry_hazard +
+                self.hazard_weights['pluv'] * metrics.pluvial_hazard +
+                self.hazard_weights['dust'] * metrics.dust_hazard
+            )
+            
+            # Apply social sector corrections if data available
+            if hasattr(metrics, 'water_access_vulnerability'):
+                metrics.water_access_vulnerability = min(1.0, metrics.water_access_vulnerability + 0.25)
+                metrics.healthcare_access_vulnerability = min(1.0, metrics.healthcare_access_vulnerability + 0.15)
+            
+            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability, +0.20 dust hazard, +0.25 water access, +0.15 healthcare")
         
         # Termez-specific corrections for border challenges and extreme poverty
         elif city == "Termez":
@@ -966,7 +1202,15 @@ class IPCCRiskAssessmentService:
             # Increase exposure due to cross-border pressures
             metrics.exposure_score = min(1.0, metrics.exposure_score + 0.15)
             
-            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability, +0.15 exposure")
+            # Increase exposure due to cross-border pressures
+            metrics.exposure_score = min(1.0, metrics.exposure_score + 0.15)
+            
+            # Apply social sector corrections for extreme poverty
+            if hasattr(metrics, 'healthcare_access_vulnerability'):
+                metrics.healthcare_access_vulnerability = min(1.0, metrics.healthcare_access_vulnerability + 0.20)
+                metrics.education_access_vulnerability = min(1.0, metrics.education_access_vulnerability + 0.15)
+            
+            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability, +0.15 exposure, +0.20 healthcare, +0.15 education")
         
         # Urgench-specific corrections for Aral Sea impacts and irrigation dependence
         elif city == "Urgench":
@@ -990,7 +1234,19 @@ class IPCCRiskAssessmentService:
                 self.hazard_weights['dust'] * metrics.dust_hazard
             )
             
-            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability, +0.15 dust hazard")
+            # Recalculate hazard score
+            metrics.hazard_score = (
+                self.hazard_weights['heat'] * metrics.heat_hazard +
+                self.hazard_weights['dry'] * metrics.dry_hazard +
+                self.hazard_weights['pluv'] * metrics.pluvial_hazard +
+                self.hazard_weights['dust'] * metrics.dust_hazard
+            )
+            
+            # Apply social sector corrections for irrigation dependence
+            if hasattr(metrics, 'water_access_vulnerability'):
+                metrics.water_access_vulnerability = min(1.0, metrics.water_access_vulnerability + 0.18)
+            
+            print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability, +0.15 dust hazard, +0.18 water access")
         
         # Namangan-specific corrections for seismic risks and population pressure
         elif city == "Namangan":

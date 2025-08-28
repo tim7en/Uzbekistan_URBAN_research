@@ -1,0 +1,4347 @@
+{
+  "city": "Bukhara",
+  "city_info": {
+    "lat": 39.7748,
+    "lon": 64.4286,
+    "buffer_m": 10000,
+    "type": "regional_capital"
+  },
+  "facilities": {
+    "schools": [
+      {
+        "id": "maktablar_ochiq.11516",
+        "name": "45-sonli umumiy o`rta ta`lim maktabi",
+        "name_en": "45-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.4131195,
+          39.7897541
+        ],
+        "capacity": 320,
+        "enrolled_students": 230,
+        "shifts": 1,
+        "construction_year": "1962",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.11634",
+        "name": "44-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "44-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.4411623,
+          39.774022
+        ],
+        "capacity": 400,
+        "enrolled_students": 212,
+        "shifts": 1,
+        "construction_year": "1986",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "umuman_yuq",
+          "sports_hall": "sport_zal_umuman_yuq",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.55",
+        "name": "1-sonli ixtisoslashtirilgan davlat umumta’lim maktabi",
+        "name_en": "1-specialized state secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.44735277,
+          39.86013504
+        ],
+        "capacity": 1176,
+        "enrolled_students": 1196,
+        "shifts": 1,
+        "construction_year": "1976",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.136",
+        "name": "1-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "1-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.43997114,
+          39.77026882
+        ],
+        "capacity": 2222,
+        "enrolled_students": 2222,
+        "shifts": 2,
+        "construction_year": "1928",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.138",
+        "name": "10-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "10-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.41122277,
+          39.77303533
+        ],
+        "capacity": 640,
+        "enrolled_students": 560,
+        "shifts": 1,
+        "construction_year": "1975",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.207",
+        "name": "20-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "20-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.46150527,
+          39.76356052
+        ],
+        "capacity": 1700,
+        "enrolled_students": 1652,
+        "shifts": 1,
+        "construction_year": "1970",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.551",
+        "name": "1-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "1-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Kogon tumani",
+        "coordinates": [
+          64.52895138,
+          39.79890521
+        ],
+        "capacity": 500,
+        "enrolled_students": 640,
+        "shifts": 2,
+        "construction_year": "2008",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.557",
+        "name": "4-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "4-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Kogon tumani",
+        "coordinates": [
+          64.47773455,
+          39.71775015
+        ],
+        "capacity": 870,
+        "enrolled_students": 881,
+        "shifts": 2,
+        "construction_year": "1967",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.562",
+        "name": "9-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "9-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Kogon tumani",
+        "coordinates": [
+          64.51663424,
+          39.7158298
+        ],
+        "capacity": 550,
+        "enrolled_students": 454,
+        "shifts": 1,
+        "construction_year": "1976",
+        "building_material": "tosh",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.574",
+        "name": "18-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "18-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Kogon tumani",
+        "coordinates": [
+          64.50649542,
+          39.74243587
+        ],
+        "capacity": 426,
+        "enrolled_students": 474,
+        "shifts": 1,
+        "construction_year": "2018",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.582",
+        "name": "12-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "12-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Kogon tumani",
+        "coordinates": [
+          64.50453018,
+          39.80835464
+        ],
+        "capacity": 834,
+        "enrolled_students": 525,
+        "shifts": 1,
+        "construction_year": "1989",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.584",
+        "name": "23-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "23-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.4320053,
+          39.75288794
+        ],
+        "capacity": 1176,
+        "enrolled_students": 1608,
+        "shifts": 2,
+        "construction_year": "1972",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.586",
+        "name": "34-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "34-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.43392832,
+          39.74429032
+        ],
+        "capacity": 1176,
+        "enrolled_students": 905,
+        "shifts": 1,
+        "construction_year": "1976",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.589",
+        "name": "37-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "37-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.43744442,
+          39.73751004
+        ],
+        "capacity": 450,
+        "enrolled_students": 502,
+        "shifts": 1,
+        "construction_year": "1980",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.592",
+        "name": "39-sonli ixtisoslashtirilgan davlat umumta’lim maktabi",
+        "name_en": "39-specialized state secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.42986219,
+          39.76796712
+        ],
+        "capacity": 1310,
+        "enrolled_students": 2357,
+        "shifts": 2,
+        "construction_year": "2021",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.595",
+        "name": "4-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "4-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.43191853,
+          39.77572473
+        ],
+        "capacity": 1504,
+        "enrolled_students": 1504,
+        "shifts": 2,
+        "construction_year": "1978",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.596",
+        "name": "40-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "40-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.38246734,
+          39.77095607
+        ],
+        "capacity": 825,
+        "enrolled_students": 1215,
+        "shifts": 2,
+        "construction_year": "1950",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.599",
+        "name": "43-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "43-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.40169428,
+          39.73951609
+        ],
+        "capacity": 630,
+        "enrolled_students": 1433,
+        "shifts": 2,
+        "construction_year": "2020",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.600",
+        "name": "6-sonli ixtisoslashtirilgan davlat umumta’lim maktabi",
+        "name_en": "6-specialized state secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.41000707,
+          39.77585953
+        ],
+        "capacity": 630,
+        "enrolled_students": 14,
+        "shifts": 2,
+        "construction_year": "1924",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.603",
+        "name": "25-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "25-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.47414025,
+          39.79383641
+        ],
+        "capacity": 440,
+        "enrolled_students": 555,
+        "shifts": 1,
+        "construction_year": "1979",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.605",
+        "name": "29-sonli ixtisoslashtirilgan davlat umumta’lim maktabi",
+        "name_en": "29-specialized state secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.41319897,
+          39.76754177
+        ],
+        "capacity": 1176,
+        "enrolled_students": 866,
+        "shifts": 1,
+        "construction_year": "1975",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.1380",
+        "name": "35-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "35-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.40331631,
+          39.72901893
+        ],
+        "capacity": 300,
+        "enrolled_students": 253,
+        "shifts": 1,
+        "construction_year": "1997",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.1644",
+        "name": "25-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "25-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.384556,
+          39.781139
+        ],
+        "capacity": 720,
+        "enrolled_students": 1002,
+        "shifts": 2,
+        "construction_year": "1926",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.1976",
+        "name": "24-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "24-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Kogon tumani",
+        "coordinates": [
+          64.51851884,
+          39.82255025
+        ],
+        "capacity": 220,
+        "enrolled_students": 182,
+        "shifts": 1,
+        "construction_year": "2022",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_olib_kelinadi",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2076",
+        "name": "34-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "34-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.38960024,
+          39.71717226
+        ],
+        "capacity": 510,
+        "enrolled_students": 492,
+        "shifts": 1,
+        "construction_year": "1973",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_umuman_yuq",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2183",
+        "name": "23-sonli Skolioz bilan kasallangan bolalar uchun ixtisoslashtirilgan sanatoriy turidagi maktab internati",
+        "name_en": "23-specialized boarding school of sanatorium type for children with scoliosis",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.41515324,
+          39.78988556
+        ],
+        "capacity": 420,
+        "enrolled_students": 234,
+        "shifts": 1,
+        "construction_year": "1962",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2223",
+        "name": "14-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "14-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.48163146,
+          39.84684214
+        ],
+        "capacity": 424,
+        "enrolled_students": 368,
+        "shifts": 1,
+        "construction_year": "1976",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2245",
+        "name": "17-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "17-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.43508463,
+          39.76541296
+        ],
+        "capacity": 2066,
+        "enrolled_students": 1936,
+        "shifts": 1,
+        "construction_year": "1963",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2253",
+        "name": "33-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "33-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.37903265,
+          39.69633395
+        ],
+        "capacity": 320,
+        "enrolled_students": 276,
+        "shifts": 2,
+        "construction_year": "1989",
+        "building_material": "paxsa",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_umuman_yuq",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2261",
+        "name": "18-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "18-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.33987055,
+          39.81164022
+        ],
+        "capacity": 1040,
+        "enrolled_students": 1048,
+        "shifts": 1,
+        "construction_year": "1980",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2336",
+        "name": "16-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "16-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Kogon tumani",
+        "coordinates": [
+          64.50260971,
+          39.72291091
+        ],
+        "capacity": 380,
+        "enrolled_students": 416,
+        "shifts": 2,
+        "construction_year": "1990",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_olib_kelinadi",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2362",
+        "name": "36-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "36-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.3826689,
+          39.7398539
+        ],
+        "capacity": 180,
+        "enrolled_students": 198,
+        "shifts": 2,
+        "construction_year": "1970",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_umuman_yuq",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2385",
+        "name": "42-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "42-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.41462425,
+          39.85068017
+        ],
+        "capacity": 240,
+        "enrolled_students": 169,
+        "shifts": 1,
+        "construction_year": "1990",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_olib_kelinadi",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2405",
+        "name": "49-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "49-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.44960287,
+          39.8499057
+        ],
+        "capacity": 300,
+        "enrolled_students": 346,
+        "shifts": 2,
+        "construction_year": "2008",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2466",
+        "name": "50-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "50-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.45818374,
+          39.84139441
+        ],
+        "capacity": 450,
+        "enrolled_students": 294,
+        "shifts": 1,
+        "construction_year": "1995",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2732",
+        "name": "11-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "11-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Kogon tumani",
+        "coordinates": [
+          64.483248,
+          39.75151628
+        ],
+        "capacity": 834,
+        "enrolled_students": 1010,
+        "shifts": 1,
+        "construction_year": "1989",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.3102",
+        "name": "28-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "28-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.43128812,
+          39.70879814
+        ],
+        "capacity": 900,
+        "enrolled_students": 930,
+        "shifts": 1,
+        "construction_year": "1976",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.3119",
+        "name": "42-sonli ixtisoslashtirilgan davlat umumta’lim maktabi",
+        "name_en": "42-specialized state secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.4336796,
+          39.77370205
+        ],
+        "capacity": 800,
+        "enrolled_students": 1305,
+        "shifts": 2,
+        "construction_year": "1958",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.3623",
+        "name": "28-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "28-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.44409856,
+          39.78558734
+        ],
+        "capacity": 784,
+        "enrolled_students": 910,
+        "shifts": 2,
+        "construction_year": "1974",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.3642",
+        "name": "41-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "41-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.41820859,
+          39.79791831
+        ],
+        "capacity": 460,
+        "enrolled_students": 431,
+        "shifts": 1,
+        "construction_year": "2009",
+        "building_material": "",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.3801",
+        "name": "29-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "29-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.4578995,
+          39.70032017
+        ],
+        "capacity": 630,
+        "enrolled_students": 616,
+        "shifts": 1,
+        "construction_year": "2013",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.4051",
+        "name": "13-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "13-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.45193379,
+          39.85896538
+        ],
+        "capacity": 420,
+        "enrolled_students": 244,
+        "shifts": 1,
+        "construction_year": "1979",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.4259",
+        "name": "38-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "38-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.42568858,
+          39.75357632
+        ],
+        "capacity": 800,
+        "enrolled_students": 1686,
+        "shifts": 1,
+        "construction_year": "1985",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.4422",
+        "name": "26-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "26-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.42519323,
+          39.81814516
+        ],
+        "capacity": 1176,
+        "enrolled_students": 1112,
+        "shifts": 1,
+        "construction_year": "1991",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.5225",
+        "name": "5-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "5-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.425481,
+          39.77742307
+        ],
+        "capacity": 843,
+        "enrolled_students": 345,
+        "shifts": 1,
+        "construction_year": "1986",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_bor_mebel_yuq",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.5943",
+        "name": "12-sonli ixtisoslashtirilgan davlat umumta’lim maktabi",
+        "name_en": "12-specialized state secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.41050061,
+          39.76809349
+        ],
+        "capacity": 1176,
+        "enrolled_students": 1458,
+        "shifts": 2,
+        "construction_year": "1998",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.6006",
+        "name": "16-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "16-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.45482511,
+          39.7610868
+        ],
+        "capacity": 1176,
+        "enrolled_students": 1345,
+        "shifts": 1,
+        "construction_year": "1983",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.6152",
+        "name": "2-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "2-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.42673307,
+          39.77082325
+        ],
+        "capacity": 1120,
+        "enrolled_students": 1875,
+        "shifts": 2,
+        "construction_year": "1973",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.6233",
+        "name": "27-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "27-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.34272608,
+          39.73514436
+        ],
+        "capacity": 624,
+        "enrolled_students": 793,
+        "shifts": 1,
+        "construction_year": "1987",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.6268",
+        "name": "18-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "18-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.42629392,
+          39.78543745
+        ],
+        "capacity": 760,
+        "enrolled_students": 857,
+        "shifts": 2,
+        "construction_year": "1963",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.6312",
+        "name": "36-sonli ixtisoslashtirilgan davlat umumta’lim maktabi",
+        "name_en": "36-specialized state secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.42051205,
+          39.77199985
+        ],
+        "capacity": 500,
+        "enrolled_students": 492,
+        "shifts": 2,
+        "construction_year": "1918",
+        "building_material": "paxsa",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_umuman_yuq",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.6517",
+        "name": "51-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "51-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.38609629,
+          39.78932931
+        ],
+        "capacity": 391,
+        "enrolled_students": 330,
+        "shifts": 1,
+        "construction_year": "1994",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_umuman_yuq",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.6585",
+        "name": "3-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "3-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.40309845,
+          39.78394924
+        ],
+        "capacity": 1177,
+        "enrolled_students": 890,
+        "shifts": 2,
+        "construction_year": "1976",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_mobil",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.6588",
+        "name": "8-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "8-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.43199292,
+          39.74439687
+        ],
+        "capacity": 1176,
+        "enrolled_students": 2100,
+        "shifts": 2,
+        "construction_year": "1977",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.6659",
+        "name": "21-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "21-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.36693457,
+          39.79251948
+        ],
+        "capacity": 420,
+        "enrolled_students": 424,
+        "shifts": 1,
+        "construction_year": "2001",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.7148",
+        "name": "21-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "21-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.43047306,
+          39.75237379
+        ],
+        "capacity": 1200,
+        "enrolled_students": 1903,
+        "shifts": 2,
+        "construction_year": "1970",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.7184",
+        "name": "15-sonli ixtisoslashtirilgan davlat umumta’lim maktabi",
+        "name_en": "15-specialized state secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.41649344,
+          39.78097578
+        ],
+        "capacity": 1176,
+        "enrolled_students": 599,
+        "shifts": 1,
+        "construction_year": "1976",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.7357",
+        "name": "30-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "30-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.44310446,
+          39.70346206
+        ],
+        "capacity": 620,
+        "enrolled_students": 531,
+        "shifts": 1,
+        "construction_year": "1980",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.7383",
+        "name": "16-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "16-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.44031896,
+          39.8332376
+        ],
+        "capacity": 630,
+        "enrolled_students": 512,
+        "shifts": 1,
+        "construction_year": "2005",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.7493",
+        "name": "2-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "2-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.45110718,
+          39.85935411
+        ],
+        "capacity": 1080,
+        "enrolled_students": 1387,
+        "shifts": 1,
+        "construction_year": "1960",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.8030",
+        "name": "30-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "30-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.43841276,
+          39.73911482
+        ],
+        "capacity": 1176,
+        "enrolled_students": 2049,
+        "shifts": 2,
+        "construction_year": "1975",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.8153",
+        "name": "9-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "9-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.41300845,
+          39.77333273
+        ],
+        "capacity": 420,
+        "enrolled_students": 402,
+        "shifts": 1,
+        "construction_year": "1993",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.8176",
+        "name": "14-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "14-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Kogon tumani",
+        "coordinates": [
+          64.49390405,
+          39.76794596
+        ],
+        "capacity": 380,
+        "enrolled_students": 342,
+        "shifts": 1,
+        "construction_year": "2009",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_olib_kelinadi",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.8370",
+        "name": "24-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "24-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.4638679,
+          39.80466777
+        ],
+        "capacity": 790,
+        "enrolled_students": 868,
+        "shifts": 2,
+        "construction_year": "1982",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.8412",
+        "name": "33-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "33-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.39064156,
+          39.76328393
+        ],
+        "capacity": 1176,
+        "enrolled_students": 926,
+        "shifts": 1,
+        "construction_year": "1989",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.8440",
+        "name": "19-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "19-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.42766417,
+          39.7609009
+        ],
+        "capacity": 730,
+        "enrolled_students": 1593,
+        "shifts": 2,
+        "construction_year": "1968",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_bor_ishlamaydi"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.588",
+        "name": "35-sonli ixtisoslashtirilgan davlat umumta’lim maktabi",
+        "name_en": "35-specialized state secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.40800419,
+          39.74655693
+        ],
+        "capacity": 1076,
+        "enrolled_students": 2856,
+        "shifts": 2,
+        "construction_year": "1993",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_mobil",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.606",
+        "name": "27-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "27-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.49340592,
+          39.81558801
+        ],
+        "capacity": 630,
+        "enrolled_students": 619,
+        "shifts": 1,
+        "construction_year": "1979",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.1457",
+        "name": "31-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "31-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.42955117,
+          39.68887925
+        ],
+        "capacity": 630,
+        "enrolled_students": 590,
+        "shifts": 1,
+        "construction_year": "2002",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.1459",
+        "name": "8-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "8-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Kogon shahar",
+        "coordinates": [
+          64.5257317,
+          39.72645122
+        ],
+        "capacity": 1176,
+        "enrolled_students": 1324,
+        "shifts": 2,
+        "construction_year": "1975",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2070",
+        "name": "17-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "17-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.40712228,
+          39.80905739
+        ],
+        "capacity": 620,
+        "enrolled_students": 590,
+        "shifts": 1,
+        "construction_year": "1983",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.2411",
+        "name": "5-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "5-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.37742746,
+          39.82923705
+        ],
+        "capacity": 624,
+        "enrolled_students": 369,
+        "shifts": 1,
+        "construction_year": "1985",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.3410",
+        "name": "44-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "44-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.40250854,
+          39.70279984
+        ],
+        "capacity": 280,
+        "enrolled_students": 233,
+        "shifts": 1,
+        "construction_year": "1989",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_umuman_yuq",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.3589",
+        "name": "22-sonli ixtisoslashtirilgan davlat umumta’lim maktabi",
+        "name_en": "22-specialized state secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.43047054,
+          39.78876889
+        ],
+        "capacity": 1568,
+        "enrolled_students": 1550,
+        "shifts": 1,
+        "construction_year": "1978",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.4515",
+        "name": "20-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "20-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.31630362,
+          39.79712458
+        ],
+        "capacity": 360,
+        "enrolled_students": 395,
+        "shifts": 1,
+        "construction_year": "1984",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.5413",
+        "name": "39-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "39-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.37146458,
+          39.8134879
+        ],
+        "capacity": 210,
+        "enrolled_students": 385,
+        "shifts": 2,
+        "construction_year": "1989",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_umuman_yuq",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.6768",
+        "name": "13-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "13-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.41384869,
+          39.74627887
+        ],
+        "capacity": 1176,
+        "enrolled_students": 1695,
+        "shifts": 2,
+        "construction_year": "1985",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.8029",
+        "name": "32-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "32-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.43074824,
+          39.73625507
+        ],
+        "capacity": 1176,
+        "enrolled_students": 1470,
+        "shifts": 2,
+        "construction_year": "1988",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.9100",
+        "name": "14-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "14-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.40176293,
+          39.76919689
+        ],
+        "capacity": 1296,
+        "enrolled_students": 1210,
+        "shifts": 1,
+        "construction_year": "1978",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.9437",
+        "name": "22-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "22-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.35256041,
+          39.78240912
+        ],
+        "capacity": 550,
+        "enrolled_students": 425,
+        "shifts": 1,
+        "construction_year": "1927",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_lokal",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.10521",
+        "name": "47-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "47-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.36454624,
+          39.75675787
+        ],
+        "capacity": 120,
+        "enrolled_students": 170,
+        "shifts": 1,
+        "construction_year": "1993",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_umuman_yuq",
+          "activity_hall": "aktiv_zal_umuman_yuq",
+          "dining_hall": "oshhona_umuman_yuq"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.10680",
+        "name": "23-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "23-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro tumani",
+        "coordinates": [
+          64.32930355,
+          39.76716039
+        ],
+        "capacity": 820,
+        "enrolled_students": 786,
+        "shifts": 1,
+        "construction_year": "2005",
+        "building_material": "gisht",
+        "sanitation": {
+          "electricity": "elektr_qisman",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.10924",
+        "name": "7-sonli ixtisoslashtirilgan davlat umumta’lim maktabi",
+        "name_en": "7-specialized state secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.45404127,
+          39.76516028
+        ],
+        "capacity": 1176,
+        "enrolled_students": 1195,
+        "shifts": 2,
+        "construction_year": "1983",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qoniqarli"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.10939",
+        "name": "31-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "31-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.42023755,
+          39.7447952
+        ],
+        "capacity": 1176,
+        "enrolled_students": 975,
+        "shifts": 1,
+        "construction_year": "1987",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qisman_tamir",
+          "activity_hall": "aktiv_zal_qisman_tamir",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      },
+      {
+        "id": "maktablar_ochiq.11201",
+        "name": "11-sonli umumiy o'rta ta'lim maktabi",
+        "name_en": "11-secondary school",
+        "viloyat": "Buxoro viloyati",
+        "tuman": "Buxoro shahar",
+        "coordinates": [
+          64.42014919,
+          39.79107354
+        ],
+        "capacity": 784,
+        "enrolled_students": 982,
+        "shifts": 2,
+        "construction_year": "1985",
+        "building_material": "beton",
+        "sanitation": {
+          "electricity": "elektr_bor",
+          "water_source": "ichimlik_suvi_manbaa_markaz",
+          "internet": "internet_optika",
+          "sports_hall": "sport_zal_qoniqarli",
+          "activity_hall": "aktiv_zal_qoniqarli",
+          "dining_hall": "oshhona_holati_qisman_tamir"
+        }
+      }
+    ],
+    "hospitals": [
+      {
+        "id": "b88dc276-ed64-4be4-860c-9bd230c3b2d3",
+        "name": "Buxoro shahar 1-son oilaviy poliklinika",
+        "coordinates": [
+          64.41865,
+          39.771904
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "521118df-3ea7-4fe7-a612-52c09fc4edb3",
+        "name": "4-Family polyclinic",
+        "coordinates": [
+          64.42972,
+          39.786823
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "eea243f1-b05e-4886-8b5d-0771b24630ec",
+        "name": "Buxoro shahar 3-son oilaviy poliklinika",
+        "coordinates": [
+          64.42799,
+          39.762024
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "f504b2cc-9ee5-4e80-a337-bb2f97979eb8",
+        "name": "Buxoro shahar  6-son oilaviy poliklinika",
+        "coordinates": [
+          64.460785,
+          39.761826
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "0baa808a-3596-4eff-a90d-3a02eca4c883",
+        "name": "Buxoro shahar 2-son oilaviy poliklinika",
+        "coordinates": [
+          64.437935,
+          39.772038
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "9740d92c-833c-4ac1-97b4-c86390122d08",
+        "name": "Buxoro shahar 9-son oilaviy poliklinika",
+        "coordinates": [
+          64.4415,
+          39.744514
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "b9586111-742d-41df-9226-b930aafa0d03",
+        "name": "Buxoro shahar 10-son oilaviy poliklinika",
+        "coordinates": [
+          64.40981,
+          39.777008
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "77761fee-bff2-4643-9150-db1aa489b340",
+        "name": "Buxoro shahar ko'p tarmoqli markaziy poliklinika",
+        "coordinates": [
+          64.43634,
+          39.748093
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "448fad27-8d41-4149-a2ff-d02b843c6086",
+        "name": "Buxoro shahar 11-son oilaviy poliklinika",
+        "coordinates": [
+          64.403076,
+          39.739952
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "ffe96fc5-b51c-4b31-a514-15ed059f96a9",
+        "name": "Buxoro shahar 5-son oilaviy poliklinika",
+        "coordinates": [
+          64.41578,
+          39.749565
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "e9867c38-e087-4dbc-9a40-a93b992f1a04",
+        "name": "Republican Specialized Scientific and Practical Medical Center of Oncology and Radiology",
+        "coordinates": [
+          64.424576,
+          39.80998
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "372c7932-26b7-4307-9bfe-8adb1faea5d8",
+        "name": "Bukhara regional branch of the Republican Specialized Scientific and Practical Medical Center for Maternal and Child Health",
+        "coordinates": [
+          64.41161,
+          39.7606
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "bce7dbe1-8346-4fef-9bbe-b319a46e3578",
+        "name": "Republican ambulance center Bukhara region branch",
+        "coordinates": [
+          64.45596,
+          39.76914
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "d6d15908-26a1-48ac-a679-9db0aaa4f040",
+        "name": "Bukhara branch of the Republican Scientific and Practical Medical Center for Specialized Eye Microsurgery",
+        "coordinates": [
+          64.41676,
+          39.762745
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "446c078e-f5e9-4ad8-8791-d2750e1ba334",
+        "name": "Bukhara Regional Children's Central Multidisciplinary Polyclinic",
+        "coordinates": [
+          64.40012,
+          39.78361
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "4803fa58-9f59-47d9-9200-6b9e4e367670",
+        "name": "Buxoro viloyat orttirilgan immunitet tanqisligi sindromiga qarshi kurash markazi",
+        "coordinates": [
+          64.44785,
+          39.789112
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "889cf917-83c8-45cc-9c77-5d4b9acbbae9",
+        "name": "Central Multidisciplinary Polyclinic of Bukhara region",
+        "coordinates": [
+          64.41676,
+          39.762745
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "111c8064-9563-473c-ba5d-bb00ce51ec09",
+        "name": "Disinfection station of Gijduvan district",
+        "coordinates": [
+          64.42173,
+          39.767967
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "ee08fc34-6a58-4008-a95e-a49e345cc637",
+        "name": "Disinfection station of the city of Bukhara",
+        "coordinates": [
+          64.40198,
+          39.782494
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "a9073a0d-4b9b-4dd4-822e-8ef08b4d275b",
+        "name": "Department of Sanitary and Epidemiological Welfare and Public Health Protection of the city of Bukhara",
+        "coordinates": [
+          64.41676,
+          39.762745
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "e454d527-f41a-4e6c-9a4f-9fdbc8bad5d8",
+        "name": "Bukhara branch of the Republican Scientific and Practical Center of Forensic Medical Examination",
+        "coordinates": [
+          64.4241,
+          39.779453
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "8c3a54c0-b577-4663-8703-3fb17289b27b",
+        "name": "Disinfection station of Bukhara region",
+        "coordinates": [
+          64.41322,
+          39.767822
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "99a98eb2-78cd-43c0-aca0-035e68ef7eb7",
+        "name": "Pediatric phthisiological dispensary of Bukhara region",
+        "coordinates": [
+          64.43593,
+          39.81116
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "e7ec698f-a486-4846-9056-dc044ad34396",
+        "name": "Bukhara Regional Specialized Children's Dental Center",
+        "coordinates": [
+          64.42922,
+          39.748886
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "fafc2c76-7b33-4622-808e-1cb7db1559ed",
+        "name": "Dental clinic of Bukhara region",
+        "coordinates": [
+          64.43068,
+          39.77304
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "0615a15c-87a5-4c74-aa00-245f4bc211dd",
+        "name": "Bukhara Regional Sanitary and Epidemiological Department for Peace and Public Health",
+        "coordinates": [
+          64.43365,
+          39.766296
+        ],
+        "type": "hospital"
+      },
+      {
+        "id": "39a26ec4-6923-4044-9025-0177b4f9e94d",
+        "name": "Bukhara Regional Clinical Hospital",
+        "coordinates": [
+          64.42814,
+          39.808655
+        ],
+        "type": "hospital"
+      }
+    ],
+    "kindergardens_gov": [
+      {
+        "id": "dbaa3840-4c91-47c0-8a44-f13ef3316dd4",
+        "name": "YULDUZCHA",
+        "coordinates": [
+          64.43637,
+          39.76786
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "b136b7c4-a4f2-4f44-8735-f8f29eddcab0",
+        "name": "5-son eksperemental davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.420815,
+          39.79268
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "12008254-bbca-4ad7-ae5a-ed0c9574319c",
+        "name": "57-Son Ixtisoslashtirilgan davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.39974,
+          39.763565
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "06e7e767-3032-474b-9d80-8848a1658445",
+        "name": "18-Son Ixtisoslashtirilgan davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.43856,
+          39.764378
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "c2d7b061-61ae-4b24-890b-da4bf034ce93",
+        "name": "82-Son ixtisoslashtirilgan davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.44138,
+          39.770596
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "a0586300-f51c-4ebd-b494-3514bb71163f",
+        "name": "80-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.41176,
+          39.76454
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "2d552968-9c62-4606-a9e7-5d5357deac54",
+        "name": "34-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.39402,
+          39.715557
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "f46221b9-01ab-4512-aecd-c32cce169148",
+        "name": "71-son-mtt",
+        "coordinates": [
+          64.40645,
+          39.745113
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "157d68ac-d21b-40bc-80cf-3f88442e4e9c",
+        "name": "19-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.384186,
+          39.779922
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "df8754b9-1a28-45f7-866a-1c688ef5db90",
+        "name": "24-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.46374,
+          39.8042
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "f199cd39-58a0-466f-a54d-ecdb0fd6c876",
+        "name": "36-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.34109,
+          39.812836
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "11619a8e-98db-4691-a2ab-22696d798aa5",
+        "name": "24-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.44998,
+          39.861073
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "f8f189ae-ca72-4aa1-b8c9-10d06ab090ca",
+        "name": "51-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.38688,
+          39.789547
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "9d20a85b-94d9-470e-baaf-5f5a94bfffc6",
+        "name": "17-son-mtt",
+        "coordinates": [
+          64.42078,
+          39.788017
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "f67670b0-8389-4c5c-aec0-c349e83c1c60",
+        "name": "10- davlat maktabgacha ta'lim tashkiloti",
+        "coordinates": [
+          64.52943,
+          39.731277
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "bde3d032-7e54-401f-872c-55b84961e729",
+        "name": "3-Son davlat maktabgacha ta'lim tashkiloti",
+        "coordinates": [
+          64.46065,
+          39.76648
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "6b82c8fc-83f6-4861-b47b-636e9648b4c6",
+        "name": "28-son-mtm",
+        "coordinates": [
+          64.43727,
+          39.76497
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "5d006305-c388-45e7-a584-1adb1c4d93bb",
+        "name": "1-son-mtt",
+        "coordinates": [
+          64.473434,
+          39.79336
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "80ac5ac1-5881-4768-b570-b34f0b22da51",
+        "name": "44-son-mtm",
+        "coordinates": [
+          64.421524,
+          39.7473
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "b5185c11-eedb-43a0-8709-d6b92b9da3f0",
+        "name": "8-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.41132,
+          39.77335
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "3c274cc1-4a5d-41a9-85fa-29268a62e53b",
+        "name": "8-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.4847,
+          39.846706
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "4d62c181-6ec7-4027-beb3-e2562c403a3e",
+        "name": "5-son davlat maktabgacha ta'lim tashkiloti",
+        "coordinates": [
+          64.53227,
+          39.750607
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "c6eecc46-8fd7-45a8-8c3f-13e9558c2a64",
+        "name": "63-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.41985,
+          39.747276
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "1d2ef5e6-6fa0-405e-a0b7-163368e0c6cc",
+        "name": "16-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.42953,
+          39.753265
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "c1db2e55-dded-40e8-876f-77130d061918",
+        "name": "62-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.40373,
+          39.78268
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "45f7d79c-fdb3-4989-8fe7-9d7a9f8c562c",
+        "name": "48-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.40098,
+          39.784023
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "57802b9f-0d38-4161-85b4-635d49062cab",
+        "name": "86-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.43701,
+          39.73843
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "fd55c511-458e-4454-8280-265fb547e20e",
+        "name": "69-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.40519,
+          39.745365
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "d4894458-faf7-422a-81e2-82e7c991cd4d",
+        "name": "2-son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.506714,
+          39.804424
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "1ab8cd46-9966-40c5-ac8a-f4d6b93abb4b",
+        "name": "26-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.43872,
+          39.8633
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "8c524dc7-b6ed-48a0-af71-20ee37f80d47",
+        "name": "32-son-mtm",
+        "coordinates": [
+          64.43341,
+          39.76337
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "cd92b1dc-19b0-4303-8f5a-e0291c0398a9",
+        "name": "9-son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.49511,
+          39.76828
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "7da17cbe-6de8-4190-b24e-c3a5abb8af81",
+        "name": "64-son-mtm",
+        "coordinates": [
+          64.391716,
+          39.764286
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "5f18eecf-deb1-488a-b0e7-a08eb12538c0",
+        "name": "61-son-mtm",
+        "coordinates": [
+          64.45516,
+          39.765827
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "2a44baac-7cb4-4b93-a977-27c7bd1d1ce6",
+        "name": "19-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.42996,
+          39.74411
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "f1511eb3-1b16-4485-b550-6c70bdd7cb7d",
+        "name": "78-son-mtm",
+        "coordinates": [
+          64.43718,
+          39.73834
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "8ca2a98a-19ed-4b6b-b2a6-dad4617b2dac",
+        "name": "60-son-mtm",
+        "coordinates": [
+          64.430664,
+          39.73525
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "939d8ef2-a169-4441-a5f8-f3d7935e1e7a",
+        "name": "16-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.37622,
+          39.694927
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "9e9e5e19-3b02-4b0c-b4da-1ea1ffe0dccb",
+        "name": "84-son-mtm",
+        "coordinates": [
+          64.39615,
+          39.763508
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "ac3601ff-c868-4fc8-b6b0-54eaab8e8b57",
+        "name": "26-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.46688,
+          39.780388
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "684a8f8f-7541-4364-a522-473b41799f7d",
+        "name": "29-son-mtm",
+        "coordinates": [
+          64.407616,
+          39.78813
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "86a6c042-3ea2-4b45-8366-feb66d2b93a7",
+        "name": "66-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.40702,
+          39.746128
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "815a4be0-80d7-4911-8677-e037b274d734",
+        "name": "53-son-mtm",
+        "coordinates": [
+          64.45594,
+          39.760674
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "52e32f40-9e2f-4a5e-a345-7959ff9f3309",
+        "name": "85-son-mtm",
+        "coordinates": [
+          64.415504,
+          39.795815
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "c9f3bd4e-047b-44f6-8988-9a5986a53d37",
+        "name": "31-son-mtm",
+        "coordinates": [
+          64.41574,
+          39.78444
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "c6cca4e6-b294-4140-bb9a-599aa3cd22ad",
+        "name": "67-son-mtm",
+        "coordinates": [
+          64.405716,
+          39.74636
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "80ccca17-5899-4daf-a71e-5b23d14adf50",
+        "name": "8-son davlat maktabgacha ta'lim tashkiloti",
+        "coordinates": [
+          64.48395,
+          39.74904
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "db913a01-c26d-4b05-ad49-79214006ddf4",
+        "name": "65-son-mtm",
+        "coordinates": [
+          64.44997,
+          39.76534
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "24a8b913-8559-4686-9bc9-064e6dcd56ee",
+        "name": "47-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.414825,
+          39.84985
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "102963ee-b0ff-4ea1-a97e-f381c5420d0c",
+        "name": "37-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.36714,
+          39.793766
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "3b1221d5-c25b-4349-96ae-85796b0078b0",
+        "name": "6-son-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.40259,
+          39.772804
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "a1621a69-cfae-44d1-a59a-ae0e0ca74607",
+        "name": "14-son-mtm",
+        "coordinates": [
+          64.47029,
+          39.76643
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "fe019be3-530b-4dc6-b8fa-36f3358644cb",
+        "name": "79-son-mtm",
+        "coordinates": [
+          64.43941,
+          39.737034
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "feb224b5-e2cb-4b4f-ac9f-28a7e9dddebb",
+        "name": "45-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.31739,
+          39.797897
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "87198fed-12e9-4316-9c2d-19f1fba10fdf",
+        "name": "38-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.32476,
+          39.74065
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "d1803021-49a3-4180-b98d-fe28d462dece",
+        "name": "25-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.44897,
+          39.85774
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "9e6d03f7-f871-4bd6-99bc-0504fc6c9c90",
+        "name": "11-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.35475,
+          39.783203
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "aacb628b-8f63-4a87-9359-dcb7adecaaf1",
+        "name": "77-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.43178,
+          39.777252
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "a5f8b0de-7388-4d1b-8af5-8140a6df0202",
+        "name": "23-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.42902,
+          39.758102
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "324ac604-3d07-4164-9dc4-57e691490371",
+        "name": "18-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.37111,
+          39.767773
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "cf4f8af4-dfa0-44fd-a668-d96444cb0e99",
+        "name": "87-son-mtm",
+        "coordinates": [
+          64.44126,
+          39.73963
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "8d5aec17-b8ba-4c70-89a9-2a791c2fa3a5",
+        "name": "30-son-mtt",
+        "coordinates": [
+          64.41092,
+          39.76964
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "1871304e-c782-4d46-9517-f55e832a5a08",
+        "name": "11-son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.537674,
+          39.751984
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "2df408dc-a922-4f6e-87af-795904afd9a0",
+        "name": "10-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.4276,
+          39.750946
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "b20541f5-a76b-443d-9b7a-567372f837fe",
+        "name": "54-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.412224,
+          39.746876
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "736a8dad-7781-420c-9ed2-3fb76d5876a3",
+        "name": "39-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.37014,
+          39.813705
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "29138ee7-d7d4-4596-989e-44a97467b725",
+        "name": "50-son-mtm",
+        "coordinates": [
+          64.44697,
+          39.76904
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "2ce28658-6971-436c-85c0-6997f8f3a8b7",
+        "name": "74-son-mtm",
+        "coordinates": [
+          64.42868,
+          39.78805
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "e5a089d7-6ffe-4570-a692-3cdf67fc1808",
+        "name": "58-son-mtm",
+        "coordinates": [
+          64.429565,
+          39.73527
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "cb0ea81b-aa34-419d-bcd8-478e0688a61f",
+        "name": "20-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.441086,
+          39.834217
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "2fc51422-f319-49ba-b1d5-f449459f40ae",
+        "name": "43-son-mtm",
+        "coordinates": [
+          64.43333,
+          39.75094
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "7f152635-d196-4b1e-9b1c-048dea38877f",
+        "name": "72-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.43846,
+          39.77108
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "5ac78a2d-b92d-4589-b473-86433279d806",
+        "name": "83-son-mtm",
+        "coordinates": [
+          64.39761,
+          39.7716
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "807fb14f-0025-4117-8f5f-64efd3735640",
+        "name": "14-son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.517296,
+          39.71729
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "5bba8c37-2daf-4f50-8312-061d484075ad",
+        "name": "13-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.42749,
+          39.758106
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "7026bf3f-bfa9-41e8-be71-e9555dabd839",
+        "name": "39-son-mtm",
+        "coordinates": [
+          64.40002,
+          39.76956
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "b5940b72-3855-49bd-8019-4aab28d8af40",
+        "name": "47-son-mtm",
+        "coordinates": [
+          64.42872,
+          39.74417
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "cd93504d-28d3-4d4e-b6ca-13ee115d5c63",
+        "name": "35-son-mtm",
+        "coordinates": [
+          64.44967,
+          39.783382
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "3d8886bb-772e-4572-97cb-6d2f297d1451",
+        "name": "1-son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.528755,
+          39.80155
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "323b0111-f031-4cd3-84f2-47a24aabb1d5",
+        "name": "12-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.33693,
+          39.76738
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "29add5ad-90ed-4ab8-af20-94a581b32044",
+        "name": "68-son-mtm",
+        "coordinates": [
+          64.435905,
+          39.743916
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "f13c583a-98c0-42f4-b938-e50e52a62bb3",
+        "name": "2-son-mtm",
+        "coordinates": [
+          64.428925,
+          39.780495
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "fae2e55f-e6d5-44ca-8949-dc4904ad7332",
+        "name": "22-son-mtm",
+        "coordinates": [
+          64.46208,
+          39.762863
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "21de86a4-474c-4814-ad2f-57d5925dc60e",
+        "name": "45-Son davlat maktabgacha ta'lim tashkiloti",
+        "coordinates": [
+          64.4411,
+          39.78452
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "df9e4f02-1e64-491e-b272-0fafaa616f33",
+        "name": "34-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.42742,
+          39.74414
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "d6c5eade-7152-42e8-8099-6b35cfce4b12",
+        "name": "75-son-mtm",
+        "coordinates": [
+          64.44926,
+          39.792683
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "987b29b1-c01c-4b21-b743-4c13e3067d0f",
+        "name": "43-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.34692,
+          39.81198
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "b4e0d0a3-75f7-4297-96db-9dc015fb64ca",
+        "name": "59-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.41942,
+          39.74328
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "4903e4af-59d9-43cd-8ab5-32f254fce698",
+        "name": "27-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.43473,
+          39.773518
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "d37197bc-ccc8-4883-9887-414b3e6ce4cd",
+        "name": "76-Son davlat maktabgacha ta'lim tashkiloti",
+        "coordinates": [
+          64.42907,
+          39.76869
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "41e9095d-3759-4b0d-b742-489fe4fe7a3f",
+        "name": "51-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.45381,
+          39.767338
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "cb4b9a78-6309-4fcc-87fd-ed18677b1470",
+        "name": "46-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.435196,
+          39.79255
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "ac3e498c-cee9-438d-a076-c0c010bb63fc",
+        "name": "25-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.43758,
+          39.74352
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "5a0307bc-4cdc-494d-901d-6f34402736b6",
+        "name": "29-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.438354,
+          39.85896
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "926a6761-bb2a-4726-8ccc-e10a070b25b1",
+        "name": "81-son-mtm",
+        "coordinates": [
+          64.3981,
+          39.770782
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "9d84a3e3-1edb-4225-afe6-7f963557e777",
+        "name": "55-son-mtm",
+        "coordinates": [
+          64.415764,
+          39.747433
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "b8d27259-d59c-4d87-89fe-c71dcbe13158",
+        "name": "52-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.453705,
+          39.760925
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "9a14d9fb-403e-4008-965e-b1ca1982da69",
+        "name": "42-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.41617,
+          39.781765
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "bc8e1c80-2e42-4f1a-8e82-67070bda5779",
+        "name": "21-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.40737,
+          39.810173
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "01b0d32a-754e-4a57-97f5-310e6933e050",
+        "name": "56-son-mtm",
+        "coordinates": [
+          64.416595,
+          39.74469
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "873b0e1d-a833-4c8f-8ced-f526b169cf25",
+        "name": "49-son-mtm",
+        "coordinates": [
+          64.42734,
+          39.787582
+        ],
+        "type": "kindergarden-legal"
+      },
+      {
+        "id": "1cacd0e5-3af8-40c6-955a-d61a2af61a26",
+        "name": "11-Son davlat maktabgacha ta`lim tashkiloti",
+        "coordinates": [
+          64.42916,
+          39.73658
+        ],
+        "type": "kindergarden-legal"
+      }
+    ],
+    "kindergardens_private": [
+      {
+        "id": "305f8f19-bd9c-4947-9ea2-457e8ed472e7",
+        "name": "RASTISHKA DXSH",
+        "coordinates": [
+          64.44646,
+          39.84966
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "ea6a87e2-bde7-48ab-ab0f-95146c6a3075",
+        "name": "YTT BOYLIYEV RAXMAT HAMROYEVICH",
+        "coordinates": [
+          64.337616,
+          39.726868
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "478f82ba-68c6-4fc3-a02b-96a1e20e2485",
+        "name": "YTT MIRZOYEVA MAFTUNA ULUG`BEK QIZI",
+        "coordinates": [
+          64.42255,
+          39.726505
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "5284f1db-65e1-4bef-a412-dd5645f0097b",
+        "name": "YTT Hamroyev Eldor Elmurodovich",
+        "coordinates": [
+          64.49089,
+          39.749584
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "a690d198-227a-46f1-a913-79ad34964a99",
+        "name": "YTT SOLIYEVA ZULFIYA IBODOVNA",
+        "coordinates": [
+          64.360146,
+          39.739902
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "6ee59529-6eb1-49ae-b40a-8d41e287db32",
+        "name": "YTT Sa`dullayeva Shaxnoza Muzaffarovna",
+        "coordinates": [
+          64.48425,
+          39.749706
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "55829484-dc64-4116-9f13-411421a94adf",
+        "name": "YTT Nasritdinova Nozima Mansur qizi",
+        "coordinates": [
+          64.48046,
+          39.713676
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "04be44c3-8fe2-4338-8f22-710f0924b1b1",
+        "name": "SHARIPOVA NARGIZA SADULLOEVNA",
+        "coordinates": [
+          64.40267,
+          39.750126
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "399538d2-0abe-481a-a680-8b9bd126ad88",
+        "name": "YTT MIRZOYEVA MARJONA ULUG`BEK QIZI",
+        "coordinates": [
+          64.34252,
+          39.76326
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "9d294a8c-aad6-405e-a0f3-eb64dc5fc649",
+        "name": "YTT ATAYEVA NASIBA JO`RAYEVNA",
+        "coordinates": [
+          64.45168,
+          39.729088
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "deda1fef-250f-4003-8a2e-6ccec9eeb31f",
+        "name": "YTT Qurbonova Gulnoz Erkinovna",
+        "coordinates": [
+          64.507805,
+          39.78914
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "3500048d-d699-428c-9a27-7c164cdc42b7",
+        "name": "YATT SHAMSIYEVA MALOHAT BADRIYEVNA",
+        "coordinates": [
+          64.42057,
+          39.809513
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "53cb4331-4d66-410a-849d-4096ec73ff57",
+        "name": "YTT MUXITDINOV RUSTAM ISTAMOVICH",
+        "coordinates": [
+          64.4347,
+          39.83108
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "6057c416-3e26-4a9a-97fd-ca76ab49ec0c",
+        "name": "YTT EGAMQULOVA NOZIMA ERKIN QIZI",
+        "coordinates": [
+          64.43985,
+          39.826336
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "10a6ffbb-ead8-481e-a1a8-2986c3e9f03e",
+        "name": "YTT HASANOVA LOLA ESANOVNA",
+        "coordinates": [
+          64.44163,
+          39.852573
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "a83bf2b1-1d2d-4086-b87b-ba900b0c5d0f",
+        "name": "YTT AXMEDOV AKOBIRJON ANVAROVICH",
+        "coordinates": [
+          64.43807,
+          39.857082
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "2480592f-61b9-419d-8544-c79b20c6dc15",
+        "name": "YTT ABDURASULOVA SEVARA AXMATQULOVNA",
+        "coordinates": [
+          64.456665,
+          39.762726
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "818954ec-9885-47c9-b0b1-24727446b17e",
+        "name": "YTT G`AFOROVA IRODA JABBOROVNA",
+        "coordinates": [
+          64.439835,
+          39.84901
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "1e4a3531-bdc5-4c91-9679-deb94c066598",
+        "name": "YTT Maxmudova Sitora Nasriddin qizi",
+        "coordinates": [
+          64.5292,
+          39.803177
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "b7ddf7cc-beea-48b6-969c-8a549a032791",
+        "name": "ABDULLAYEVA DILOROM SHOMURODOVNA",
+        "coordinates": [
+          64.38275,
+          39.772243
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "00812042-5885-47a7-a1a3-2896a6b6f5b1",
+        "name": "YTT Fozilov Doniyor Shodiyevich",
+        "coordinates": [
+          64.48619,
+          39.72111
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "266558c9-d8cc-4d93-a396-5eb66ac988e9",
+        "name": "YTT Sayfullayeva Mohinur Isroilovna",
+        "coordinates": [
+          64.50723,
+          39.80411
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "099d857a-ae1d-4581-9370-109393af5246",
+        "name": "YTT HAMROYEVA LOBAR OLIMJONOVNA",
+        "coordinates": [
+          64.413864,
+          39.80814
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "3c804799-e1d8-44f1-a6e2-f50e27821442",
+        "name": "YTT SHUKUROVA NODIRA AZIMOVNA",
+        "coordinates": [
+          64.37902,
+          39.760952
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "57bdb2f0-b4ee-48b8-a9a6-c62d92e09f09",
+        "name": "YATT HAYITOVA NIGINA HAYOTOVNA",
+        "coordinates": [
+          64.425064,
+          39.746525
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "346d6fe6-8407-4377-b6f0-b0e85720949a",
+        "name": "YTT RAHMATOV NODIR BAXTIYAROVICH",
+        "coordinates": [
+          64.41249,
+          39.811684
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "52bf331a-42a2-4abb-ad41-186ffb1cf60f",
+        "name": "YTT MUROTOV ERKIN NEGMUROTOVICH",
+        "coordinates": [
+          64.43932,
+          39.864002
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "b5532de4-137b-4303-b7a0-455baf7c798d",
+        "name": "YTT SHAVKATOVA DILDORA SHAVKAT QIZI",
+        "coordinates": [
+          64.399704,
+          39.75513
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "0d417090-a040-4512-87b3-57c5fdad45b4",
+        "name": "YTT ISTAMOVA SARVINOZ DILMUROD QIZI",
+        "coordinates": [
+          64.37429,
+          39.777443
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "ab0c2690-f19c-417b-a364-7311628ef0da",
+        "name": "YATT- Nabiyeva-Xurshida-Barotovna",
+        "coordinates": [
+          64.52376,
+          39.727642
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "89f3edd8-02f0-434f-b9ff-e6801226b2e4",
+        "name": "HAMROYEV AKBARJON MAQSUDOVICH",
+        "coordinates": [
+          64.4244,
+          39.777336
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "c6a63f7e-3ad4-403b-b1f1-ea33388edf0a",
+        "name": "YTT HAZRATOVA SITORABONU BOBIR QIZI",
+        "coordinates": [
+          64.439865,
+          39.8081
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "97745da9-b5dc-4159-9817-b63844948e5f",
+        "name": "YTT YUSUPOVA DILNOZA MUXAMMADOVNA",
+        "coordinates": [
+          64.429726,
+          39.77682
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "ffe8cc68-6b56-421a-96de-0fbfe384794a",
+        "name": "YTT MUHAMMADIYEVA RA`NO RO`ZIQULOVNA",
+        "coordinates": [
+          64.37257,
+          39.76928
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "e4b4c8e1-1a64-4b85-a86f-35b8153f6a19",
+        "name": "YTT RAMAZONOVA SHAHNOZA FAZLIDDIN QIZI",
+        "coordinates": [
+          64.37792,
+          39.776497
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "9eedebca-e6d1-49bb-a2db-a990ab1c1d78",
+        "name": "YTT ERGASHEV MAXSUD MAHMUD O`G`LI",
+        "coordinates": [
+          64.42989,
+          39.821087
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "85f3b564-8be1-4a03-bc49-f30aade784c3",
+        "name": "YTT ELOV ANDIYOR ABDULLAYEVICH",
+        "coordinates": [
+          64.42551,
+          39.725483
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "1c80af28-dde9-4555-acf9-af67f1203a9b",
+        "name": "YTT Avezova Gulandom Ro`ziyevna",
+        "coordinates": [
+          64.50862,
+          39.73661
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "c614ea6a-f7c7-4947-a324-6c492ff07d36",
+        "name": "YTT Jo`rayeva Zebuniso Raupovna",
+        "coordinates": [
+          64.502304,
+          39.71662
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "3a5c6a9e-0f63-458c-b3e8-2dc765149460",
+        "name": "YTT JO`RAYEVA SHAHLO SHAVKATOVNA",
+        "coordinates": [
+          64.407234,
+          39.81156
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "390cafdc-558a-4c85-a8f1-a86994026f15",
+        "name": "YTT Xudoyberdiyeva Dildora Sattorovna",
+        "coordinates": [
+          64.4809,
+          39.750984
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "65ea141c-4aa0-4d19-b275-1adce7da0a07",
+        "name": "YATT SHARIPOVA ZEBINISO SALIMOVNA",
+        "coordinates": [
+          64.417625,
+          39.747124
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "bf367958-efcd-40de-8a49-758a0a312795",
+        "name": "YTT Kamolov Firdavsiy Furqatovich",
+        "coordinates": [
+          64.47581,
+          39.74782
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "c2434909-4438-415d-9c53-b6327c9ac363",
+        "name": "YTT ASTANOVA NIGORA SOLIXOVNA",
+        "coordinates": [
+          64.41337,
+          39.736664
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "4e858ca4-01b7-4dd1-b212-c99bccd651cf",
+        "name": "YTT ERGASHOVA MAHBUBA KAMOL QIZI",
+        "coordinates": [
+          64.43988,
+          39.808098
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "7ef784fe-7094-4d18-a502-e9eee026f180",
+        "name": "YATT KIBRIYEVA MANZURA",
+        "coordinates": [
+          64.42481,
+          39.80359
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "ca8f4c61-477e-416f-a3a2-6ec165d79715",
+        "name": "YTT QURBONOV EZOZBEK QOBIL O`G`LI",
+        "coordinates": [
+          64.4286,
+          39.767086
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "0cd6017e-4b93-4d53-a64b-d92539f5a81f",
+        "name": "YTT XOLOVA NILUFAR SAMADOVNA",
+        "coordinates": [
+          64.47741,
+          39.8504
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "3c5fb6c5-0f6d-40f7-b559-79592891e911",
+        "name": "YTT MAQSUDOVA MALIKA BESHIMOVNA",
+        "coordinates": [
+          64.40658,
+          39.790092
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "273f9615-6011-4685-a712-9989ef9f1c49",
+        "name": "YTT ASATOVA SHAHNOZA SHUHRATOVNA",
+        "coordinates": [
+          64.42493,
+          39.727703
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "578464c5-68bb-4a0a-9abc-8b8b595cb559",
+        "name": "YTT NURULLOYEVA SHAHNOZA SHAMSHODOVNA",
+        "coordinates": [
+          64.33726,
+          39.770435
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "1e45b498-6a54-4f4b-8986-aacb355d6d06",
+        "name": "YATT KAMILOVA GULMIRA ALIMOVNA",
+        "coordinates": [
+          64.44278,
+          39.73477
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "687e0b10-aabe-4e7e-810d-2fd0637f87d4",
+        "name": "YTT XUDDIYEVA NARGIZA NORQULOVNA",
+        "coordinates": [
+          64.41134,
+          39.783104
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "0b635143-f729-4d85-8759-c39f38002389",
+        "name": "YTT SATTOROVA SITORA",
+        "coordinates": [
+          64.4191,
+          39.789864
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "65c8cacd-0239-45fa-916b-90d3575c06d9",
+        "name": "YTT NARZIYEVA SHAHLO SHARIPOVNA",
+        "coordinates": [
+          64.40526,
+          39.8124
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "bc127dc3-6340-4b90-812f-8aae2f699afd",
+        "name": "YTT Atoyeva Feruza Aloviddinovna",
+        "coordinates": [
+          64.52176,
+          39.824284
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "c9c061bf-b368-409b-9d25-de03fad574e5",
+        "name": "YTT Haydarova Shaxlo Baxriddin qizi",
+        "coordinates": [
+          64.52832,
+          39.80224
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "e59cf869-058b-4685-a49b-49ebde689bf7",
+        "name": "YATT- Axmedova-Sayyora-Ablaqulovna",
+        "coordinates": [
+          64.52425,
+          39.727993
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "fec70837-42dd-446a-9ead-a5018e11d323",
+        "name": "YTT FARMONOV DADAXON BAXTIYOROVICH",
+        "coordinates": [
+          64.44013,
+          39.781033
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "645b5ee9-90c7-487a-990f-7ff2951dbc2f",
+        "name": "YTT Halilova Dilbar Hikmatovna",
+        "coordinates": [
+          64.52126,
+          39.82425
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "7232a42c-6e5e-4461-b08f-e8b99310a0b6",
+        "name": "YTT Boltayev  Baxodir Yo`ldoshovich",
+        "coordinates": [
+          64.506805,
+          39.737965
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "c15297af-dd58-47a5-83c0-cd6c44e4109b",
+        "name": "YTT Shodiyev Bexruz Doniyor o`g`li",
+        "coordinates": [
+          64.48624,
+          39.721096
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "2fb6ba5b-132d-488c-9d00-f98be1e33da5",
+        "name": "YTT RADJABOVA SABOHAT SAYFULLOYEVNA",
+        "coordinates": [
+          64.39026,
+          39.718483
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "57f0c512-7d78-4418-bd92-73b320150dc7",
+        "name": "HUDOYQULOV FARHOD FAHRIDDINOVICH",
+        "coordinates": [
+          64.38217,
+          39.73569
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "972e57e7-ef8f-4def-a24b-ac986f8a9a24",
+        "name": "YTT NUROV UMIDJON BOBIROVICH",
+        "coordinates": [
+          64.451035,
+          39.85404
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "28dc9ab3-fafe-4169-9fce-19fac9ae1958",
+        "name": "YOQUTBEGIM DXSH",
+        "coordinates": [
+          64.39368,
+          39.721504
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "bf49c4e3-d2db-4585-b9f8-919954ca7776",
+        "name": "YTT Xudoyberdiyeva Zarifa  Bekmurod qizi",
+        "coordinates": [
+          64.51388,
+          39.735264
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "1e3d0733-0bc0-4341-a65f-b8f050316a8a",
+        "name": "YTT XOLMURODOVA MAFTUNA O`TKIROVNA",
+        "coordinates": [
+          64.45144,
+          39.854435
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "e01841f2-f6b7-4573-b63e-6df84b2c6a2a",
+        "name": "DXSH Virastayka-ХК",
+        "coordinates": [
+          64.48492,
+          39.74472
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "b3887bf8-27a7-4fe1-8d18-cb385697b410",
+        "name": "YTT Aminova Ra`no Xamrayevna",
+        "coordinates": [
+          64.46348,
+          39.71795
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "dcbb5bb5-cb8d-4328-919c-ed8c55276268",
+        "name": "ORZU-BOLAJON",
+        "coordinates": [
+          64.41776,
+          39.75075
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "818c0d4d-43e7-4c37-93ae-27af971094bd",
+        "name": "YATT SAIDOVA FERUZA TO`YMURODOVNA",
+        "coordinates": [
+          64.39854,
+          39.78842
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "642da8b6-912f-4fbe-a3f8-bee60cdd58d2",
+        "name": "YTT HAMROYEVA FERUZA OLIMOVNA",
+        "coordinates": [
+          64.4193,
+          39.797813
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "94d088f4-ebb3-45b2-8165-3557bc2ec857",
+        "name": "YTT SHARAPOVA BAXTIGUL ERGASHEVNA",
+        "coordinates": [
+          64.42804,
+          39.688274
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "117ad5d5-9b03-47d1-8b09-899813859576",
+        "name": "YTT RUSTAMOVA NARGIZA SHAROFBOYEVNA",
+        "coordinates": [
+          64.425865,
+          39.72537
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "7f8d67f6-c640-4d4f-b10e-8c91e10f98cf",
+        "name": "YTT Jalilova Nargizabonu Toxirovna",
+        "coordinates": [
+          64.48358,
+          39.75023
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "150b6049-5adb-4c56-8d18-49a4f1775fcb",
+        "name": "YTT KIBRIYEV HODI BARAKAYEVICH",
+        "coordinates": [
+          64.42485,
+          39.80357
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "5ac3350f-5e40-4c24-bbd3-ba28f9533000",
+        "name": "YTT NASRITDINOV IBRAGIM SHAMSUTDINOVICH",
+        "coordinates": [
+          64.37432,
+          39.756737
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "78ea8e3d-b637-4ad5-84a8-65ab078ee315",
+        "name": "YTT BOLTAYEV ANVAR INOYATOVICH",
+        "coordinates": [
+          64.423744,
+          39.822903
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "d855c8af-73c7-422e-b2f1-ab9891438e6a",
+        "name": "kamalak-kids",
+        "coordinates": [
+          64.426605,
+          39.76861
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "202b6c81-7130-4855-9e81-ba9062468e1d",
+        "name": "YTT Xudoyqulov G`iyos G`aniyevich",
+        "coordinates": [
+          64.52805,
+          39.801895
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "09df31aa-bc16-46ff-84cc-cb305d7330ff",
+        "name": "YTT Raxmatova Dilbar Abdullayevna",
+        "coordinates": [
+          64.48621,
+          39.72111
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "4775719d-d9e5-4f47-b494-a8d13cf3e2ee",
+        "name": "YTT Saksonova Inobat Mamatjonovna",
+        "coordinates": [
+          64.53181,
+          39.802258
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "a545b1b2-3481-441b-9d79-aa988112d0a5",
+        "name": "YTT Fozilova Zilola Allamovna",
+        "coordinates": [
+          64.51211,
+          39.73596
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "b97d27fb-2a69-4233-acf1-55908bca163b",
+        "name": "YTT Aminova Shaxnoza Nasritdinovna",
+        "coordinates": [
+          64.505974,
+          39.745647
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "f92bfbeb-0966-4bdf-b9d5-93ac24bde35f",
+        "name": "YTT HALIMOVA MALIKA RAHMONOVNA",
+        "coordinates": [
+          64.37751,
+          39.696377
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "86234a7c-d144-465d-827a-7eeff65281a0",
+        "name": "YTT ESHONOVA MAHFUZA AHMADOVNA",
+        "coordinates": [
+          64.44579,
+          39.84412
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "87f094a2-5a07-4c68-b64b-07e3b488b8f6",
+        "name": "ytt-salomova-shaxlo",
+        "coordinates": [
+          64.46631,
+          39.71549
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "b93550af-803e-41e0-ab47-463c56637255",
+        "name": "YTT QUDRATOVA MUKARRAM NASULLOYEVNA",
+        "coordinates": [
+          64.47741,
+          39.8504
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "2b1ac63a-61e8-47d5-9a2d-6f4cbf5be9d1",
+        "name": "YTT MARUPOVA ZIYODA QURBONOVNA",
+        "coordinates": [
+          64.439835,
+          39.84901
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "34c116c5-e6a6-473b-98a7-f9e7c5113f4e",
+        "name": "ORZUBONU DXSH",
+        "coordinates": [
+          64.432304,
+          39.832058
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "c6b4d050-824c-4d0e-8ed1-ea0519a422db",
+        "name": "KUPOLA VOSTOKA DXSH",
+        "coordinates": [
+          64.33175,
+          39.771385
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "62301e24-429b-4de4-8cc8-c1d7b9e8c8f9",
+        "name": "MAHBUB YULDUZ DXSH",
+        "coordinates": [
+          64.33474,
+          39.72518
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "d94d5b8f-c6f6-42e0-84ae-2201521c2d8d",
+        "name": "CHIPOLINO DXSH",
+        "coordinates": [
+          64.34071,
+          39.829483
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "2442ec38-62c7-49a6-8f80-9f1bb5df2377",
+        "name": "DETSKIY AKADEMIYA",
+        "coordinates": [
+          64.42509,
+          39.816124
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "bff9729c-4d8a-4f3d-8db6-525452759ace",
+        "name": "GULI ANORA DXSH",
+        "coordinates": [
+          64.43782,
+          39.707703
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "862e79bc-10b4-4d5e-91d5-4e776c384274",
+        "name": "O'ZBEK KELAJAG AVLODI",
+        "coordinates": [
+          64.45953,
+          39.766495
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "f6407fa5-b897-4ebf-9ae7-5398da6df1fd",
+        "name": "oltin-diyor-farzandlari",
+        "coordinates": [
+          64.44835,
+          39.776497
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "a116b65e-f5e8-4191-8c76-9a61bafbb68d",
+        "name": "BUXORO YULDUZCHALARI DXSH",
+        "coordinates": [
+          64.430504,
+          39.732857
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "70aba07f-25a5-457b-acb5-6a1e9aa47f1c",
+        "name": "binafsha-bolalar-bog-chasi",
+        "coordinates": [
+          64.40837,
+          39.83356
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "2519c6f2-c9dd-4929-a13a-34fc5290971d",
+        "name": "AL BUXORIY AVLODLARI",
+        "coordinates": [
+          64.41968,
+          39.744026
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "9b79236e-9b69-4b0d-a298-67850dc602f4",
+        "name": "AKBAR-IMKON",
+        "coordinates": [
+          64.43344,
+          39.810303
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "cb2d09fc-7f5d-4603-a536-d3c56ed5c52d",
+        "name": "azizbek-aa",
+        "coordinates": [
+          64.43973,
+          39.74022
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "a476d7f9-89c5-4d6d-aaa6-c31844e07004",
+        "name": "AzElJahon DXSH",
+        "coordinates": [
+          64.49577,
+          39.743298
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "e30ac974-c63f-4780-b90a-9905c50d2121",
+        "name": "PAHLOVONLAR QORG`ONCHASI",
+        "coordinates": [
+          64.402695,
+          39.74211
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "5eecf51d-eeb6-4e08-ae73-1f35d82715f2",
+        "name": "SOJIDA MUHAMMADALI",
+        "coordinates": [
+          64.40594,
+          39.754208
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "8b881c10-5447-4667-b2e1-5bb7cd8f4e37",
+        "name": "Botir Bexruz saxovatlari DXSH",
+        "coordinates": [
+          64.512886,
+          39.731956
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "7af3a3cd-7180-4272-8f20-92171e46e4f4",
+        "name": "PROBLESKI-NADEJDI",
+        "coordinates": [
+          64.43426,
+          39.76536
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "56ab5ccf-ed7a-4fb9-ae9a-a47268fe88a4",
+        "name": "detski-unversititet",
+        "coordinates": [
+          64.43641,
+          39.76807
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "693dcbf7-21f0-47db-b68b-3b01ddd8e8b6",
+        "name": "BABY-CLUB",
+        "coordinates": [
+          64.45122,
+          39.768208
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "021b1f35-362e-4e24-ac91-012e2af22124",
+        "name": "nebesnye-zvezdochki",
+        "coordinates": [
+          64.432526,
+          39.810345
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "716c7b2f-f71d-4da0-8088-56143c3b2974",
+        "name": "moya-akademiya",
+        "coordinates": [
+          64.426,
+          39.768566
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "96a7d241-7835-452e-bec1-b738ededd0d2",
+        "name": "AKADEMIYA DETSTVO PLYUS  XMTT",
+        "coordinates": [
+          64.33064,
+          39.810516
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "3ccf4401-1223-46ee-82bb-fc6d71350c22",
+        "name": "deti-indego",
+        "coordinates": [
+          64.42625,
+          39.779556
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "ea6d6b22-55c8-4715-99ba-f9fca8a721a7",
+        "name": "IZOBRETATELI",
+        "coordinates": [
+          64.42655,
+          39.774193
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "3421f72d-ff29-4e2c-a483-818b369c3f8c",
+        "name": "kinderland-razvivayka",
+        "coordinates": [
+          64.41691,
+          39.76781
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "46ccac92-bc3b-4831-8012-08302b268fa8",
+        "name": "SUPER DETKI",
+        "coordinates": [
+          64.42499,
+          39.74513
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "9f30d9d8-43fd-45fe-9622-12fdf41737bf",
+        "name": "CLEVER BABY  XMTT",
+        "coordinates": [
+          64.4513,
+          39.853767
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "ec9fbf15-d99b-4d85-953c-3b7d62353dae",
+        "name": "ACADEMY-OF-GENIUS-KIDS",
+        "coordinates": [
+          64.429214,
+          39.73644
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "2d4c72b1-b266-4100-b1b1-1c3ea711f7a1",
+        "name": "PRIONITET-ZIYO",
+        "coordinates": [
+          64.417816,
+          39.776093
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "d908f61f-f1db-425e-8b43-fea06b9b9e65",
+        "name": "ERKATOY",
+        "coordinates": [
+          64.42748,
+          39.737827
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "d06bb80f-21fc-4da8-a32f-6dc89f10cdfb",
+        "name": "umniy-malish",
+        "coordinates": [
+          64.418434,
+          39.775185
+        ],
+        "type": "kindergarden"
+      },
+      {
+        "id": "40dfc572-0c7a-4146-ae59-275e95d46fe0",
+        "name": "RASTISHKA-ALAN",
+        "coordinates": [
+          64.428535,
+          39.761562
+        ],
+        "type": "kindergarden"
+      }
+    ]
+  },
+  "summary": {
+    "total_schools": 85,
+    "total_hospitals": 27,
+    "total_kindergardens": 225,
+    "total_students_capacity": 67518,
+    "total_students_enrolled": 75303,
+    "sanitation_indicators": {
+      "electricity_access": 85.9,
+      "water_access": 78.8,
+      "internet_access": 100.0,
+      "sports_facilities": 72.9,
+      "dining_facilities": 51.8,
+      "activity_halls": 49.4
+    },
+    "infrastructure_quality": {
+      "modern_buildings": 15.3,
+      "brick_construction": 75.3,
+      "multiple_shifts": 38.8
+    }
+  }
+}
