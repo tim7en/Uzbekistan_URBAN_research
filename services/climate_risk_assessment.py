@@ -582,13 +582,25 @@ class IPCCRiskAssessmentService:
     def _calculate_utilization_rate_vulnerability(self, per_capita: Dict[str, Any]) -> float:
         """Calculate utilization rate vulnerability from per capita metrics"""
         try:
-            utilization_rate = per_capita.get('school_utilization_rate', 0.5)
+            # utilization_rate is in percentage (e.g., 145.1 for 145.1%)
+            utilization_rate_pct = per_capita.get('utilization_rate', 85.0)
+            utilization_rate = utilization_rate_pct / 100.0  # Convert to decimal (0.0-1.0+ range)
             
-            # Low utilization rate = higher vulnerability (underutilized infrastructure)
-            # High utilization rate = higher vulnerability (overutilized infrastructure)
-            # Optimal utilization is around 0.8-0.9
-            optimal_rate = 0.85
-            vulnerability = abs(utilization_rate - optimal_rate) * 2.0
+            # Schools with multiple shifts effectively increase capacity, reducing overcrowding risk
+            # Optimal utilization is around 0.8-0.95 (80-95%)
+            # Under-utilization (< 50%) indicates inefficient infrastructure
+            # Over-utilization (> 100%) after accounting for shifts indicates true overcrowding
+            
+            if utilization_rate < 0.5:  # Under 50% utilization
+                # Under-utilization vulnerability
+                vulnerability = (0.5 - utilization_rate) * 1.5  # Scale 0.5->0 to 0->0.75
+            elif utilization_rate <= 1.0:  # 50-100% utilization (good range)
+                # Minimal vulnerability in optimal range
+                vulnerability = 0.1
+            else:  # Over 100% utilization (true overcrowding despite shifts)
+                # Overcrowding vulnerability increases more gradually
+                excess = utilization_rate - 1.0
+                vulnerability = 0.3 + min(0.7, excess * 1.0)  # Scale 0->0.7 to 0.3->1.0
             
             return min(1.0, max(0.0, vulnerability))
         except:
