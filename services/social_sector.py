@@ -137,6 +137,7 @@ def analyze_city_social_sector(city: str, external_data: Dict[str, Any]) -> Dict
                         "enrolled_students": int(properties.get('umumiy_uquvchi', 0)) if properties.get('umumiy_uquvchi') else 0,
                         "shifts": int(properties.get('smena', 1)) if properties.get('smena') else 1,
                         "construction_year": properties.get('qurilish_yili', ''),
+                        "renovation_year": properties.get('kapital_tamir', ''),
                         "building_material": properties.get('material_sten', ''),
                         "sanitation": {
                             "electricity": properties.get('elektr_kun_davomida', ''),
@@ -150,7 +151,9 @@ def analyze_city_social_sector(city: str, external_data: Dict[str, Any]) -> Dict
 
                     results["facilities"]["schools"].append(school_info)
                     results["summary"]["total_schools"] += 1
-                    results["summary"]["total_students_capacity"] += school_info["capacity"]
+                    # Calculate effective capacity accounting for multiple shifts
+                    effective_capacity = school_info["capacity"] * school_info["shifts"]
+                    results["summary"]["total_students_capacity"] += effective_capacity
                     results["summary"]["total_students_enrolled"] += school_info["enrolled_students"]
 
     # Analyze hospitals
@@ -332,24 +335,63 @@ def _calculate_water_vulnerability_index(water_sources: Dict[str, float]) -> flo
 
 
 def _calculate_infrastructure_quality(schools: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """Calculate infrastructure quality indicators."""
+    """Calculate infrastructure quality indicators including building age and renovation status."""
     if not schools:
         return {}
 
     quality = {
         "modern_buildings": 0.0,  # Built after 2000
         "brick_construction": 0.0,
-        "multiple_shifts": 0.0
+        "multiple_shifts": 0.0,
+        "overcrowded_schools": 0.0,  # Schools with utilization > 100%
+        "severely_overcrowded": 0.0,  # Schools with utilization > 150%
+        "average_utilization": 0.0,
+        "max_utilization": 0.0,
+        # New building age and renovation indicators
+        "old_buildings": 0.0,  # Built before 1980
+        "very_old_buildings": 0.0,  # Built before 1970
+        "recently_renovated": 0.0,  # Renovated after 2015
+        "needs_renovation": 0.0,  # Old buildings without recent renovation
+        "building_age_vulnerability": 0.0,  # Composite age vulnerability score
+        "average_building_age": 0.0,
+        "renovation_coverage": 0.0,
+        # New shift and capacity metrics
+        "total_effective_capacity": 0.0,
+        "average_shifts": 0.0,
+        "shift_efficiency": 0.0  # How well shifts are utilized
     }
 
     total_schools = len(schools)
+    total_utilization = 0.0
+    max_utilization = 0.0
+    total_building_age = 0.0
+    valid_age_count = 0
+
+    current_year = 2025  # Current assessment year
 
     for school in schools:
         # Construction year
         try:
             year = int(school.get('construction_year', 0))
-            if year >= 2000:
-                quality["modern_buildings"] += 1
+            if year > 0:
+                building_age = current_year - year
+                total_building_age += building_age
+                valid_age_count += 1
+
+                if year >= 2000:
+                    quality["modern_buildings"] += 1
+                if year < 1980:
+                    quality["old_buildings"] += 1
+                if year < 1970:
+                    quality["very_old_buildings"] += 1
+        except (ValueError, TypeError):
+            pass
+
+        # Renovation status
+        try:
+            renovation_year = int(school.get('renovation_year', 0))
+            if renovation_year >= 2015:
+                quality["recently_renovated"] += 1
         except (ValueError, TypeError):
             pass
 
@@ -361,8 +403,57 @@ def _calculate_infrastructure_quality(schools: List[Dict[str, Any]]) -> Dict[str
         if school.get('shifts', 1) > 1:
             quality["multiple_shifts"] += 1
 
-    # Convert to percentages
-    for key in quality:
+        # Calculate utilization rate using effective capacity (accounting for shifts)
+        capacity = school.get('capacity', 0)
+        shifts = school.get('shifts', 1)
+        effective_capacity = capacity * shifts
+        enrolled = school.get('enrolled_students', 0)
+
+        if effective_capacity > 0:
+            utilization = (enrolled / effective_capacity) * 100
+            total_utilization += utilization
+
+            if utilization > max_utilization:
+                max_utilization = utilization
+
+            if utilization > 100:
+                quality["overcrowded_schools"] += 1
+            if utilization > 150:
+                quality["severely_overcrowded"] += 1
+
+    # Calculate averages
+    if total_schools > 0:
+        quality["average_utilization"] = round(total_utilization / total_schools, 1)
+        quality["max_utilization"] = round(max_utilization, 1)
+
+    if valid_age_count > 0:
+        quality["average_building_age"] = round(total_building_age / valid_age_count, 1)
+
+    # Calculate renovation coverage
+    quality["renovation_coverage"] = round((quality["recently_renovated"] / total_schools) * 100, 1) if total_schools > 0 else 0.0
+
+    # Calculate building age vulnerability
+    # Old buildings without recent renovation are most vulnerable
+    old_without_renovation = quality["old_buildings"] - quality["recently_renovated"]
+    if old_without_renovation < 0:
+        old_without_renovation = 0
+
+    quality["needs_renovation"] = old_without_renovation
+
+    # Building age vulnerability score (0-1 scale)
+    # Combines old buildings, renovation needs, and average age
+    age_vulnerability = 0.0
+    if total_schools > 0:
+        old_building_ratio = quality["old_buildings"] / total_schools
+        renovation_gap = old_without_renovation / total_schools
+        age_factor = min(1.0, quality["average_building_age"] / 50) if quality["average_building_age"] > 0 else 0.0
+
+        age_vulnerability = (old_building_ratio * 0.4 + renovation_gap * 0.4 + age_factor * 0.2)
+
+    quality["building_age_vulnerability"] = round(age_vulnerability, 3)
+
+    # Convert counts to percentages
+    for key in ["modern_buildings", "brick_construction", "multiple_shifts", "overcrowded_schools", "severely_overcrowded", "old_buildings", "very_old_buildings", "recently_renovated", "needs_renovation"]:
         quality[key] = round((quality[key] / total_schools) * 100, 1) if total_schools > 0 else 0.0
 
     return quality
@@ -439,18 +530,41 @@ def _calculate_per_capita_metrics(summary: Dict[str, Any], population: int) -> D
             "kindergardens_per_1000": 0.0,
             "student_capacity_per_1000": 0.0,
             "enrolled_students_per_1000": 0.0,
-            "water_vulnerability_index": summary.get("sanitation_indicators", {}).get("water_vulnerability_index", 0.0)
+            "water_vulnerability_index": summary.get("sanitation_indicators", {}).get("water_vulnerability_index", 0.0),
+            "overcrowding_index": 0.0,
+            "utilization_rate": 0.0,
+            "building_age_vulnerability": 0.0,
+            "renovation_coverage": 0.0,
+            "population": population
         }
 
     population_in_thousands = population / 1000.0
+
+    # Calculate overcrowding metrics using effective capacity
+    total_capacity = summary.get("total_students_capacity", 0)  # This is now effective capacity
+    total_enrolled = summary.get("total_students_enrolled", 0)
+    infrastructure_quality = summary.get("infrastructure_quality", {})
+
+    utilization_rate = 0.0
+    overcrowding_index = 0.0
+
+    if total_capacity > 0:
+        utilization_rate = round((total_enrolled / total_capacity) * 100, 1)
+        # Overcrowding index: 0 (no overcrowding) to 1.0 (severe overcrowding)
+        if utilization_rate > 100:
+            overcrowding_index = min(1.0, (utilization_rate - 100) / 100)  # Scale to 0-1.0
 
     return {
         "schools_per_1000": round(summary.get("total_schools", 0) / population_in_thousands, 2),
         "hospitals_per_1000": round(summary.get("total_hospitals", 0) / population_in_thousands, 2),
         "kindergardens_per_1000": round(summary.get("total_kindergardens", 0) / population_in_thousands, 2),
-        "student_capacity_per_1000": round(summary.get("total_students_capacity", 0) / population_in_thousands, 2),
-        "enrolled_students_per_1000": round(summary.get("total_students_enrolled", 0) / population_in_thousands, 2),
+        "student_capacity_per_1000": round(total_capacity / population_in_thousands, 2),
+        "enrolled_students_per_1000": round(total_enrolled / population_in_thousands, 2),
         "water_vulnerability_index": summary.get("sanitation_indicators", {}).get("water_vulnerability_index", 0.0),
+        "overcrowding_index": round(overcrowding_index, 3),
+        "utilization_rate": utilization_rate,
+        "building_age_vulnerability": infrastructure_quality.get("building_age_vulnerability", 0.0),
+        "renovation_coverage": infrastructure_quality.get("renovation_coverage", 0.0),
         "population": population
     }
 
