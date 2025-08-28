@@ -11,6 +11,7 @@ from typing import Dict, Any, List, Optional, Tuple
 from collections import defaultdict
 
 from .utils import UZBEKISTAN_CITIES, create_output_directories
+from .climate_data_loader import UZBEK_CITIES_DATA
 
 
 def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -90,7 +91,13 @@ def analyze_city_social_sector(city: str, external_data: Dict[str, Any]) -> Dict
     city_info = UZBEKISTAN_CITIES[city]
     city_lat, city_lon = city_info['lat'], city_info['lon']
     buffer_m = city_info['buffer_m']
-    population = city_info.get('population', 0)
+
+    # Use real population data from climate data loader
+    real_city_data = UZBEK_CITIES_DATA.get(city)
+    if real_city_data:
+        population = real_city_data.get('pop_2024', city_info.get('population', 0))
+    else:
+        population = city_info.get('population', 0)
 
     results = {
         "city": city,
