@@ -23,7 +23,6 @@ from typing import List, Dict, Any, Optional
 
 from services import gee
 from services.utils import create_output_directories, UZBEKISTAN_CITIES
-from services.water_scarcity_assessment import WaterScarcityAssessmentService
 from services.climate_data_loader import ClimateDataLoader
 
 
@@ -56,7 +55,7 @@ def main():
     # Initialize services
     data_loader = ClimateDataLoader(str(base))
 
-    # Prefer GEE-backed assessment when available; fall back to simulator
+    # Only use GEE-backed assessment - no simulator fallback
     water_service = None
     try:
         gee_ok = gee.initialize_gee()
@@ -70,15 +69,13 @@ def main():
             water_service = WaterScarcityGEEAssessment(data_loader)
             print("Using GEE-backed water scarcity assessment")
         except Exception as e:
-            if args.real_only:
-                raise
-            print(f"GEE-backed assessment failed to initialize, falling back to simulator: {e}")
-            water_service = WaterScarcityAssessmentService(data_loader)
+            raise RuntimeError(f"GEE water scarcity assessment failed to initialize: {e}")
     else:
-        # No GEE available or initialization failed — use simulator unless real-only requested
-        if args.real_only:
-            raise RuntimeError('GEE not available but --real-only was requested')
-        water_service = WaterScarcityAssessmentService(data_loader)
+        raise RuntimeError(
+            "Google Earth Engine not available. "
+            "Water scarcity assessment requires GEE for real satellite data. "
+            "Please ensure GEE is properly configured."
+        )
 
     results = []
 

@@ -22,9 +22,38 @@ try:
 except Exception:
     ee = None
 
-from services.water_scarcity_assessment import WaterScarcityMetrics
 from services.utils import UZBEKISTAN_CITIES
+from dataclasses import dataclass
 import math
+
+# Define the metrics dataclass here to avoid circular imports
+@dataclass
+class WaterScarcityMetrics:
+    """Water scarcity assessment metrics for a city"""
+    city: str
+
+    # Supply-side indicators (hydroclimate)
+    aridity_index: float = 0.0  # AI = P/PET (lower = drier baseline)
+    climatic_water_deficit: float = 0.0  # CWD (higher = greater unmet demand)
+    drought_frequency: float = 0.0  # Fraction of months with PDSI ≤ -2
+
+    # Surface water indicators
+    surface_water_change: float = 0.0  # JRC GSW change_abs (negative = loss)
+
+    # Demand proxies
+    cropland_fraction: float = 0.0  # ESA WorldCover cropland %
+    population_density: float = 0.0  # GPW population density
+
+    # External benchmark
+    aqueduct_bws_score: float = 0.0  # WRI Aqueduct Baseline Water Stress
+
+    # Composite scores
+    water_supply_risk: float = 0.0
+    water_demand_risk: float = 0.0
+    overall_water_scarcity_score: float = 0.0
+
+    # Risk classification
+    water_scarcity_level: str = "Unknown"
 
 CACHE_DIR = Path('suhi_analysis_output') / 'data' / 'water_scarcity'
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -48,6 +77,7 @@ class WaterScarcityGEEAssessment:
         'jrc_gsw': 'JRC/GSW1_4/GlobalSurfaceWater',
         'worldcover': 'ESA/WorldCover/v200',  # Fixed: v200 is the latest
         'gpw': 'CIESIN/GPWv411/GPW_UNWPP-Adjusted_Population_Density/gpw_v4_unwpp-adjusted_population_density_rev11_2020_30_sec',
+        'aqueduct': 'projects/WRI/Aqueduct40/annual',  # WRI Aqueduct Baseline Water Stress
     }
 
     def __init__(self, data_loader):
@@ -349,6 +379,19 @@ class WaterScarcityGEEAssessment:
                 pop_val = existing_pop_data.get('density', pop_val)
                 print(f"Debug {city}: Using existing population density={pop_val}")
 
+            try:
+                # Fetch WRI Aqueduct Baseline Water Stress score
+                aqueduct = ee.ImageCollection(self.DATASETS['aqueduct']).filterDate('2010-01-01', '2020-12-31')
+                aqueduct_result = aqueduct.mean().select('bws_score').reduceRegion(
+                    ee.Reducer.mean(), land_buf, 1000,
+                    bestEffort=True, maxPixels=1e9
+                )
+                aqueduct_val = float(aqueduct_result.get('bws_score').getInfo()) if aqueduct_result.get('bws_score') else None
+                print(f"Debug {city}: WRI Aqueduct BWS score={aqueduct_val}")
+            except Exception as e:
+                print(f"Warning: Aqueduct data failed for {city}: {e}")
+                aqueduct_val = None
+
             indicators = {
                 'aridity_index': aridity_index,
                 'climatic_water_deficit': climatic_water_deficit,
@@ -356,7 +399,7 @@ class WaterScarcityGEEAssessment:
                 'surface_water_change': -float(jrc_val),  # negative = loss
                 'cropland_fraction': float(cropland_fraction),
                 'population_density': float(pop_val),
-                'aqueduct_bws_score': None
+                'aqueduct_bws_score': aqueduct_val
             }
 
             # Cache and return

@@ -218,21 +218,123 @@ class ClimateDataLoader:
             print("⚠️ Nightlights data not found")
     
     def _initialize_population_data(self):
-        """Initialize population data for cities"""
+        """Initialize population data for cities using user-provided data"""
         from .utils import UZBEKISTAN_CITIES
+        
+        # First try to load supplemental population data from Excel (for cities not in UZBEK_CITIES_DATA)
+        supplemental_pop_data = self._load_user_population_data()
         
         # Initialize population data for all cities in UZBEKISTAN_CITIES
         for city, info in UZBEKISTAN_CITIES.items():
-            pop = info.get('population')
-            gdp = 2000  # Default GDP per capita for Uzbekistan
+            # Use user-provided data from UZBEK_CITIES_DATA if available
+            if city in UZBEK_CITIES_DATA:
+                user_data = UZBEK_CITIES_DATA[city]
+                pop = user_data['pop_2024']
+                gdp = user_data['gdp_per_capita']
+                area = user_data.get('area_km2')
+                print(f"[USER DATA] {city}: {pop:,.0f} people, GDP: ${gdp:,.0f}, Area: {area:.1f} km²")
+            # Use supplemental Excel data if available
+            elif city in supplemental_pop_data:
+                pop = supplemental_pop_data[city]['population']
+                gdp = supplemental_pop_data[city]['gdp_per_capita']
+                area = None
+                print(f"[EXCEL DATA] {city}: {pop:,.0f} people, GDP: ${gdp:,.0f}")
+            # Fallback to hardcoded values
+            else:
+                pop = info.get('population')
+                gdp = 2000  # Default GDP per capita for Uzbekistan
+                area = None
+                print(f"[HARDCODED] {city}: {pop:,.0f} people, GDP: ${gdp:,.0f}")
             
             cp = CityPopulationData(city=city,
                                     population_2024=pop,
-                                    gdp_per_capita_usd=gdp)
+                                    gdp_per_capita_usd=gdp,
+                                    urban_area_km2=area)
             
             self.population_data[city] = cp
 
-        print(f"[OK] Initialized assessment for {len(self.population_data)} cities (populated from UZBEKISTAN_CITIES where available)")
+        print(f"[OK] Initialized assessment for {len(self.population_data)} cities using user-provided data")
+    
+    def _load_user_population_data(self):
+        """Load user-provided population data from Excel file"""
+        import pandas as pd
+        import os
+        
+        user_data = {}
+        
+        try:
+            excel_path = os.path.join(self.base_path, 'ExternalData', 'uzbekistan_pop_grp.xlsx')
+            if not os.path.exists(excel_path):
+                print("[WARNING] User population data file not found, using hardcoded values")
+                return user_data
+            
+            # Read the Excel file
+            pop_df = pd.read_excel(excel_path)
+            
+            # City to region mapping for Uzbekistan cities
+            city_region_mapping = {
+                'Tashkent': ['Tashkent city', 'Tashkent region'],
+                'Samarkand': ['Samarkand region'],
+                'Bukhara': ['Bukhara region'],
+                'Andijan': ['Andijan region'],
+                'Namangan': ['Namangan region'],
+                'Fergana': ['Fergana region'],
+                'Nukus': ['Republic of Karakalpakstan'],
+                'Urgench': ['Khorezm region'],
+                'Jizzakh': ['Jizzakh region'],
+                'Qarshi': ['Kashkadarya region'],
+                'Navoiy': ['Navoi region'],
+                'Termez': ['Surkhandarya region'],
+                'Gulistan': ['Syrdarya region'],
+                'Nurafshon': ['Tashkent region']  # Nurafshon is in Tashkent region
+            }
+            
+            # Extract population data (assuming population is in thousands)
+            for city, regions in city_region_mapping.items():
+                for region in regions:
+                    # Look for the region in the first column
+                    matches = pop_df[pop_df.iloc[:, 0].astype(str).str.contains(region.replace(' region', '').replace(' Republic of ', ''), case=False, na=False)]
+                    
+                    if not matches.empty:
+                        # Get the population value (assuming it's in column 1, in thousands)
+                        pop_value = matches.iloc[0, 1]  # Population in thousands
+                        if pd.notna(pop_value):
+                            # Convert to actual population (multiply by 1000)
+                            actual_pop = float(pop_value) * 1000
+                            
+                            # Estimate GDP per capita (using regional averages)
+                            gdp_estimates = {
+                                'Tashkent': 4000,  # Capital city
+                                'Samarkand': 2500,  # Historic city
+                                'Bukhara': 2200,    # Tourism-dependent
+                                'Andijan': 2000,    # Agricultural region
+                                'Namangan': 1900,   # Industrial region
+                                'Fergana': 1800,    # Agricultural valley
+                                'Nukus': 1600,      # Remote region
+                                'Urgench': 1700,    # Agricultural region
+                                'Jizzakh': 1800,    # Mixed economy
+                                'Qarshi': 1900,     # Agricultural
+                                'Navoiy': 2800,     # Mining region
+                                'Termez': 1700,     # Border region
+                                'Gulistan': 1600,   # Agricultural
+                                'Nurafshon': 3500   # Suburban to capital
+                            }
+                            
+                            user_data[city] = {
+                                'population': int(actual_pop),
+                                'gdp_per_capita': gdp_estimates.get(city, 2000)
+                            }
+                            break  # Use first match found
+            
+            if user_data:
+                print(f"[SUCCESS] Loaded user population data for {len(user_data)} cities")
+            else:
+                print("[WARNING] No user population data could be extracted from Excel file")
+            
+        except Exception as e:
+            print(f"[ERROR] Failed to load user population data: {e}")
+        
+        return user_data
     
     def _initialize_data_cache(self):
         """Initialize data cache for percentile-based normalization"""
