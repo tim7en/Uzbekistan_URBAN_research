@@ -1,0 +1,804 @@
+{
+  "city": "Tashkent",
+  "year": 2022,
+  "analysis_timestamp": "2025-08-29T19:42:52.423697",
+  "geometries": {
+    "center_lat": 41.2995,
+    "center_lon": 69.2401,
+    "urban_buffer_m": 15000
+  },
+  "pollutants": {
+    "CO": {
+      "urban_annual": {
+        "mean": 0.03160196293031685,
+        "stdDev": 0.0008239999250187885,
+        "min": 0.030201708692378402,
+        "max": 0.033104713662922995,
+        "count": 22,
+        "valid_pixels": 22,
+        "months_with_data": 12,
+        "standard_error": 0.00017567737429097498,
+        "confidence_interval_95": {
+          "lower_bound": 0.03128574365659309,
+          "upper_bound": 0.03191818220404061,
+          "margin_of_error": 0.000316219273723755,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 0.026074327307950135,
+        "variability_level": "low",
+        "statistical_measures": {
+          "sample_size": 22,
+          "degrees_of_freedom": 21,
+          "relative_standard_error": 0.005559065260545624,
+          "data_reliability": "moderate"
+        },
+        "data_range": 0.0029030049705445933,
+        "relative_range": 0.09186153964378083
+      },
+      "rural_annual": {
+        "mean": 0.030268510367281867,
+        "stdDev": 0.0009810820479920527,
+        "min": 0.02719756998282569,
+        "max": 0.03244339608093953,
+        "count": 136,
+        "valid_pixels": 136,
+        "months_with_data": 12,
+        "standard_error": 8.4127091569676e-05,
+        "confidence_interval_95": {
+          "lower_bound": 0.030103621267805303,
+          "upper_bound": 0.03043339946675843,
+          "margin_of_error": 0.00016488909947656497,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 0.03241263068738703,
+        "variability_level": "low",
+        "statistical_measures": {
+          "sample_size": 136,
+          "degrees_of_freedom": 135,
+          "relative_standard_error": 0.00277936015181677,
+          "data_reliability": "high"
+        },
+        "data_range": 0.005245826098113842,
+        "relative_range": 0.1733096883348515
+      },
+      "urban_rural_ratio": 1.0440541191771482,
+      "monthly_data_points": {
+        "2022_01": 433,
+        "2022_02": 394,
+        "2022_03": 440,
+        "2022_04": 424,
+        "2022_05": 430,
+        "2022_06": 426,
+        "2022_07": 439,
+        "2022_08": 440,
+        "2022_09": 426,
+        "2022_10": 440,
+        "2022_11": 425,
+        "2022_12": 439
+      },
+      "data_completeness": 1.0,
+      "seasonal_analysis": {
+        "winter": {
+          "urban": {
+            "mean": 0.0347996809644243,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.0326039348174793,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "spring": {
+          "urban": {
+            "mean": 0.03244096956186783,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.031426942061355115,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "summer": {
+          "urban": {
+            "mean": 0.030148817963783256,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.02928747406579095,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "autumn": {
+          "urban": {
+            "mean": 0.02935745950096114,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.02814704271170497,
+            "count": 136,
+            "months_with_data": 3
+          }
+        }
+      },
+      "health_indicators": {
+        "annual_average_ugm3": 39516561.68206138,
+        "exceeds_who_hourly": true,
+        "carbon_monoxide_risk": "high"
+      }
+    },
+    "CH4": {
+      "urban_annual": {
+        "mean": 1913.061794263275,
+        "stdDev": 6.797246706424108,
+        "min": 1900.8862482421243,
+        "max": 1926.2595737070537,
+        "count": 22,
+        "valid_pixels": 22,
+        "months_with_data": 12,
+        "standard_error": 1.4491778670554334,
+        "confidence_interval_95": {
+          "lower_bound": 1910.4532741025753,
+          "upper_bound": 1915.6703144239748,
+          "margin_of_error": 2.60852016069978,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 0.003553072214816639,
+        "variability_level": "low",
+        "statistical_measures": {
+          "sample_size": 22,
+          "degrees_of_freedom": 21,
+          "relative_standard_error": 0.0007575175414621227,
+          "data_reliability": "moderate"
+        },
+        "data_range": 25.373325464929394,
+        "relative_range": 0.013263202234771891
+      },
+      "rural_annual": {
+        "mean": 1908.1719064044191,
+        "stdDev": 7.296707297495506,
+        "min": 1871.6991125273532,
+        "max": 1923.9264095770543,
+        "count": 136,
+        "valid_pixels": 136,
+        "months_with_data": 12,
+        "standard_error": 0.6256874888597492,
+        "confidence_interval_95": {
+          "lower_bound": 1906.945558926254,
+          "upper_bound": 1909.3982538825842,
+          "margin_of_error": 1.2263474781651085,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 0.003823925545180434,
+        "variability_level": "low",
+        "statistical_measures": {
+          "sample_size": 136,
+          "degrees_of_freedom": 135,
+          "relative_standard_error": 0.00032789891034437055,
+          "data_reliability": "high"
+        },
+        "data_range": 52.227297049701065,
+        "relative_range": 0.02737033119207446
+      },
+      "urban_rural_ratio": 1.0025626034229116,
+      "monthly_data_points": {
+        "2022_01": 431,
+        "2022_02": 393,
+        "2022_03": 437,
+        "2022_04": 424,
+        "2022_05": 440,
+        "2022_06": 417,
+        "2022_07": 364,
+        "2022_08": 34,
+        "2022_09": 426,
+        "2022_10": 439,
+        "2022_11": 423,
+        "2022_12": 439
+      },
+      "data_completeness": 1.0,
+      "seasonal_analysis": {
+        "winter": {
+          "urban": {
+            "mean": 1933.4003264204152,
+            "count": 18,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 1906.514072057363,
+            "count": 133,
+            "months_with_data": 3
+          }
+        },
+        "spring": {
+          "urban": {
+            "mean": 1897.7194271161475,
+            "count": 21,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 1887.989334541054,
+            "count": 135,
+            "months_with_data": 3
+          }
+        },
+        "summer": {
+          "urban": {
+            "mean": 1909.0846636922643,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 1907.7307779616656,
+            "count": 135,
+            "months_with_data": 3
+          }
+        },
+        "autumn": {
+          "urban": {
+            "mean": 1922.5103909711743,
+            "count": 21,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 1918.30706864702,
+            "count": 135,
+            "months_with_data": 3
+          }
+        }
+      },
+      "health_indicators": {}
+    },
+    "AER_AI": {
+      "urban_annual": {
+        "mean": 0.17629845835778085,
+        "stdDev": 0.06458385653585375,
+        "min": 0.02742711826018341,
+        "max": 0.26966713429686323,
+        "count": 22,
+        "valid_pixels": 22,
+        "months_with_data": 12,
+        "standard_error": 0.013769324478451991,
+        "confidence_interval_95": {
+          "lower_bound": 0.15151367429656726,
+          "upper_bound": 0.20108324241899445,
+          "margin_of_error": 0.024784784061213583,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 0.36633250873236217,
+        "variability_level": "high",
+        "statistical_measures": {
+          "sample_size": 22,
+          "degrees_of_freedom": 21,
+          "relative_standard_error": 0.07810235328608753,
+          "data_reliability": "moderate"
+        },
+        "data_range": 0.24224001603667983,
+        "relative_range": 1.3740336602664833
+      },
+      "rural_annual": {
+        "mean": 0.06093630159067857,
+        "stdDev": 0.08093266337293303,
+        "min": -0.15350888575190247,
+        "max": 0.23226475210330672,
+        "count": 136,
+        "valid_pixels": 136,
+        "months_with_data": 12,
+        "standard_error": 0.006939918630136481,
+        "confidence_interval_95": {
+          "lower_bound": 0.04733406107561106,
+          "upper_bound": 0.07453854210574606,
+          "margin_of_error": 0.013602240515067502,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 1.3281518776208976,
+        "variability_level": "high",
+        "statistical_measures": {
+          "sample_size": 136,
+          "degrees_of_freedom": 135,
+          "relative_standard_error": 0.11388808393317525,
+          "data_reliability": "high"
+        },
+        "data_range": 0.3857736378552092,
+        "relative_range": 6.330768815713966
+      },
+      "urban_rural_ratio": 2.893159803855724,
+      "monthly_data_points": {
+        "2022_01": 434,
+        "2022_02": 395,
+        "2022_03": 440,
+        "2022_04": 424,
+        "2022_05": 440,
+        "2022_06": 426,
+        "2022_07": 439,
+        "2022_08": 440,
+        "2022_09": 426,
+        "2022_10": 440,
+        "2022_11": 425,
+        "2022_12": 439
+      },
+      "data_completeness": 1.0,
+      "seasonal_analysis": {
+        "winter": {
+          "urban": {
+            "mean": -0.11807557668280456,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": -0.20014073601892812,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "spring": {
+          "urban": {
+            "mean": 0.10807484838533708,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": -0.03799930379870316,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "summer": {
+          "urban": {
+            "mean": 0.5899742776182839,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.40751806521920825,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "autumn": {
+          "urban": {
+            "mean": 0.12451279264390537,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.07090314579264537,
+            "count": 136,
+            "months_with_data": 3
+          }
+        }
+      },
+      "health_indicators": {}
+    },
+    "NO2": {
+      "urban_annual": {
+        "mean": 0.00020131025334595672,
+        "stdDev": 6.431973214222958e-05,
+        "min": 8.458936216604321e-05,
+        "max": 0.0003136693909568508,
+        "count": 22,
+        "valid_pixels": 22,
+        "months_with_data": 12,
+        "standard_error": 1.3713012968524328e-05,
+        "confidence_interval_95": {
+          "lower_bound": 0.00017662683000261293,
+          "upper_bound": 0.0002259936766893005,
+          "margin_of_error": 2.468342334334379e-05,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 0.3195054949918249,
+        "variability_level": "high",
+        "statistical_measures": {
+          "sample_size": 22,
+          "degrees_of_freedom": 21,
+          "relative_standard_error": 0.06811880041181098,
+          "data_reliability": "moderate"
+        },
+        "data_range": 0.0002290800287908076,
+        "relative_range": 1.1379451616760317
+      },
+      "rural_annual": {
+        "mean": 9.91053467406854e-05,
+        "stdDev": 3.941872287347784e-05,
+        "min": 4.827710456891129e-05,
+        "max": 0.00023636296333105067,
+        "count": 136,
+        "valid_pixels": 136,
+        "months_with_data": 12,
+        "standard_error": 3.38012760046305e-06,
+        "confidence_interval_95": {
+          "lower_bound": 9.248029664377783e-05,
+          "upper_bound": 0.00010573039683759298,
+          "margin_of_error": 6.625050096907578e-06,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 0.39774567336532407,
+        "variability_level": "high",
+        "statistical_measures": {
+          "sample_size": 136,
+          "degrees_of_freedom": 135,
+          "relative_standard_error": 0.034106410114353766,
+          "data_reliability": "high"
+        },
+        "data_range": 0.0001880858587621394,
+        "relative_range": 1.8978376540498505
+      },
+      "urban_rural_ratio": 2.031275405076742,
+      "monthly_data_points": {
+        "2022_01": 433,
+        "2022_02": 394,
+        "2022_03": 440,
+        "2022_04": 424,
+        "2022_05": 426,
+        "2022_06": 426,
+        "2022_07": 439,
+        "2022_08": 440,
+        "2022_09": 426,
+        "2022_10": 440,
+        "2022_11": 425,
+        "2022_12": 439
+      },
+      "data_completeness": 1.0,
+      "seasonal_analysis": {
+        "winter": {
+          "urban": {
+            "mean": 0.0003594849199992899,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.00017210041957406287,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "spring": {
+          "urban": {
+            "mean": 0.0001744219008014186,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 7.811828323105009e-05,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "summer": {
+          "urban": {
+            "mean": 0.00012548446911185733,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 6.435269581598313e-05,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "autumn": {
+          "urban": {
+            "mean": 0.00021010755412727164,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.00011330573991399904,
+            "count": 136,
+            "months_with_data": 3
+          }
+        }
+      },
+      "health_indicators": {
+        "annual_average_ugm3": 413454.4134065809,
+        "exceeds_who_annual": true,
+        "traffic_pollution_indicator": "high"
+      }
+    },
+    "O3": {
+      "urban_annual": {
+        "mean": 0.14139722591319234,
+        "stdDev": 0.00016141253821142025,
+        "min": 0.14116764220174632,
+        "max": 0.1416775503910973,
+        "count": 22,
+        "valid_pixels": 22,
+        "months_with_data": 12,
+        "standard_error": 3.4413268775452135e-05,
+        "confidence_interval_95": {
+          "lower_bound": 0.14133528202939652,
+          "upper_bound": 0.14145916979698817,
+          "margin_of_error": 6.194388379581385e-05,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 0.0011415537834562318,
+        "variability_level": "low",
+        "statistical_measures": {
+          "sample_size": 22,
+          "degrees_of_freedom": 21,
+          "relative_standard_error": 0.00024338008439132598,
+          "data_reliability": "moderate"
+        },
+        "data_range": 0.0005099081893509827,
+        "relative_range": 0.003606210702210165
+      },
+      "rural_annual": {
+        "mean": 0.14142048179205824,
+        "stdDev": 0.00033059638132769653,
+        "min": 0.140584179432335,
+        "max": 0.1420336459637152,
+        "count": 136,
+        "valid_pixels": 136,
+        "months_with_data": 12,
+        "standard_error": 2.834840582546664e-05,
+        "confidence_interval_95": {
+          "lower_bound": 0.14136491891664033,
+          "upper_bound": 0.14147604466747615,
+          "margin_of_error": 5.556287541791461e-05,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 0.0023376838852366424,
+        "variability_level": "low",
+        "statistical_measures": {
+          "sample_size": 136,
+          "degrees_of_freedom": 135,
+          "relative_standard_error": 0.00020045473941426357,
+          "data_reliability": "high"
+        },
+        "data_range": 0.0014494665313802002,
+        "relative_range": 0.010249339508766954
+      },
+      "urban_rural_ratio": 0.9998355550867087,
+      "monthly_data_points": {
+        "2022_01": 434,
+        "2022_02": 395,
+        "2022_03": 440,
+        "2022_04": 424,
+        "2022_05": 440,
+        "2022_06": 426,
+        "2022_07": 439,
+        "2022_08": 440,
+        "2022_09": 426,
+        "2022_10": 440,
+        "2022_11": 425,
+        "2022_12": 439
+      },
+      "data_completeness": 1.0,
+      "seasonal_analysis": {
+        "winter": {
+          "urban": {
+            "mean": 0.15386290001758304,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.1538333707507822,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "spring": {
+          "urban": {
+            "mean": 0.1427348125006425,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.14278549101022175,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "summer": {
+          "urban": {
+            "mean": 0.13806965584557074,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.13810778761849835,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "autumn": {
+          "urban": {
+            "mean": 0.1310490842201269,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.13107597298689283,
+            "count": 136,
+            "months_with_data": 3
+          }
+        }
+      },
+      "health_indicators": {
+        "peak_concentration_ugm3": 303594750.83806574,
+        "exceeds_who_hourly": true,
+        "photochemical_pollution_risk": "high"
+      }
+    },
+    "SO2": {
+      "urban_annual": {
+        "mean": 0.0002495870264781932,
+        "stdDev": 3.103846986289838e-05,
+        "min": 0.00017645068640587594,
+        "max": 0.00030173685748909886,
+        "count": 22,
+        "valid_pixels": 22,
+        "months_with_data": 12,
+        "standard_error": 6.6174240093519605e-06,
+        "confidence_interval_95": {
+          "lower_bound": 0.00023767566326135964,
+          "upper_bound": 0.0002614983896950267,
+          "margin_of_error": 1.1911363216833529e-05,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 0.12435930785693408,
+        "variability_level": "moderate",
+        "statistical_measures": {
+          "sample_size": 22,
+          "degrees_of_freedom": 21,
+          "relative_standard_error": 0.026513493520586236,
+          "data_reliability": "moderate"
+        },
+        "data_range": 0.00012528617108322293,
+        "relative_range": 0.5019738920370902
+      },
+      "rural_annual": {
+        "mean": 0.00025910074796937183,
+        "stdDev": 6.046265929191223e-05,
+        "min": 0.0001304617772808706,
+        "max": 0.0004009742400428247,
+        "count": 136,
+        "valid_pixels": 136,
+        "months_with_data": 12,
+        "standard_error": 5.184630261258256e-06,
+        "confidence_interval_95": {
+          "lower_bound": 0.00024893887265730566,
+          "upper_bound": 0.000269262623281438,
+          "margin_of_error": 1.016187531206618e-05,
+          "confidence_level": 0.95
+        },
+        "coefficient_of_variation": 0.2333557883015432,
+        "variability_level": "moderate",
+        "statistical_measures": {
+          "sample_size": 136,
+          "degrees_of_freedom": 135,
+          "relative_standard_error": 0.020010093764264734,
+          "data_reliability": "high"
+        },
+        "data_range": 0.0002705124627619541,
+        "relative_range": 1.0440435424521866
+      },
+      "urban_rural_ratio": 0.9632817675528159,
+      "monthly_data_points": {
+        "2022_01": 431,
+        "2022_02": 393,
+        "2022_03": 440,
+        "2022_04": 424,
+        "2022_05": 438,
+        "2022_06": 426,
+        "2022_07": 439,
+        "2022_08": 440,
+        "2022_09": 426,
+        "2022_10": 440,
+        "2022_11": 424,
+        "2022_12": 439
+      },
+      "data_completeness": 1.0,
+      "seasonal_analysis": {
+        "winter": {
+          "urban": {
+            "mean": 0.0009250815968604103,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.001057954398635852,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "spring": {
+          "urban": {
+            "mean": 0.00015467153022573528,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.00016330284499370523,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "summer": {
+          "urban": {
+            "mean": 0.00012328306879195325,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.0001307776268841839,
+            "count": 136,
+            "months_with_data": 3
+          }
+        },
+        "autumn": {
+          "urban": {
+            "mean": 0.0003187909948615716,
+            "count": 22,
+            "months_with_data": 3
+          },
+          "rural": {
+            "mean": 0.0003224267983131188,
+            "count": 136,
+            "months_with_data": 3
+          }
+        }
+      },
+      "health_indicators": {
+        "annual_average_ugm3": 713841.1802835681,
+        "exceeds_who_daily": true,
+        "industrial_pollution_indicator": "high"
+      }
+    }
+  },
+  "seasonal_analysis": {},
+  "health_indicators": {},
+  "quality_metrics": {
+    "temporal_coverage": {
+      "CO": 1.0,
+      "CH4": 1.0,
+      "AER_AI": 1.0,
+      "NO2": 1.0,
+      "O3": 1.0,
+      "SO2": 1.0
+    },
+    "spatial_coverage": {
+      "CO": {
+        "urban_data": true,
+        "rural_data": true,
+        "both_zones": true
+      },
+      "CH4": {
+        "urban_data": true,
+        "rural_data": true,
+        "both_zones": true
+      },
+      "AER_AI": {
+        "urban_data": true,
+        "rural_data": true,
+        "both_zones": true
+      },
+      "NO2": {
+        "urban_data": true,
+        "rural_data": true,
+        "both_zones": true
+      },
+      "O3": {
+        "urban_data": true,
+        "rural_data": true,
+        "both_zones": true
+      },
+      "SO2": {
+        "urban_data": true,
+        "rural_data": true,
+        "both_zones": true
+      }
+    },
+    "data_completeness": {
+      "pollutants_analyzed": 6,
+      "average_completeness": 1.0,
+      "quality_rating": "excellent"
+    },
+    "overall_quality_score": 1.0
+  }
+}

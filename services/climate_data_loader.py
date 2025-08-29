@@ -128,6 +128,7 @@ class ClimateDataLoader:
         self.spatial_data = {}
         self.nightlights_data = []
         self.temperature_data = {}
+        self.air_quality_data = {}
         self.population_data = {}
         self._cache = {}
         
@@ -141,6 +142,7 @@ class ClimateDataLoader:
         self._load_lulc_data()
         self._load_spatial_data()
         self._load_nightlights_data()
+        self._load_air_quality_data()
         self._initialize_population_data()
         self._initialize_data_cache()
         
@@ -150,6 +152,7 @@ class ClimateDataLoader:
             'lulc_data': self.lulc_data,
             'spatial_data': self.spatial_data,
             'nightlights_data': self.nightlights_data,
+            'air_quality_data': self.air_quality_data,
             'population_data': self.population_data,
             'cache': self._cache
         }
@@ -216,6 +219,23 @@ class ClimateDataLoader:
             print(f"[OK] Loaded nightlights data for {len(self.nightlights_data)} cities")
         else:
             print("⚠️ Nightlights data not found")
+    
+    def _load_air_quality_data(self):
+        """Load air quality data from Sentinel analysis"""
+        air_quality_file = self.base_path / "reports" / "air_quality_summary.json"
+        if air_quality_file.exists():
+            with open(air_quality_file, 'r') as f:
+                air_quality_summary = json.load(f)
+            
+            # Extract city-specific air quality data
+            if 'city_results' in air_quality_summary:
+                for city, results in air_quality_summary['city_results'].items():
+                    if 'error' not in results:
+                        self.air_quality_data[city] = results
+            
+            print(f"[OK] Loaded air quality data for {len(self.air_quality_data)} cities")
+        else:
+            print("⚠️ Air quality data not found - run air quality assessment first")
     
     def _initialize_population_data(self):
         """Initialize population data for cities using user-provided data"""
@@ -299,8 +319,17 @@ class ClimateDataLoader:
                         # Get the population value (assuming it's in column 1, in thousands)
                         pop_value = matches.iloc[0, 1]  # Population in thousands
                         if pd.notna(pop_value):
-                            # Convert to actual population (multiply by 1000)
-                            actual_pop = float(pop_value) * 1000
+                            try:
+                                # Convert to actual population (multiply by 1000)
+                                # Handle pandas/numpy scalar types
+                                if hasattr(pop_value, 'item'):
+                                    pop_value = pop_value.item()
+                                elif not isinstance(pop_value, (int, float)):
+                                    pop_value = str(pop_value)
+                                actual_pop = float(pop_value) * 1000
+                            except (ValueError, TypeError) as conv_error:
+                                print(f"[WARNING] Could not convert population value {pop_value}: {conv_error}")
+                                continue
                             
                             # Estimate GDP per capita (using regional averages)
                             gdp_estimates = {

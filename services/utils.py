@@ -63,6 +63,16 @@ DATASETS = {
     # Nighttime lights datasets
     "viirs_monthly": "NOAA/VIIRS/DNB/MONTHLY_V1/VCMCFG",
     "dmsp_ols": "NOAA/DMSP-OLS/NIGHTTIME_LIGHTS",
+    # Sentinel air quality datasets (using NRTI collections with available data)
+    # Prefer OFFL (final) collections for historical analysis; fall back to NRTI if needed
+    "sentinel5p_no2": "COPERNICUS/S5P/OFFL/L3_NO2",
+    "sentinel5p_o3": "COPERNICUS/S5P/OFFL/L3_O3",
+    "sentinel5p_so2": "COPERNICUS/S5P/OFFL/L3_SO2",
+    "sentinel5p_co": "COPERNICUS/S5P/OFFL/L3_CO",
+    "sentinel5p_ch4": "COPERNICUS/S5P/OFFL/L3_CH4",  # OFFL may have limited coverage; use carefully
+    "sentinel5p_aerosol": "COPERNICUS/S5P/OFFL/L3_AER_AI",
+    "sentinel2_aod": "COPERNICUS/S2_SR_HARMONIZED",
+    "sentinel3_olci": "COPERNICUS/S3/OLCI",
 }
 
 GEE_CONFIG = {
@@ -70,7 +80,9 @@ GEE_CONFIG = {
     "scale": 10,
     "scale_modis": 1000,
     "scale_landsat": 30,
+    "scale_s5p": 7500,  # 🔥 OPTIMIZATION: Proper S5P scale (7-10km footprint)
     "best_effort": True,
+    "tile_scale": 4,    # 🔥 OPTIMIZATION: Better tile scaling for S5P
 }
 
 ESRI_CLASSES = {
