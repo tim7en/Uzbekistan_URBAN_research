@@ -324,31 +324,11 @@ class WaterScarcityGEEAssessment:
                     ee.Reducer.mean(), buf, 2500,
                     bestEffort=True, maxPixels=1e9
                 )
-                jrc_val = float(jrc_occurrence.get('occurrence').getInfo()) if jrc_occurrence.get('occurrence') else 0.0
+                occurrence_val = jrc_occurrence.get('occurrence').getInfo() if jrc_occurrence.get('occurrence') else None
+                jrc_val = float(occurrence_val) if occurrence_val is not None else 0.0
             except Exception as e:
                 print(f"Warning: JRC data failed for {city}: {e}")
                 jrc_val = 0.0
-
-            try:
-                # WorldCover 2020 uses 'Map' band with class values
-                wc_result = worldcover.reduceRegion(
-                    ee.Reducer.frequencyHistogram(), land_buf, 100,
-                    bestEffort=True, maxPixels=1e9
-                )
-                hist = wc_result.getInfo()
-                if 'Map' in hist:
-                    class_counts = hist['Map']
-                    total_pixels = sum(class_counts.values())
-                    # Class 40 = cropland in ESA WorldCover
-                    cropland_pixels = class_counts.get('40', 0)
-                    cropland_fraction = float(cropland_pixels) / float(total_pixels) if total_pixels > 0 else 0.0
-                    print(f"Debug {city}: WorldCover total_pixels={total_pixels}, cropland_pixels={cropland_pixels}, fraction={cropland_fraction}")
-                else:
-                    print(f"Debug {city}: WorldCover 'Map' band not found in result")
-                    cropland_fraction = 0.0
-            except Exception as e:
-                print(f"Warning: WorldCover data failed for {city}: {e}")
-                cropland_fraction = 0.0
 
             # Use existing LULC data for cropland fraction (preferred over satellite-derived data)
             existing_cropland = self.lulc_data.get(city, {}).get('cropland_fraction', None)
@@ -375,7 +355,7 @@ class WaterScarcityGEEAssessment:
                 'aridity_index': aridity_index,
                 'climatic_water_deficit': climatic_water_deficit,
                 'drought_frequency': drought_frequency,
-                'surface_water_change': -float(jrc_val),  # negative = loss
+                'surface_water_change': -float(jrc_val) if jrc_val is not None else 0.0,  # negative = loss
                 'cropland_fraction': float(cropland_fraction),
                 'population_density': float(pop_val),
                 'aqueduct_bws_score': aqueduct_val
@@ -397,7 +377,7 @@ class WaterScarcityGEEAssessment:
         swc = raw.get('surface_water_change', -10)
         cropland = raw.get('cropland_fraction', 0.1)
         pop = raw.get('population_density', 100)
-        aqu = raw.get('aqueduct_bws_score', 3.0) if raw.get('aqueduct_bws_score') is not None else 3.0
+        aqu = raw.get('aqueduct_bws_score')
 
         # Normalize each into 0-1 (simple robust scaling using plausible bounds)
         def norm(x, low, high):
@@ -409,7 +389,7 @@ class WaterScarcityGEEAssessment:
         swc_s = norm(-swc, 0, 100)  # negative change increases risk
         cropland_s = norm(cropland, 0.0, 0.5)
         pop_s = norm(pop, 50, 1000)
-        aqu_s = norm(aqu, 1.0, 5.0)
+        aqu_s = norm(aqu, 1.0, 5.0) if aqu is not None else 0.5  # Default to moderate risk when no data
 
         supply = 0.6 * (ai_s * 0.4 + cwd_s * 0.4 + df_s * 0.2) + 0.4 * swc_s
         demand = 0.7 * cropland_s + 0.3 * pop_s
