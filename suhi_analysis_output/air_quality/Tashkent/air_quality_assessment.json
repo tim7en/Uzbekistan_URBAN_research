@@ -1,12 +1,12 @@
 {
   "city": "Tashkent",
   "analysis_period": "2019-2024",
-  "timestamp": "2025-08-29T19:37:59.584538",
+  "timestamp": "2025-08-29T21:13:37.297294",
   "yearly_results": {
     "2019": {
       "city": "Tashkent",
       "year": 2019,
-      "analysis_timestamp": "2025-08-29T19:37:59.585536",
+      "analysis_timestamp": "2025-08-29T21:13:37.298716",
       "geometries": {
         "center_lat": 41.2995,
         "center_lon": 69.2401,
@@ -810,7 +810,7 @@
     "2020": {
       "city": "Tashkent",
       "year": 2020,
-      "analysis_timestamp": "2025-08-29T19:38:47.282789",
+      "analysis_timestamp": "2025-08-29T21:14:36.474580",
       "geometries": {
         "center_lat": 41.2995,
         "center_lon": 69.2401,
@@ -1614,7 +1614,7 @@
     "2021": {
       "city": "Tashkent",
       "year": 2021,
-      "analysis_timestamp": "2025-08-29T19:39:24.400152",
+      "analysis_timestamp": "2025-08-29T21:15:24.950109",
       "geometries": {
         "center_lat": 41.2995,
         "center_lon": 69.2401,
@@ -2418,7 +2418,7 @@
     "2022": {
       "city": "Tashkent",
       "year": 2022,
-      "analysis_timestamp": "2025-08-29T19:42:52.423697",
+      "analysis_timestamp": "2025-08-29T21:16:10.638939",
       "geometries": {
         "center_lat": 41.2995,
         "center_lon": 69.2401,
@@ -3222,7 +3222,7 @@
     "2023": {
       "city": "Tashkent",
       "year": 2023,
-      "analysis_timestamp": "2025-08-29T19:47:26.914379",
+      "analysis_timestamp": "2025-08-29T21:16:57.627369",
       "geometries": {
         "center_lat": 41.2995,
         "center_lon": 69.2401,
@@ -4026,7 +4026,7 @@
     "2024": {
       "city": "Tashkent",
       "year": 2024,
-      "analysis_timestamp": "2025-08-29T19:51:29.756777",
+      "analysis_timestamp": "2025-08-29T21:17:36.809677",
       "geometries": {
         "center_lat": 41.2995,
         "center_lon": 69.2401,
@@ -4848,9 +4848,9 @@
       ],
       "trend_direction": "increasing",
       "trend_significance": "weak",
-      "trend_slope": 0.00010024952010790249,
-      "trend_intercept": -0.16895406297271848,
-      "r_squared": 0.024205888642958362
+      "trend_slope": 0.00010024952010789701,
+      "trend_intercept": -0.16895406297270754,
+      "r_squared": 0.024205888642958584
     },
     "CH4": {
       "annual_means": [
@@ -4871,9 +4871,9 @@
       ],
       "trend_direction": "increasing",
       "trend_significance": "strong",
-      "trend_slope": 11.497731543741489,
-      "trend_intercept": -21333.825344403176,
-      "r_squared": 0.9286743233038812
+      "trend_slope": 11.497731543744306,
+      "trend_intercept": -21333.825344408884,
+      "r_squared": 0.9286743233038666
     },
     "AER_AI": {
       "annual_means": [
@@ -4894,9 +4894,9 @@
       ],
       "trend_direction": "increasing",
       "trend_significance": "moderate",
-      "trend_slope": 0.22286063387622554,
-      "trend_intercept": -450.8174258583519,
-      "r_squared": 0.6887253713857278
+      "trend_slope": 0.22286063387628935,
+      "trend_intercept": -450.8174258584812,
+      "r_squared": 0.6887253713857533
     },
     "NO2": {
       "annual_means": [
@@ -4917,9 +4917,9 @@
       ],
       "trend_direction": "increasing",
       "trend_significance": "weak",
-      "trend_slope": 9.805403618006088e-06,
-      "trend_intercept": -0.019636874947777373,
-      "r_squared": 0.42167503691169783
+      "trend_slope": 9.805403618007067e-06,
+      "trend_intercept": -0.01963687494777937,
+      "r_squared": 0.42167503691173125
     },
     "O3": {
       "annual_means": [
@@ -4940,9 +4940,9 @@
       ],
       "trend_direction": "increasing",
       "trend_significance": "weak",
-      "trend_slope": 0.0014034211745954474,
-      "trend_intercept": -2.6932096170231823,
-      "r_squared": 0.4077863250707964
+      "trend_slope": 0.0014034211745962873,
+      "trend_intercept": -2.6932096170248827,
+      "r_squared": 0.4077863250707965
     },
     "SO2": {
       "annual_means": [
@@ -4963,20 +4963,20 @@
       ],
       "trend_direction": "decreasing",
       "trend_significance": "weak",
-      "trend_slope": -5.313604718588902e-06,
-      "trend_intercept": 0.011027886065972912,
-      "r_squared": 0.06929120839361358
+      "trend_slope": -5.313604718596741e-06,
+      "trend_intercept": 0.011027886065988767,
+      "r_squared": 0.06929120839359759
     }
   },
   "summary": {
     "total_years_analyzed": 6,
     "pollutants_covered": [
+      "CO",
       "AER_AI",
-      "NO2",
       "CH4",
-      "O3",
+      "NO2",
       "SO2",
-      "CO"
+      "O3"
     ],
     "data_quality_summary": {
       "average_score": 1.0,
