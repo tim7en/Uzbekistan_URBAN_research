@@ -65,8 +65,8 @@ def main():
     air_quality_dir = base / 'air_quality'
     air_quality_dir.mkdir(parents=True, exist_ok=True)
 
-    # Get cities to analyze
-    cities = args.cities if args.cities else list(UZBEKISTAN_CITIES.keys())
+    # Get cities to analyze (exclude Tashkent)
+    cities = args.cities if args.cities else [city for city in UZBEKISTAN_CITIES.keys() if city != "Tashkent"]
     start_year = args.start_year
     end_year = args.end_year
 
