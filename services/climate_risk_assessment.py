@@ -1158,23 +1158,36 @@ class IPCCRiskAssessmentService:
         """Calculate water scarcity vulnerability based on water scarcity assessment"""
         if city not in self.water_scarcity_data:
             return 0.5  # Default moderate vulnerability if no data
-        
+
         water_data = self.water_scarcity_data[city]
-        
-        # Use water scarcity index as primary vulnerability indicator
-        water_scarcity_index = water_data.get('water_scarcity_index', 0.0)
-        
-        # Additional factors from drought frequency and water stress
-        drought_frequency = water_data.get('drought_frequency', 0.0)
-        water_stress_level = water_data.get('water_stress_level', 0.0)
-        
-        # Combine factors: higher scarcity, more frequent droughts, higher stress = higher vulnerability
+
+        # Use available water scarcity indicators
+        aridity_index = water_data.get('aridity_index', 0.2)
+        climatic_water_deficit = water_data.get('climatic_water_deficit', 500)
+        drought_frequency = water_data.get('drought_frequency', 0.1)
+        surface_water_change = water_data.get('surface_water_change', 0.0)
+
+        # Calculate water scarcity vulnerability from available indicators
+        # Lower aridity index = higher risk (more arid)
+        aridity_risk = 1.0 - min(1.0, aridity_index / 0.5)  # Normalize to 0-1, invert
+
+        # Higher climatic water deficit = higher risk
+        cwd_risk = min(1.0, climatic_water_deficit / 2000.0)  # Normalize to 0-1
+
+        # Higher drought frequency = higher risk
+        drought_risk = min(1.0, drought_frequency / 0.5)  # Normalize to 0-1
+
+        # Surface water loss = higher risk (negative change)
+        surface_water_risk = min(1.0, max(0.0, -surface_water_change / 50.0))  # Normalize to 0-1
+
+        # Combine factors with appropriate weights
         combined_vulnerability = (
-            0.5 * water_scarcity_index +
-            0.3 * drought_frequency +
-            0.2 * water_stress_level
+            0.4 * aridity_risk +           # Aridity is primary indicator
+            0.3 * cwd_risk +               # Climatic water deficit
+            0.2 * drought_risk +           # Drought frequency
+            0.1 * surface_water_risk       # Surface water change
         )
-        
+
         return min(1.0, combined_vulnerability)
     
     def _calculate_greenspace_adaptive_capacity(self, city: str) -> float:

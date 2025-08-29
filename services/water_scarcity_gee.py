@@ -251,43 +251,44 @@ class WaterScarcityGEEAssessment:
             # Convert temp to Celsius
             monthly_temp_c = [t - 273.15 for t in monthly_temp_k]
 
-            # Compute PET and water balance locally (fast)
+            # Compute PET and water balance locally (fast) using Hargreaves method
             days_in_month = [31,28,31,30,31,30,31,31,30,31,30,31]
             monthly_pet = []
             D_values = []  # Palmer Drought Severity Index proxy
 
-            # Compute annual heat index I for each year
+            # Compute PET for each year using Hargreaves method
             for yy in range(2001, 2021):
                 year_idx = (yy - 2001) * 12
-                temps_year = monthly_temp_c[year_idx:year_idx+12]
-
-                I = 0.0
-                for T in temps_year:
-                    if T > 0:
-                        I += (T / 5.0) ** 1.514
-
-                a = (6.75e-7) * (I ** 3) - (7.71e-5) * (I ** 2) + (1.792e-2) * I + 0.49239 if I > 0 else 0.0
+                temps_year_c = monthly_temp_c[year_idx:year_idx+12]
 
                 for m_idx in range(12):
-                    T = temps_year[m_idx]
+                    T_mean = temps_year_c[m_idx]
                     m = m_idx + 1
                     P = monthly_precip[year_idx + m_idx]
 
-                    if T <= 0 or I <= 0:
+                    if T_mean <= 0:
                         pet = 0.0
                     else:
-                        # Daylength correction for Thornthwaite
-                        day_of_year = sum(days_in_month[:m-1]) + 15
-                        decl = 23.45 * math.sin(2 * math.pi * (284 + day_of_year) / 365.0) * math.pi / 180.0
-                        lat_rad = float(lat) * math.pi / 180.0
-                        cos_omega = -math.tan(lat_rad) * math.tan(decl)
-                        cos_omega = max(-1.0, min(1.0, cos_omega))
-                        omega = math.acos(cos_omega)
-                        daylength = 2.0 * omega * 24.0 / (2.0 * math.pi)
-                        daylength_factor = max(0.1, min(2.0, daylength / 12.0))
+                        # Estimate Tmax and Tmin from Tmean (typical for arid regions)
+                        # Uzbekistan diurnal range: ~12-15°C in summer, ~8-10°C in winter
+                        diurnal_range = 12.0 if m in [6,7,8] else 10.0  # Summer vs winter
+                        T_max = T_mean + diurnal_range / 2.0
+                        T_min = T_mean - diurnal_range / 2.0
 
-                        pet_month = 16.0 * ((10.0 * T / I) ** a) if I > 0 else 0.0
-                        pet = pet_month * (days_in_month[m-1] / 30.0) * daylength_factor
+                        # Calculate extraterrestrial radiation (Ra) in MJ/m²/day
+                        # Based on latitude and day of year
+                        day_of_year = sum(days_in_month[:m-1]) + 15
+                        solar_declination = 0.409 * math.sin(2 * math.pi * (284 + day_of_year) / 365.0)
+                        lat_rad = float(lat) * math.pi / 180.0
+
+                        sunset_angle = math.acos(-math.tan(lat_rad) * math.tan(solar_declination))
+                        Ra = (24.0 * 60.0 / math.pi) * 0.082 * (sunset_angle * math.sin(lat_rad) * math.sin(solar_declination) +
+                                                              math.cos(lat_rad) * math.cos(solar_declination) * math.sin(sunset_angle))
+                        Ra = max(0.0, Ra)  # Ensure non-negative
+
+                        # Hargreaves PET formula: PET = 0.0023 * Ra * (Tmax - Tmin)^0.5 * (Tmean + 17.8) * days
+                        pet_daily = 0.0023 * Ra * (T_max - T_min)**0.5 * (T_mean + 17.8)
+                        pet = pet_daily * days_in_month[m-1]
 
                     monthly_pet.append(pet)
                     D_values.append(P - pet)
