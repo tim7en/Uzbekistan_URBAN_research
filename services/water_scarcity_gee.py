@@ -42,7 +42,7 @@ class WaterScarcityMetrics:
 
     # Demand proxies
     cropland_fraction: float = 0.0  # ESA WorldCover cropland %
-    population_density: float = 0.0  # GPW population density
+    population_density: float = 0.0  # User-provided population density
 
     # External benchmark
     aqueduct_bws_score: float = 0.0  # WRI Aqueduct Baseline Water Stress
@@ -75,9 +75,6 @@ class WaterScarcityGEEAssessment:
         'chirps': 'UCSB-CHG/CHIRPS/DAILY',
         'era5': 'ECMWF/ERA5/DAILY',
         'jrc_gsw': 'JRC/GSW1_4/GlobalSurfaceWater',
-        'worldcover': 'ESA/WorldCover/v200',  # Fixed: v200 is the latest
-        'gpw': 'CIESIN/GPWv411/GPW_UNWPP-Adjusted_Population_Density/gpw_v4_unwpp-adjusted_population_density_rev11_2020_30_sec',
-        'aqueduct': 'projects/WRI/Aqueduct40/annual',  # WRI Aqueduct Baseline Water Stress
     }
 
     def __init__(self, data_loader):
@@ -169,8 +166,8 @@ class WaterScarcityGEEAssessment:
           - drought_frequency (fraction months with very low precip)
           - surface_water_change (percent change from JRC GSW)
           - cropland_fraction (percent from WorldCover)
-          - population_density (GPW 2020 estimate)
-          - aqueduct_bws_score (if available via local lookup it's left as None)
+          - population_density (from user-provided data)
+          - aqueduct_bws_score (from WRI Aqueduct when available)
         """
         # Try cache first
         cached = self._load_cached(city)
@@ -193,8 +190,6 @@ class WaterScarcityGEEAssessment:
             chirps = ee.ImageCollection(self.DATASETS['chirps']).filterDate('2001-01-01', '2020-12-31')
             era5 = ee.ImageCollection(self.DATASETS['era5']).select(['mean_2m_air_temperature'])
             jrc = ee.Image(self.DATASETS['jrc_gsw']).select('occurrence')
-            worldcover = ee.Image(self.DATASETS['worldcover'])
-            gpw = ee.Image(self.DATASETS['gpw']).select('population_density')
 
             # Use circular buffer, not bounds (smaller area)
             buf = geom.buffer(5000)
@@ -355,42 +350,26 @@ class WaterScarcityGEEAssessment:
                 print(f"Warning: WorldCover data failed for {city}: {e}")
                 cropland_fraction = 0.0
 
-            # Override with existing LULC data if available (preferred over WorldCover)
+            # Use existing LULC data for cropland fraction (preferred over satellite-derived data)
             existing_cropland = self.lulc_data.get(city, {}).get('cropland_fraction', None)
             if existing_cropland is not None:
                 cropland_fraction = existing_cropland
                 print(f"Debug {city}: Using existing LULC cropland fraction={cropland_fraction}")
+            else:
+                print(f"Warning: No LULC cropland data available for {city}")
+                cropland_fraction = 0.0
 
-            try:
-                # GPW v411 uses 'population_density' band
-                pop_result = gpw.reduceRegion(
-                    ee.Reducer.mean(), land_buf, 1000,
-                    bestEffort=True, maxPixels=1e9
-                )
-                pop_val = float(pop_result.get('population_density').getInfo()) if pop_result.get('population_density') else 100.0
-                print(f"Debug {city}: GPW population_density={pop_val}")
-            except Exception as e:
-                print(f"Warning: GPW data failed for {city}: {e}")
-                pop_val = 100.0
-
-            # Override with existing population data if available (preferred over GPW)
+            # Use existing population data directly (no satellite imagery needed)
             existing_pop_data = self.city_population_data.get(city, {})
             if existing_pop_data:
-                pop_val = existing_pop_data.get('density', pop_val)
-                print(f"Debug {city}: Using existing population density={pop_val}")
+                pop_val = existing_pop_data.get('density', 100.0)
+                print(f"Debug {city}: Using user-provided population density={pop_val}")
+            else:
+                print(f"Warning: No population data available for {city}")
+                pop_val = 100.0
 
-            try:
-                # Fetch WRI Aqueduct Baseline Water Stress score
-                aqueduct = ee.ImageCollection(self.DATASETS['aqueduct']).filterDate('2010-01-01', '2020-12-31')
-                aqueduct_result = aqueduct.mean().select('bws_score').reduceRegion(
-                    ee.Reducer.mean(), land_buf, 1000,
-                    bestEffort=True, maxPixels=1e9
-                )
-                aqueduct_val = float(aqueduct_result.get('bws_score').getInfo()) if aqueduct_result.get('bws_score') else None
-                print(f"Debug {city}: WRI Aqueduct BWS score={aqueduct_val}")
-            except Exception as e:
-                print(f"Warning: Aqueduct data failed for {city}: {e}")
-                aqueduct_val = None
+            # Aqueduct data removed due to availability issues - set to None
+            aqueduct_val = None
 
             indicators = {
                 'aridity_index': aridity_index,
