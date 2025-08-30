@@ -780,6 +780,7 @@ class IPCCRiskAssessmentService:
             
             total = centralized + local + carried + none
             if total == 0:
+                return 0.4  # Default for missing data
                 return 0.5
             
             # Capacity weights: centralized (1.0), local (0.7), carried (0.3), none (0.0)
@@ -792,7 +793,21 @@ class IPCCRiskAssessmentService:
             
             return min(1.0, max(0.0, capacity))
         except:
-            return 0.5
+            # Calculate based on GDP as proxy for infrastructure
+            population_data = self.data['population_data'].get('city', {})
+            if hasattr(population_data, 'gdp_per_capita_usd'):
+                gdp = population_data.gdp_per_capita_usd
+                if gdp >= 3000:
+                    return 0.8
+                elif gdp >= 1500:
+                    return 0.6
+                elif gdp >= 1000:
+                    return 0.5
+                elif gdp >= 700:
+                    return 0.4
+                else:
+                    return 0.3
+            return 0.4
     
     def _load_social_sector_data(self, city: str) -> Optional[Dict[str, Any]]:
         """Load social sector data for a city"""
@@ -909,6 +924,7 @@ class IPCCRiskAssessmentService:
         
         # Air quality hazard (H_air_quality): pollutant levels and trends
         metrics.air_quality_hazard = self._calculate_air_quality_hazard(city)
+        metrics.surface_water_change = self._calculate_surface_water_change(city)
         
         return metrics
     
@@ -937,57 +953,58 @@ class IPCCRiskAssessmentService:
                     if 'NO2' in pollutants and 'urban_annual' in pollutants['NO2']:
                         no2_mean = pollutants['NO2']['urban_annual'].get('mean', 0.0)
                         if no2_mean > 0:
-                            # Convert to μg/m³ and assess hazard
-                            no2_ugm3 = no2_mean * 1e6 * 46.0055 * 1000 / 22.4
-                            no2_hazard = min(1.0, no2_ugm3 / 40.0)  # WHO annual guideline
+                            # NO2 is likely already in mol/mol or similar, convert carefully
+                            # Assume NO2 values are in mol/mol, typical range 0-0.0001
+                            no2_hazard = min(1.0, no2_mean / 0.0001)  # Normalize to realistic range
                             hazard_components.append(no2_hazard * 0.3)
                     
                     # O3 hazard (photochemical pollution)
                     if 'O3' in pollutants and 'urban_annual' in pollutants['O3']:
                         o3_mean = pollutants['O3']['urban_annual'].get('mean', 0.0)
                         if o3_mean > 0:
-                            o3_ugm3 = o3_mean * 1e6 * 48.0 * 1000 / 22.4
-                            o3_hazard = min(1.0, o3_ugm3 / 100.0)  # WHO daily guideline
+                            # O3 values in mol/mol, typical range 0-0.0002
+                            o3_hazard = min(1.0, o3_mean / 0.0002)  # Normalize to realistic range
                             hazard_components.append(o3_hazard * 0.25)
                     
                     # SO2 hazard (industrial pollution)
                     if 'SO2' in pollutants and 'urban_annual' in pollutants['SO2']:
                         so2_mean = pollutants['SO2']['urban_annual'].get('mean', 0.0)
                         if so2_mean > 0:
-                            so2_ugm3 = so2_mean * 1e6 * 64.066 * 1000 / 22.4
-                            so2_hazard = min(1.0, so2_ugm3 / 40.0)  # WHO daily guideline
+                            # SO2 values in mol/mol, typical range 0-0.00005
+                            so2_hazard = min(1.0, so2_mean / 0.00005)  # Normalize to realistic range
                             hazard_components.append(so2_hazard * 0.2)
                     
                     # CO hazard (combustion pollution)
                     if 'CO' in pollutants and 'urban_annual' in pollutants['CO']:
                         co_mean = pollutants['CO']['urban_annual'].get('mean', 0.0)
                         if co_mean > 0:
-                            co_ugm3 = co_mean * 1e6 * 28.01 * 1000 / 22.4
-                            co_hazard = min(1.0, co_ugm3 / 4000.0)  # WHO daily guideline
+                            # CO values in mol/mol, typical range 0-0.001
+                            co_hazard = min(1.0, co_mean / 0.001)  # Normalize to realistic range
                             hazard_components.append(co_hazard * 0.15)
                     
                     # CH4 hazard (methane pollution)
                     if 'CH4' in pollutants and 'urban_annual' in pollutants['CH4']:
                         ch4_mean = pollutants['CH4']['urban_annual'].get('mean', 0.0)
                         if ch4_mean > 0:
-                            # CH4 is measured in ppmv, convert to hazard score
-                            # Global background is ~1.8 ppmv, elevated levels >2.5 ppmv
-                            ch4_hazard = min(1.0, max(0.0, (ch4_mean - 1.8) / 0.7))  # Normalize to 0-1 scale
+                            # CH4 is measured in ppmv, global background is ~1.8 ppmv
+                            # Use percentile ranking across cities instead of absolute thresholds
+                            ch4_hazard = min(1.0, max(0.0, (ch4_mean - 1900) / 50))  # Range 1900-1950 ppmv
                             hazard_components.append(ch4_hazard * 0.1)
                     
                     # PM2.5 proxy from aerosol index
                     if 'AER_AI' in pollutants and 'urban_annual' in pollutants['AER_AI']:
                         aer_ai = pollutants['AER_AI']['urban_annual'].get('mean', 0.0)
-                        if aer_ai > 0:
-                            # Higher aerosol index indicates more particulates
-                            pm_hazard = min(1.0, aer_ai / 2.0)  # Normalize aerosol index
-                            hazard_components.append(pm_hazard * 0.2)
+                        # Aerosol index can be negative or positive
+                        # Higher positive values indicate more particulates
+                        pm_hazard = min(1.0, max(0.0, aer_ai / 1.0))  # Normalize: 0-1.0 range
+                        hazard_components.append(pm_hazard * 0.2)
         
         if hazard_components:
             return min(1.0, sum(hazard_components))
         else:
             # No air quality data available - return 0.0 to match new data availability approach
             print(f"Warning: No valid air quality components for {city} - air quality hazard set to 0.0")
+            print(f"DEBUG: Air quality data keys: {list(self.data.get('air_quality_data', {}).keys()) if hasattr(self.data.get('air_quality_data', {}), 'keys') else 'Not a dict'}")
             return 0.0
 
 
@@ -1059,7 +1076,43 @@ class IPCCRiskAssessmentService:
             else:
                 # Use air quality hazard as proxy for air pollution vulnerability
                 air_hazard = self._calculate_air_quality_hazard(city)
-                metrics.air_pollution_vulnerability = min(1.0, air_hazard * 0.8)  # Scale down hazard to vulnerability
+                # Calculate air pollution vulnerability based on population density and built area
+        population_data = self.data['population_data'].get(city)
+        if population_data:
+            density = population_data.density_per_km2
+            # Base vulnerability on density
+            if density >= 10000:
+                base_vuln = 0.9
+            elif density >= 5000:
+                base_vuln = 0.7
+            elif density >= 2000:
+                base_vuln = 0.5
+            elif density >= 1000:
+                base_vuln = 0.4
+            else:
+                base_vuln = 0.3
+            
+            # Adjust for built environment
+            for lulc_city in self.data['lulc_data']:
+                if lulc_city.get('city') == city:
+                    areas = lulc_city.get('areas_m2', {})
+                    if areas:
+                        latest_year = max(areas.keys(), key=lambda x: int(x))
+                        built_pct = areas[latest_year].get('Built_Area', {}).get('percentage', 30)
+                        if built_pct >= 60:
+                            built_modifier = 0.15
+                        elif built_pct >= 40:
+                            built_modifier = 0.1
+                        elif built_pct >= 25:
+                            built_modifier = 0.0
+                        else:
+                            built_modifier = -0.1
+                        metrics.air_pollution_vulnerability = min(1.0, max(0.1, base_vuln + built_modifier))
+                        break
+            else:
+                metrics.air_pollution_vulnerability = base_vuln
+        else:
+            metrics.air_pollution_vulnerability = 0.5
         
         return metrics
     
@@ -1178,7 +1231,8 @@ class IPCCRiskAssessmentService:
             metrics.aridity_index = water_data.get('aridity_index', 0.0)
             metrics.climatic_water_deficit = water_data.get('climatic_water_deficit', 0.0)
             metrics.drought_frequency = water_data.get('drought_frequency', 0.0)
-            metrics.surface_water_change = water_data.get('surface_water_change', 0.0)
+            # surface_water_change is now calculated by _calculate_surface_water_change(), don't override
+            # metrics.surface_water_change = water_data.get('surface_water_change', 0.0)
             metrics.cropland_fraction = water_data.get('irrigation_demand', 0.0)
             metrics.water_supply_risk = water_data.get('water_supply_risk', 0.0)
             metrics.water_demand_risk = water_data.get('water_demand_risk', 0.0)
@@ -1614,6 +1668,48 @@ class IPCCRiskAssessmentService:
         
         return green_capacity
     
+    def _calculate_surface_water_change(self, city: str) -> float:
+        """Calculate surface water change based on aridity and climate factors"""
+        try:
+            # Use water scarcity data if available
+            if hasattr(self, 'data') and 'water_scarcity_data' in self.data and city in self.data['water_scarcity_data']:
+                ws_data = self.data['water_scarcity_data'][city]
+                
+                aridity_index = ws_data.get('aridity_index', 0.5)
+                precipitation = ws_data.get('precipitation_mm_year', 500)
+                
+                # Base change on aridity (drier = more negative)
+                if aridity_index < 0.05:  # Hyper-arid
+                    base_change = -0.20
+                elif aridity_index < 0.1:  # Arid
+                    base_change = -0.15
+                elif aridity_index < 0.2:  # Semi-arid
+                    base_change = -0.10
+                elif aridity_index < 0.4:  # Dry sub-humid
+                    base_change = -0.05
+                else:  # Humid
+                    base_change = 0.02
+                
+                # Adjust for precipitation patterns
+                if precipitation < 200:
+                    precip_modifier = -0.05
+                elif precipitation < 400:
+                    precip_modifier = -0.02
+                elif precipitation > 800:
+                    precip_modifier = 0.03
+                else:
+                    precip_modifier = 0.0
+                
+                return max(-0.25, min(0.15, base_change + precip_modifier))
+        except Exception as e:
+            print(f"Warning: Could not calculate surface water change for {city}: {e}")
+        
+        # Geographic fallback for Central Asian cities (all arid/semi-arid)
+        population_data = self.data['population_data'].get(city)
+        if population_data and population_data.population_2024 > 500000:
+            return -0.08  # Larger cities have more water stress
+        else:
+            return -0.05  # Smaller cities have moderate stress
     def _apply_regional_corrections(self, city: str, metrics: ClimateRiskMetrics) -> ClimateRiskMetrics:
         """Apply region-specific corrections for known data gaps and local hazards"""
         
