@@ -1446,32 +1446,64 @@ class IPCCRiskAssessmentService:
         for city_name in list(self.data['population_data'].keys()):
             temp_data = self.data['temperature_data'].get(city_name, {})
             if temp_data:
-                # Use multiple temperature indicators
-                current_temp = temp_data.get('current_suhi_intensity', 0)
-                temp_trend = temp_data.get('temperature_trend', 0) * 10  # Scale trend
-                summer_max = temp_data.get('summer_max_temp', current_temp + 30)  # Estimate if missing
-                
-                # Composite heat indicator
-                heat_indicator = (current_temp * 0.5 + 
-                                temp_trend * 0.3 + 
-                                (summer_max - 35) * 0.2)  # 35°C baseline
-                
-                all_temp_values.append(heat_indicator)
-                all_city_names.append(city_name)
+                # Get latest year's data from nested structure
+                latest_year = max(temp_data.keys()) if temp_data else None
+                if latest_year:
+                    year_data = temp_data[latest_year]
+                    summer_data = year_data.get('summer_season_summary', {})
+                    urban_data = summer_data.get('urban', {})
+                    rural_data = summer_data.get('rural', {})
+                    
+                    urban_day = urban_data.get('day', {})
+                    rural_day = rural_data.get('day', {})
+                    
+                    # Calculate SUHI intensity
+                    urban_temp = urban_day.get('mean', 30)
+                    rural_temp = rural_day.get('mean', 30)
+                    current_suhi = urban_temp - rural_temp
+                    
+                    # Get summer max temperature
+                    summer_max = urban_day.get('max', 35)
+                    
+                    # Calculate temperature trend (simplified)
+                    temp_trend = max(0, summer_max - 35) * 0.1
+                    
+                    # Composite heat indicator
+                    heat_indicator = (current_suhi * 0.5 + 
+                                    temp_trend * 0.3 + 
+                                    (summer_max - 35) * 0.2)
+                    
+                    all_temp_values.append(heat_indicator)
+                else:
+                    all_temp_values.append(0)
             else:
                 all_temp_values.append(0)
-                all_city_names.append(city_name)
+            all_city_names.append(city_name)
         
         # Get current city's value
         current_temp_data = self.data['temperature_data'].get(city, {})
         if current_temp_data:
-            current_suhi = current_temp_data.get('current_suhi_intensity', 0)
-            current_trend = current_temp_data.get('temperature_trend', 0) * 10
-            current_summer = current_temp_data.get('summer_max_temp', current_suhi + 30)
-            
-            current_heat = (current_suhi * 0.5 + 
-                          current_trend * 0.3 + 
-                          (current_summer - 35) * 0.2)
+            latest_year = max(current_temp_data.keys()) if current_temp_data else None
+            if latest_year:
+                year_data = current_temp_data[latest_year]
+                summer_data = year_data.get('summer_season_summary', {})
+                urban_data = summer_data.get('urban', {})
+                rural_data = summer_data.get('rural', {})
+                
+                urban_day = urban_data.get('day', {})
+                rural_day = rural_data.get('day', {})
+                
+                urban_temp = urban_day.get('mean', 30)
+                rural_temp = rural_day.get('mean', 30)
+                current_suhi = urban_temp - rural_temp
+                summer_max = urban_day.get('max', 35)
+                temp_trend = max(0, summer_max - 35) * 0.1
+                
+                current_heat = (current_suhi * 0.5 + 
+                              temp_trend * 0.3 + 
+                              (summer_max - 35) * 0.2)
+            else:
+                current_heat = 0
         else:
             current_heat = 0
         
@@ -1614,47 +1646,60 @@ class IPCCRiskAssessmentService:
         return min(1.0, dust_score)
     
     def _calculate_pluvial_hazard(self, city: str) -> float:
-        """Calculate pluvial hazard with proper precipitation weighting (FIXED)"""
+        """Calculate pluvial hazard based on urban characteristics (FIXED)"""
         
-        # Get precipitation and urban data for all cities
+        # Get urban characteristics data for all cities
         all_pluvial_values = []
         all_city_names = []
         
         for city_name in list(self.data['population_data'].keys()):
-            temp_data = self.data['temperature_data'].get(city_name, {})  # Contains precipitation
+            # Find LULC data for this city
             lulc_data = None
             for lulc_city in self.data['lulc_data']:
                 if lulc_city.get('city') == city_name:
                     lulc_data = lulc_city
                     break
+            
             if lulc_data is None:
                 lulc_data = {}
             
-            # Precipitation component (70% weight)
-            if temp_data and 'precipitation_trend' in temp_data:
-                # Use absolute precipitation trend as proxy for extreme events
-                precip_intensity = abs(temp_data['precipitation_trend']) * 100
-                # Cap at reasonable maximum
-                precip_component = min(precip_intensity, 2.0)
-            else:
-                precip_component = 0.5  # Neutral default
+            # Get population data for density calculation
+            pop_data = self.data['population_data'].get(city_name, {})
             
-            # Imperviousness component (30% weight) 
-            if lulc_data and 'built_area_percentage' in lulc_data:
+            # Calculate urban imperviousness (primary factor - 60% weight)
+            if 'built_area_percentage' in lulc_data:
                 built_pct = lulc_data['built_area_percentage'] / 100.0
-                # Imperviousness increases flood risk but is secondary to precipitation
-                imperv_component = min(built_pct * 1.5, 1.0)
+                imperv_component = min(built_pct * 1.2, 1.0)  # Scale up built area impact
             else:
-                imperv_component = 0.3
+                imperv_component = 0.4  # Default moderate imperviousness
             
-            # Combined pluvial risk with proper weighting
-            pluvial_risk = (0.7 * precip_component + 0.3 * imperv_component)
+            # Calculate population density pressure (30% weight)
+            if pop_data and hasattr(pop_data, 'area_km2') and pop_data.area_km2 > 0:
+                population = pop_data.population
+                density = population / pop_data.area_km2
+                # Normalize density (typical range 0-10,000 people/km2)
+                density_component = min(density / 10000.0, 1.0)
+            else:
+                density_component = 0.3
+            
+            # Calculate drainage capacity loss from urbanization (10% weight)
+            # More built area = less natural drainage
+            if 'vegetation_percentage' in lulc_data:
+                veg_pct = lulc_data['vegetation_percentage'] / 100.0
+                drainage_loss = 1.0 - veg_pct  # Less vegetation = more drainage loss
+                drainage_component = min(drainage_loss * 0.8, 1.0)
+            else:
+                drainage_component = 0.5
+            
+            # Combined pluvial risk
+            pluvial_risk = (0.6 * imperv_component + 
+                          0.3 * density_component + 
+                          0.1 * drainage_component)
             
             all_pluvial_values.append(pluvial_risk)
             all_city_names.append(city_name)
         
-        # Calculate current city's value
-        current_temp = self.data['temperature_data'].get(city, {})
+        # Calculate current city's value using same methodology
         current_lulc = None
         for lulc_city in self.data['lulc_data']:
             if lulc_city.get('city') == city:
@@ -1663,19 +1708,33 @@ class IPCCRiskAssessmentService:
         if current_lulc is None:
             current_lulc = {}
         
-        if current_temp and 'precipitation_trend' in current_temp:
-            current_precip = abs(current_temp['precipitation_trend']) * 100
-            current_precip = min(current_precip, 2.0)
-        else:
-            current_precip = 0.5
+        current_pop = self.data['population_data'].get(city, {})
         
-        if current_lulc and 'built_area_percentage' in current_lulc:
+        # Current city imperviousness
+        if 'built_area_percentage' in current_lulc:
             current_built = current_lulc['built_area_percentage'] / 100.0
-            current_imperv = min(current_built * 1.5, 1.0)
+            current_imperv = min(current_built * 1.2, 1.0)
         else:
-            current_imperv = 0.3
+            current_imperv = 0.4
         
-        current_pluvial = (0.7 * current_precip + 0.3 * current_imperv)
+        # Current city density
+        if current_pop and hasattr(current_pop, 'area_km2') and current_pop.area_km2 > 0:
+            current_population = current_pop.population
+            current_density_val = current_population / current_pop.area_km2
+            current_density = min(current_density_val / 10000.0, 1.0)
+        else:
+            current_density = 0.3
+        
+        # Current city drainage
+        if 'vegetation_percentage' in current_lulc:
+            current_veg = current_lulc['vegetation_percentage'] / 100.0
+            current_drainage = min((1.0 - current_veg) * 0.8, 1.0)
+        else:
+            current_drainage = 0.5
+        
+        current_pluvial = (0.6 * current_imperv + 
+                         0.3 * current_density + 
+                         0.1 * current_drainage)
         
         # Apply safe percentile normalization
         normalized_pluvial = self.data_loader.safe_percentile_norm(
