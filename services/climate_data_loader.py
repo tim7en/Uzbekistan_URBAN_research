@@ -182,20 +182,50 @@ class ClimateDataLoader:
     
     def _load_suhi_data(self):
         """Load SUHI data as fallback"""
-        suhi_file = self.base_path / "reports" / "suhi_batch_summary.json"
-        if suhi_file.exists():
-            with open(suhi_file, 'r') as f:
-                self.suhi_data = json.load(f)
+        self.suhi_data = {}
+        suhi_dir = self.base_path / "suhi"
+        
+        if suhi_dir.exists():
+            for city_dir in suhi_dir.iterdir():
+                if city_dir.is_dir():
+                    city_name = city_dir.name
+                    self.suhi_data[city_name] = {}
+                    
+                    # Load all yearly SUHI files for this city
+                    for suhi_file in city_dir.glob(f"{city_name}_suhi_*.json"):
+                        year_match = suhi_file.stem.split('_')[-1]
+                        try:
+                            year = int(year_match)
+                            with open(suhi_file, 'r') as f:
+                                self.suhi_data[city_name][str(year)] = json.load(f)
+                        except (ValueError, json.JSONDecodeError) as e:
+                            print(f"Warning: Could not load {suhi_file}: {e}")
+            
             print(f"[OK] Loaded SUHI data for {len(self.suhi_data)} cities")
         else:
             print("⚠️ SUHI data not found, using temperature data only")
     
     def _load_lulc_data(self):
         """Load LULC (Land Use Land Cover) data"""
-        lulc_file = self.base_path / "reports" / "lulc_analysis_summary.json"
-        if lulc_file.exists():
-            with open(lulc_file, 'r') as f:
-                self.lulc_data = json.load(f)
+        self.lulc_data = []
+        lulc_dir = self.base_path / "lulc_analysis"
+        
+        if lulc_dir.exists():
+            for city_dir in lulc_dir.iterdir():
+                if city_dir.is_dir():
+                    city_name = city_dir.name
+                    lulc_file = city_dir / f"{city_name}_lulc_analysis_2016_2024.json"
+                    
+                    if lulc_file.exists():
+                        try:
+                            with open(lulc_file, 'r') as f:
+                                city_lulc_data = json.load(f)
+                                # Add city name to the data for easier processing
+                                city_lulc_data['city'] = city_name
+                                self.lulc_data.append(city_lulc_data)
+                        except json.JSONDecodeError as e:
+                            print(f"Warning: Could not load {lulc_file}: {e}")
+            
             print(f"[OK] Loaded LULC data for {len(self.lulc_data)} cities")
         else:
             print("⚠️ LULC data not found")
@@ -212,10 +242,25 @@ class ClimateDataLoader:
     
     def _load_nightlights_data(self):
         """Load nightlights data"""
-        nightlights_file = self.base_path / "reports" / "nightlights_summary.json"
-        if nightlights_file.exists():
-            with open(nightlights_file, 'r') as f:
-                self.nightlights_data = json.load(f)
+        self.nightlights_data = []
+        nightlights_dir = self.base_path / "nightlights"
+        
+        if nightlights_dir.exists():
+            for city_dir in nightlights_dir.iterdir():
+                if city_dir.is_dir():
+                    city_name = city_dir.name
+                    nl_file = city_dir / f"{city_name}_nightlights.json"
+                    
+                    if nl_file.exists():
+                        try:
+                            with open(nl_file, 'r') as f:
+                                city_nl_data = json.load(f)
+                                # Add city name to the data for easier processing
+                                city_nl_data['city'] = city_name
+                                self.nightlights_data.append(city_nl_data)
+                        except json.JSONDecodeError as e:
+                            print(f"Warning: Could not load {nl_file}: {e}")
+            
             print(f"[OK] Loaded nightlights data for {len(self.nightlights_data)} cities")
         else:
             print("⚠️ Nightlights data not found")
@@ -252,7 +297,7 @@ class ClimateDataLoader:
                 pop = user_data['pop_2024']
                 gdp = user_data['gdp_per_capita']
                 area = user_data.get('area_km2')
-                print(f"[USER DATA] {city}: {pop:,.0f} people, GDP: ${gdp:,.0f}, Area: {area:.1f} km²")
+                print(f"[USER DATA] {city}: {pop:,.0f} people, GDP: ${gdp:,.0f}, Area: {area:.1f} km2")
             # Use supplemental Excel data if available
             elif city in supplemental_pop_data:
                 pop = supplemental_pop_data[city]['population']
@@ -283,7 +328,7 @@ class ClimateDataLoader:
         user_data = {}
         
         try:
-            excel_path = os.path.join(self.base_path, 'ExternalData', 'uzbekistan_pop_grp.xlsx')
+            excel_path = os.path.join(self.base_path, '..', 'ExternalData', 'uzbekistan_pop_grp.xlsx')
             if not os.path.exists(excel_path):
                 print("[WARNING] User population data file not found, using hardcoded values")
                 return user_data
@@ -435,6 +480,7 @@ class ClimateDataLoader:
         """
         Percentile-based [0,1] scaling with winsorization.
         More conservative percentiles (10th-90th) to avoid inflation.
+        Modified to handle minimum values better for small cities.
         """
         try:
             s = pd.Series([v for v in values if v is not None and np.isfinite(v)])
@@ -443,6 +489,13 @@ class ClimateDataLoader:
             a, b = s.quantile(lo), s.quantile(hi)
             if a == b:
                 return fallback
+
+            # Handle minimum values: if x is below 10th percentile, return small positive value
+            # instead of 0.0 to avoid zeroing out small cities' exposure
+            if x < a:
+                # Return 10% of the normalized range instead of 0.0
+                return 0.1 if not invert else 0.9
+
             z = (np.clip(x, a, b) - a) / (b - a)
             return 1 - z if invert else z
         except Exception:

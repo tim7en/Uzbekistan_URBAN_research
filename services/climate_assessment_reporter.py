@@ -281,7 +281,7 @@ class ClimateAssessmentReporter:
         except Exception as e:
             print(f"Warning: Could not save PNG: {e}")
         
-        print(f"✓ Saved climate risk assessment dashboard: {html_file.name}")
+        print(f"[OK] Saved climate risk assessment dashboard: {html_file.name}")
         return fig
     
     def create_adaptability_ranking_table(self, city_risk_profiles: Dict[str, ClimateRiskMetrics]):
@@ -362,7 +362,7 @@ class ClimateAssessmentReporter:
         except Exception as e:
             print(f"Warning: Could not save PNG: {e}")
         
-        print(f"✓ Saved adaptability ranking table: {html_file.name}")
+        print(f"[OK] Saved adaptability ranking table: {html_file.name}")
         return fig
     
     def generate_assessment_summary(self, city_risk_profiles: Dict[str, ClimateRiskMetrics]):
@@ -379,7 +379,7 @@ class ClimateAssessmentReporter:
         risk_scores = [metrics.overall_risk_score for metrics in city_risk_profiles.values()]
         adapt_scores = [metrics.adaptability_score for metrics in city_risk_profiles.values()]
         
-        print(f"\n📊 ASSESSMENT SUMMARY:")
+        print(f"\n[ASSESSMENT SUMMARY]:")
         print(f"   Cities Assessed: {len(city_risk_profiles)}")
         print(f"   Average Risk Score: {np.mean(risk_scores):.3f}")
         print(f"   Average Adaptability Score: {np.mean(adapt_scores):.3f}")
@@ -391,17 +391,17 @@ class ClimateAssessmentReporter:
         low_adaptability = [city for city, metrics in city_risk_profiles.items() if metrics.adaptability_score < 0.4]
         urgent_action = list(set(high_risk) & set(low_adaptability))
         
-        print(f"\n🚨 HIGH PRIORITY CITIES (Risk > 0.6): {len(high_risk)}")
+        print(f"\n[HIGH PRIORITY CITIES] (Risk > 0.6): {len(high_risk)}")
         for city in high_risk:
             risk = city_risk_profiles[city].overall_risk_score
             adapt = city_risk_profiles[city].adaptability_score
             print(f"   {city}: Risk={risk:.3f}, Adaptability={adapt:.3f}")
         
-        print(f"\n⚠️  URGENT ACTION NEEDED: {len(urgent_action)}")
+        print(f"\n[WARNING] URGENT ACTION NEEDED: {len(urgent_action)}")
         for city in urgent_action:
             print(f"   {city}: High risk + Low adaptability")
         
-        print(f"\n📈 CLIMATE TRENDS:")
+        print(f"\n[CLIMATE TRENDS]:")
         temp_trends = [metrics.temperature_trend for metrics in city_risk_profiles.values() if metrics.temperature_trend != 0]
         if temp_trends:
             print(f"   Average Temperature Trend: {np.mean(temp_trends):.4f} °C/year")
@@ -434,7 +434,7 @@ class ClimateAssessmentReporter:
                 f.write(f"  GDP per capita: ${metrics.gdp_per_capita_usd:.0f} USD\n" if metrics.gdp_per_capita_usd else "  GDP per capita: N/A\n")
                 f.write(f"  Temperature Trend: {metrics.temperature_trend:.4f} °C/year\n")
         
-        print(f"✓ Saved detailed text report: {report_file.name}")
+        print(f"[OK] Saved detailed text report: {report_file.name}")
     
     def _calculate_priority_scores(self, city_risk_profiles: Dict[str, ClimateRiskMetrics]) -> List[float]:
         """Calculate priority scores for cities using IPCC AR6 framework approach"""

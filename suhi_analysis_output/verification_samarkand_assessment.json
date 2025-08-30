@@ -1,0 +1,248 @@
+{
+  "city": "Samarkand",
+  "assessment_metrics": {
+    "city": "Samarkand",
+    "population": 585200,
+    "gdp_per_capita_usd": 883.9,
+    "hazard_score": 0.7640462506181137,
+    "exposure_score": 0.8389448736523727,
+    "vulnerability_score": 0.5291983361897132,
+    "adaptive_capacity_score": 0.37421143496124276,
+    "heat_hazard": 0.876000000000001,
+    "dry_hazard": 0.27448371622870044,
+    "dust_hazard": 0.44980031138186927,
+    "pluvial_hazard": 0.9865949180327955,
+    "population_exposure": 0.8616335446747294,
+    "gdp_exposure": 0.68785898739014,
+    "viirs_exposure": 1.0,
+    "income_vulnerability": 0.9417571478180345,
+    "veg_access_vulnerability": 0.217547640170081,
+    "fragmentation_vulnerability": 1.0,
+    "bio_trend_vulnerability": 1.0,
+    "water_access_vulnerability": 0.24280000000000002,
+    "healthcare_access_vulnerability": 0.8200000000000001,
+    "education_access_vulnerability": 0.6499999999999999,
+    "sanitation_vulnerability": 0.24280000000000002,
+    "building_age_vulnerability": 0.219,
+    "water_supply_risk": 0.5849627565854392,
+    "water_demand_risk": 0.8756704804018964,
+    "overall_water_scarcity_score": 0.7012458461120221,
+    "water_scarcity_level": "Critical",
+    "aridity_index": 0.1372573314023014,
+    "climatic_water_deficit": 2364.444574704571,
+    "drought_frequency": 0.24583333333333332,
+    "surface_water_change": 0.0,
+    "cropland_fraction": 0.41119320028706885,
+    "gdp_adaptive_capacity": 0.058242852181965454,
+    "greenspace_adaptive_capacity": 0.4272917802813704,
+    "services_adaptive_capacity": 1.0,
+    "social_infrastructure_capacity": 0.37,
+    "water_system_capacity": 0.5,
+    "overall_risk_score": 0.3392122625119978,
+    "adaptability_score": 0.2794263209873866,
+    "current_suhi_intensity": 1.3659424829729794,
+    "temperature_trend": 0.15285158544502328,
+    "suhi_trend": 0.07970841481351965,
+    "built_area_percentage": 53.21560133215863,
+    "green_space_accessibility": 435.095280340162,
+    "economic_capacity": 0.058242852181965454,
+    "air_quality_hazard": 1.0,
+    "air_pollution_vulnerability": 0.8,
+    "air_quality_adaptive_capacity": 0.501787204275205,
+    "co_level": 0.0317235117111627,
+    "no2_level": 8.034124730600647e-05,
+    "o3_level": 0.14897512483925807,
+    "so2_level": 0.00015359471993433234,
+    "ch4_level": 1927.8153720341375,
+    "aerosol_index": 0.0463577013399072,
+    "air_quality_trend": 0.04783423185119385,
+    "health_risk_score": 0.65,
+    "water_scarcity_vulnerability": 0.6885274682114921
+  },
+  "verification_summary": {
+    "total_data_components": 18,
+    "fallback_components_used": 6,
+    "fallback_percentage": 33.33333333333333,
+    "data_sources": {
+      "built_area_percentage": {
+        "Tashkent": {
+          "source": "LULC Analysis File",
+          "value": 67.76146260102628,
+          "is_fallback": false
+        },
+        "Samarkand": {
+          "source": "LULC Analysis File",
+          "value": 53.21560133215863,
+          "is_fallback": false
+        }
+      },
+      "vegetation_patches": {
+        "Tashkent": {
+          "source": "Spatial Analysis File",
+          "value": 220,
+          "is_fallback": false
+        },
+        "Samarkand": {
+          "source": "Spatial Analysis File",
+          "value": 93,
+          "is_fallback": false
+        }
+      },
+      "built_patches": {
+        "Tashkent": {
+          "source": "Spatial Analysis File",
+          "value": 139,
+          "is_fallback": false
+        },
+        "Samarkand": {
+          "source": "Spatial Analysis File",
+          "value": 129,
+          "is_fallback": false
+        }
+      },
+      "nightlights_urban": {
+        "Tashkent": {
+          "source": "Nightlights Data File",
+          "value": 22.89357935656735,
+          "is_fallback": false
+        },
+        "Samarkand": {
+          "source": "Nightlights Data File",
+          "value": 10.387022079944241,
+          "is_fallback": false
+        }
+      },
+      "population": {
+        "Tashkent": {
+          "source": "User-Provided Official Data",
+          "value": 3058400,
+          "is_fallback": false
+        },
+        "Samarkand": {
+          "source": "User-Provided Official Data",
+          "value": 585200,
+          "is_fallback": false
+        }
+      },
+      "gdp_per_capita": {
+        "Tashkent": {
+          "source": "User-Provided Official Data",
+          "value": 3323.1,
+          "is_fallback": false
+        },
+        "Samarkand": {
+          "source": "User-Provided Official Data",
+          "value": 883.9,
+          "is_fallback": false
+        }
+      },
+      "water_scarcity_index": {
+        "Tashkent": {
+          "source": "Water Scarcity Assessment File",
+          "value": 0.6235210728384253,
+          "is_fallback": false
+        },
+        "Samarkand": {
+          "source": "Water Scarcity Assessment File",
+          "value": 0.7012458461120221,
+          "is_fallback": false
+        }
+      },
+      "drought_frequency": {
+        "Tashkent": {
+          "source": "Water Scarcity Assessment File",
+          "value": 0.24583333333333332,
+          "is_fallback": false
+        },
+        "Samarkand": {
+          "source": "Water Scarcity Assessment File",
+          "value": 0.24583333333333332,
+          "is_fallback": false
+        }
+      },
+      "aridity_index": {
+        "Tashkent": {
+          "source": "Water Scarcity Assessment File",
+          "value": 0.17858414532457031,
+          "is_fallback": false
+        },
+        "Samarkand": {
+          "source": "Water Scarcity Assessment File",
+          "value": 0.1372573314023014,
+          "is_fallback": false
+        }
+      }
+    },
+    "fallbacks_used": {
+      "temperature": {
+        "Tashkent": "Temperature statistics missing from data file",
+        "Samarkand": "Temperature statistics missing from data file"
+      },
+      "suhi": {
+        "Tashkent": "SUHI intensity missing from data file",
+        "Samarkand": "SUHI intensity missing from data file"
+      },
+      "air_quality": {
+        "Tashkent": "No air quality metrics found in data",
+        "Samarkand": "No air quality metrics found in data"
+      }
+    },
+    "warnings": [
+      "⚠️ FALLBACK: temperature for Tashkent - Temperature statistics missing from data file",
+      "⚠️ FALLBACK: suhi for Tashkent - SUHI intensity missing from data file",
+      "⚠️ FALLBACK: air_quality for Tashkent - No air quality metrics found in data",
+      "⚠️ FALLBACK: temperature for Samarkand - Temperature statistics missing from data file",
+      "⚠️ FALLBACK: suhi for Samarkand - SUHI intensity missing from data file",
+      "⚠️ FALLBACK: air_quality for Samarkand - No air quality metrics found in data"
+    ]
+  },
+  "data_completeness": {
+    "total_components": 8,
+    "available_components": 1,
+    "real_data_components": 1,
+    "availability_percentage": 12.5,
+    "real_data_percentage": 12.5,
+    "component_details": {
+      "temperature": {
+        "available": false,
+        "is_fallback": true,
+        "source": "Not Available"
+      },
+      "suhi": {
+        "available": false,
+        "is_fallback": true,
+        "source": "Not Available"
+      },
+      "lulc": {
+        "available": false,
+        "is_fallback": true,
+        "source": "Not Available"
+      },
+      "spatial": {
+        "available": false,
+        "is_fallback": true,
+        "source": "Not Available"
+      },
+      "nightlights": {
+        "available": false,
+        "is_fallback": true,
+        "source": "Not Available"
+      },
+      "air_quality": {
+        "available": false,
+        "is_fallback": true,
+        "source": "Not Available"
+      },
+      "population": {
+        "available": true,
+        "is_fallback": false,
+        "source": "User-Provided Official Data"
+      },
+      "water_scarcity": {
+        "available": false,
+        "is_fallback": true,
+        "source": "Not Available"
+      }
+    }
+  }
+}

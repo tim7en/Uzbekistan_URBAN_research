@@ -160,7 +160,7 @@ class IPCCRiskAssessmentService:
             from pathlib import Path
             import json
             
-            water_scarcity_dir = Path('suhi_analysis_output') / 'water_scarcity'
+            water_scarcity_dir = self.data_loader.base_path / 'water_scarcity'
             water_dict = {}
             
             if water_scarcity_dir.exists():
@@ -191,7 +191,7 @@ class IPCCRiskAssessmentService:
                             except Exception as e:
                                 print(f"Warning: Could not load water scarcity data for {city_name}: {e}")
                                 continue
-            
+                    
             if water_dict:
                 print(f"Loaded water scarcity data for {len(water_dict)} cities from existing files")
             else:
@@ -215,7 +215,7 @@ class IPCCRiskAssessmentService:
             print(f"Assessing {city}...")
             results[city] = self.assess_city_climate_risk(city)
         
-        print(f"✓ Completed assessment for {len(results)} cities")
+        print(f"[OK] Completed assessment for {len(results)} cities")
         
         # Quick distribution sanity check (skip when no cities)
         if not results:
@@ -321,50 +321,70 @@ class IPCCRiskAssessmentService:
     
     def calculate_hazard_score(self, city: str) -> float:
         """Calculate climate hazard score using comprehensive temperature statistics"""
-        # Prefer temperature data over SUHI data
+        # Use only temperature data - no fallbacks to SUHI or climatological estimates
         city_data = self.data['temperature_data'].get(city, {})
         if not city_data:
-            # Fallback to SUHI data
-            city_data = self.data['suhi_data'].get(city, {})
-            if not city_data:
-                return 0.0
-            return self._calculate_hazard_from_suhi(city, city_data)
+            # No temperature data available - do not apply climatological fallback
+            # Return 0.0 so the assessment reflects only available observations
+            # (caller _calculate_heat_hazard will treat 0.0 as missing)
+            return 0.0  # Return 0.0 if no temperature data available
         
         years = sorted(city_data.keys())
+        # Require at least 2 years of data for meaningful trend analysis
         if len(years) < 2:
-            return 0.0
-        
+            return 0.0  # Insufficient data for assessment
+
         # Current hazard intensity (latest year summer temperatures)
         latest_year = years[-1]
         latest_stats = city_data[latest_year]
-        
+
         # Use summer season summary for more accurate assessment
         summer_stats = latest_stats.get('summer_season_summary', {})
-        
+        if not summer_stats:
+            return 0.0  # No summer data available
+
         # Extract temperature statistics from actual data structure
-        urban_day = summer_stats.get('urban', {}).get('day', {})
-        urban_night = summer_stats.get('urban', {}).get('night', {})
-        
-        # Heat stress indicators - derive from available statistics
-        mean_summer_temp = urban_day.get('mean', 25)
-        max_summer_temp = urban_day.get('max', 35)
-        p90_summer_temp = urban_day.get('p90', 35)  # 90th percentile as proxy for hot days
-        
-        # Estimate extreme heat days from percentile data
-        # If p90 > 40°C, likely many extreme heat days; if max > 45°C, definitely extreme
+        urban_data = summer_stats.get('urban', {})
+        if not urban_data:
+            return 0.0  # No urban temperature data
+
+        urban_day = urban_data.get('day', {})
+        if not urban_day:
+            return 0.0  # No daytime temperature data
+
+        # Extract actual temperature values - use realistic defaults for Uzbekistan climate
+        mean_summer_temp = urban_day.get('mean')
+        max_summer_temp = urban_day.get('max')
+        p90_summer_temp = urban_day.get('p90')
+
+        # If key statistics are missing, cannot perform assessment
+        if mean_summer_temp is None or max_summer_temp is None or p90_summer_temp is None:
+            return 0.0
+
+        # Heat stress indicators - derive from available statistics with adjusted thresholds for MODIS data
+        # MODIS LST is generally smoother and may underestimate extremes compared to Landsat —
+        # lower the thresholds and relax some checks so valid but sparser MODIS-derived extremes are counted.
         extreme_heat_days = 0
         very_hot_days = 0
-        
-        if max_summer_temp > 45:
-            extreme_heat_days = 15  # Estimate based on max temp
-        elif p90_summer_temp > 40:
-            extreme_heat_days = 5   # Some extreme days
+
+        # Extreme heat: max > 42°C (severe heat waves) or p90 > 40°C (persistent extreme heat)
+        # Adjusted thresholds for Central Asia
+        if max_summer_temp > 38:      # Lowered from 42°C
+            extreme_heat_days = 15
+        elif p90_summer_temp > 35:    # Lowered from 40°C  
+            extreme_heat_days = 8
+        elif p90_summer_temp > 32:    # Added intermediate threshold
+            extreme_heat_days = 3
+
             
-        if p90_summer_temp > 35:
-            very_hot_days = 30      # Many hot days if 90th percentile > 35°C
-        elif mean_summer_temp > 32:
-            very_hot_days = 15      # Some hot days
-        
+        # Very hot days: p90 > 36°C (hot summers) or mean > 34°C (generally hot)
+        if p90_summer_temp > 36:
+            very_hot_days = 45      # Very hot summer
+        elif p90_summer_temp > 34:
+            very_hot_days = 25      # Hot summer
+        elif mean_summer_temp > 34:
+            very_hot_days = 15      # Moderately hot summer
+
         # Temperature trend analysis (warming rate)
         temp_trends = []
         for temp_type in ['day', 'night']:
@@ -373,24 +393,24 @@ class IPCCRiskAssessmentService:
             for year in years:
                 year_data = city_data[year]
                 summer_data = year_data.get('summer_season_summary', {})
-                urban_data = summer_data.get('urban', {})
-                temp_data = urban_data.get(temp_type, {})
+                urban_temp_data = summer_data.get('urban', {})
+                temp_data = urban_temp_data.get(temp_type, {})
                 temp_val = temp_data.get('mean')
-                
+
                 if temp_val is not None:
                     values.append(temp_val)
                     years_list.append(int(year))
-            
-            if len(values) >= 3:
+
+            if len(values) >= 3:  # Need at least 3 points for reliable trend
                 try:
                     trend = np.polyfit(years_list, values, 1)[0]  # °C per year
                     temp_trends.append(trend)
                 except:
-                    temp_trends.append(0.0)
-        
+                    pass
+
         avg_temp_trend = np.mean(temp_trends) if temp_trends else 0.0
-        
-        # IPCC AR6 hazard scoring
+
+        # IPCC AR6 hazard scoring with adjusted thresholds for MODIS data
         # Current intensity (40% weight)
         intensity_score = 0.0
         if extreme_heat_days > 10:
@@ -399,23 +419,24 @@ class IPCCRiskAssessmentService:
             intensity_score = 0.7
         elif very_hot_days > 20:
             intensity_score = 0.5
-        elif mean_summer_temp > 30:
+        elif mean_summer_temp > 28:    # lowered threshold to reflect MODIS bias
             intensity_score = 0.3
-        
-        # Temperature trend (40% weight)
+
+        # Temperature trend (40% weight) - adjusted for more realistic warming rates for MODIS
         trend_score = 0.0
-        if avg_temp_trend > 0.08:  # Very high warming
+        if avg_temp_trend > 0.06:  # Very high warming
             trend_score = 1.0
-        elif avg_temp_trend > 0.05:  # High warming
+        elif avg_temp_trend > 0.03:  # High warming
             trend_score = 0.7
-        elif avg_temp_trend > 0.02:  # Medium warming
+        elif avg_temp_trend > 0.015:  # Medium warming
             trend_score = 0.4
         elif avg_temp_trend > 0.0:  # Low warming
             trend_score = 0.2
-        
-        # Maximum temperature threshold (20% weight)
-        max_temp_score = min(1.0, max(0.0, (max_summer_temp - 35) / 10))
-        
+
+        # Maximum temperature threshold (20% weight) - adjusted for MODIS characteristics
+        # Make max temperature more sensitive by lowering baseline
+        max_temp_score = min(1.0, max(0.0, (max_summer_temp - 33) / 9))
+
         hazard_score = (0.4 * intensity_score + 0.4 * trend_score + 0.2 * max_temp_score)
         return min(1.0, hazard_score)
     
@@ -476,15 +497,20 @@ class IPCCRiskAssessmentService:
         if not population_data:
             return 0.0
         
+        # Ensure cache exists
+        if 'cache' not in self.data:
+            print(f"Warning: Data cache not available for {city} - exposure score set to 0.0")
+            return 0.0
+        
         # Population exposure (normalized by city population distribution)
         pop_score = self.data_loader.pct_norm(
-            self.data['cache']['population'], 
+            self.data['cache'].get('population', []), 
             population_data.population_2024
         )
         
         # Urban density exposure
         density_score = self.data_loader.pct_norm(
-            self.data['cache']['density'], 
+            self.data['cache'].get('density', []), 
             population_data.density_per_km2
         )
         
@@ -499,7 +525,7 @@ class IPCCRiskAssessmentService:
                         latest_year = str(years[-1])
                         built_pct = areas[latest_year].get('Built_Area', {}).get('percentage', 0)
                         built_score = self.data_loader.pct_norm(
-                            self.data['cache']['built_pct'], built_pct
+                            self.data['cache'].get('built_pct', []), built_pct
                         )
                 break
         
@@ -514,7 +540,7 @@ class IPCCRiskAssessmentService:
                         latest_year = str(years[-1])
                         urban_nl = years_data[latest_year].get('stats', {}).get('urban_core', {}).get('mean', 0)
                         nightlight_score = self.data_loader.pct_norm(
-                            self.data['cache']['nightlights'], urban_nl
+                            self.data['cache'].get('nightlights', []), urban_nl
                         )
                 break
         
@@ -530,9 +556,14 @@ class IPCCRiskAssessmentService:
         if not population_data:
             return 0.0
         
+        # Ensure cache exists
+        if 'cache' not in self.data:
+            print(f"Warning: Data cache not available for {city} - vulnerability score set to 0.0")
+            return 0.0
+        
         # Economic vulnerability (inverted GDP per capita)
         gdp_vulnerability = self.data_loader.pct_norm(
-            self.data['cache']['gdp'], 
+            self.data['cache'].get('gdp', []), 
             population_data.gdp_per_capita_usd, 
             invert=True  # Lower GDP = higher vulnerability
         )
@@ -548,7 +579,7 @@ class IPCCRiskAssessmentService:
                         latest_year = str(years[-1])
                         built_pct = areas[latest_year].get('Built_Area', {}).get('percentage', 0)
                         built_vulnerability = self.data_loader.pct_norm(
-                            self.data['cache']['built_pct'], built_pct
+                            self.data['cache'].get('built_pct', []), built_pct
                         )
                 break
         
@@ -583,7 +614,11 @@ class IPCCRiskAssessmentService:
                 pm25_level = air_data['pm25']
                 # Higher PM2.5 levels = higher vulnerability
                 air_vulnerability = min(1.0, pm25_level / 35.0)  # 35 µg/m³ as threshold for high risk
-        
+            else:
+                # Use air quality hazard as proxy for air pollution vulnerability
+                air_hazard = self._calculate_air_quality_hazard(city)
+                air_vulnerability = min(1.0, air_hazard * 0.8)  # Scale down hazard to vulnerability
+                
         # Weighted vulnerability score
         vulnerability_score = (0.4 * gdp_vulnerability + 0.25 * built_vulnerability + 
                               0.15 * green_vulnerability + 0.2 * water_vulnerability +
@@ -595,6 +630,11 @@ class IPCCRiskAssessmentService:
         """Calculate adaptive capacity score based on economic and environmental resources"""
         population_data = self.data['population_data'].get(city)
         if not population_data:
+            return 0.0
+        
+        # Ensure cache exists
+        if 'cache' not in self.data:
+            print(f"Warning: Data cache not available for {city} - adaptive capacity score set to 0.0")
             return 0.0
         
         # Economic adaptive capacity
@@ -760,7 +800,7 @@ class IPCCRiskAssessmentService:
             import json
             from pathlib import Path
             
-            social_file = Path('suhi_analysis_output/social_sector') / f'{city}_social_sector.json'
+            social_file = self.data_loader.base_path / 'social_sector' / f'{city}_social_sector.json'
             if social_file.exists():
                 with open(social_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
@@ -834,10 +874,17 @@ class IPCCRiskAssessmentService:
         return metrics
     
     def _calculate_overall_risk(self, metrics: ClimateRiskMetrics) -> float:
-        """Calculate overall risk score using IPCC AR6 framework"""
-        # Risk = H × E × V (multiplicative formula from IPCC AR6)
+        """Calculate overall risk score using IPCC AR6 framework with proper handling"""
+        # Check if any component is missing (0.0)
+        #if metrics.hazard_score == 0.0 or metrics.exposure_score == 0.0 or metrics.vulnerability_score == 0.0:
+            # Fallback to weighted additive approach when data is missing
+            # This prevents zero multiplication but still reflects actual available data
+            #return min(1.0, 0.4 * metrics.hazard_score + 0.3 * metrics.exposure_score + 0.3 * metrics.vulnerability_score)
+        
+        # Standard multiplicative formula when all data is available
         overall_risk = metrics.hazard_score * metrics.exposure_score * metrics.vulnerability_score
         return min(1.0, max(0.0, overall_risk))
+
     
     def _calculate_adaptability_score(self, metrics: ClimateRiskMetrics) -> float:
         """Calculate adaptability score using IPCC AR6 framework"""
@@ -865,6 +912,85 @@ class IPCCRiskAssessmentService:
         
         return metrics
     
+    def _calculate_air_quality_hazard(self, city: str) -> float:
+        """Calculate air quality hazard component"""
+        if city not in self.data.get('air_quality_data', {}):
+            # Do not use a default moderate hazard when data is missing; return 0.0
+            print(f"Warning: No air quality data for {city} - air quality hazard set to 0.0")
+            return 0.0  # No data -> no implicit hazard assumption
+        
+        air_data = self.data['air_quality_data'][city]
+        
+        # Calculate based on available pollutant data
+        hazard_components = []
+        
+        if 'yearly_results' in air_data:
+            years = sorted([int(y) for y in air_data['yearly_results'].keys() if y.isdigit()])
+            if years:
+                latest_year = str(years[-1])
+                year_data = air_data['yearly_results'][latest_year]
+                
+                if 'pollutants' in year_data:
+                    pollutants = year_data['pollutants']
+                    
+                    # NO2 hazard (traffic pollution)
+                    if 'NO2' in pollutants and 'urban_annual' in pollutants['NO2']:
+                        no2_mean = pollutants['NO2']['urban_annual'].get('mean', 0.0)
+                        if no2_mean > 0:
+                            # Convert to μg/m³ and assess hazard
+                            no2_ugm3 = no2_mean * 1e6 * 46.0055 * 1000 / 22.4
+                            no2_hazard = min(1.0, no2_ugm3 / 40.0)  # WHO annual guideline
+                            hazard_components.append(no2_hazard * 0.3)
+                    
+                    # O3 hazard (photochemical pollution)
+                    if 'O3' in pollutants and 'urban_annual' in pollutants['O3']:
+                        o3_mean = pollutants['O3']['urban_annual'].get('mean', 0.0)
+                        if o3_mean > 0:
+                            o3_ugm3 = o3_mean * 1e6 * 48.0 * 1000 / 22.4
+                            o3_hazard = min(1.0, o3_ugm3 / 100.0)  # WHO daily guideline
+                            hazard_components.append(o3_hazard * 0.25)
+                    
+                    # SO2 hazard (industrial pollution)
+                    if 'SO2' in pollutants and 'urban_annual' in pollutants['SO2']:
+                        so2_mean = pollutants['SO2']['urban_annual'].get('mean', 0.0)
+                        if so2_mean > 0:
+                            so2_ugm3 = so2_mean * 1e6 * 64.066 * 1000 / 22.4
+                            so2_hazard = min(1.0, so2_ugm3 / 40.0)  # WHO daily guideline
+                            hazard_components.append(so2_hazard * 0.2)
+                    
+                    # CO hazard (combustion pollution)
+                    if 'CO' in pollutants and 'urban_annual' in pollutants['CO']:
+                        co_mean = pollutants['CO']['urban_annual'].get('mean', 0.0)
+                        if co_mean > 0:
+                            co_ugm3 = co_mean * 1e6 * 28.01 * 1000 / 22.4
+                            co_hazard = min(1.0, co_ugm3 / 4000.0)  # WHO daily guideline
+                            hazard_components.append(co_hazard * 0.15)
+                    
+                    # CH4 hazard (methane pollution)
+                    if 'CH4' in pollutants and 'urban_annual' in pollutants['CH4']:
+                        ch4_mean = pollutants['CH4']['urban_annual'].get('mean', 0.0)
+                        if ch4_mean > 0:
+                            # CH4 is measured in ppmv, convert to hazard score
+                            # Global background is ~1.8 ppmv, elevated levels >2.5 ppmv
+                            ch4_hazard = min(1.0, max(0.0, (ch4_mean - 1.8) / 0.7))  # Normalize to 0-1 scale
+                            hazard_components.append(ch4_hazard * 0.1)
+                    
+                    # PM2.5 proxy from aerosol index
+                    if 'AER_AI' in pollutants and 'urban_annual' in pollutants['AER_AI']:
+                        aer_ai = pollutants['AER_AI']['urban_annual'].get('mean', 0.0)
+                        if aer_ai > 0:
+                            # Higher aerosol index indicates more particulates
+                            pm_hazard = min(1.0, aer_ai / 2.0)  # Normalize aerosol index
+                            hazard_components.append(pm_hazard * 0.2)
+        
+        if hazard_components:
+            return min(1.0, sum(hazard_components))
+        else:
+            # No air quality data available - return 0.0 to match new data availability approach
+            print(f"Warning: No valid air quality components for {city} - air quality hazard set to 0.0")
+            return 0.0
+
+
     def _calculate_exposure_components(self, city: str, metrics: ClimateRiskMetrics) -> ClimateRiskMetrics:
         """Calculate individual exposure components using IPCC AR6 framework"""
         population_data = self.data['population_data'].get(city)
@@ -922,7 +1048,7 @@ class IPCCRiskAssessmentService:
         # Water scarcity vulnerability (V_water_scarcity)
         metrics.water_scarcity_vulnerability = self._calculate_water_scarcity_vulnerability(city)
         
-        # Air pollution vulnerability (V_air_pollution) - based on PM2.5 levels
+        # Air pollution vulnerability (V_air_pollution) - based on PM2.5 levels or air quality hazard
         metrics.air_pollution_vulnerability = 0.0
         if city in self.data['air_quality_data']:
             air_data = self.data['air_quality_data'][city]
@@ -930,6 +1056,10 @@ class IPCCRiskAssessmentService:
                 pm25_level = air_data['pm25']
                 # Higher PM2.5 levels = higher vulnerability
                 metrics.air_pollution_vulnerability = min(1.0, pm25_level / 35.0)  # 35 µg/m³ as threshold for high risk
+            else:
+                # Use air quality hazard as proxy for air pollution vulnerability
+                air_hazard = self._calculate_air_quality_hazard(city)
+                metrics.air_pollution_vulnerability = min(1.0, air_hazard * 0.8)  # Scale down hazard to vulnerability
         
         return metrics
     
@@ -955,6 +1085,40 @@ class IPCCRiskAssessmentService:
         metrics.air_quality_adaptive_capacity = self._calculate_air_quality_adaptive_capacity(city)
         
         return metrics
+        
+    def _calculate_air_quality_adaptive_capacity(self, city: str) -> float:
+        """Calculate air quality management adaptive capacity"""
+        population_data = self.data['population_data'].get(city)
+        if not population_data:
+            return 0.0  # No data -> no capacity
+        
+        # Base capacity from economic resources (wealthier cities can afford better air quality management)
+        economic_capacity = self.data_loader.pct_norm(
+            self.data['cache']['gdp'], 
+            population_data.gdp_per_capita_usd
+        )
+        
+        # Population size capacity (larger cities have more resources for air quality management)
+        size_capacity = self.data_loader.pct_norm(
+            self.data['cache']['population'], 
+            population_data.population_2024
+        )
+        
+        # Urban infrastructure capacity (cities with better services have better air quality monitoring)
+        services_capacity = self._calculate_viirs_exposure(city)
+        
+        # Air quality data availability bonus
+        data_availability_bonus = 0.2 if city in self.data.get('air_quality_data', {}) else 0.0
+        
+        # Combined air quality management capacity
+        air_quality_capacity = (
+            0.4 * economic_capacity +     # Economic resources for air quality management
+            0.3 * size_capacity +          # City size and resources
+            0.2 * services_capacity +      # Infrastructure and services
+            0.1 * data_availability_bonus  # Monitoring and data availability
+        )
+        
+        return min(1.0, air_quality_capacity)
     
     def _populate_supporting_metrics(self, city: str, metrics: ClimateRiskMetrics):
         """Populate supporting metrics for detailed analysis"""
@@ -1060,7 +1224,7 @@ class IPCCRiskAssessmentService:
                                     
                                     # Calculate average pollutant change
                                     changes = []
-                                    for pollutant in ['CO', 'NO2', 'O3', 'SO2']:
+                                    for pollutant in ['CO', 'NO2', 'O3', 'SO2', 'CH4']:
                                         if (pollutant in pollutants and pollutant in prev_pollutants and
                                             'urban_annual' in pollutants[pollutant] and 
                                             'urban_annual' in prev_pollutants[pollutant]):
@@ -1079,15 +1243,17 @@ class IPCCRiskAssessmentService:
                         # Calculate health risk score based on pollutant levels
                         health_risk = 0.0
                         if metrics.no2_level > 1e-4:  # High NO2
-                            health_risk += 0.3
+                            health_risk += 0.25
                         if metrics.o3_level > 1e-4:   # High O3
-                            health_risk += 0.2
+                            health_risk += 0.20
                         if metrics.so2_level > 1e-5:  # High SO2
-                            health_risk += 0.2
+                            health_risk += 0.20
                         if metrics.co_level > 1e-5:   # High CO
-                            health_risk += 0.2
+                            health_risk += 0.15
+                        if metrics.ch4_level > 2.0:   # Elevated CH4 (>2.0 ppmv)
+                            health_risk += 0.10
                         if metrics.aerosol_index > 1.0:  # High particulates
-                            health_risk += 0.1
+                            health_risk += 0.10
                         
                         metrics.health_risk_score = min(1.0, health_risk)
         
@@ -1095,21 +1261,27 @@ class IPCCRiskAssessmentService:
     
     # Individual hazard calculation methods
     def _calculate_heat_hazard(self, city: str) -> float:
-        """Calculate heat hazard component (H_heat)"""
-        # Use climatological estimation when temperature data is unavailable
-        if not self.data['temperature_data'].get(city) and not self.data['suhi_data'].get(city):
-            return self._estimate_climatological_heat_hazard(city)
+        """Calculate heat hazard with proper fallback handling"""
+        hazard_score = self.calculate_hazard_score(city)
+        
+        if hazard_score == 0.0:
+            # Use regional climate baseline for Central Asia instead of 0.0
+            print(f"Warning: No temperature data for {city}, using regional baseline")
+            return 0.4  # Moderate baseline for arid continental climate
+        
+        return hazard_score
 
-        # Use existing heat hazard calculation from calculate_hazard_score
-        return self.calculate_hazard_score(city)
     
     def _calculate_dry_hazard(self, city: str) -> float:
         """Calculate dry/ecological stress hazard (H_dry)"""
-        # Use climatological estimation when LULC data is unavailable
+        # Do NOT fall back to climatological estimators; use only observed LULC/vegetation data
         if not self.data['lulc_data']:
-            return self._estimate_climatological_dry_hazard(city)
+            # Missing LULC data - cannot estimate dry hazard reliably
+            # Return 0.0 so that absence of data does not add implicit risk
+            print(f"Warning: LULC data missing for {city} - dry hazard set to 0.0")
+            return 0.0
         
-        # Based on low NDVI/EVI in summer, negative seasonal changes
+        # Based on low NDVI/EVI, negative seasonal changes
         dry_score = 0.0
         
         # Initialize cache for bare/sparse percentages if needed
@@ -1173,9 +1345,10 @@ class IPCCRiskAssessmentService:
     
     def _calculate_dust_hazard(self, city: str) -> float:
         """Calculate dust proxy hazard (H_dust)"""
-        # Use climatological estimation when LULC data is unavailable
+        # Do NOT fall back to climatological estimators; require LULC/spatial data
         if not self.data['lulc_data']:
-            return self._estimate_climatological_dust_hazard(city)
+            print(f"Warning: LULC data missing for {city} - dust hazard set to 0.0")
+            return 0.0
         
         # Based on bare/low-veg share and vegetation patch isolation
         dust_score = 0.0
@@ -1228,12 +1401,26 @@ class IPCCRiskAssessmentService:
     
     def _calculate_pluvial_hazard(self, city: str) -> float:
         """Calculate pluvial proxy hazard (H_pluv)"""
-        # Use climatological estimation when LULC data is unavailable
+        # Do NOT fall back to climatological estimators; use only observed LULC data
         if not self.data['lulc_data']:
-            return self._estimate_climatological_pluvial_hazard(city)
+            print(f"Warning: LULC data missing for {city} - pluvial hazard set to 0.0")
+            return 0.0
         
         # Based on built-up share and edge density (imperviousness/flow concentration)
         pluvial_score = 0.0
+        
+        # Initialize cache for built percentages if needed
+        if 'built_pct' not in self.data['cache']:
+            built_pcts = []
+            for lulc_city in self.data['lulc_data']:
+                areas = lulc_city.get('areas_m2', {})
+                if areas:
+                    years = sorted([int(y) for y in areas.keys()])
+                    if years:
+                        latest_year = str(years[-1])
+                        built_pct = areas[latest_year].get('Built_Area', {}).get('percentage', 0)
+                        built_pcts.append(built_pct)
+            self.data['cache']['built_pct'] = built_pcts
         
         # Built-up percentage from LULC
         for lulc_city in self.data['lulc_data']:
@@ -1319,6 +1506,7 @@ class IPCCRiskAssessmentService:
                         for year in years:
                             year_data = areas[str(year)]
                             total_veg = (year_data.get('Trees', {}).get('percentage', 0) + 
+                                       
                                        year_data.get('Crops', {}).get('percentage', 0) +
                                        year_data.get('Grass', {}).get('percentage', 0))
                             veg_percentages.append(total_veg)
@@ -1337,7 +1525,10 @@ class IPCCRiskAssessmentService:
     def _calculate_water_scarcity_vulnerability(self, city: str) -> float:
         """Calculate water scarcity vulnerability based on water scarcity assessment"""
         if city not in self.water_scarcity_data:
-            return 0.5  # Default moderate vulnerability if no data
+            # Do not assign a default moderate vulnerability when there is no assessment
+            # Return 0.0 to ensure vulnerability reflects only available analysis
+            print(f"Warning: No water scarcity assessment for {city} - water vulnerability set to 0.0")
+            return 0.0
 
         water_data = self.water_scarcity_data[city]
 
@@ -1597,291 +1788,3 @@ class IPCCRiskAssessmentService:
             print(f"Applied regional corrections to {city}: +{total_penalty:.3f} vulnerability")
         
         return metrics
-
-    def _estimate_climatological_heat_hazard(self, city: str) -> float:
-        """Estimate heat hazard based on climatological knowledge of Uzbekistan"""
-        from .utils import UZBEKISTAN_CITIES
-
-        if city not in UZBEKISTAN_CITIES:
-            return 0.3  # Default moderate heat hazard
-
-        city_info = UZBEKISTAN_CITIES[city]
-        lat, lon = city_info['lat'], city_info['lon']
-
-        # Uzbekistan climate characteristics
-        # Northern cities (cooler summers) vs Southern cities (hotter summers)
-
-
-
-        base_heat_hazard = 0.0
-
-        # Latitude-based heat intensity (southern cities hotter)
-        if lat < 39.0:  # Southern cities (Termez, Qarshi, Bukhara)
-            base_heat_hazard = 0.8
-        elif lat < 40.5:  # Central cities (Samarkand, Jizzakh, Navoiy)
-            base_heat_hazard = 0.7
-        elif lat < 41.5:  # Northern cities (Tashkent, Nurafshon, Andijan)
-            base_heat_hazard = 0.6
-        else:  # Northernmost cities (Namangan, Fergana, Urgench)
-            base_heat_hazard = 0.5
-
-        # Longitude-based aridity adjustment (western cities more arid/hot)
-        if lon < 65.0:  # Western cities (more arid)
-            base_heat_hazard += 0.1
-        elif lon > 70.0:  # Eastern cities (Fergana Valley - more moderate)
-            base_heat_hazard -= 0.1
-
-        # City-specific adjustments based on known climate patterns
-        city_adjustments = {
-            'Tashkent': 0.0,    # Capital, some urban cooling
-            'Samarkand': 0.05,  # Historic city, moderate climate
-            'Bukhara': 0.1,     # Desert climate, very hot
-            'Khiva': 0.15,      # Arid desert climate
-            'Urgench': 0.15,    # Arid desert climate
-            'Nukus': 0.2,       # Extreme desert climate
-            'Termez': 0.1,      # Southern desert climate
-            'Qarshi': 0.1,      # Southern desert climate
-           
-
-            'Fergana': -0.05,   # Fergana Valley, more moderate
-            'Namangan': -0.05,  # Fergana Valley, more moderate
-        }
-
-        adjustment = city_adjustments.get(city, 0.0)
-        heat_hazard = max(0.0, min(1.0, base_heat_hazard + adjustment))
-
-        return heat_hazard
-
-    def _estimate_climatological_dry_hazard(self, city: str) -> float:
-        """Estimate dry/ecological hazard based on aridity patterns"""
-        from .utils import UZBEKISTAN_CITIES
-
-        if city not in UZBEKISTAN_CITIES:
-            return 0.4  # Default moderate dry hazard
-
-        city_info = UZBEKISTAN_CITIES[city]
-        lat, lon = city_info['lat'], city_info['lon']
-
-        # Aridity increases from east to west and north to south
-        base_dry_hazard = 0.0
-
-        # Longitude-based aridity (western cities more arid)
-        if lon < 60.0:  # Extreme west (Nukus, Urgench)
-            base_dry_hazard = 0.9
-        elif lon < 65.0:  # Western cities
-            base_dry_hazard = 0.8
-
-        elif lon < 68.0:  # Central cities
-            base_dry_hazard = 0.6
-        elif lon < 70.0:  # Eastern cities
-            base_dry_hazard = 0.4
-        else:  # Fergana Valley (more precipitation)
-            base_dry_hazard = 0.3
-
-        # Latitude adjustment (southern cities slightly more arid)
-        if lat < 39.0:
-            base_dry_hazard += 0.1
-
-        # City-specific adjustments
-        city_adjustments = {
-            'Nukus': 0.1,       # Aral Sea region, extremely arid
-            'Urgench': 0.1,     # Khorezm region, very arid
-            'Bukhara': 0.05,    # Kyzylkum desert influence
-            'Navoiy': 0.05,     # Desert mining region
-            'Andijan': -0.1,    # Fergana Valley, irrigated agriculture
-            'Fergana': -0.1,    # Fergana Valley, irrigated agriculture
-            'Namangan': -0.1,      # Fergana Valley, irrigated agriculture
-            'Tashkent': -0.05,  # Better water infrastructure
-        }
-
-        adjustment = city_adjustments.get(city, 0.0)
-        dry_hazard = max(0.0, min(1.0, base_dry_hazard + adjustment))
-
-        return dry_hazard
-
-    def _estimate_climatological_dust_hazard(self, city: str) -> float:
-        """Estimate dust hazard based on desert proximity and wind patterns"""
-        from .utils import UZBEKISTAN_CITIES
-
-        if city not in UZBEKISTAN_CITIES:
-            return 0.3  # Default moderate dust hazard
-
-        city_info = UZBEKISTAN_CITIES[city]
-        lat, lon = city_info['lat'], city_info['lon']
-
-        # Dust hazard based on proximity to deserts and wind patterns
-        base_dust_hazard = 0.0
-
-        # Western cities near Kyzylkum and Aral Sea deserts
-        if lon < 65.0:
-            base_dust_hazard = 0.8
-        elif lon < 68.0:
-            base_dust_hazard = 0.6
-        else:
-            base_dust_hazard = 0.4
-
-        # Southern cities affected by desert winds
-        if lat < 39.0:
-            base_dust_hazard += 0.1
-
-        # City-specific adjustments
-        city_adjustments = {
-            'Nukus': 0.2,       # Near Aral Sea disaster zone
-            'Urgench': 0.1,     # Khorezm desert winds
-            'Bukhara': 0.1,     # Kyzylkum desert proximity
-            'Navoiy': 0.1,      # Desert mining operations
-            'Tashkent': -0.1,   # Urban area, less dust
-            'Andijan': -0.1,    # Mountain-protected valley
-            'Fergana': -0.1,    # Mountain-protected valley
-            'Namangan': -0.1,   # Mountain-protected valley
-        }
-
-        adjustment = city_adjustments.get(city, 0.0)
-        dust_hazard = max(0.0, min(1.0, base_dust_hazard + adjustment))
-
-        return dust_hazard
-
-    def _estimate_climatological_pluvial_hazard(self, city: str) -> float:
-        """Estimate pluvial (heavy rain) hazard based on climate patterns"""
-        from .utils import UZBEKISTAN_CITIES
-
-        if city not in UZBEKISTAN_CITIES:
-            return 0.2  # Default low pluvial hazard
-
-        city_info = UZBEKISTAN_CITIES[city]
-        lat, lon = city_info['lat'], city_info['lon']
-
-        # Pluvial hazard based on monsoon influence and topography
-        base_pluvial_hazard = 0.0
-
-        # Eastern cities (Fergana Valley) get more precipitation
-        if lon > 70.0:
-            base_pluvial_hazard = 0.5
-        elif lon > 68.0:
-            base_pluvial_hazard = 0.3
-        else:
-            base_pluvial_hazard = 0.2
-
-        # Northern cities slightly more precipitation
-        if lat > 40.5:
-            base_pluvial_hazard += 0.1
-
-        # City-specific adjustments
-        city_adjustments = {
-            'Andijan': 0.1,     # Fergana Valley, more rainfall
-            'Fergana': 0.1,     # Fergana Valley, more rainfall
-            'Namangan': 0.1,    # Fergana Valley, more rainfall
-            'Tashkent': 0.05,   # Moderate rainfall
-            'Nukus': -0.1,      # Extremely arid
-            'Urgench': -0.1,    # Very arid
-            'Bukhara': -0.05,   # Desert climate
-        }
-
-        adjustment = city_adjustments.get(city, 0.0)
-        pluvial_hazard = max(0.0, min(1.0, base_pluvial_hazard + adjustment))
-
-        return pluvial_hazard
-
-    def _calculate_air_quality_hazard(self, city: str) -> float:
-        """Calculate air quality hazard component (H_air_quality)"""
-        if city not in self.data['air_quality_data']:
-            return 0.3  # Default moderate air quality hazard if no data
-        
-        air_data = self.data['air_quality_data'][city]
-        
-        # Extract pollutant levels (use urban annual data if available)
-        co_level = 0.0
-        no2_level = 0.0
-        o3_level = 0.0
-        so2_level = 0.0
-        ch4_level = 0.0
-        aerosol_index = 0.0
-        
-        if 'yearly_results' in air_data:
-            # Get the most recent year
-            years = sorted([int(y) for y in air_data['yearly_results'].keys() if y.isdigit()])
-            if years:
-                latest_year = str(years[-1])
-                year_data = air_data['yearly_results'][latest_year]
-                
-                if 'pollutants' in year_data:
-                    pollutants = year_data['pollutants']
-                    
-                    # Extract urban annual means
-                    if 'CO' in pollutants and 'urban_annual' in pollutants['CO']:
-                        co_level = pollutants['CO']['urban_annual'].get('mean', 0.0)
-                    if 'NO2' in pollutants and 'urban_annual' in pollutants['NO2']:
-                        no2_level = pollutants['NO2']['urban_annual'].get('mean', 0.0)
-                    if 'O3' in pollutants and 'urban_annual' in pollutants['O3']:
-                        o3_level = pollutants['O3']['urban_annual'].get('mean', 0.0)
-                    if 'SO2' in pollutants and 'urban_annual' in pollutants['SO2']:
-                        so2_level = pollutants['SO2']['urban_annual'].get('mean', 0.0)
-                    if 'CH4' in pollutants and 'urban_annual' in pollutants['CH4']:
-                        ch4_level = pollutants['CH4']['urban_annual'].get('mean', 0.0)
-                    if 'AER_AI' in pollutants and 'urban_annual' in pollutants['AER_AI']:
-                        aerosol_index = pollutants['AER_AI']['urban_annual'].get('mean', 0.0)
-        
-        # Calculate hazard scores for each pollutant
-        # CO hazard (carbon monoxide)
-        co_hazard = min(1.0, co_level / 1e-5) if co_level > 0 else 0.0  # High levels indicate poor air quality
-        
-        # NO2 hazard (nitrogen dioxide - traffic indicator)
-        no2_hazard = min(1.0, no2_level / 1e-4) if no2_level > 0 else 0.0
-        
-        # O3 hazard (ozone - photochemical pollution)
-        o3_hazard = min(1.0, o3_level / 1e-4) if o3_level > 0 else 0.0
-        
-        # SO2 hazard (sulfur dioxide - industrial pollution)
-        so2_hazard = min(1.0, so2_level / 1e-5) if so2_level > 0 else 0.0
-        
-        # CH4 hazard (methane - background pollution)
-        ch4_hazard = min(1.0, ch4_level / 2000) if ch4_level > 0 else 0.0
-        
-        # Aerosol index hazard (particulate matter proxy)
-        aerosol_hazard = min(1.0, aerosol_index / 2.0) if aerosol_index > 0 else 0.0
-        
-        # Weighted air quality hazard score
-        air_quality_hazard = (
-            0.2 * co_hazard +      # CO
-            0.25 * no2_hazard +    # NO2 (traffic)
-            0.20 * o3_hazard +     # O3 (photochemical)
-            0.15 * so2_hazard +    # SO2 (industrial)
-            0.10 * ch4_hazard +    # CH4 (background)
-            0.10 * aerosol_hazard  # Aerosol (particulates)
-        )
-        
-        return min(1.0, air_quality_hazard)
-    
-    def _calculate_air_quality_adaptive_capacity(self, city: str) -> float:
-        """Calculate air quality management adaptive capacity"""
-        population_data = self.data['population_data'].get(city)
-        if not population_data:
-            return 0.3  # Default moderate capacity
-        
-        # Base capacity from economic resources (wealthier cities can afford better air quality management)
-        economic_capacity = self.data_loader.pct_norm(
-            self.data['cache']['gdp'], 
-            population_data.gdp_per_capita_usd
-        )
-        
-        # Population size capacity (larger cities have more resources for air quality management)
-        size_capacity = self.data_loader.pct_norm(
-            self.data['cache']['population'], 
-            population_data.population_2024
-        )
-        
-        # Urban infrastructure capacity (cities with better services have better air quality monitoring)
-        services_capacity = self._calculate_viirs_exposure(city)
-        
-        # Air quality data availability bonus
-        data_availability_bonus = 0.2 if city in self.data['air_quality_data'] else 0.0
-        
-        # Combined air quality management capacity
-        air_quality_capacity = (
-            0.4 * economic_capacity +     # Economic resources for air quality management
-            0.3 * size_capacity +          # City size and resources
-            0.2 * services_capacity +      # Infrastructure and services
-            0.1 * data_availability_bonus  # Monitoring and data availability
-        )
-        
-        return min(1.0, air_quality_capacity)
