@@ -1,0 +1,692 @@
+{
+  "assessment_metadata": {
+    "timestamp": "2025-08-30T10:00:47.257714",
+    "assessment_type": "Integrated Climate-Air Quality Risk Assessment",
+    "climate_data_source": "IPCC AR6 Framework",
+    "air_quality_data_source": "Sentinel-5P Satellite Data",
+    "analysis_period": "2019-2024",
+    "cities_analyzed": 14
+  },
+  "integrated_city_summaries": {
+    "Tashkent": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Decreasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "high",
+        "drought_pollution_compound": "low",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 3,
+        "overall_compound_risk_level": "high"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Establish air quality emergency response protocols",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Nukus": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Decreasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Decreasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "high",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 4,
+        "overall_compound_risk_level": "high"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Develop drought contingency plans for industrial emissions control",
+        "Establish air quality emergency response protocols",
+        "Monitor groundwater contamination from industrial activities during dry periods",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Implement water-efficient industrial processes to reduce pollution during droughts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Andijan": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Increasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "low",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 2,
+        "overall_compound_risk_level": "moderate"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children",
+          "respiratory patients",
+          "industrial workers"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Establish air quality emergency response protocols",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Bukhara": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Increasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "low",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 2,
+        "overall_compound_risk_level": "moderate"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children",
+          "respiratory patients",
+          "industrial workers"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Establish air quality emergency response protocols",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Samarkand": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Decreasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "low",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 2,
+        "overall_compound_risk_level": "moderate"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Establish air quality emergency response protocols",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Namangan": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Increasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "low",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 2,
+        "overall_compound_risk_level": "moderate"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children",
+          "respiratory patients",
+          "industrial workers"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Establish air quality emergency response protocols",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Jizzakh": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Decreasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "low",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 2,
+        "overall_compound_risk_level": "moderate"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Establish air quality emergency response protocols",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Qarshi": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Decreasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "low",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 2,
+        "overall_compound_risk_level": "moderate"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Establish air quality emergency response protocols",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Navoiy": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Decreasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Decreasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Decreasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "high",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 4,
+        "overall_compound_risk_level": "high"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "outdoor workers",
+          "children"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Develop drought contingency plans for industrial emissions control",
+        "Establish air quality emergency response protocols",
+        "Monitor groundwater contamination from industrial activities during dry periods",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Implement water-efficient industrial processes to reduce pollution during droughts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Termez": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "Increasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "high",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 4,
+        "overall_compound_risk_level": "high"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children",
+          "respiratory patients",
+          "industrial workers"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Develop drought contingency plans for industrial emissions control",
+        "Establish air quality emergency response protocols",
+        "Monitor groundwater contamination from industrial activities during dry periods",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Implement water-efficient industrial processes to reduce pollution during droughts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Gulistan": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Decreasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "low",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 2,
+        "overall_compound_risk_level": "moderate"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Establish air quality emergency response protocols",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Nurafshon": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Decreasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "low",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 2,
+        "overall_compound_risk_level": "moderate"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Establish air quality emergency response protocols",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Fergana": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Increasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "high",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 4,
+        "overall_compound_risk_level": "high"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children",
+          "respiratory patients",
+          "industrial workers"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Develop drought contingency plans for industrial emissions control",
+        "Establish air quality emergency response protocols",
+        "Monitor groundwater contamination from industrial activities during dry periods",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Implement water-efficient industrial processes to reduce pollution during droughts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    },
+    "Urgench": {
+      "climate_hazards": [],
+      "air_quality_risks": [
+        "Increasing CO levels",
+        "Increasing CH4 levels",
+        "Increasing AER_AI levels",
+        "Increasing NO2 levels",
+        "High traffic pollution (NO2)",
+        "Increasing O3 levels",
+        "High photochemical pollution risk (O3)",
+        "Increasing SO2 levels",
+        "High industrial pollution (SO2)"
+      ],
+      "compound_risks": {
+        "heat_wave_air_quality_compound": "moderate",
+        "drought_pollution_compound": "low",
+        "urban_heat_island_pollution": "low",
+        "climate_adaptation_air_quality_benefits": [],
+        "overall_compound_risk_score": 2,
+        "overall_compound_risk_level": "moderate"
+      },
+      "health_impacts": {
+        "respiratory_diseases": "high",
+        "cardiovascular_diseases": "high",
+        "vulnerable_populations": [
+          "children",
+          "elderly",
+          "asthma patients",
+          "outdoor workers",
+          "children",
+          "respiratory patients",
+          "industrial workers"
+        ],
+        "emergency_response_needs": "high"
+      },
+      "integrated_recommendations": [
+        "Develop public health campaigns on air pollution and heat risks",
+        "Establish air quality emergency response protocols",
+        "Create vulnerable population protection programs",
+        "Create shaded pedestrian areas to reduce heat exposure and traffic pollution",
+        "Promote indoor air filtration during heat waves",
+        "Implement heat-health warning systems integrated with air quality alerts",
+        "Develop urban green spaces to reduce both heat and pollution",
+        "Implement real-time air quality and weather monitoring systems"
+      ]
+    }
+  },
+  "compound_risk_analysis": {
+    "cities_by_compound_risk": {
+      "very_high": [],
+      "high": [
+        "Tashkent",
+        "Nukus",
+        "Navoiy",
+        "Termez",
+        "Fergana"
+      ],
+      "moderate": [
+        "Andijan",
+        "Bukhara",
+        "Samarkand",
+        "Namangan",
+        "Jizzakh",
+        "Qarshi",
+        "Gulistan",
+        "Nurafshon",
+        "Urgench"
+      ],
+      "low": []
+    },
+    "most_common_compound_risks": {
+      "heat_wave_air_quality_compound": 14,
+      "drought_pollution_compound": 4
+    },
+    "regional_patterns": {},
+    "priority_interventions": [
+      "Urban heat and air quality management programs"
+    ]
+  },
+  "policy_recommendations": [
+    "Develop integrated climate-air quality monitoring systems",
+    "Implement multi-benefit urban greening strategies",
+    "Create comprehensive heat-health-air quality early warning systems",
+    "Promote sustainable urban transport to reduce both emissions and congestion",
+    "Establish air quality standards integrated with climate adaptation goals",
+    "Develop compound risk assessment frameworks for urban planning",
+    "Implement green infrastructure for simultaneous climate and air quality benefits",
+    "Create public health campaigns addressing climate and air quality interactions",
+    "Develop emergency response protocols for compound heat-pollution events",
+    "Integrate air quality considerations into climate adaptation funding programs"
+  ]
+}

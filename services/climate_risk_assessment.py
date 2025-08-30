@@ -79,6 +79,21 @@ class ClimateRiskMetrics:
     built_area_percentage: float = 0.0
     green_space_accessibility: float = 0.0
     economic_capacity: float = 0.0
+    
+    # Air Quality Components
+    air_quality_hazard: float = 0.0
+    air_pollution_vulnerability: float = 0.0
+    air_quality_adaptive_capacity: float = 0.0
+    
+    # Air Quality Supporting Metrics
+    co_level: float = 0.0
+    no2_level: float = 0.0
+    o3_level: float = 0.0
+    so2_level: float = 0.0
+    ch4_level: float = 0.0
+    aerosol_index: float = 0.0
+    air_quality_trend: float = 0.0
+    health_risk_score: float = 0.0
 
 
 class IPCCRiskAssessmentService:
@@ -100,10 +115,11 @@ class IPCCRiskAssessmentService:
         
         # IPCC AR6 hazard weights (from specification)
         self.hazard_weights = {
-            'heat': 0.60,
-            'dry': 0.25,
+            'heat': 0.50,
+            'dry': 0.20,
             'pluv': 0.10,
-            'dust': 0.05
+            'dust': 0.05,
+            'air_quality': 0.15
         }
         
         # IPCC AR6 exposure weights (from specification)
@@ -115,47 +131,72 @@ class IPCCRiskAssessmentService:
         
         # IPCC AR6 vulnerability weights (from specification)
         self.vulnerability_weights = {
-            'income_inv': 0.20,
-            'veg_access': 0.12,
-            'fragment': 0.08,
-            'delta_bio_veg': 0.06,
-            'water_scarcity': 0.22,    # Water scarcity vulnerability (critical for arid regions)
-            'water_access': 0.14,      # Social sector: water infrastructure vulnerability
-            'healthcare_access': 0.06, # Social sector: healthcare access vulnerability
-            'education_access': 0.05,  # Social sector: education access vulnerability
+            'income_inv': 0.15,
+            'veg_access': 0.10,
+            'fragment': 0.06,
+            'delta_bio_veg': 0.05,
+            'water_scarcity': 0.18,    # Water scarcity vulnerability (critical for arid regions)
+            'water_access': 0.12,      # Social sector: water infrastructure vulnerability
+            'healthcare_access': 0.05, # Social sector: healthcare access vulnerability
+            'education_access': 0.04,  # Social sector: education access vulnerability
             'sanitation': 0.03,        # Social sector: sanitation vulnerability
-            'building_age': 0.04       # Social sector: building age and renovation vulnerability
+            'building_age': 0.04,      # Social sector: building age and renovation vulnerability
+            'air_pollution': 0.18      # Air pollution vulnerability (health impacts)
         }
         
         # IPCC AR6 adaptive capacity weights (from specification)
         self.adaptive_capacity_weights = {
-            'gdp_pc': 0.40,
-            'greenspace': 0.25,
-            'services': 0.15,
-            'social_infrastructure': 0.15,  # Social sector: schools, hospitals per capita
-            'water_system': 0.05           # Social sector: water system resilience
+            'gdp_pc': 0.35,
+            'greenspace': 0.20,
+            'services': 0.12,
+            'social_infrastructure': 0.13,  # Social sector: schools, hospitals per capita
+            'water_system': 0.05,          # Social sector: water system resilience
+            'air_quality_management': 0.15  # Air quality management and monitoring capacity
         }
     
     def _load_water_scarcity_data(self) -> Dict[str, Dict]:
-        """Load water scarcity assessment data from the water scarcity service"""
+        """Load water scarcity assessment data from existing JSON files"""
         try:
-            from .water_scarcity_gee import WaterScarcityGEEAssessment
+            from pathlib import Path
+            import json
             
-            water_service = WaterScarcityGEEAssessment(self.data_loader)
-            water_data = water_service.assess_all_cities_water_scarcity()
-            
-            # Convert to dictionary format for easy lookup
+            water_scarcity_dir = Path('suhi_analysis_output') / 'water_scarcity'
             water_dict = {}
-            for city, assessment in water_data.items():
-                water_dict[city] = {
-                    'water_scarcity_index': assessment.overall_water_scarcity_score,
-                    'drought_frequency': assessment.drought_frequency,
-                    'water_stress_level': assessment.aqueduct_bws_score,
-                    'irrigation_demand': assessment.cropland_fraction,
-                    'surface_water_availability': assessment.surface_water_change
-                }
             
-            print(f"Loaded water scarcity data for {len(water_dict)} cities")
+            if water_scarcity_dir.exists():
+                for city_dir in water_scarcity_dir.iterdir():
+                    if city_dir.is_dir():
+                        city_name = city_dir.name
+                        water_file = city_dir / 'water_scarcity_assessment.json'
+                        
+                        if water_file.exists():
+                            try:
+                                with open(water_file, 'r', encoding='utf-8') as f:
+                                    data = json.load(f)
+                                
+                                # Extract relevant fields for risk assessment
+                                water_dict[city_name] = {
+                                    'water_scarcity_index': data.get('overall_water_scarcity_score', 0.0),
+                                    'drought_frequency': data.get('drought_frequency', 0.0),
+                                    'water_stress_level': data.get('aqueduct_bws_score'),
+                                    'irrigation_demand': data.get('cropland_fraction', 0.0),
+                                    'surface_water_availability': data.get('surface_water_change', 0.0),
+                                    'aridity_index': data.get('aridity_index', 0.2),
+                                    'climatic_water_deficit': data.get('climatic_water_deficit', 0.0),
+                                    'water_supply_risk': data.get('water_supply_risk', 0.0),
+                                    'water_demand_risk': data.get('water_demand_risk', 0.0),
+                                    'water_scarcity_level': data.get('water_scarcity_level', 'Unknown')
+                                }
+                                
+                            except Exception as e:
+                                print(f"Warning: Could not load water scarcity data for {city_name}: {e}")
+                                continue
+            
+            if water_dict:
+                print(f"Loaded water scarcity data for {len(water_dict)} cities from existing files")
+            else:
+                print("Warning: No water scarcity data files found - water scarcity vulnerability will be set to default values")
+            
             return water_dict
             
         except Exception as e:
@@ -217,7 +258,8 @@ class IPCCRiskAssessmentService:
                 self.hazard_weights['heat'] * metrics.heat_hazard +
                 self.hazard_weights['dry'] * metrics.dry_hazard +
                 self.hazard_weights['pluv'] * metrics.pluvial_hazard +
-                self.hazard_weights['dust'] * metrics.dust_hazard
+                self.hazard_weights['dust'] * metrics.dust_hazard +
+                self.hazard_weights['air_quality'] * metrics.air_quality_hazard
             )
             
             metrics.exposure_score = (
@@ -231,13 +273,38 @@ class IPCCRiskAssessmentService:
                 self.vulnerability_weights['veg_access'] * metrics.veg_access_vulnerability +
                 self.vulnerability_weights['fragment'] * metrics.fragmentation_vulnerability +
                 self.vulnerability_weights['delta_bio_veg'] * metrics.bio_trend_vulnerability +
-                self.vulnerability_weights['water_scarcity'] * metrics.water_scarcity_vulnerability
+                self.vulnerability_weights['water_scarcity'] * metrics.water_scarcity_vulnerability +
+                self.vulnerability_weights['air_pollution'] * metrics.air_pollution_vulnerability
             )
             
             metrics.adaptive_capacity_score = (
                 self.adaptive_capacity_weights['gdp_pc'] * metrics.gdp_adaptive_capacity +
                 self.adaptive_capacity_weights['greenspace'] * metrics.greenspace_adaptive_capacity +
-                self.adaptive_capacity_weights['services'] * metrics.services_adaptive_capacity
+                self.adaptive_capacity_weights['services'] * metrics.services_adaptive_capacity +
+                self.adaptive_capacity_weights['air_quality_management'] * metrics.air_quality_adaptive_capacity
+            )
+        else:
+            # Recalculate composite scores with social sector components
+            metrics.vulnerability_score = (
+                self.vulnerability_weights['income_inv'] * metrics.income_vulnerability +
+                self.vulnerability_weights['veg_access'] * metrics.veg_access_vulnerability +
+                self.vulnerability_weights['fragment'] * metrics.fragmentation_vulnerability +
+                self.vulnerability_weights['delta_bio_veg'] * metrics.bio_trend_vulnerability +
+                self.vulnerability_weights['water_access'] * metrics.water_access_vulnerability +
+                self.vulnerability_weights['healthcare_access'] * metrics.healthcare_access_vulnerability +
+                self.vulnerability_weights['education_access'] * metrics.education_access_vulnerability +
+                self.vulnerability_weights['sanitation'] * metrics.sanitation_vulnerability +
+                self.vulnerability_weights['building_age'] * metrics.building_age_vulnerability +
+                self.vulnerability_weights['air_pollution'] * metrics.air_pollution_vulnerability
+            )
+            
+            metrics.adaptive_capacity_score = (
+                self.adaptive_capacity_weights['gdp_pc'] * metrics.gdp_adaptive_capacity +
+                self.adaptive_capacity_weights['greenspace'] * metrics.greenspace_adaptive_capacity +
+                self.adaptive_capacity_weights['services'] * metrics.services_adaptive_capacity +
+                self.adaptive_capacity_weights['social_infrastructure'] * metrics.social_infrastructure_capacity +
+                self.adaptive_capacity_weights['water_system'] * metrics.water_system_capacity +
+                self.adaptive_capacity_weights['air_quality_management'] * metrics.air_quality_adaptive_capacity
             )
         
         # Apply region-specific corrections for known data gaps
@@ -508,9 +575,19 @@ class IPCCRiskAssessmentService:
             # Use water scarcity index as vulnerability (higher scarcity = higher vulnerability)
             water_vulnerability = water_data.get('water_scarcity_index', 0.0)
         
+        # Air pollution vulnerability (based on PM2.5 levels)
+        air_vulnerability = 0.0
+        if city in self.data['air_quality_data']:
+            air_data = self.data['air_quality_data'][city]
+            if 'pm25' in air_data:
+                pm25_level = air_data['pm25']
+                # Higher PM2.5 levels = higher vulnerability
+                air_vulnerability = min(1.0, pm25_level / 35.0)  # 35 µg/m³ as threshold for high risk
+        
         # Weighted vulnerability score
         vulnerability_score = (0.4 * gdp_vulnerability + 0.25 * built_vulnerability + 
-                              0.15 * green_vulnerability + 0.2 * water_vulnerability)
+                              0.15 * green_vulnerability + 0.2 * water_vulnerability +
+                              0.18 * air_vulnerability)  # Include air pollution vulnerability
         
         return min(1.0, vulnerability_score)
     
@@ -722,7 +799,8 @@ class IPCCRiskAssessmentService:
             self.vulnerability_weights['healthcare_access'] * metrics.healthcare_access_vulnerability +
             self.vulnerability_weights['education_access'] * metrics.education_access_vulnerability +
             self.vulnerability_weights['sanitation'] * metrics.sanitation_vulnerability +
-            self.vulnerability_weights['building_age'] * metrics.building_age_vulnerability
+            self.vulnerability_weights['building_age'] * metrics.building_age_vulnerability +
+            self.vulnerability_weights['air_pollution'] * metrics.air_pollution_vulnerability
         )
         
         metrics.adaptive_capacity_score = (
@@ -730,7 +808,8 @@ class IPCCRiskAssessmentService:
             self.adaptive_capacity_weights['greenspace'] * metrics.greenspace_adaptive_capacity +
             self.adaptive_capacity_weights['services'] * metrics.services_adaptive_capacity +
             self.adaptive_capacity_weights['social_infrastructure'] * metrics.social_infrastructure_capacity +
-            self.adaptive_capacity_weights['water_system'] * metrics.water_system_capacity
+            self.adaptive_capacity_weights['water_system'] * metrics.water_system_capacity +
+            self.adaptive_capacity_weights['air_quality_management'] * metrics.air_quality_adaptive_capacity
         )
         
         # Recalculate overall risk with updated components
@@ -742,7 +821,8 @@ class IPCCRiskAssessmentService:
             self.hazard_weights['heat'] * metrics.heat_hazard +
             self.hazard_weights['dry'] * metrics.dry_hazard +
             self.hazard_weights['pluv'] * metrics.pluvial_hazard +
-            self.hazard_weights['dust'] * metrics.dust_hazard
+            self.hazard_weights['dust'] * metrics.dust_hazard +
+            self.hazard_weights['air_quality'] * metrics.air_quality_hazard
         )
         
         metrics.exposure_score = (
@@ -779,6 +859,9 @@ class IPCCRiskAssessmentService:
         
         # Pluvial proxy (H_pluv): built-up share and edge density
         metrics.pluvial_hazard = self._calculate_pluvial_hazard(city)
+        
+        # Air quality hazard (H_air_quality): pollutant levels and trends
+        metrics.air_quality_hazard = self._calculate_air_quality_hazard(city)
         
         return metrics
     
@@ -839,6 +922,15 @@ class IPCCRiskAssessmentService:
         # Water scarcity vulnerability (V_water_scarcity)
         metrics.water_scarcity_vulnerability = self._calculate_water_scarcity_vulnerability(city)
         
+        # Air pollution vulnerability (V_air_pollution) - based on PM2.5 levels
+        metrics.air_pollution_vulnerability = 0.0
+        if city in self.data['air_quality_data']:
+            air_data = self.data['air_quality_data'][city]
+            if 'pm25' in air_data:
+                pm25_level = air_data['pm25']
+                # Higher PM2.5 levels = higher vulnerability
+                metrics.air_pollution_vulnerability = min(1.0, pm25_level / 35.0)  # 35 µg/m³ as threshold for high risk
+        
         return metrics
     
     def _calculate_adaptive_capacity_components(self, city: str, metrics: ClimateRiskMetrics) -> ClimateRiskMetrics:
@@ -858,6 +950,9 @@ class IPCCRiskAssessmentService:
         
         # Services adaptive capacity (AC_services) - VIIRS as proxy
         metrics.services_adaptive_capacity = self._calculate_viirs_exposure(city)
+        
+        # Air quality management adaptive capacity (AC_air_quality_management)
+        metrics.air_quality_adaptive_capacity = self._calculate_air_quality_adaptive_capacity(city)
         
         return metrics
     
@@ -912,6 +1007,91 @@ class IPCCRiskAssessmentService:
                 self.data['cache']['gdp'], 
                 population_data.gdp_per_capita_usd
             )
+        
+        # Water scarcity data
+        if city in self.water_scarcity_data:
+            water_data = self.water_scarcity_data[city]
+            metrics.aridity_index = water_data.get('aridity_index', 0.0)
+            metrics.climatic_water_deficit = water_data.get('climatic_water_deficit', 0.0)
+            metrics.drought_frequency = water_data.get('drought_frequency', 0.0)
+            metrics.surface_water_change = water_data.get('surface_water_change', 0.0)
+            metrics.cropland_fraction = water_data.get('irrigation_demand', 0.0)
+            metrics.water_supply_risk = water_data.get('water_supply_risk', 0.0)
+            metrics.water_demand_risk = water_data.get('water_demand_risk', 0.0)
+            metrics.overall_water_scarcity_score = water_data.get('water_scarcity_index', 0.0)
+            metrics.water_scarcity_level = water_data.get('water_scarcity_level', 'Unknown')
+    
+        # Air quality metrics - populate from air quality data
+        if city in self.data['air_quality_data']:
+            air_data = self.data['air_quality_data'][city]
+            
+            if 'yearly_results' in air_data:
+                # Get the most recent year
+                years = sorted([int(y) for y in air_data['yearly_results'].keys() if y.isdigit()])
+                if years:
+                    latest_year = str(years[-1])
+                    year_data = air_data['yearly_results'][latest_year]
+                    
+                    if 'pollutants' in year_data:
+                        pollutants = year_data['pollutants']
+                        
+                        # Extract urban annual means
+                        if 'CO' in pollutants and 'urban_annual' in pollutants['CO']:
+                            metrics.co_level = pollutants['CO']['urban_annual'].get('mean', 0.0)
+                        if 'NO2' in pollutants and 'urban_annual' in pollutants['NO2']:
+                            metrics.no2_level = pollutants['NO2']['urban_annual'].get('mean', 0.0)
+                        if 'O3' in pollutants and 'urban_annual' in pollutants['O3']:
+                            metrics.o3_level = pollutants['O3']['urban_annual'].get('mean', 0.0)
+                        if 'SO2' in pollutants and 'urban_annual' in pollutants['SO2']:
+                            metrics.so2_level = pollutants['SO2']['urban_annual'].get('mean', 0.0)
+                        if 'CH4' in pollutants and 'urban_annual' in pollutants['CH4']:
+                            metrics.ch4_level = pollutants['CH4']['urban_annual'].get('mean', 0.0)
+                        if 'AER_AI' in pollutants and 'urban_annual' in pollutants['AER_AI']:
+                            metrics.aerosol_index = pollutants['AER_AI']['urban_annual'].get('mean', 0.0)
+                        
+                        # Calculate air quality trend (simplified)
+                        if len(years) >= 2:
+                            # Simple trend calculation based on latest vs previous year
+                            prev_year = str(years[-2])
+                            if prev_year in air_data['yearly_results']:
+                                prev_data = air_data['yearly_results'][prev_year]
+                                if 'pollutants' in prev_data:
+                                    prev_pollutants = prev_data['pollutants']
+                                    
+                                    # Calculate average pollutant change
+                                    changes = []
+                                    for pollutant in ['CO', 'NO2', 'O3', 'SO2']:
+                                        if (pollutant in pollutants and pollutant in prev_pollutants and
+                                            'urban_annual' in pollutants[pollutant] and 
+                                            'urban_annual' in prev_pollutants[pollutant]):
+                                            
+                                            current = pollutants[pollutant]['urban_annual'].get('mean', 0.0)
+                                            previous = prev_pollutants[pollutant]['urban_annual'].get('mean', 0.0)
+                                            
+                                            if previous > 0:
+                                                change = (current - previous) / previous
+                                                changes.append(change)
+                                    
+                                    if changes:
+                                        avg_change = np.mean(changes)
+                                        metrics.air_quality_trend = float(avg_change)
+                        
+                        # Calculate health risk score based on pollutant levels
+                        health_risk = 0.0
+                        if metrics.no2_level > 1e-4:  # High NO2
+                            health_risk += 0.3
+                        if metrics.o3_level > 1e-4:   # High O3
+                            health_risk += 0.2
+                        if metrics.so2_level > 1e-5:  # High SO2
+                            health_risk += 0.2
+                        if metrics.co_level > 1e-5:   # High CO
+                            health_risk += 0.2
+                        if metrics.aerosol_index > 1.0:  # High particulates
+                            health_risk += 0.1
+                        
+                        metrics.health_risk_score = min(1.0, health_risk)
+        
+        return metrics
     
     # Individual hazard calculation methods
     def _calculate_heat_hazard(self, city: str) -> float:
@@ -1430,7 +1610,8 @@ class IPCCRiskAssessmentService:
 
         # Uzbekistan climate characteristics
         # Northern cities (cooler summers) vs Southern cities (hotter summers)
-        # Western cities (arid) vs Eastern cities (relatively more moderate)
+
+
 
         base_heat_hazard = 0.0
 
@@ -1460,7 +1641,8 @@ class IPCCRiskAssessmentService:
             'Nukus': 0.2,       # Extreme desert climate
             'Termez': 0.1,      # Southern desert climate
             'Qarshi': 0.1,      # Southern desert climate
-            'Andijan': -0.05,   # Fergana Valley, more moderate
+           
+
             'Fergana': -0.05,   # Fergana Valley, more moderate
             'Namangan': -0.05,  # Fergana Valley, more moderate
         }
@@ -1488,6 +1670,7 @@ class IPCCRiskAssessmentService:
             base_dry_hazard = 0.9
         elif lon < 65.0:  # Western cities
             base_dry_hazard = 0.8
+
         elif lon < 68.0:  # Central cities
             base_dry_hazard = 0.6
         elif lon < 70.0:  # Eastern cities
@@ -1507,7 +1690,7 @@ class IPCCRiskAssessmentService:
             'Navoiy': 0.05,     # Desert mining region
             'Andijan': -0.1,    # Fergana Valley, irrigated agriculture
             'Fergana': -0.1,    # Fergana Valley, irrigated agriculture
-            'Namangan': -0.1,   # Fergana Valley, irrigated agriculture
+            'Namangan': -0.1,      # Fergana Valley, irrigated agriculture
             'Tashkent': -0.05,  # Better water infrastructure
         }
 
@@ -1598,3 +1781,107 @@ class IPCCRiskAssessmentService:
         pluvial_hazard = max(0.0, min(1.0, base_pluvial_hazard + adjustment))
 
         return pluvial_hazard
+
+    def _calculate_air_quality_hazard(self, city: str) -> float:
+        """Calculate air quality hazard component (H_air_quality)"""
+        if city not in self.data['air_quality_data']:
+            return 0.3  # Default moderate air quality hazard if no data
+        
+        air_data = self.data['air_quality_data'][city]
+        
+        # Extract pollutant levels (use urban annual data if available)
+        co_level = 0.0
+        no2_level = 0.0
+        o3_level = 0.0
+        so2_level = 0.0
+        ch4_level = 0.0
+        aerosol_index = 0.0
+        
+        if 'yearly_results' in air_data:
+            # Get the most recent year
+            years = sorted([int(y) for y in air_data['yearly_results'].keys() if y.isdigit()])
+            if years:
+                latest_year = str(years[-1])
+                year_data = air_data['yearly_results'][latest_year]
+                
+                if 'pollutants' in year_data:
+                    pollutants = year_data['pollutants']
+                    
+                    # Extract urban annual means
+                    if 'CO' in pollutants and 'urban_annual' in pollutants['CO']:
+                        co_level = pollutants['CO']['urban_annual'].get('mean', 0.0)
+                    if 'NO2' in pollutants and 'urban_annual' in pollutants['NO2']:
+                        no2_level = pollutants['NO2']['urban_annual'].get('mean', 0.0)
+                    if 'O3' in pollutants and 'urban_annual' in pollutants['O3']:
+                        o3_level = pollutants['O3']['urban_annual'].get('mean', 0.0)
+                    if 'SO2' in pollutants and 'urban_annual' in pollutants['SO2']:
+                        so2_level = pollutants['SO2']['urban_annual'].get('mean', 0.0)
+                    if 'CH4' in pollutants and 'urban_annual' in pollutants['CH4']:
+                        ch4_level = pollutants['CH4']['urban_annual'].get('mean', 0.0)
+                    if 'AER_AI' in pollutants and 'urban_annual' in pollutants['AER_AI']:
+                        aerosol_index = pollutants['AER_AI']['urban_annual'].get('mean', 0.0)
+        
+        # Calculate hazard scores for each pollutant
+        # CO hazard (carbon monoxide)
+        co_hazard = min(1.0, co_level / 1e-5) if co_level > 0 else 0.0  # High levels indicate poor air quality
+        
+        # NO2 hazard (nitrogen dioxide - traffic indicator)
+        no2_hazard = min(1.0, no2_level / 1e-4) if no2_level > 0 else 0.0
+        
+        # O3 hazard (ozone - photochemical pollution)
+        o3_hazard = min(1.0, o3_level / 1e-4) if o3_level > 0 else 0.0
+        
+        # SO2 hazard (sulfur dioxide - industrial pollution)
+        so2_hazard = min(1.0, so2_level / 1e-5) if so2_level > 0 else 0.0
+        
+        # CH4 hazard (methane - background pollution)
+        ch4_hazard = min(1.0, ch4_level / 2000) if ch4_level > 0 else 0.0
+        
+        # Aerosol index hazard (particulate matter proxy)
+        aerosol_hazard = min(1.0, aerosol_index / 2.0) if aerosol_index > 0 else 0.0
+        
+        # Weighted air quality hazard score
+        air_quality_hazard = (
+            0.2 * co_hazard +      # CO
+            0.25 * no2_hazard +    # NO2 (traffic)
+            0.20 * o3_hazard +     # O3 (photochemical)
+            0.15 * so2_hazard +    # SO2 (industrial)
+            0.10 * ch4_hazard +    # CH4 (background)
+            0.10 * aerosol_hazard  # Aerosol (particulates)
+        )
+        
+        return min(1.0, air_quality_hazard)
+    
+    def _calculate_air_quality_adaptive_capacity(self, city: str) -> float:
+        """Calculate air quality management adaptive capacity"""
+        population_data = self.data['population_data'].get(city)
+        if not population_data:
+            return 0.3  # Default moderate capacity
+        
+        # Base capacity from economic resources (wealthier cities can afford better air quality management)
+        economic_capacity = self.data_loader.pct_norm(
+            self.data['cache']['gdp'], 
+            population_data.gdp_per_capita_usd
+        )
+        
+        # Population size capacity (larger cities have more resources for air quality management)
+        size_capacity = self.data_loader.pct_norm(
+            self.data['cache']['population'], 
+            population_data.population_2024
+        )
+        
+        # Urban infrastructure capacity (cities with better services have better air quality monitoring)
+        services_capacity = self._calculate_viirs_exposure(city)
+        
+        # Air quality data availability bonus
+        data_availability_bonus = 0.2 if city in self.data['air_quality_data'] else 0.0
+        
+        # Combined air quality management capacity
+        air_quality_capacity = (
+            0.4 * economic_capacity +     # Economic resources for air quality management
+            0.3 * size_capacity +          # City size and resources
+            0.2 * services_capacity +      # Infrastructure and services
+            0.1 * data_availability_bonus  # Monitoring and data availability
+        )
+        
+        return min(1.0, air_quality_capacity)
