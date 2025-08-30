@@ -70,6 +70,8 @@ class ClimateRiskMetrics:
     
     # Composite scores
     overall_risk_score: float = 0.0
+    hev_score: float = 0.0  # H×E×V (original risk without adaptive capacity)
+    hev_adj_score: float = 0.0  # H×E×V×(1-AC) (risk adjusted for adaptive capacity)
     adaptability_score: float = 0.0
     
     # Supporting metrics
@@ -767,47 +769,52 @@ class IPCCRiskAssessmentService:
         except:
             return 0.5
     
-    def _calculate_water_system_capacity(self, sanitation_indicators: Dict[str, Any]) -> float:
-        """Calculate water system adaptive capacity from sanitation indicators"""
-        try:
-            # Extract water source distribution
-            water_sources = sanitation_indicators.get('water_source_distribution', {})
-            
-            centralized = water_sources.get('centralized', 0)
-            local = water_sources.get('local', 0)
-            carried = water_sources.get('carried', 0)
-            none = water_sources.get('none', 0)
-            
-            total = centralized + local + carried + none
-            if total == 0:
-                return 0.4  # Default for missing data
+    def _calculate_water_system_capacity(self, city: str, sanitation_indicators: Dict[str, Any] = None) -> float:
+        """Calculate water system adaptive capacity from sanitation indicators
+        
+        FIX: Now uses city-specific GDP-based calculation instead of constant 0.4
+        """
+        if sanitation_indicators:
+            try:
+                # Extract water source distribution
+                water_sources = sanitation_indicators.get('water_source_distribution', {})
+                
+                centralized = water_sources.get('centralized', 0)
+                local = water_sources.get('local', 0)
+                carried = water_sources.get('carried', 0)
+                none = water_sources.get('none', 0)
+                
+                total = centralized + local + carried + none
+                if total > 0:
+                    # Capacity weights: centralized (1.0), local (0.7), carried (0.3), none (0.0)
+                    capacity = (
+                        centralized * 1.0 +
+                        local * 0.7 +
+                        carried * 0.3 +
+                        none * 0.0
+                    ) / total
+                    
+                    return min(1.0, max(0.0, capacity))
+            except:
+                pass
+        
+        # Calculate based on GDP as proxy for water infrastructure capacity
+        population_data = self.data['population_data'].get(city)
+        if population_data and hasattr(population_data, 'gdp_per_capita_usd'):
+            gdp = population_data.gdp_per_capita_usd
+            if gdp >= 3000:
+                return 0.8
+            elif gdp >= 1500:
+                return 0.6
+            elif gdp >= 1000:
                 return 0.5
-            
-            # Capacity weights: centralized (1.0), local (0.7), carried (0.3), none (0.0)
-            capacity = (
-                centralized * 1.0 +
-                local * 0.7 +
-                carried * 0.3 +
-                none * 0.0
-            ) / total
-            
-            return min(1.0, max(0.0, capacity))
-        except:
-            # Calculate based on GDP as proxy for infrastructure
-            population_data = self.data['population_data'].get('city', {})
-            if hasattr(population_data, 'gdp_per_capita_usd'):
-                gdp = population_data.gdp_per_capita_usd
-                if gdp >= 3000:
-                    return 0.8
-                elif gdp >= 1500:
-                    return 0.6
-                elif gdp >= 1000:
-                    return 0.5
-                elif gdp >= 700:
-                    return 0.4
-                else:
-                    return 0.3
-            return 0.4
+            elif gdp >= 700:
+                return 0.4
+            else:
+                return 0.3
+        
+        # Final fallback - should rarely be used
+        return 0.4
     
     def _load_social_sector_data(self, city: str) -> Optional[Dict[str, Any]]:
         """Load social sector data for a city"""
@@ -842,7 +849,7 @@ class IPCCRiskAssessmentService:
         
         # Calculate social sector adaptive capacity components
         metrics.social_infrastructure_capacity = self._calculate_social_infrastructure_capacity(per_capita)
-        metrics.water_system_capacity = self._calculate_water_system_capacity(sanitation_indicators)
+        metrics.water_system_capacity = self._calculate_water_system_capacity(city, sanitation_indicators)
         
         # Recalculate composite scores with social sector components
         metrics.vulnerability_score = (
@@ -897,7 +904,18 @@ class IPCCRiskAssessmentService:
             #return min(1.0, 0.4 * metrics.hazard_score + 0.3 * metrics.exposure_score + 0.3 * metrics.vulnerability_score)
         
         # Standard multiplicative formula when all data is available
-        overall_risk = metrics.hazard_score * metrics.exposure_score * metrics.vulnerability_score
+        # Calculate both HEV (original) and HEV_adj (with adaptive capacity)
+        hev_score = metrics.hazard_score * metrics.exposure_score * metrics.vulnerability_score
+        
+        # Risk reduction through adaptive capacity: Risk_adjusted = HEV * (1 - AC)
+        hev_adj_score = hev_score * (1.0 - metrics.adaptive_capacity_score)
+        
+        # Store both scores in metrics for reporting
+        metrics.hev_score = min(1.0, max(0.0, hev_score))
+        metrics.hev_adj_score = min(1.0, max(0.0, hev_adj_score))
+        
+        # Return the adjusted risk as the primary risk score
+        overall_risk = hev_adj_score
         return min(1.0, max(0.0, overall_risk))
 
     
@@ -1014,26 +1032,88 @@ class IPCCRiskAssessmentService:
         if not population_data:
             return metrics
         
-        # Population exposure (E_pop)
-        metrics.population_exposure = self.data_loader.pct_norm(
-            self.data['cache']['population'], 
-            population_data.population_2024
-        )
+        # Population exposure (E_pop) - exposed population
+        # Use built area fraction as proxy for exposure (people in developed areas)
+        # For now, use population-based estimates since LULC data may not be available
+        if population_data.population_2024 > 1000000:  # Large cities
+            built_area_fraction = 0.7
+        elif population_data.population_2024 > 300000:  # Medium cities  
+            built_area_fraction = 0.5
+        else:  # Small cities
+            built_area_fraction = 0.3
+            
+        exposed_population = population_data.population_2024 * built_area_fraction
         
-        # GDP exposure (E_gdp) - composition-weighted City GDP
-        city_gdp = population_data.population_2024 * population_data.gdp_per_capita_usd
-        if 'city_gdp' not in self.data['cache']:
-            # Initialize city_gdp cache if not present
-            city_gdps = []
+        # Initialize exposed population cache if needed
+        if 'exposed_population' not in self.data['cache']:
+            exposed_pops = []
+            for pop_data in self.data['population_data'].values():
+                if pop_data.population_2024:
+                    if pop_data.population_2024 > 1000000:
+                        city_built_fraction = 0.7
+                    elif pop_data.population_2024 > 300000:
+                        city_built_fraction = 0.5
+                    else:
+                        city_built_fraction = 0.3
+                    exposed_pops.append(pop_data.population_2024 * city_built_fraction)
+            self.data['cache']['exposed_population'] = exposed_pops
+
+        # FIX: Use safe_percentile_norm instead of winsorized_pct_norm to prevent zeros
+        all_exposed_pops = self.data['cache']['exposed_population']
+        safe_normalized_pop = self.data_loader.safe_percentile_norm(all_exposed_pops, floor=0.05, ceiling=0.95)
+        
+        # Get the index for current city by matching population data
+        pop_city_index = -1
+        current_pop_data = self.data['population_data'].get(city)
+        if current_pop_data:
+            for i, pop_data in enumerate(self.data['population_data'].values()):
+                if pop_data.population_2024 == current_pop_data.population_2024:
+                    pop_city_index = i
+                    break
+        
+        if pop_city_index >= 0 and pop_city_index < len(safe_normalized_pop):
+            metrics.population_exposure = safe_normalized_pop[pop_city_index]
+        else:
+            metrics.population_exposure = 0.05  # Floor instead of 0.0        # GDP exposure (E_gdp) - total GDP at risk (population × GDP_per_capita × exposed_share)
+        # FIX: Now uses exposed GDP instead of total GDP
+        exposed_gdp = population_data.population_2024 * population_data.gdp_per_capita_usd * built_area_fraction
+        
+        if 'exposed_gdp' not in self.data['cache']:
+            # Initialize exposed_gdp cache if not present
+            exposed_gdps = []
             for pop_data in self.data['population_data'].values():
                 if pop_data.population_2024 and pop_data.gdp_per_capita_usd:
-                    city_gdps.append(pop_data.population_2024 * pop_data.gdp_per_capita_usd)
-            self.data['cache']['city_gdp'] = city_gdps
+                    # Get built area fraction for this city based on population
+                    if pop_data.population_2024 > 1000000:  # Large cities
+                        city_built_fraction = 0.7
+                    elif pop_data.population_2024 > 300000:  # Medium cities  
+                        city_built_fraction = 0.5
+                    else:  # Small cities
+                        city_built_fraction = 0.3
+                    
+                    exposed_gdp_city = pop_data.population_2024 * pop_data.gdp_per_capita_usd * city_built_fraction
+                    exposed_gdps.append(exposed_gdp_city)
+            self.data['cache']['exposed_gdp'] = exposed_gdps
         
-        metrics.gdp_exposure = self.data_loader.pct_norm(
-            self.data['cache']['city_gdp'], 
-            city_gdp
-        )
+        # FIX: Use safe_percentile_norm instead of winsorized_pct_norm
+        # This prevents artificial zeros and ensures proper ranking
+        all_exposed_gdps = self.data['cache']['exposed_gdp']
+        safe_normalized = self.data_loader.safe_percentile_norm(all_exposed_gdps, floor=0.05, ceiling=0.95)
+        
+        # Get the index for current city by matching population data
+        city_index = -1
+        current_pop_data = self.data['population_data'].get(city)
+        if current_pop_data:
+            for i, pop_data in enumerate(self.data['population_data'].values()):
+                if (pop_data.population_2024 == current_pop_data.population_2024 and 
+                    pop_data.gdp_per_capita_usd == current_pop_data.gdp_per_capita_usd):
+                    city_index = i
+                    break
+        
+        if city_index >= 0 and city_index < len(safe_normalized):
+            metrics.gdp_exposure = safe_normalized[city_index]
+        else:
+            metrics.gdp_exposure = 0.5  # Fallback
         
         # VIIRS exposure (E_viirs) - urban radiance
         metrics.viirs_exposure = self._calculate_viirs_exposure(city)
@@ -1123,7 +1203,7 @@ class IPCCRiskAssessmentService:
             return metrics
         
         # GDP per capita adaptive capacity (AC_gdp_pc)
-        metrics.gdp_adaptive_capacity = self.data_loader.pct_norm(
+        metrics.gdp_adaptive_capacity = self.data_loader.winsorized_pct_norm(
             self.data['cache']['gdp'], 
             population_data.gdp_per_capita_usd
         )
@@ -1131,8 +1211,8 @@ class IPCCRiskAssessmentService:
         # Greenspace adaptive capacity (AC_greenspace)
         metrics.greenspace_adaptive_capacity = self._calculate_greenspace_adaptive_capacity(city)
         
-        # Services adaptive capacity (AC_services) - VIIRS as proxy
-        metrics.services_adaptive_capacity = self._calculate_viirs_exposure(city)
+        # Services adaptive capacity (AC_services) - Based on actual service infrastructure
+        metrics.services_adaptive_capacity = self._calculate_services_adaptive_capacity(city)
         
         # Air quality management adaptive capacity (AC_air_quality_management)
         metrics.air_quality_adaptive_capacity = self._calculate_air_quality_adaptive_capacity(city)
@@ -1158,7 +1238,8 @@ class IPCCRiskAssessmentService:
         )
         
         # Urban infrastructure capacity (cities with better services have better air quality monitoring)
-        services_capacity = self._calculate_viirs_exposure(city)
+        # FIX: Calculate actual services capacity instead of aliasing VIIRS exposure
+        services_capacity = self._calculate_services_adaptive_capacity(city)
         
         # Air quality data availability bonus
         data_availability_bonus = 0.2 if city in self.data.get('air_quality_data', {}) else 0.0
@@ -1172,6 +1253,47 @@ class IPCCRiskAssessmentService:
         )
         
         return min(1.0, air_quality_capacity)
+    
+    def _calculate_services_adaptive_capacity(self, city: str) -> float:
+        """Calculate services adaptive capacity based on actual service infrastructure
+        
+        FIX: This was previously aliased to VIIRS exposure. Now calculates based on:
+        - Healthcare infrastructure density
+        - Educational infrastructure density  
+        - Economic capacity for service provision
+        - Population density (service accessibility)
+        """
+        
+        # Get basic city data
+        population_data = self.data['population_data'].get(city)
+        if not population_data:
+            return 0.0
+        
+        # Healthcare infrastructure capacity
+        healthcare_capacity = 1.0 - self.data.get('social_sector_data', {}).get(city, {}).get('healthcare_access_vulnerability', 0.5)
+        
+        # Educational infrastructure capacity
+        education_capacity = 1.0 - self.data.get('social_sector_data', {}).get(city, {}).get('education_access_vulnerability', 0.5)
+        
+        # Economic capacity for service provision
+        economic_capacity = self.data_loader.pct_norm(
+            self.data['cache']['gdp'], 
+            population_data.gdp_per_capita_usd
+        )
+        
+        # Population density factor (higher density = better service accessibility)
+        population_density = population_data.density_per_km2 if population_data.density_per_km2 else 0
+        density_capacity = min(1.0, population_density / 1000)  # Normalize to reasonable urban density
+        
+        # Combined services capacity
+        services_capacity = (
+            0.3 * healthcare_capacity +    # Healthcare infrastructure
+            0.3 * education_capacity +     # Educational infrastructure  
+            0.25 * economic_capacity +     # Economic resources for services
+            0.15 * density_capacity        # Population density for accessibility
+        )
+        
+        return min(1.0, services_capacity)
     
     def _populate_supporting_metrics(self, city: str, metrics: ClimateRiskMetrics):
         """Populate supporting metrics for detailed analysis"""
@@ -1315,17 +1437,55 @@ class IPCCRiskAssessmentService:
     
     # Individual hazard calculation methods
     def _calculate_heat_hazard(self, city: str) -> float:
-        """Calculate heat hazard with proper fallback handling"""
-        hazard_score = self.calculate_hazard_score(city)
+        """Calculate heat hazard with relative temperature scaling (FIXED)"""
         
-        if hazard_score == 0.0:
-            # Use regional climate baseline for Central Asia instead of 0.0
-            print(f"Warning: No temperature data for {city}, using regional baseline")
-            return 0.4  # Moderate baseline for arid continental climate
+        # Get temperature data for all cities to calculate relative scaling
+        all_temp_values = []
+        all_city_names = []
         
-        return hazard_score
-
-    
+        for city_name in list(self.data['population_data'].keys()):
+            temp_data = self.data['temperature_data'].get(city_name, {})
+            if temp_data:
+                # Use multiple temperature indicators
+                current_temp = temp_data.get('current_suhi_intensity', 0)
+                temp_trend = temp_data.get('temperature_trend', 0) * 10  # Scale trend
+                summer_max = temp_data.get('summer_max_temp', current_temp + 30)  # Estimate if missing
+                
+                # Composite heat indicator
+                heat_indicator = (current_temp * 0.5 + 
+                                temp_trend * 0.3 + 
+                                (summer_max - 35) * 0.2)  # 35°C baseline
+                
+                all_temp_values.append(heat_indicator)
+                all_city_names.append(city_name)
+            else:
+                all_temp_values.append(0)
+                all_city_names.append(city_name)
+        
+        # Get current city's value
+        current_temp_data = self.data['temperature_data'].get(city, {})
+        if current_temp_data:
+            current_suhi = current_temp_data.get('current_suhi_intensity', 0)
+            current_trend = current_temp_data.get('temperature_trend', 0) * 10
+            current_summer = current_temp_data.get('summer_max_temp', current_suhi + 30)
+            
+            current_heat = (current_suhi * 0.5 + 
+                          current_trend * 0.3 + 
+                          (current_summer - 35) * 0.2)
+        else:
+            current_heat = 0
+        
+        # Apply safe percentile normalization to prevent max-pegging
+        normalized_heat = self.data_loader.safe_percentile_norm(
+            all_temp_values, floor=0.05, ceiling=0.95
+        )
+        
+        # Return value for current city
+        if city in all_city_names:
+            city_index = all_city_names.index(city)
+            return normalized_heat[city_index]
+        else:
+            return 0.5
     def _calculate_dry_hazard(self, city: str) -> float:
         """Calculate dry/ecological stress hazard (H_dry)"""
         # Do NOT fall back to climatological estimators; use only observed LULC/vegetation data
@@ -1454,61 +1614,154 @@ class IPCCRiskAssessmentService:
         return min(1.0, dust_score)
     
     def _calculate_pluvial_hazard(self, city: str) -> float:
-        """Calculate pluvial proxy hazard (H_pluv)"""
-        # Do NOT fall back to climatological estimators; use only observed LULC data
-        if not self.data['lulc_data']:
-            print(f"Warning: LULC data missing for {city} - pluvial hazard set to 0.0")
-            return 0.0
+        """Calculate pluvial hazard with proper precipitation weighting (FIXED)"""
         
-        # Based on built-up share and edge density (imperviousness/flow concentration)
-        pluvial_score = 0.0
+        # Get precipitation and urban data for all cities
+        all_pluvial_values = []
+        all_city_names = []
         
-        # Initialize cache for built percentages if needed
-        if 'built_pct' not in self.data['cache']:
-            built_pcts = []
+        for city_name in list(self.data['population_data'].keys()):
+            temp_data = self.data['temperature_data'].get(city_name, {})  # Contains precipitation
+            lulc_data = None
             for lulc_city in self.data['lulc_data']:
-                areas = lulc_city.get('areas_m2', {})
-                if areas:
-                    years = sorted([int(y) for y in areas.keys()])
-                    if years:
-                        latest_year = str(years[-1])
-                        built_pct = areas[latest_year].get('Built_Area', {}).get('percentage', 0)
-                        built_pcts.append(built_pct)
-            self.data['cache']['built_pct'] = built_pcts
+                if lulc_city.get('city') == city_name:
+                    lulc_data = lulc_city
+                    break
+            if lulc_data is None:
+                lulc_data = {}
+            
+            # Precipitation component (70% weight)
+            if temp_data and 'precipitation_trend' in temp_data:
+                # Use absolute precipitation trend as proxy for extreme events
+                precip_intensity = abs(temp_data['precipitation_trend']) * 100
+                # Cap at reasonable maximum
+                precip_component = min(precip_intensity, 2.0)
+            else:
+                precip_component = 0.5  # Neutral default
+            
+            # Imperviousness component (30% weight) 
+            if lulc_data and 'built_area_percentage' in lulc_data:
+                built_pct = lulc_data['built_area_percentage'] / 100.0
+                # Imperviousness increases flood risk but is secondary to precipitation
+                imperv_component = min(built_pct * 1.5, 1.0)
+            else:
+                imperv_component = 0.3
+            
+            # Combined pluvial risk with proper weighting
+            pluvial_risk = (0.7 * precip_component + 0.3 * imperv_component)
+            
+            all_pluvial_values.append(pluvial_risk)
+            all_city_names.append(city_name)
         
-        # Built-up percentage from LULC
+        # Calculate current city's value
+        current_temp = self.data['temperature_data'].get(city, {})
+        current_lulc = None
         for lulc_city in self.data['lulc_data']:
             if lulc_city.get('city') == city:
-                areas = lulc_city.get('areas_m2', {})
-                if areas:
-                    years = sorted([int(y) for y in areas.keys()])
-                    if years:
-                        latest_year = str(years[-1])
-                        built_pct = areas[latest_year].get('Built_Area', {}).get('percentage', 0)
-                        pluvial_score = self.data_loader.pct_norm(
-                            self.data['cache']['built_pct'], built_pct
-                        )
+                current_lulc = lulc_city
                 break
+        if current_lulc is None:
+            current_lulc = {}
         
-        return pluvial_score
+        if current_temp and 'precipitation_trend' in current_temp:
+            current_precip = abs(current_temp['precipitation_trend']) * 100
+            current_precip = min(current_precip, 2.0)
+        else:
+            current_precip = 0.5
+        
+        if current_lulc and 'built_area_percentage' in current_lulc:
+            current_built = current_lulc['built_area_percentage'] / 100.0
+            current_imperv = min(current_built * 1.5, 1.0)
+        else:
+            current_imperv = 0.3
+        
+        current_pluvial = (0.7 * current_precip + 0.3 * current_imperv)
+        
+        # Apply safe percentile normalization
+        normalized_pluvial = self.data_loader.safe_percentile_norm(
+            all_pluvial_values, floor=0.05, ceiling=0.95
+        )
+        
+        # Return value for current city
+        if city in all_city_names:
+            city_index = all_city_names.index(city)
+            return normalized_pluvial[city_index]
+        else:
+            return 0.5
     
     def _calculate_viirs_exposure(self, city: str) -> float:
-        """Calculate VIIRS exposure component"""
-        viirs_score = 0.0
-        for nl_city in self.data['nightlights_data']:
-            if nl_city.get('city') == city:
-                years_data = nl_city.get('years', {})
+        """Calculate VIIRS exposure with improved scaling (FIXED)"""
+        
+        # Collect nightlight data for all cities
+        all_viirs_values = []
+        all_city_names = []
+        
+        for city_name in list(self.data['population_data'].keys()):
+            nightlight_data = None
+            for nightlight_city in self.data['nightlights_data']:
+                if nightlight_city.get('city') == city_name:
+                    nightlight_data = nightlight_city
+                    break
+            if nightlight_data is None:
+                nightlight_data = {}
+            
+            if nightlight_data and 'years' in nightlight_data:
+                years_data = nightlight_data['years']
                 if years_data:
-                    years = sorted([int(y) for y in years_data.keys()])
-                    if years:
-                        latest_year = str(years[-1])
-                        urban_nl = years_data[latest_year].get('stats', {}).get('urban_core', {}).get('mean', 0)
-                        viirs_score = self.data_loader.pct_norm(
-                            self.data['cache']['nightlights'], urban_nl
-                        )
+                    # Get latest year data
+                    latest_year = max(years_data.keys())
+                    year_data = years_data[latest_year]
+                    
+                    if 'stats' in year_data and 'urban_core' in year_data['stats']:
+                        viirs_value = year_data['stats']['urban_core'].get('mean', 0)
+                    else:
+                        viirs_value = 0
+                else:
+                    viirs_value = 0
+            else:
+                viirs_value = 0
+            
+            # Apply log transformation to reduce skewness
+            log_viirs = np.log(viirs_value + 1)
+            all_viirs_values.append(log_viirs)
+            all_city_names.append(city_name)
+        
+        # Get current city's value
+        current_nightlight = None
+        for nightlight_city in self.data['nightlights_data']:
+            if nightlight_city.get('city') == city:
+                current_nightlight = nightlight_city
                 break
-        return viirs_score
-    
+        if current_nightlight is None:
+            current_nightlight = {}
+        if current_nightlight and 'years' in current_nightlight:
+            years_data = current_nightlight['years']
+            if years_data:
+                latest_year = max(years_data.keys())
+                year_data = years_data[latest_year]
+                
+                if 'stats' in year_data and 'urban_core' in year_data['stats']:
+                    current_viirs = year_data['stats']['urban_core'].get('mean', 0)
+                else:
+                    current_viirs = 0
+            else:
+                current_viirs = 0
+        else:
+            current_viirs = 0
+        
+        current_log_viirs = np.log(current_viirs + 1)
+        
+        # Apply safe percentile normalization
+        normalized_viirs = self.data_loader.safe_percentile_norm(
+            all_viirs_values, floor=0.05, ceiling=0.95
+        )
+        
+        # Return value for current city
+        if city in all_city_names:
+            city_index = all_city_names.index(city)
+            return normalized_viirs[city_index]
+        else:
+            return 0.5
     def _calculate_veg_access_vulnerability(self, city: str) -> float:
         """Calculate vegetation access vulnerability"""
         veg_vuln = 0.0
@@ -1545,37 +1798,77 @@ class IPCCRiskAssessmentService:
         return frag_vuln
     
     def _calculate_bio_trend_vulnerability(self, city: str) -> float:
-        """Calculate biomass/vegetation trend vulnerability"""
-        bio_vuln = 0.0
+        """Calculate bio trend vulnerability with missing data imputation (FIXED)"""
         
-        # Check vegetation trends from LULC data
-        for lulc_city in self.data['lulc_data']:
-            if lulc_city.get('city') == city:
-                areas = lulc_city.get('areas_m2', {})
-                if areas:
+        # Collect vegetation trend data for all cities
+        all_bio_trends = []
+        all_city_names = []
+        raw_values = []
+        
+        for city_name in list(self.data['population_data'].keys()):
+            # Find LULC data for this city to calculate vegetation trend
+            lulc_city_data = None
+            for lulc_city in self.data['lulc_data']:
+                if lulc_city.get('city') == city_name:
+                    lulc_city_data = lulc_city
+                    break
+            
+            if lulc_city_data:
+                areas = lulc_city_data.get('areas_m2', {})
+                if areas and len(areas) >= 2:  # Need at least 2 years for trend
                     years = sorted([int(y) for y in areas.keys()])
-                    if len(years) >= 3:
-                        # Calculate vegetation trend over time
-                        veg_percentages = []
-                        for year in years:
-                            year_data = areas[str(year)]
-                            total_veg = (year_data.get('Trees', {}).get('percentage', 0) + 
-                                       
-                                       year_data.get('Crops', {}).get('percentage', 0) +
-                                       year_data.get('Grass', {}).get('percentage', 0))
-                            veg_percentages.append(total_veg)
-                        
+                    
+                    # Calculate vegetation percentages over time
+                    veg_percentages = []
+                    for year in years:
+                        year_data = areas[str(year)]
+                        total_veg = (year_data.get('Trees', {}).get('percentage', 0) + 
+                                   year_data.get('Crops', {}).get('percentage', 0) +
+                                   year_data.get('Grass', {}).get('percentage', 0))
+                        veg_percentages.append(total_veg)
+                    
+                    # Calculate trend
+                    if len(veg_percentages) >= 2:
                         try:
+                            import numpy as np
                             veg_trend = np.polyfit(years, veg_percentages, 1)[0]
-                            # Negative trend = higher vulnerability
-                            if veg_trend < 0:
-                                bio_vuln = min(1.0, abs(veg_trend) * 2.0)  # Scale factor
+                            
+                            # Convert trend to vulnerability (negative trend = higher vulnerability)
+                            bio_vulnerability = max(0, -veg_trend * 10)  # Scale negative trend to positive vulnerability
+                            raw_values.append(bio_vulnerability)
                         except:
-                            pass
-                break
+                            raw_values.append(None)  # Mark as missing
+                    else:
+                        raw_values.append(None)  # Mark as missing
+                else:
+                    raw_values.append(None)  # Mark as missing
+            else:
+                raw_values.append(None)  # Mark as missing
+            
+            all_city_names.append(city_name)
         
-        return bio_vuln
-    
+        # Impute missing values with median of valid values
+        valid_values = [v for v in raw_values if v is not None]
+        if valid_values:
+            median_value = np.median(valid_values)
+            print(f"[BIO_TREND] Median vegetation vulnerability: {median_value:.3f}")
+        else:
+            median_value = 0.5  # Conservative default
+        
+        # Replace None values with median
+        imputed_values = [v if v is not None else median_value for v in raw_values]
+        
+        # Apply safe percentile normalization
+        normalized_bio = self.data_loader.safe_percentile_norm(
+            imputed_values, floor=0.05, ceiling=0.95
+        )
+        
+        # Return value for current city
+        if city in all_city_names:
+            city_index = all_city_names.index(city)
+            return normalized_bio[city_index]
+        else:
+            return 0.5
     def _calculate_water_scarcity_vulnerability(self, city: str) -> float:
         """Calculate water scarcity vulnerability based on water scarcity assessment"""
         if city not in self.water_scarcity_data:

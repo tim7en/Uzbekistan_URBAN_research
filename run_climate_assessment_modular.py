@@ -40,7 +40,7 @@ class IPCCClimateRiskAssessment:
         # Generate comprehensive reports
         self.reporter.generate_comprehensive_report(self.city_risk_profiles)
         
-        print(f"\n✅ Assessment complete. Results saved to: {self.output_path}")
+        print(f"\n[OK] Assessment complete. Results saved to: {self.output_path}")
         return self.city_risk_profiles
 
 
@@ -144,7 +144,7 @@ def main():
             }
         json.dump(results_dict, f, indent=2, ensure_ascii=False)
     
-    print(f"✅ Results saved to: {output_file}")
+    print(f"[OK] Results saved to: {output_file}")
     
     return results
 

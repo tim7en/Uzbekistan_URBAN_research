@@ -500,3 +500,109 @@ class ClimateDataLoader:
             return 1 - z if invert else z
         except Exception:
             return fallback
+
+    @staticmethod
+    def winsorized_pct_norm(values, x, lo=0.1, hi=0.9, invert=False, fallback=0.5):
+        """
+        Winsorized percentile normalization to prevent max-pegging.
+        
+        FIX: Uses strict ceiling approach to ensure no city hits exactly 1.000
+        Maximum value is capped at 0.95 to prevent scale domination.
+        
+        Args:
+            values: List of values for percentile calculation
+            x: Value to normalize
+            lo: Lower percentile (default 10th percentile)
+            hi: Upper percentile (default 90th percentile) 
+            invert: Whether to invert the scale
+            fallback: Value to return on error
+        """
+        try:
+            s = pd.Series([v for v in values if v is not None and np.isfinite(v)])
+            if s.empty or x is None or not np.isfinite(x):
+                return fallback
+                
+            # Calculate winsorized bounds
+            a, b = s.quantile(lo), s.quantile(hi)
+            if a == b:
+                return fallback
+            
+            # Winsorize the value (clip to bounds)
+            x_winsorized = np.clip(x, a, b)
+            
+            # Scale to [0,0.95] to prevent max-pegging at 1.000
+            z = (x_winsorized - a) / (b - a) * 0.95
+            
+            return 0.95 - z if invert else z
+        except Exception:
+            return fallback
+
+    @staticmethod
+    def safe_percentile_norm(values, floor=0.05, ceiling=0.95):
+        """
+        Safe percentile normalization with floor/ceiling protection.
+        Prevents artificial zeros and ones that distort rankings.
+        
+        Args:
+            values: array-like of values to normalize
+            floor: minimum scaled value (default 0.05)
+            ceiling: maximum scaled value (default 0.95)
+        
+        Returns:
+            Array of normalized values in range [floor, ceiling]
+        """
+        values = np.array(values)
+        
+        # Handle NaN/inf values
+        valid_mask = np.isfinite(values)
+        if not np.any(valid_mask):
+            return np.full_like(values, (floor + ceiling) / 2)
+        
+        # Calculate percentile ranks for valid values only
+        valid_values = values[valid_mask]
+        percentile_ranks = np.zeros_like(values, dtype=float)
+        
+        # Use scipy.stats.rankdata for proper percentile ranking
+        from scipy.stats import rankdata
+        ranks = rankdata(valid_values, method='average')
+        percentile_ranks[valid_mask] = (ranks - 1) / (len(ranks) - 1) if len(ranks) > 1 else 0.5
+        
+        # Apply floor/ceiling scaling
+        scaled_values = floor + (ceiling - floor) * percentile_ranks
+        
+        # Handle NaN values with median imputation
+        if not np.all(valid_mask):
+            median_value = np.median(scaled_values[valid_mask])
+            scaled_values[~valid_mask] = median_value
+        
+        return scaled_values
+
+    @staticmethod
+    def geometric_mean_adaptive_capacity(components_dict, floor=0.05, ceiling=0.95):
+        """
+        Calculate adaptive capacity using geometric mean to prevent zero collapse.
+        
+        Args:
+            components_dict: Dictionary of adaptive capacity components
+            floor: minimum component value before geometric mean
+            ceiling: maximum component value
+        
+        Returns:
+            Geometric mean adaptive capacity score
+        """
+        # Ensure all components are above floor to prevent zero collapse
+        components = []
+        for key, value in components_dict.items():
+            # Floor individual components
+            safe_value = max(value, floor)
+            safe_value = min(safe_value, ceiling)
+            components.append(safe_value)
+        
+        # Calculate geometric mean
+        if len(components) == 0:
+            return (floor + ceiling) / 2
+        
+        geometric_mean = np.power(np.prod(components), 1.0 / len(components))
+        
+        # Ensure result is within bounds
+        return max(floor, min(ceiling, geometric_mean))
