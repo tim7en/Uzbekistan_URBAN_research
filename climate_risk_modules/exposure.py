@@ -51,68 +51,128 @@ class ExposureAssessment(BaseRiskModule):
         
     def _calculate_population_density(self, city: str) -> float:
         """Calculate population density exposure score"""
-        if not self.data_loader:
+        if not self.data:
             return 0.0
             
         try:
-            spatial_data = self.data_loader.get_spatial_data(city)
-            if not spatial_data or 'population_density' not in spatial_data:
+            pop_data = self.get_population_data(city)
+            if not pop_data:
                 return 0.0
                 
-            pop_density = spatial_data['population_density']
-            # Normalize population density (typical urban range: 1000-20000 people/km²)
-            return self.normalize_score(pop_density, min_val=1000.0, max_val=20000.0)
+            density = pop_data.density_per_km2
+            if density and density > 0:
+                # Normalize population density (typical urban range: 1000-20000 people/km²)
+                return self.normalize_score(density, min_val=1000.0, max_val=20000.0)
+            
+            return 0.0
             
         except Exception:
             return 0.0
             
     def _calculate_built_up_area(self, city: str) -> float:
         """Calculate built-up area exposure score"""
-        if not self.data_loader:
+        if not self.data:
             return 0.0
             
         try:
-            lulc_data = self.data_loader.get_lulc_data(city)
-            if not lulc_data or 'built_up_percentage' not in lulc_data:
-                return 0.0
-                
-            built_up_pct = lulc_data['built_up_percentage']
-            # Normalize built-up percentage (0-100%)
-            return self.normalize_score(built_up_pct, min_val=0.0, max_val=100.0)
+            lulc_data = self.get_lulc_data(city)
+            if lulc_data:
+                # Try to extract built-up percentage from LULC data
+                areas = lulc_data.get('areas_m2', {})
+                if areas:
+                    # Get latest year's data
+                    years = sorted([y for y in areas.keys() if y.isdigit()])
+                    if years:
+                        latest_year = years[-1]
+                        year_data = areas[latest_year]
+                        built_pct = year_data.get('Built_Area', {}).get('percentage', 0)
+                        if built_pct > 0:
+                            return self.normalize_score(built_pct, min_val=0.0, max_val=100.0)
+            
+            # Fallback: Estimate based on population density
+            pop_data = self.get_population_data(city)
+            if pop_data and pop_data.density_per_km2:
+                density = pop_data.density_per_km2
+                # Higher density cities typically have more built-up area
+                # Rough estimate: 1000 people/km² ≈ 20% built-up, 10000 people/km² ≈ 80% built-up
+                estimated_built_pct = min(80.0, max(10.0, (density / 1000) * 20))
+                return self.normalize_score(estimated_built_pct, min_val=0.0, max_val=100.0)
+            
+            return 0.0
             
         except Exception:
             return 0.0
             
     def _calculate_vegetation_accessibility(self, city: str) -> float:
         """Calculate vegetation accessibility score (inverse of exposure)"""
-        if not self.data_loader:
+        if not self.data:
             return 0.0
             
         try:
-            veg_data = self.data_loader.get_vegetation_data(city)
-            if not veg_data or 'accessibility_score' not in veg_data:
-                return 0.0
-                
-            accessibility = veg_data['accessibility_score']
-            # Higher accessibility = lower exposure, so invert the score
-            return 1.0 - self.normalize_score(accessibility, min_val=0.0, max_val=1.0)
+            veg_data = self.get_vegetation_data(city)
+            if veg_data:
+                accessibility = veg_data.get('accessibility_score', 0.0)
+                # Higher accessibility = lower exposure, so invert the score
+                return 1.0 - accessibility
+            
+            # Fallback: Estimate based on city size and type
+            pop_data = self.get_population_data(city)
+            if pop_data:
+                population = pop_data.population_2024
+                if population:
+                    # Larger cities typically have lower vegetation accessibility
+                    # Small cities (<200k): high accessibility (low exposure)
+                    # Large cities (>1M): low accessibility (high exposure)
+                    if population < 200000:
+                        accessibility_est = 0.8
+                    elif population < 500000:
+                        accessibility_est = 0.6
+                    elif population < 1000000:
+                        accessibility_est = 0.4
+                    else:
+                        accessibility_est = 0.2
+                    
+                    # Return inverse for exposure
+                    return 1.0 - accessibility_est
+            
+            return 0.5  # Default moderate exposure
             
         except Exception:
             return 0.0
             
     def _calculate_air_quality_exposure(self, city: str) -> float:
         """Calculate air quality exposure score"""
-        if not self.data_loader:
+        if not self.data:
             return 0.0
             
         try:
-            air_data = self.data_loader.get_air_quality_data(city)
-            if not air_data or 'pm2_5_avg' not in air_data:
-                return 0.0
-                
-            pm25 = air_data['pm2_5_avg']
-            # Normalize PM2.5 levels (WHO guideline: 5, typical urban range: 5-100 µg/m³)
-            return self.normalize_score(pm25, min_val=5.0, max_val=100.0)
+            air_data = self.get_air_quality_data(city)
+            if air_data and 'pm2_5_avg' in air_data:
+                pm25 = air_data['pm2_5_avg']
+                # Normalize PM2.5 levels (WHO guideline: 5, typical urban range: 5-100 µg/m³)
+                return self.normalize_score(pm25, min_val=5.0, max_val=100.0)
+            
+            # Fallback: Estimate based on population density and industrial activity
+            pop_data = self.get_population_data(city)
+            if pop_data:
+                density = pop_data.density_per_km2
+                if density and density > 0:
+                    # Higher density typically correlates with worse air quality
+                    # Additional factors for specific cities known for industry
+                    base_exposure = self.normalize_score(density, min_val=1000.0, max_val=15000.0)
+                    
+                    # Adjust for known industrial cities
+                    industrial_cities = {
+                        'Navoiy': 1.3,    # Mining and processing
+                        'Tashkent': 1.2,  # Capital with heavy traffic
+                        'Nukus': 1.1,    # Aral Sea environmental issues
+                        'Termez': 1.1,   # Border trade and activity
+                    }
+                    
+                    multiplier = industrial_cities.get(city, 1.0)
+                    return min(1.0, base_exposure * multiplier)
+            
+            return 0.3  # Default moderate exposure
             
         except Exception:
             return 0.0

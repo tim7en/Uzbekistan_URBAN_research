@@ -53,6 +53,12 @@ class BaseRiskModule(ABC):
         self.data_loader = data_loader
         self.cache = {}
         
+        # Load all data if data_loader is provided
+        if self.data_loader:
+            self.data = self.data_loader.load_all_data()
+        else:
+            self.data = {}
+        
     @abstractmethod
     def calculate(self, city: str, **kwargs) -> Dict[str, float]:
         """
@@ -79,6 +85,63 @@ class BaseRiskModule(ABC):
         """Set cached result"""
         self.cache[key] = value
         
+    def get_population_data(self, city: str):
+        """Get population data for city"""
+        return self.data.get('population_data', {}).get(city)
+        
+    def get_temperature_data(self, city: str):
+        """Get temperature data for city"""
+        return self.data.get('temperature_data', {}).get(city)
+        
+    def get_suhi_data(self, city: str):
+        """Get SUHI data for city"""
+        return self.data.get('suhi_data', {}).get(city)
+        
+    def get_lulc_data(self, city: str):
+        """Get LULC data for city"""
+        lulc_list = self.data.get('lulc_data', [])
+        for lulc_item in lulc_list:
+            if lulc_item.get('city') == city:
+                return lulc_item
+        return None
+        
+    def get_spatial_data(self, city: str):
+        """Get spatial data for city"""
+        spatial_data = self.data.get('spatial_data', {})
+        return spatial_data.get('per_year', {}).get(city)
+        
+    def get_air_quality_data(self, city: str):
+        """Get air quality data for city"""
+        return self.data.get('air_quality_data', {}).get(city)
+        
+    def get_nightlight_data(self, city: str):
+        """Get nightlight data for city"""
+        nightlight_list = self.data.get('nightlights_data', [])
+        for nl_item in nightlight_list:
+            if nl_item.get('city') == city:
+                return nl_item
+        return None
+        
+    def get_vegetation_data(self, city: str):
+        """Get vegetation data for city"""
+        spatial_data = self.get_spatial_data(city)
+        if spatial_data:
+            # Get latest year's vegetation accessibility data
+            years = sorted([int(y) for y in spatial_data.keys()])
+            if years:
+                latest_year = str(years[-1])
+                year_data = spatial_data[latest_year]
+                veg_accessibility = year_data.get('vegetation_accessibility', {})
+                city_veg = veg_accessibility.get('city', {})
+                
+                if city_veg:
+                    mean_distance = city_veg.get('mean', 1000)  # meters
+                    # Convert to accessibility score (closer = better)
+                    max_distance = 1000  # 1km threshold
+                    accessibility_score = max(0.0, 1.0 - (mean_distance / max_distance))
+                    return {'accessibility_score': accessibility_score}
+        return None
+        
     def validate_data_availability(self, city: str, required_data: list) -> bool:
         """
         Validate that required data is available for the city
@@ -90,12 +153,23 @@ class BaseRiskModule(ABC):
         Returns:
             True if all required data is available
         """
-        if not self.data_loader:
+        if not self.data:
             return False
             
         for data_type in required_data:
-            if not hasattr(self.data_loader, f'get_{data_type}'):
-                return False
+            if data_type == 'population_data':
+                if not self.get_population_data(city):
+                    return False
+            elif data_type == 'temperature_data':
+                if not self.get_temperature_data(city):
+                    return False
+            elif data_type == 'lulc_data':
+                if not self.get_lulc_data(city):
+                    return False
+            elif data_type == 'spatial_data':
+                if not self.get_spatial_data(city):
+                    return False
+            # Add other data type checks as needed
                 
         return True
         
