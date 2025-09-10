@@ -1,0 +1,347 @@
+{
+  "city": "Andijan",
+  "years_analyzed": [
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024"
+  ],
+  "data": {
+    "2017": {
+      "city": "Andijan",
+      "year": 2017,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 42,
+        "mean_patch_area_m2": 665714.2857142857,
+        "max_patch_area_m2": 7360000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 27960000
+      },
+      "built_patches": {
+        "patch_count": 78,
+        "mean_patch_area_m2": 1125128.2051282052,
+        "max_patch_area_m2": 21680000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 87760000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 903.4944977475197,
+          "stdDev": 1004.7416790430353,
+          "min": 100,
+          "max": 4788.527957525152
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 890.7597726169406,
+          "stdDev": 1000.8051511497569
+        }
+      },
+      "edge_density_m_per_km2": 2589.574588827215,
+      "edge_metrics": {
+        "edge_pixels": 11575,
+        "edge_length_m": 1157500,
+        "region_area_km2": 446.98461476802527
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2018": {
+      "city": "Andijan",
+      "year": 2018,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 50,
+        "mean_patch_area_m2": 627200.0,
+        "max_patch_area_m2": 5960000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 31360000
+      },
+      "built_patches": {
+        "patch_count": 77,
+        "mean_patch_area_m2": 1087272.7272727273,
+        "max_patch_area_m2": 22040000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 83720000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 957.9022553909007,
+          "stdDev": 1079.1867707515516,
+          "min": 100,
+          "max": 4904.079934095692
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 945.0457362645981,
+          "stdDev": 1075.1596339578052
+        }
+      },
+      "edge_density_m_per_km2": 2642.820269357744,
+      "edge_metrics": {
+        "edge_pixels": 11813,
+        "edge_length_m": 1181300,
+        "region_area_km2": 446.98461476802527
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2019": {
+      "city": "Andijan",
+      "year": 2019,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 47,
+        "mean_patch_area_m2": 628085.1063829787,
+        "max_patch_area_m2": 5960000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 29520000
+      },
+      "built_patches": {
+        "patch_count": 78,
+        "mean_patch_area_m2": 1099487.1794871795,
+        "max_patch_area_m2": 22320000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 85760000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 921.994893377932,
+          "stdDev": 1017.0812909615887,
+          "min": 100,
+          "max": 4438.468204234429
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 910.2330983141686,
+          "stdDev": 1013.6647363752556
+        }
+      },
+      "edge_density_m_per_km2": 2650.8742378413535,
+      "edge_metrics": {
+        "edge_pixels": 11849,
+        "edge_length_m": 1184900,
+        "region_area_km2": 446.98461476802527
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2020": {
+      "city": "Andijan",
+      "year": 2020,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 52,
+        "mean_patch_area_m2": 610000.0,
+        "max_patch_area_m2": 5960000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 31720000
+      },
+      "built_patches": {
+        "patch_count": 77,
+        "mean_patch_area_m2": 1119480.5194805195,
+        "max_patch_area_m2": 22680000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 86200000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 968.1434298816548,
+          "stdDev": 1090.967756595314,
+          "min": 100,
+          "max": 5032.891812864647
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 956.2405011312278,
+          "stdDev": 1087.273575221236
+        }
+      },
+      "edge_density_m_per_km2": 2670.1142736633096,
+      "edge_metrics": {
+        "edge_pixels": 11935,
+        "edge_length_m": 1193500,
+        "region_area_km2": 446.98461476802527
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2021": {
+      "city": "Andijan",
+      "year": 2021,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 57,
+        "mean_patch_area_m2": 565614.0350877193,
+        "max_patch_area_m2": 5760000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 32240000
+      },
+      "built_patches": {
+        "patch_count": 73,
+        "mean_patch_area_m2": 688219.1780821917,
+        "max_patch_area_m2": 8040000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 50240000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 966.8212670891128,
+          "stdDev": 1091.9099302443938,
+          "min": 100,
+          "max": 5044.799302251776
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 956.3125454270468,
+          "stdDev": 1088.5520754642444
+        }
+      },
+      "edge_density_m_per_km2": 2701.43526221068,
+      "edge_metrics": {
+        "edge_pixels": 12075,
+        "edge_length_m": 1207500,
+        "region_area_km2": 446.98461476802527
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2022": {
+      "city": "Andijan",
+      "year": 2022,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 63,
+        "mean_patch_area_m2": 516825.3968253968,
+        "max_patch_area_m2": 5720000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 32560000
+      },
+      "built_patches": {
+        "patch_count": 85,
+        "mean_patch_area_m2": 712470.5882352941,
+        "max_patch_area_m2": 8680000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 60560000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 952.6006743593721,
+          "stdDev": 1082.257206208452,
+          "min": 100,
+          "max": 5069.51674225463
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 941.20862036353,
+          "stdDev": 1078.5401987293606
+        }
+      },
+      "edge_density_m_per_km2": 2756.0232708218105,
+      "edge_metrics": {
+        "edge_pixels": 12319,
+        "edge_length_m": 1231900,
+        "region_area_km2": 446.98461476802527
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2023": {
+      "city": "Andijan",
+      "year": 2023,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 61,
+        "mean_patch_area_m2": 530491.8032786886,
+        "max_patch_area_m2": 5640000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 32360000
+      },
+      "built_patches": {
+        "patch_count": 87,
+        "mean_patch_area_m2": 1092873.5632183908,
+        "max_patch_area_m2": 23880000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 95080000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 992.574250525038,
+          "stdDev": 1118.4290645657813,
+          "min": 100,
+          "max": 5099.019513592785
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 982.4651345119714,
+          "stdDev": 1115.2229206797153
+        }
+      },
+      "edge_density_m_per_km2": 2765.6432887327887,
+      "edge_metrics": {
+        "edge_pixels": 12362,
+        "edge_length_m": 1236200,
+        "region_area_km2": 446.98461476802527
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2024": {
+      "city": "Andijan",
+      "year": 2024,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 64,
+        "mean_patch_area_m2": 510000.0,
+        "max_patch_area_m2": 5640000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 32640000
+      },
+      "built_patches": {
+        "patch_count": 80,
+        "mean_patch_area_m2": 754500.0,
+        "max_patch_area_m2": 8960000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 60360000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 987.512071469956,
+          "stdDev": 1118.8049445527417,
+          "min": 100,
+          "max": 5099.019513592785
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 976.0440788035097,
+          "stdDev": 1115.119091359406
+        }
+      },
+      "edge_density_m_per_km2": 2800.3200974816627,
+      "edge_metrics": {
+        "edge_pixels": 12517,
+        "edge_length_m": 1251700,
+        "region_area_km2": 446.98461476802527
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    }
+  },
+  "temporal_changes": {
+    "veg_patch_count_change": 22,
+    "veg_patch_count_pct": 52.38095238095239,
+    "veg_mean_patch_area_m2_change": -155714.28571428568,
+    "veg_mean_patch_area_m2_pct": -23.39055793991416,
+    "built_mean_distance_m_change": 84.01757372243628,
+    "built_mean_distance_m_pct": 9.29917934551881,
+    "veg_access_mean_m_change": 85.2843061865691,
+    "veg_access_mean_m_pct": 9.574332924354508,
+    "edge_density_m_per_km2_change": 210.7455086544478,
+    "edge_density_m_per_km2_pct": 8.138228941684655
+  }
+}

@@ -15,7 +15,7 @@ from pathlib import Path
 import json
 import numpy as np
 from dataclasses import dataclass
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 try:
     import ee
@@ -45,7 +45,7 @@ class WaterScarcityMetrics:
     population_density: float = 0.0  # User-provided population density
 
     # External benchmark
-    aqueduct_bws_score: float = 0.0  # WRI Aqueduct Baseline Water Stress
+    aqueduct_bws_score: Optional[float] = None  # WRI Aqueduct Baseline Water Stress
 
     # Composite scores
     water_supply_risk: float = 0.0
@@ -176,15 +176,13 @@ class WaterScarcityGEEAssessment:
 
         # Use optimized EE workflow: build monthly time series server-side, one getInfo() call
         try:
-            # Create a point geometry from data_loader city definitions when available
-            if city in self.city_definitions:
-                cd = self.city_definitions[city]
-                geom = ee.Geometry.Point([cd['lon'], cd['lat']])
-                lat = float(cd.get('lat', 0.0))
-            else:
-                # Fallback: try to use a city centroid from utils mapping
-                geom = ee.Geometry.Point([0, 0])
-                lat = 0.0
+            # Create a point geometry from data_loader city definitions
+            if city not in self.city_definitions:
+                raise RuntimeError(f"City {city} not found in city definitions")
+            
+            cd = self.city_definitions[city]
+            geom = ee.Geometry.Point([cd['lon'], cd['lat']])
+            lat = float(cd['lat'])
 
             # Collections
             chirps = ee.ImageCollection(self.DATASETS['chirps']).filterDate('2001-01-01', '2020-12-31')
@@ -233,20 +231,22 @@ class WaterScarcityGEEAssessment:
                 'months': month_array
             }).getInfo()
 
-            # Extract to Python lists
-            monthly_precip = [float(x) if x is not None else 0.0 for x in vals['P']]
-            monthly_temp_k = [float(x) if x is not None else 273.15 for x in vals['T']]
+            # Extract to Python lists - fail if data is incomplete
+            monthly_precip = []
+            monthly_temp_k = []
+            
+            for x in vals['P']:
+                if x is None:
+                    raise RuntimeError(f"Missing precipitation data for {city}")
+                monthly_precip.append(float(x))
+            
+            for x in vals['T']:
+                if x is None:
+                    raise RuntimeError(f"Missing temperature data for {city}")
+                monthly_temp_k.append(float(x))
 
             if len(monthly_precip) != 240 or len(monthly_temp_k) != 240:
-                # Fill missing values with reasonable defaults
-                while len(monthly_precip) < 240:
-                    monthly_precip.append(0.0)
-                while len(monthly_temp_k) < 240:
-                    monthly_temp_k.append(273.15 + 15.0)  # 15°C default
-                
-                # Trim if too many (shouldn't happen but be safe)
-                monthly_precip = monthly_precip[:240]
-                monthly_temp_k = monthly_temp_k[:240]
+                raise RuntimeError(f"Incomplete time series data for {city}: got {len(monthly_precip)} precip and {len(monthly_temp_k)} temp values, expected 240 each")
 
             # Convert temp to Celsius
             monthly_temp_c = [t - 273.15 for t in monthly_temp_k]
@@ -325,31 +325,28 @@ class WaterScarcityGEEAssessment:
                     ee.Reducer.mean(), buf, 2500,
                     bestEffort=True, maxPixels=1e9
                 )
-                occurrence_val = jrc_occurrence.get('occurrence').getInfo() if jrc_occurrence.get('occurrence') else None
-                jrc_val = float(occurrence_val) if occurrence_val is not None else 0.0
+                occurrence_val = jrc_occurrence.get('occurrence').getInfo()
+                if occurrence_val is None:
+                    raise RuntimeError(f"JRC surface water data unavailable for {city}")
+                jrc_val = float(occurrence_val)
             except Exception as e:
-                print(f"Warning: JRC data failed for {city}: {e}")
-                jrc_val = 0.0
+                raise RuntimeError(f"JRC surface water data failed for {city}: {e}")
 
-            # Use existing LULC data for cropland fraction (preferred over satellite-derived data)
+            # Use existing LULC data for cropland fraction - fail if not available
             existing_cropland = self.lulc_data.get(city, {}).get('cropland_fraction', None)
-            if existing_cropland is not None:
-                cropland_fraction = existing_cropland
-                print(f"Debug {city}: Using existing LULC cropland fraction={cropland_fraction}")
-            else:
-                print(f"Warning: No LULC cropland data available for {city}")
-                cropland_fraction = 0.0
+            if existing_cropland is None:
+                raise RuntimeError(f"No LULC cropland data available for {city}")
+            cropland_fraction = existing_cropland
+            print(f"Debug {city}: Using existing LULC cropland fraction={cropland_fraction}")
 
-            # Use existing population data directly (no satellite imagery needed)
+            # Use existing population data - fail if not available
             existing_pop_data = self.city_population_data.get(city, {})
-            if existing_pop_data:
-                pop_val = existing_pop_data.get('density', 100.0)
-                print(f"Debug {city}: Using user-provided population density={pop_val}")
-            else:
-                print(f"Warning: No population data available for {city}")
-                pop_val = 100.0
+            if not existing_pop_data or 'density' not in existing_pop_data:
+                raise RuntimeError(f"No population data available for {city}")
+            pop_val = existing_pop_data['density']
+            print(f"Debug {city}: Using user-provided population density={pop_val}")
 
-            # Aqueduct data removed due to availability issues - set to None
+            # Aqueduct data removed due to availability issues - skip for now
             aqueduct_val = None
 
             indicators = {
@@ -390,8 +387,9 @@ class WaterScarcityGEEAssessment:
         swc_s = norm(-swc, 0, 100)  # negative change increases risk
         cropland_s = norm(cropland, 0.0, 0.5)
         pop_s = norm(pop, 50, 1000)
-        aqu_s = norm(aqu, 1.0, 5.0) if aqu is not None else 0.5  # Default to moderate risk when no data
-
+        # Note: Aqueduct data is not currently available, so scoring focuses on satellite-derived indicators
+        # This ensures the assessment can still run with available data
+        
         supply = 0.6 * (ai_s * 0.4 + cwd_s * 0.4 + df_s * 0.2) + 0.4 * swc_s
         demand = 0.7 * cropland_s + 0.3 * pop_s
         overall = 0.6 * supply + 0.4 * demand

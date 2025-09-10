@@ -7,7 +7,17 @@ institutional capacity, economic capacity, and social capacity.
 
 import numpy as np
 from typing import Dict, Optional
-from .base import BaseRiskModule, DEFAULT_WEIGHTS
+import sys
+import os
+
+# Handle imports for both standalone and module usage
+if __name__ == "__main__":
+    # Add parent directory to path for standalone execution
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    from base import BaseRiskModule, DEFAULT_WEIGHTS
+else:
+    from .base import BaseRiskModule, DEFAULT_WEIGHTS
 
 
 class AdaptiveCapacityAssessment(BaseRiskModule):
@@ -111,9 +121,6 @@ class AdaptiveCapacityAssessment(BaseRiskModule):
             )
             
             return min(1.0, green_capacity)
-            
-        except Exception:
-            return 0.0
             
             return min(1.0, green_capacity)
             
@@ -328,14 +335,6 @@ class AdaptiveCapacityAssessment(BaseRiskModule):
             
         except Exception:
             return 0.0
-            
-    def _load_social_sector_data(self, city: str) -> Optional[Dict]:
-        """Load social sector data for detailed analysis"""
-        try:
-            # Currently no social sector data available in the data loader
-            return None
-        except Exception:
-            return None
 
 
 def run_adaptive_capacity_assessment(city: str, data_loader=None) -> Dict[str, float]:
@@ -366,8 +365,9 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         city_name = sys.argv[1]
         
-        # Initialize data loader
-        loader = ClimateDataLoader()
+        # Initialize data loader with correct base path
+        base_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "individual_results")
+        loader = ClimateDataLoader(base_path)
         
         # Run assessment
         results = run_adaptive_capacity_assessment(city_name, loader)
