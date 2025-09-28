@@ -1,0 +1,347 @@
+{
+  "city": "Termez",
+  "years_analyzed": [
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024"
+  ],
+  "data": {
+    "2017": {
+      "city": "Termez",
+      "year": 2017,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 36,
+        "mean_patch_area_m2": 1067777.7777777778,
+        "max_patch_area_m2": 30480000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 38440000
+      },
+      "built_patches": {
+        "patch_count": 50,
+        "mean_patch_area_m2": 279200.0,
+        "max_patch_area_m2": 1880000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 13960000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 575.9288941812983,
+          "stdDev": 587.0810495583667,
+          "min": 100,
+          "max": 2884.4410203711914
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 483.4178834436957,
+          "stdDev": 500.1305477855235
+        }
+      },
+      "edge_density_m_per_km2": 2231.452319462553,
+      "edge_metrics": {
+        "edge_pixels": 4433,
+        "edge_length_m": 443300,
+        "region_area_km2": 198.65985758851846
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2018": {
+      "city": "Termez",
+      "year": 2018,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 38,
+        "mean_patch_area_m2": 1068421.0526315789,
+        "max_patch_area_m2": 28120000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 40600000
+      },
+      "built_patches": {
+        "patch_count": 53,
+        "mean_patch_area_m2": 273962.2641509434,
+        "max_patch_area_m2": 2600000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 14520000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 600.959053618019,
+          "stdDev": 612.4134623246176,
+          "min": 100,
+          "max": 2900
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 502.9486466322643,
+          "stdDev": 526.4621822516805
+        }
+      },
+      "edge_density_m_per_km2": 2322.059451766469,
+      "edge_metrics": {
+        "edge_pixels": 4613,
+        "edge_length_m": 461300,
+        "region_area_km2": 198.65985758851846
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2019": {
+      "city": "Termez",
+      "year": 2019,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 49,
+        "mean_patch_area_m2": 1185306.1224489796,
+        "max_patch_area_m2": 29360000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 58080000
+      },
+      "built_patches": {
+        "patch_count": 63,
+        "mean_patch_area_m2": 286349.20634920633,
+        "max_patch_area_m2": 2280000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 18040000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 513.6918394876284,
+          "stdDev": 471.02065482292886,
+          "min": 100,
+          "max": 2256.1028345356954
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 444.78278396020784,
+          "stdDev": 411.7919190390248
+        }
+      },
+      "edge_density_m_per_km2": 2496.226494972885,
+      "edge_metrics": {
+        "edge_pixels": 4959,
+        "edge_length_m": 495900,
+        "region_area_km2": 198.65985758851846
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2020": {
+      "city": "Termez",
+      "year": 2020,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 47,
+        "mean_patch_area_m2": 857872.340425532,
+        "max_patch_area_m2": 27760000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 40320000
+      },
+      "built_patches": {
+        "patch_count": 55,
+        "mean_patch_area_m2": 343272.7272727273,
+        "max_patch_area_m2": 2320000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 18880000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 604.9889143844999,
+          "stdDev": 627.0327424264284,
+          "min": 100,
+          "max": 2941.0882339705486
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 501.01786430828776,
+          "stdDev": 546.6792633387707
+        }
+      },
+      "edge_density_m_per_km2": 2428.7745187021924,
+      "edge_metrics": {
+        "edge_pixels": 4825,
+        "edge_length_m": 482500,
+        "region_area_km2": 198.65985758851846
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2021": {
+      "city": "Termez",
+      "year": 2021,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 40,
+        "mean_patch_area_m2": 1009000.0,
+        "max_patch_area_m2": 29800000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 40360000
+      },
+      "built_patches": {
+        "patch_count": 51,
+        "mean_patch_area_m2": 341960.7843137255,
+        "max_patch_area_m2": 2360000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 17440000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 615.7712917380915,
+          "stdDev": 628.6974886295044,
+          "min": 100,
+          "max": 2941.0882339705486
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 510.7623110851924,
+          "stdDev": 548.762950371118
+        }
+      },
+      "edge_density_m_per_km2": 2362.8326613032314,
+      "edge_metrics": {
+        "edge_pixels": 4694,
+        "edge_length_m": 469400,
+        "region_area_km2": 198.65985758851846
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2022": {
+      "city": "Termez",
+      "year": 2022,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 33,
+        "mean_patch_area_m2": 1184242.4242424243,
+        "max_patch_area_m2": 32120000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 39080000
+      },
+      "built_patches": {
+        "patch_count": 53,
+        "mean_patch_area_m2": 320754.71698113205,
+        "max_patch_area_m2": 2440000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 17000000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 541.7501060301553,
+          "stdDev": 481.2464805316493,
+          "min": 100,
+          "max": 2256.1028345356954
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 461.2388845876009,
+          "stdDev": 424.97521525564343
+        }
+      },
+      "edge_density_m_per_km2": 2283.2997340586826,
+      "edge_metrics": {
+        "edge_pixels": 4536,
+        "edge_length_m": 453600,
+        "region_area_km2": 198.65985758851846
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2023": {
+      "city": "Termez",
+      "year": 2023,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 35,
+        "mean_patch_area_m2": 1101714.2857142857,
+        "max_patch_area_m2": 31920000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 38560000
+      },
+      "built_patches": {
+        "patch_count": 55,
+        "mean_patch_area_m2": 359272.7272727273,
+        "max_patch_area_m2": 2680000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 19760000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 539.6358276661139,
+          "stdDev": 484.2796121025331,
+          "min": 100,
+          "max": 2256.1028345356954
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 463.08778273717024,
+          "stdDev": 427.6051505462062
+        }
+      },
+      "edge_density_m_per_km2": 2384.981071421966,
+      "edge_metrics": {
+        "edge_pixels": 4738,
+        "edge_length_m": 473800,
+        "region_area_km2": 198.65985758851846
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2024": {
+      "city": "Termez",
+      "year": 2024,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 41,
+        "mean_patch_area_m2": 969756.0975609756,
+        "max_patch_area_m2": 32560000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 39760000
+      },
+      "built_patches": {
+        "patch_count": 56,
+        "mean_patch_area_m2": 357857.14285714284,
+        "max_patch_area_m2": 2680000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 20040000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 531.4693544799129,
+          "stdDev": 476.07694030159564,
+          "min": 100,
+          "max": 2256.1028345356954
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 461.73049303874336,
+          "stdDev": 421.0747674573383
+        }
+      },
+      "edge_density_m_per_km2": 2423.7407891297526,
+      "edge_metrics": {
+        "edge_pixels": 4815,
+        "edge_length_m": 481500,
+        "region_area_km2": 198.65985758851846
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    }
+  },
+  "temporal_changes": {
+    "veg_patch_count_change": 5,
+    "veg_patch_count_pct": 13.88888888888889,
+    "veg_mean_patch_area_m2_change": -98021.68021680217,
+    "veg_mean_patch_area_m2_pct": -9.179970051521536,
+    "built_mean_distance_m_change": -44.45953970138544,
+    "built_mean_distance_m_pct": -7.719623056000015,
+    "veg_access_mean_m_change": -21.68739040495234,
+    "veg_access_mean_m_pct": -4.486261503289689,
+    "edge_density_m_per_km2_change": 192.28846966719948,
+    "edge_density_m_per_km2_pct": 8.617189262350552
+  }
+}

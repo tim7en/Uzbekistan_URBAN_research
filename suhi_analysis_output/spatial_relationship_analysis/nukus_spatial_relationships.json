@@ -1,0 +1,347 @@
+{
+  "city": "Nukus",
+  "years_analyzed": [
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024"
+  ],
+  "data": {
+    "2017": {
+      "city": "Nukus",
+      "year": 2017,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 33,
+        "mean_patch_area_m2": 2926060.606060606,
+        "max_patch_area_m2": 36120000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 96560000
+      },
+      "built_patches": {
+        "patch_count": 26,
+        "mean_patch_area_m2": 976923.0769230769,
+        "max_patch_area_m2": 10120000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 25400000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 924.8800232059606,
+          "stdDev": 831.4012610097125,
+          "min": 100,
+          "max": 3883.2975677895197
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 825.4761878301451,
+          "stdDev": 815.8503022989986
+        }
+      },
+      "edge_density_m_per_km2": 1534.4419531380518,
+      "edge_metrics": {
+        "edge_pixels": 4763,
+        "edge_length_m": 476300,
+        "region_area_km2": 310.40600723013983
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2018": {
+      "city": "Nukus",
+      "year": 2018,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 30,
+        "mean_patch_area_m2": 3252000.0,
+        "max_patch_area_m2": 43760000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 97560000
+      },
+      "built_patches": {
+        "patch_count": 26,
+        "mean_patch_area_m2": 780000.0,
+        "max_patch_area_m2": 10480000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 20280000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 939.4396669984504,
+          "stdDev": 832.0349050495106,
+          "min": 100,
+          "max": 3905.124837953327
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 858.2508104446207,
+          "stdDev": 821.7188251412458
+        }
+      },
+      "edge_density_m_per_km2": 1520.2669697372385,
+      "edge_metrics": {
+        "edge_pixels": 4719,
+        "edge_length_m": 471900,
+        "region_area_km2": 310.40600723013983
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2019": {
+      "city": "Nukus",
+      "year": 2019,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 30,
+        "mean_patch_area_m2": 3204000.0,
+        "max_patch_area_m2": 36080000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 96120000
+      },
+      "built_patches": {
+        "patch_count": 22,
+        "mean_patch_area_m2": 787272.7272727273,
+        "max_patch_area_m2": 11160000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 17320000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 952.06054990523,
+          "stdDev": 838.171129037366,
+          "min": 100,
+          "max": 3921.734310225516
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 871.3702886947422,
+          "stdDev": 828.2757991115449
+        }
+      },
+      "edge_density_m_per_km2": 1515.4345890324157,
+      "edge_metrics": {
+        "edge_pixels": 4704,
+        "edge_length_m": 470400,
+        "region_area_km2": 310.40600723013983
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2020": {
+      "city": "Nukus",
+      "year": 2020,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 28,
+        "mean_patch_area_m2": 3542857.1428571427,
+        "max_patch_area_m2": 42640000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 99200000
+      },
+      "built_patches": {
+        "patch_count": 27,
+        "mean_patch_area_m2": 751111.1111111111,
+        "max_patch_area_m2": 10520000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 20280000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 945.4455357900921,
+          "stdDev": 837.5514548584064,
+          "min": 100,
+          "max": 4004.9968789001573
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 873.1552586333556,
+          "stdDev": 829.2530093216703
+        }
+      },
+      "edge_density_m_per_km2": 1487.084622230789,
+      "edge_metrics": {
+        "edge_pixels": 4616,
+        "edge_length_m": 461600,
+        "region_area_km2": 310.40600723013983
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2021": {
+      "city": "Nukus",
+      "year": 2021,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 19,
+        "mean_patch_area_m2": 2298947.3684210526,
+        "max_patch_area_m2": 37400000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 43680000
+      },
+      "built_patches": {
+        "patch_count": 22,
+        "mean_patch_area_m2": 901818.1818181818,
+        "max_patch_area_m2": 10440000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 19840000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 963.6280496263427,
+          "stdDev": 832.61600504078,
+          "min": 100,
+          "max": 3905.124837953327
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 893.7748664955265,
+          "stdDev": 826.7103103157838
+        }
+      },
+      "edge_density_m_per_km2": 1416.8540226540315,
+      "edge_metrics": {
+        "edge_pixels": 4398,
+        "edge_length_m": 439800,
+        "region_area_km2": 310.40600723013983
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2022": {
+      "city": "Nukus",
+      "year": 2022,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 23,
+        "mean_patch_area_m2": 285217.39130434784,
+        "max_patch_area_m2": 2000000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 6560000
+      },
+      "built_patches": {
+        "patch_count": 31,
+        "mean_patch_area_m2": 735483.8709677419,
+        "max_patch_area_m2": 11120000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 22800000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 942.7413309059169,
+          "stdDev": 830.0039445547154,
+          "min": 100,
+          "max": 3956.0080889704964
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 876.9871464792373,
+          "stdDev": 822.4824951296265
+        }
+      },
+      "edge_density_m_per_km2": 1537.0192228472906,
+      "edge_metrics": {
+        "edge_pixels": 4771,
+        "edge_length_m": 477100,
+        "region_area_km2": 310.40600723013983
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2023": {
+      "city": "Nukus",
+      "year": 2023,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 25,
+        "mean_patch_area_m2": 3758400.0,
+        "max_patch_area_m2": 49880000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 93960000
+      },
+      "built_patches": {
+        "patch_count": 27,
+        "mean_patch_area_m2": 794074.074074074,
+        "max_patch_area_m2": 10520000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 21440000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 946.7122723267025,
+          "stdDev": 825.4224020191245,
+          "min": 100,
+          "max": 3905.124837953327
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 879.2276631306986,
+          "stdDev": 818.9051405154561
+        }
+      },
+      "edge_density_m_per_km2": 1491.5948442219567,
+      "edge_metrics": {
+        "edge_pixels": 4630,
+        "edge_length_m": 463000,
+        "region_area_km2": 310.40600723013983
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2024": {
+      "city": "Nukus",
+      "year": 2024,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 23,
+        "mean_patch_area_m2": 2486956.5217391304,
+        "max_patch_area_m2": 49600000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 57200000
+      },
+      "built_patches": {
+        "patch_count": 25,
+        "mean_patch_area_m2": 907200.0,
+        "max_patch_area_m2": 11120000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 22680000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 951.866005813857,
+          "stdDev": 826.0419627743275,
+          "min": 100,
+          "max": 3921.734310225516
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 887.9392596684924,
+          "stdDev": 819.8246860664487
+        }
+      },
+      "edge_density_m_per_km2": 1482.574400239621,
+      "edge_metrics": {
+        "edge_pixels": 4602,
+        "edge_length_m": 460200,
+        "region_area_km2": 310.40600723013983
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    }
+  },
+  "temporal_changes": {
+    "veg_patch_count_change": -10,
+    "veg_patch_count_pct": -30.303030303030305,
+    "veg_mean_patch_area_m2_change": -439104.0843214756,
+    "veg_mean_patch_area_m2_pct": -15.006664025071142,
+    "built_mean_distance_m_change": 26.985982607896403,
+    "built_mean_distance_m_pct": 2.917781975045094,
+    "veg_access_mean_m_change": 62.46307183834722,
+    "veg_access_mean_m_pct": 7.566913832189183,
+    "edge_density_m_per_km2_change": -51.86755289843086,
+    "edge_density_m_per_km2_pct": -3.3802225488137707
+  }
+}

@@ -1,0 +1,347 @@
+{
+  "city": "Fergana",
+  "years_analyzed": [
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024"
+  ],
+  "data": {
+    "2017": {
+      "city": "Fergana",
+      "year": 2017,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 41,
+        "mean_patch_area_m2": 528780.487804878,
+        "max_patch_area_m2": 7560000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 21680000
+      },
+      "built_patches": {
+        "patch_count": 78,
+        "mean_patch_area_m2": 794871.7948717949,
+        "max_patch_area_m2": 20880000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 62000000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 858.1137383946275,
+          "stdDev": 949.7096169693976,
+          "min": 100,
+          "max": 5091.168824543142
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 818.4961511039555,
+          "stdDev": 935.4345705794249
+        }
+      },
+      "edge_density_m_per_km2": 2096.2690192061636,
+      "edge_metrics": {
+        "edge_pixels": 9370,
+        "edge_length_m": 937000,
+        "region_area_km2": 446.98461476801896
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2018": {
+      "city": "Fergana",
+      "year": 2018,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 37,
+        "mean_patch_area_m2": 555675.6756756756,
+        "max_patch_area_m2": 7400000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 20560000
+      },
+      "built_patches": {
+        "patch_count": 94,
+        "mean_patch_area_m2": 748936.1702127659,
+        "max_patch_area_m2": 19960000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 70400000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 850.0444565819464,
+          "stdDev": 937.8074499884773,
+          "min": 100,
+          "max": 5091.168824543142
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 821.3185328066251,
+          "stdDev": 927.597592101992
+        }
+      },
+      "edge_density_m_per_km2": 2241.4641732579034,
+      "edge_metrics": {
+        "edge_pixels": 10019,
+        "edge_length_m": 1001900,
+        "region_area_km2": 446.98461476801896
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2019": {
+      "city": "Fergana",
+      "year": 2019,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 38,
+        "mean_patch_area_m2": 866315.7894736842,
+        "max_patch_area_m2": 9240000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 32920000
+      },
+      "built_patches": {
+        "patch_count": 91,
+        "mean_patch_area_m2": 799120.8791208791,
+        "max_patch_area_m2": 23240000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 72720000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 881.8205326175565,
+          "stdDev": 975.3260694068559,
+          "min": 100,
+          "max": 5249.761899362675
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 854.4264803083045,
+          "stdDev": 965.7407177746097
+        }
+      },
+      "edge_density_m_per_km2": 2294.7098537884335,
+      "edge_metrics": {
+        "edge_pixels": 10257,
+        "edge_length_m": 1025700,
+        "region_area_km2": 446.98461476801896
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2020": {
+      "city": "Fergana",
+      "year": 2020,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 37,
+        "mean_patch_area_m2": 678918.9189189189,
+        "max_patch_area_m2": 7440000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 25120000
+      },
+      "built_patches": {
+        "patch_count": 107,
+        "mean_patch_area_m2": 456448.5981308411,
+        "max_patch_area_m2": 5960000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 48840000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 855.6858425252734,
+          "stdDev": 935.5818981768699,
+          "min": 100,
+          "max": 5091.168824543142
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 829.7136804173851,
+          "stdDev": 927.2757472566984
+        }
+      },
+      "edge_density_m_per_km2": 2366.9718487941527,
+      "edge_metrics": {
+        "edge_pixels": 10580,
+        "edge_length_m": 1058000,
+        "region_area_km2": 446.98461476801896
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2021": {
+      "city": "Fergana",
+      "year": 2021,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 41,
+        "mean_patch_area_m2": 555121.9512195121,
+        "max_patch_area_m2": 5960000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 22760000
+      },
+      "built_patches": {
+        "patch_count": 95,
+        "mean_patch_area_m2": 746526.3157894737,
+        "max_patch_area_m2": 22720000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 70920000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 849.3817026734525,
+          "stdDev": 929.0547456149492,
+          "min": 100,
+          "max": 5091.168824543142
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 824.3764365752493,
+          "stdDev": 921.1796743108474
+        }
+      },
+      "edge_density_m_per_km2": 2336.769466980617,
+      "edge_metrics": {
+        "edge_pixels": 10445,
+        "edge_length_m": 1044500,
+        "region_area_km2": 446.98461476801896
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2022": {
+      "city": "Fergana",
+      "year": 2022,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 51,
+        "mean_patch_area_m2": 665882.3529411765,
+        "max_patch_area_m2": 7720000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 33960000
+      },
+      "built_patches": {
+        "patch_count": 103,
+        "mean_patch_area_m2": 488932.03883495147,
+        "max_patch_area_m2": 5480000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 50360000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 854.9940442689972,
+          "stdDev": 958.0166827368136,
+          "min": 100,
+          "max": 5249.761899362675
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 834.822724295137,
+          "stdDev": 951.1969820745848
+        }
+      },
+      "edge_density_m_per_km2": 2444.1557134287445,
+      "edge_metrics": {
+        "edge_pixels": 10925,
+        "edge_length_m": 1092500,
+        "region_area_km2": 446.98461476801896
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2023": {
+      "city": "Fergana",
+      "year": 2023,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 57,
+        "mean_patch_area_m2": 578245.6140350878,
+        "max_patch_area_m2": 10480000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 32960000
+      },
+      "built_patches": {
+        "patch_count": 96,
+        "mean_patch_area_m2": 526666.6666666666,
+        "max_patch_area_m2": 7040000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 50560000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 839.4271713370499,
+          "stdDev": 930.7910927138618,
+          "min": 100,
+          "max": 5093.132631298738
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 822.2885624561712,
+          "stdDev": 925.3891857217769
+        }
+      },
+      "edge_density_m_per_km2": 2421.1124147117507,
+      "edge_metrics": {
+        "edge_pixels": 10822,
+        "edge_length_m": 1082200,
+        "region_area_km2": 446.98461476801896
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2024": {
+      "city": "Fergana",
+      "year": 2024,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 52,
+        "mean_patch_area_m2": 636153.8461538461,
+        "max_patch_area_m2": 7160000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 33080000
+      },
+      "built_patches": {
+        "patch_count": 97,
+        "mean_patch_area_m2": 743505.1546391753,
+        "max_patch_area_m2": 22800000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 72120000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 849.664379368709,
+          "stdDev": 929.6166295014526,
+          "min": 100,
+          "max": 5091.168824543142
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 833.4908144838024,
+          "stdDev": 924.8475294206071
+        }
+      },
+      "edge_density_m_per_km2": 2430.284989929195,
+      "edge_metrics": {
+        "edge_pixels": 10863,
+        "edge_length_m": 1086300,
+        "region_area_km2": 446.98461476801896
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    }
+  },
+  "temporal_changes": {
+    "veg_patch_count_change": 11,
+    "veg_patch_count_pct": 26.82926829268293,
+    "veg_mean_patch_area_m2_change": 107373.35834896809,
+    "veg_mean_patch_area_m2_pct": 20.30584728924212,
+    "built_mean_distance_m_change": -8.449359025918511,
+    "built_mean_distance_m_pct": -0.9846432527377668,
+    "veg_access_mean_m_change": 14.994663379846884,
+    "veg_access_mean_m_pct": 1.8319772621560493,
+    "edge_density_m_per_km2_change": 334.0159707230314,
+    "edge_density_m_per_km2_pct": 15.933831376734267
+  }
+}

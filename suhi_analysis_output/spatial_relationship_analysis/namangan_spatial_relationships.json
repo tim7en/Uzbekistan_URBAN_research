@@ -1,0 +1,347 @@
+{
+  "city": "Namangan",
+  "years_analyzed": [
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024"
+  ],
+  "data": {
+    "2017": {
+      "city": "Namangan",
+      "year": 2017,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 36,
+        "mean_patch_area_m2": 326666.6666666667,
+        "max_patch_area_m2": 2040000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 11760000
+      },
+      "built_patches": {
+        "patch_count": 54,
+        "mean_patch_area_m2": 1184444.4444444445,
+        "max_patch_area_m2": 19240000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 63960000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 751.9821822277506,
+          "stdDev": 670.8602459247559,
+          "min": 100,
+          "max": 3517.101079013795
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 746.3471926372755,
+          "stdDev": 670.1311277281667
+        }
+      },
+      "edge_density_m_per_km2": 2166.2938007442103,
+      "edge_metrics": {
+        "edge_pixels": 9683,
+        "edge_length_m": 968300,
+        "region_area_km2": 446.9846147680197
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2018": {
+      "city": "Namangan",
+      "year": 2018,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 39,
+        "mean_patch_area_m2": 238974.35897435897,
+        "max_patch_area_m2": 1520000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 9320000
+      },
+      "built_patches": {
+        "patch_count": 78,
+        "mean_patch_area_m2": 852820.5128205129,
+        "max_patch_area_m2": 19400000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 66520000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 794.0104627688326,
+          "stdDev": 714.1625185656089,
+          "min": 100,
+          "max": 3640.0549446402592
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 788.536217974309,
+          "stdDev": 713.4299660706502
+        }
+      },
+      "edge_density_m_per_km2": 2282.1814583694813,
+      "edge_metrics": {
+        "edge_pixels": 10201,
+        "edge_length_m": 1020100,
+        "region_area_km2": 446.9846147680197
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2019": {
+      "city": "Namangan",
+      "year": 2019,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 42,
+        "mean_patch_area_m2": 275238.09523809527,
+        "max_patch_area_m2": 2640000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 11560000
+      },
+      "built_patches": {
+        "patch_count": 89,
+        "mean_patch_area_m2": 789213.4831460674,
+        "max_patch_area_m2": 19920000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 70240000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 831.7282221171231,
+          "stdDev": 728.4448956859984,
+          "min": 100,
+          "max": 3640.0549446402592
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 825.6392168243402,
+          "stdDev": 727.7835525256222
+        }
+      },
+      "edge_density_m_per_km2": 2296.2759032157983,
+      "edge_metrics": {
+        "edge_pixels": 10264,
+        "edge_length_m": 1026400,
+        "region_area_km2": 446.9846147680197
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2020": {
+      "city": "Namangan",
+      "year": 2020,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 38,
+        "mean_patch_area_m2": 300000.0,
+        "max_patch_area_m2": 1560000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 11400000
+      },
+      "built_patches": {
+        "patch_count": 81,
+        "mean_patch_area_m2": 868641.975308642,
+        "max_patch_area_m2": 20000000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 70360000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 866.2830676373674,
+          "stdDev": 746.2163107988549,
+          "min": 100,
+          "max": 3640.0549446402592
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 861.2468671781073,
+          "stdDev": 746.0826092086803
+        }
+      },
+      "edge_density_m_per_km2": 2265.4023573619615,
+      "edge_metrics": {
+        "edge_pixels": 10126,
+        "edge_length_m": 1012600,
+        "region_area_km2": 446.9846147680197
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2021": {
+      "city": "Namangan",
+      "year": 2021,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 41,
+        "mean_patch_area_m2": 283902.43902439025,
+        "max_patch_area_m2": 1520000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 11640000
+      },
+      "built_patches": {
+        "patch_count": 78,
+        "mean_patch_area_m2": 923076.9230769231,
+        "max_patch_area_m2": 20280000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 72000000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 858.5615578138985,
+          "stdDev": 733.9049524415548,
+          "min": 100,
+          "max": 3640.0549446402592
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 852.498362790851,
+          "stdDev": 733.4540703537364
+        }
+      },
+      "edge_density_m_per_km2": 2298.960559377001,
+      "edge_metrics": {
+        "edge_pixels": 10276,
+        "edge_length_m": 1027600,
+        "region_area_km2": 446.9846147680197
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2022": {
+      "city": "Namangan",
+      "year": 2022,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 48,
+        "mean_patch_area_m2": 394166.6666666667,
+        "max_patch_area_m2": 8360000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 18920000
+      },
+      "built_patches": {
+        "patch_count": 83,
+        "mean_patch_area_m2": 798072.2891566266,
+        "max_patch_area_m2": 19960000,
+        "min_patch_area_m2": 40000,
+        "total_area_m2": 66240000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 864.9906649367844,
+          "stdDev": 741.810265839932,
+          "min": 100,
+          "max": 3546.82957019364
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 859.092909168043,
+          "stdDev": 741.3845323831474
+        }
+      },
+      "edge_density_m_per_km2": 2289.1168201192563,
+      "edge_metrics": {
+        "edge_pixels": 10232,
+        "edge_length_m": 1023200,
+        "region_area_km2": 446.9846147680197
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2023": {
+      "city": "Namangan",
+      "year": 2023,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 45,
+        "mean_patch_area_m2": 418666.6666666667,
+        "max_patch_area_m2": 7760000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 18840000
+      },
+      "built_patches": {
+        "patch_count": 77,
+        "mean_patch_area_m2": 943896.1038961039,
+        "max_patch_area_m2": 20560000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 72680000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 888.9787120256575,
+          "stdDev": 762.121205530306,
+          "min": 100,
+          "max": 3546.82957019364
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 882.9486884127998,
+          "stdDev": 761.7548003497608
+        }
+      },
+      "edge_density_m_per_km2": 2236.766024975794,
+      "edge_metrics": {
+        "edge_pixels": 9998,
+        "edge_length_m": 999800,
+        "region_area_km2": 446.9846147680197
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    },
+    "2024": {
+      "city": "Namangan",
+      "year": 2024,
+      "scale": 100,
+      "veg_patches": {
+        "patch_count": 53,
+        "mean_patch_area_m2": 1753207.5471698113,
+        "max_patch_area_m2": 55960000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 92920000
+      },
+      "built_patches": {
+        "patch_count": 89,
+        "mean_patch_area_m2": 803146.0674157303,
+        "max_patch_area_m2": 20440000,
+        "min_patch_area_m2": 0,
+        "total_area_m2": 71480000
+      },
+      "built_distance_stats": {
+        "city": {
+          "mean": 902.420971846226,
+          "stdDev": 773.3486321440615,
+          "min": 100,
+          "max": 3640.0549446402592
+        }
+      },
+      "vegetation_accessibility": {
+        "city": {
+          "mean": 895.8877013061283,
+          "stdDev": 773.4625722126367
+        }
+      },
+      "edge_density_m_per_km2": 2400.3063294624217,
+      "edge_metrics": {
+        "edge_pixels": 10729,
+        "edge_length_m": 1072900,
+        "region_area_km2": 446.9846147680197
+      },
+      "veg_patch_isolation_note": "Skipped for performance"
+    }
+  },
+  "temporal_changes": {
+    "veg_patch_count_change": 17,
+    "veg_patch_count_pct": 47.22222222222222,
+    "veg_mean_patch_area_m2_change": 1426540.8805031446,
+    "veg_mean_patch_area_m2_pct": 436.69618790912585,
+    "built_mean_distance_m_change": 150.43878961847543,
+    "built_mean_distance_m_pct": 20.00563220431631,
+    "veg_access_mean_m_change": 149.5405086688528,
+    "veg_access_mean_m_pct": 20.03631957674281,
+    "edge_density_m_per_km2_change": 234.01252871821134,
+    "edge_density_m_per_km2_pct": 10.802437261179369
+  }
+}

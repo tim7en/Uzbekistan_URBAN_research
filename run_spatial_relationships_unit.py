@@ -9,186 +9,131 @@ Produces per-city JSON reports with:
 This script runs independently and writes outputs to `suhi_analysis_output/reports/`.
 """
 import sys
+import json
+import time
 from pathlib import Path
+from typing import List, Dict, Any, Optional
 
 # Ensure repository root is on sys.path so local `services` package is importable
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT))
 
-import json
-from typing import List, Dict, Any
-
-import ee
-
-from services.utils import create_output_directories
+from services.utils import create_output_directories, UZBEKISTAN_CITIES, ANALYSIS_CONFIG
 from services.gee import initialize_gee
 from services.spatial_relationships import run_for_cities
 
 
-def analyze_city(city: str, year: int = None, scale: int = None) -> Dict[str, Any]:
-    if year is None:
-        year = (ANALYSIS_CONFIG.get('years') or [2019])[0]
-    city_info = UZBEKISTAN_CITIES[city]
-    center = ee.Geometry.Point([city_info['lon'], city_info['lat']])
-    region = center.buffer(city_info['buffer_m']).bounds()
-    if scale is None:
-        scale = ANALYSIS_CONFIG.get('target_resolution_m', 100)
-
-    out: Dict[str, Any] = {'city': city, 'year': year, 'scale': scale}
-
-    # Load ESRI LULC using existing helper
-    classifications = load_all_classifications(year, region, f"{year}-01-01", f"{year}-12-31", optimal_scales={'scale': max(200, scale)})
-    esri_full = classifications.get('esri_full')
-    esri_built = classifications.get('esri_built')
-    if esri_full is None:
-        out['error'] = 'ESRI LULC not available'
-        return out
-
-    # Define vegetation classes from ESRI_CLASSES mapping
-    from services.utils import ESRI_CLASSES
-    veg_class_ids = [k for k, v in ESRI_CLASSES.items() if 'Tree' in v or 'Crops' in v or 'Vegetation' in v or 'Rangeland' in v]
-    # Create binary masks
-    veg_mask = None
-    for cid in veg_class_ids:
-        try:
-            band = esri_full.select(0)
-            m = band.eq(cid)
-            veg_mask = m if veg_mask is None else veg_mask.Or(m)
-        except Exception:
-            continue
-    if veg_mask is None:
-        out['error'] = 'No vegetation classes found in ESRI mapping'
-        return out
-
-    built_mask = esri_built if esri_built is not None else esri_full.eq(7)
-
-    # Connected components for patches (vegetation and built-up)
-    veg_cc = veg_mask.selfMask().connectedComponents(ee.Kernel.plus(1), 256)
-    built_cc = built_mask.selfMask().connectedComponents(ee.Kernel.plus(1), 256)
-
-    # Patch size (pixel counts * scale^2) and mean patch area
-    def patch_stats(cc_image):
-        # cc_image has property 'labels'
-        label_band = cc_image.select('labels')
-        hist = label_band.reduceRegion(reducer=ee.Reducer.frequencyHistogram(), geometry=region, scale=scale, maxPixels=1e10, bestEffort=True)
-        hist_info = hist.getInfo() if hist else {}
-        vals = {}
-        try:
-            first = next(iter(hist_info.values()))
-            for k, v in first.items():
-                vals[int(k)] = int(v)
-        except Exception:
-            vals = {}
-        # compute areas (m2)
-        areas = [c * (scale * scale) for c in vals.values()]
-        mean_area = sum(areas) / len(areas) if areas else 0
-        median_area = sorted(areas)[len(areas)//2] if areas else 0
-        return {'patch_count': len(areas), 'mean_patch_area_m2': mean_area, 'median_patch_area_m2': median_area}
-
-    out['veg_patches'] = patch_stats(veg_cc)
-    out['built_patches'] = patch_stats(built_cc)
-
-    # Distance from each built pixel to nearest vegetation patch
-    # Use distance() on veg_mask (distance in meters if scale in meters)
-    veg_distance = veg_mask.Not().distance(ee.Kernel.euclidean(1))
-    # For built-up pixels only
-    built_distance = veg_distance.updateMask(built_mask)
-
-    # Compute zonal stats for built distances within city urban_core
-    zones = {'city': region}
-    try:
-        dist_stats = error_assessment.compute_zonal_uncertainty(built_distance, zones, scale=scale)
-        out['built_distance_stats'] = dist_stats
-    except Exception as e:
-        out['built_distance_error'] = str(e)
-
-    # Vegetation accessibility index: mean distance to green for all pixels
-    try:
-        veg_dist_all = veg_distance
-        acc_stats = error_assessment.compute_zonal_uncertainty(veg_dist_all, zones, scale=scale)
-        out['vegetation_accessibility'] = acc_stats
-    except Exception as e:
-        out['vegetation_accessibility_error'] = str(e)
-
-    # Edge density (approximate) - compute boundary length by differencing dilation/erosion
-    try:
-        # Use focal operations to approximate edges: built_mask XOR built_mask.focal_max(1)
-        built_dilate = built_mask.focal_max(1, 'square', 'meters')
-        built_erode = built_mask.focal_min(1, 'square', 'meters')
-        built_edge = built_dilate.And(built_erode.Not())
-        # Edge pixel count
-        edge_count = built_edge.reduceRegion(reducer=ee.Reducer.sum(), geometry=region, scale=scale, maxPixels=1e10, bestEffort=True).getInfo()
-        first = next(iter(edge_count.values())) if edge_count else 0
-        edge_pixels = int(first) if first else 0
-        region_area_m2 = region.area().getInfo()
-        edge_density_m_per_km2 = (edge_pixels * scale) / (region_area_m2 / 1e6) if region_area_m2 else None
-        out['edge_density_m_per_km2'] = edge_density_m_per_km2
-    except Exception as e:
-        out['edge_density_error'] = str(e)
-
-    # Patch isolation: mean nearest-neighbor distance between vegetation patch centroids
-    try:
-        # centroids of veg patches via connectedComponents label reducer
-        # compute centroid per label via ee.Image.pixelLonLat() weighted by label presence
-        labels = veg_cc.select('labels')
-        lab_hist = labels.reduceRegion(reducer=ee.Reducer.frequencyHistogram(), geometry=region, scale=scale, maxPixels=1e10, bestEffort=True).getInfo()
-        centroid_list = []
-        try:
-            first = next(iter(lab_hist.values()))
-            for lbl in first.keys():
-                lbl_int = int(lbl)
-                mask_lbl = labels.eq(lbl_int)
-                coords = ee.Image.pixelLonLat().updateMask(mask_lbl).reduceRegion(reducer=ee.Reducer.mean(), geometry=region, scale=scale, maxPixels=1e10, bestEffort=True).getInfo()
-                if coords:
-                    lon = coords.get('longitude')
-                    lat = coords.get('latitude')
-                    if lon is not None and lat is not None:
-                        centroid_list.append((float(lon), float(lat)))
-        except Exception:
-            centroid_list = []
-        # compute pairwise nearest neighbor distances (approx on client)
-        import math
-        nn_distances = []
-        for i, (lon1, lat1) in enumerate(centroid_list):
-            mind = None
-            for j, (lon2, lat2) in enumerate(centroid_list):
-                if i == j:
-                    continue
-                # haversine
-                R = 6371000.0
-                phi1 = math.radians(lat1)
-                phi2 = math.radians(lat2)
-                dphi = math.radians(lat2 - lat1)
-                dlambda = math.radians(lon2 - lon1)
-                a = math.sin(dphi/2)**2 + math.cos(phi1)*math.cos(phi2)*math.sin(dlambda/2)**2
-                d = 2*R*math.atan2(math.sqrt(a), math.sqrt(1-a))
-                if mind is None or d < mind:
-                    mind = d
-            if mind is not None:
-                nn_distances.append(mind)
-        mean_nn = sum(nn_distances)/len(nn_distances) if nn_distances else None
-        out['veg_patch_isolation_mean_m'] = mean_nn
-    except Exception as e:
-        out['veg_patch_isolation_error'] = str(e)
-
-    return out
-
-
-def main(cities: List[str] = None, years: List[int] = None, scale: int = None):
+def main(cities: Optional[List[str]] = None, years: Optional[List[int]] = None, scale: Optional[int] = None):
+    start_time = time.time()
+    
+    print("🚀 Starting Optimized Spatial Relationships Analysis")
+    print("=" * 50)
+    
+    # Initialize GEE
+    print("🔑 Initializing Google Earth Engine...")
+    gee_start = time.time()
     ok = initialize_gee()
     if not ok:
-        print('GEE init failed; aborting spatial relationships unit')
+        print('❌ GEE init failed; aborting spatial relationships unit')
         return
+    gee_time = time.time() - gee_start
+    print(f"   ✅ GEE initialized in {gee_time:.2f} seconds")
+
+    # Setup parameters
+    if cities is None:
+        cities = list(UZBEKISTAN_CITIES.keys())
+    if years is None:
+        years = [2016, 2024]  # Just start and end year for faster analysis
+    if scale is None:
+        scale = ANALYSIS_CONFIG.get('target_resolution_m', 100)
+    
+    print(f"\n📊 Analysis Configuration:")
+    print(f"   🏙️  Cities: {len(cities)} ({', '.join(cities[:5])}" + (f"... and {len(cities)-5} more" if len(cities) > 5 else "") + ")")
+    print(f"   📅 Years: {years}")
+    print(f"   📏 Scale: {scale}m")
+    print(f"   🎯 Total combinations: {len(cities) * len(years)}")
+    print("\n   🚀 Using OPTIMIZED algorithms:")
+    print("      ✓ Circular regions (not bounds)")
+    print("      ✓ TileScale=4 for all reductions")
+    print("      ✓ Reduced distance search to 3km")
+    print("      ✓ Sample-based percentiles")
+    print("      ✓ Single getInfo() per city-year")
+    print("      ✓ Skipped vectorization")
+    print()
 
     dirs = create_output_directories()
+    
+    # Create dedicated spatial relationships analysis folder
+    spatial_output_dir = Path(__file__).parent / 'suhi_analysis_output' / 'spatial_relationship_analysis'
+    spatial_output_dir.mkdir(exist_ok=True)
+    print(f"📁 Created output directory: {spatial_output_dir}")
+    
+    # Run the analysis with progress tracking
+    print("\n🔄 Running spatial relationships analysis...")
+    analysis_start = time.time()
+    
     result = run_for_cities(cities=cities, years=years, scale=scale)
-    out_file = Path(__file__).parent / 'suhi_analysis_output' / 'reports' / 'spatial_relationships_report.json'
-    with open(out_file, 'w', encoding='utf-8') as fh:
+    
+    analysis_time = time.time() - analysis_start
+    print(f"\n✅ Analysis completed in {analysis_time:.2f} seconds ({analysis_time/60:.1f} minutes)")
+    print(f"   ⚡ Average per city-year: {analysis_time/(len(cities)*len(years)):.1f} seconds")
+    
+    # Save the comprehensive report
+    print("\n💾 Saving results...")
+    save_start = time.time()
+    
+    comprehensive_report_file = Path(__file__).parent / 'suhi_analysis_output' / 'reports' / 'spatial_relationships_report.json'
+    with open(comprehensive_report_file, 'w', encoding='utf-8') as fh:
         json.dump(result, fh, indent=2)
-    print(f"Wrote report: {out_file}")
+    print(f"   📄 Comprehensive report: {comprehensive_report_file}")
+    
+    # Save individual city data files
+    per_year_data = result.get('per_year', {})
+    successful_analyses = 0
+    failed_analyses = 0
+    
+    for i, (city, city_data) in enumerate(per_year_data.items(), 1):
+        city_file = spatial_output_dir / f"{city.lower()}_spatial_relationships.json"
+        
+        # Count successful vs failed analyses for this city
+        city_successful = sum(1 for year_data in city_data.values() if 'error' not in year_data)
+        city_failed = len(city_data) - city_successful
+        successful_analyses += city_successful
+        failed_analyses += city_failed
+        
+        # Save city-specific data
+        with open(city_file, 'w', encoding='utf-8') as fh:
+            json.dump({
+                'city': city,
+                'years_analyzed': list(city_data.keys()),
+                'data': city_data,
+                'temporal_changes': result.get('temporal_changes', {}).get(city, {})
+            }, fh, indent=2)
+        
+        status = "✓" if city_failed == 0 else "⚠" if city_successful > 0 else "✗"
+        print(f"   {status} {city}: {city_file.name} ({city_successful}/{len(city_data)} years)")
+    
+    save_time = time.time() - save_start
+    print(f"\n✅ Files saved in {save_time:.2f} seconds")
+    
+    # Summary statistics
+    total_time = time.time() - start_time
+    print("\n" + "=" * 50)
+    print("📊 SUMMARY:")
+    print(f"   ✅ Successful analyses: {successful_analyses}/{successful_analyses + failed_analyses}")
+    print(f"   ❌ Failed analyses: {failed_analyses}")
+    print(f"   ⏱️  Total runtime: {total_time:.2f} seconds ({total_time/60:.1f} minutes)")
+    print(f"   🚀 Performance: {total_time/(successful_analyses + failed_analyses):.1f} sec/analysis")
+    print(f"   📁 Output directory: {spatial_output_dir}")
+    print("=" * 50)
 
 
 if __name__ == '__main__':
-    from services.utils import UZBEKISTAN_CITIES
-    # Process all configured cities by default
-    main(cities=list(UZBEKISTAN_CITIES.keys()), years=[2016,2024])
+    # Run comprehensive analysis for all Uzbekistan cities (14 total) from 2017-2024
+    print("🌍 Running spatial relationships analysis for ALL cities (2017-2024)")
+    print(f"   Cities: {len(UZBEKISTAN_CITIES)} total")
+    print(f"   Years: 8 years (2017-2024)")
+    print(f"   Total analyses: {len(UZBEKISTAN_CITIES) * 8} = 112 city-year combinations")
+    print()
+    
+    main(cities=list(UZBEKISTAN_CITIES.keys()), years=list(range(2017, 2025)))
