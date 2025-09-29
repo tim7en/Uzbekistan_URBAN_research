@@ -1,11 +1,11 @@
 # Uzbekistan Nightlight Regional Analysis Report
 
-**Generated:** 2025-09-29 12:17:12 UTC
+**Generated:** 2025-09-29 13:20:52 UTC
 
 **Analysis Period:** 2017-2024
 
-**Total Analyses:** 2
-**Successful:** 2
+**Total Analyses:** 8
+**Successful:** 8
 **Failed:** 0
 
 ## Overview
@@ -20,11 +20,11 @@ This report presents a comprehensive analysis of nighttime lights in Uzbekistan,
 
 ### 2024 City-to-Region Ratios
 
-- **Samarkand** (Samarkand Region): 13.11x
-- **Bukhara** (Bukhara Region): 9.62x
+- **Tashkent** (Tashkent Region): 13.95x
 
 ### Growth Trends (2017-2024)
 
+- **Tashkent**: 12.80 → 13.95 (+1.15, +9.0%)
 
 ## Methodology
 

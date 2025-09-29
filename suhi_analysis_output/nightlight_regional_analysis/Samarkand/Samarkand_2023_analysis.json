@@ -1,22 +1,49 @@
 {
   "city": "Samarkand",
   "year": 2023,
-  "timestamp": "2025-09-29T12:12:22.214456",
+  "timestamp": "2025-09-29T12:31:54.238068",
   "region_name": "Samarkand Region",
   "city_radius_km": 12.0,
   "city_area_km2": 452.38896,
   "analysis_approach": "city_center_administrative_region",
   "city_stats": {
-    "error": "Element.geometry: Parameter 'feature' is required and may not be null."
+    "mean": 11.605121231867647,
+    "median": 7.493329498504089,
+    "stdDev": 11.285824999280893,
+    "count": 2432,
+    "min": 0.8300000429153442,
+    "max": 165.625,
+    "lit_area_km2": 442.6525516161763
   },
   "city_buffer_stats": {
-    "error": "Element.geometry: Parameter 'feature' is required and may not be null."
+    "mean": 8.980888030053565,
+    "median": 4.481096486897129,
+    "stdDev": 10.315789518581033,
+    "count": 3476,
+    "min": 0.6850000023841858,
+    "max": 165.625,
+    "lit_area_km2": 616.0770616414218
   },
   "region_stats": {
-    "error": "Element.geometry: Parameter 'feature' is required and may not be null."
+    "mean": 1.105554035569042,
+    "median": 0.4134830921659442,
+    "stdDev": 2.7880513546372505,
+    "count": 22184,
+    "min": 0.3050000071525574,
+    "max": 119.92250061035156,
+    "lit_area_km2": 3289.546960742893
   },
   "regional_background_stats": {
-    "error": "Element.geometry: Parameter 'feature' is required and may not be null."
+    "mean": 0.7812150805517815,
+    "median": 0.42153278720371906,
+    "stdDev": 1.0719665285522275,
+    "count": 21407,
+    "min": 0.3050000071525574,
+    "max": 24.927499771118164,
+    "lit_area_km2": 2668.7572560813733
   },
-  "thumbnail": null
+  "city_to_region_ratio": 14.85521915894252,
+  "city_to_full_region_ratio": 10.497109013666936,
+  "city_background_difference": 10.823906151315866,
+  "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlight_regional_analysis\\thumbnails\\Samarkand_2023_regional_zones.png"
 }

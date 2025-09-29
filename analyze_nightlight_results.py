@@ -1,223 +1,312 @@
-"""Quick analysis summary for Uzbekistan Regional Nightlight Analysis results.
-
-This script reads the CSV results and provides quick insights and summary statistics.
+#!/usr/bin/env python3
 """
+Analyze nightlight results for Uzbekistan cities.
+Updated to work with the comprehensive merged dataset.
+"""
+
 import pandas as pd
-from pathlib import Path
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
+from pathlib import Path
+import warnings
+warnings.filterwarnings('ignore')
 
-def analyze_results(csv_path: Path):
-    """Analyze the nightlight regional analysis results."""
+def load_nightlight_data():
+    """Load the comprehensive nightlight analysis results."""
+    csv_path = "suhi_analysis_output/nightlight_regional_analysis/uzbekistan_nightlight_regional_analysis.csv"
     
-    # Read the CSV data
-    df = pd.read_csv(csv_path)
+    try:
+        df = pd.read_csv(csv_path)
+        print(f"✅ Loaded nightlight data: {len(df)} records from {df['city'].nunique()} cities")
+        print(f"   Years: {df['year'].min()}-{df['year'].max()}")
+        return df
+    except FileNotFoundError:
+        print(f"❌ Data file not found: {csv_path}")
+        print("   Please run the nightlight analysis first.")
+        return None
+
+def analyze_temporal_trends(df):
+    """Analyze temporal trends in nightlight data."""
     
-    print("🌃 Uzbekistan City-Centered Nightlight Analysis - Quick Summary")
-    print("=" * 60)
-    print(f"📊 Data loaded: {len(df)} records")
-    print(f"🏙️ Cities analyzed: {', '.join(df['city'].unique())}")
-    print(f"📅 Years covered: {df['year'].min()}-{df['year'].max()}")
-    print(f"🗺️ Analysis types: City-centered circular zones")
+    print("\n🔍 Temporal Trends Analysis")
+    print("=" * 50)
     
-    print("\n💡 Key Insights:")
-    print("-" * 30)
+    # Calculate year-over-year growth rates
+    growth_data = []
     
-    # Latest year insights
-    latest_year = df['year'].max()
-    latest_data = df[df['year'] == latest_year].sort_values('city_to_regional_background_ratio', ascending=False)
-    
-    print(f"\n🏆 City-to-Background Ratios ({latest_year}):")
-    for _, row in latest_data.iterrows():
-        ratio = row['city_to_regional_background_ratio']
-        city_radiance = row['city_mean_radiance']
-        background_radiance = row['regional_background_mean_radiance']
-        city_radius = row['city_radius_km']
-        admin_region = row['administrative_region']
-        
-        print(f"  {row['city']:<10}: {ratio:.2f}x")
-        print(f"    {'':>2}City radiance: {city_radiance:.1f} nW/cm²/sr")
-        print(f"    {'':>2}Background: {background_radiance:.1f} nW/cm²/sr")
-        print(f"    {'':>2}Administrative region: {admin_region}")
-        print(f"    {'':>2}City analysis zone: {city_radius:.1f}km radius circular buffer")
-        print()
-    
-    # Growth trends
-    print(f"📈 Temporal Changes:")
-    cities = df['city'].unique()
-    
-    for city in cities:
+    for city in df['city'].unique():
         city_data = df[df['city'] == city].sort_values('year')
-        if len(city_data) >= 2:
-            first_ratio = city_data.iloc[0]['city_to_regional_background_ratio']
-            last_ratio = city_data.iloc[-1]['city_to_regional_background_ratio']
-            change = last_ratio - first_ratio
-            change_pct = (change / first_ratio) * 100 if first_ratio != 0 else 0
+        
+        if len(city_data) > 1:
+            # Calculate growth rate in city mean radiance
+            first_year = city_data.iloc[0]
+            last_year = city_data.iloc[-1]
             
-            trend_symbol = "📈" if change > 0 else "📉" if change < 0 else "📊"
-            print(f"  {city:<10}: {first_ratio:.2f} → {last_ratio:.2f} {trend_symbol} ({change:+.2f}, {change_pct:+.1f}%)")
+            years_span = last_year['year'] - first_year['year']
+            radiance_growth = ((last_year['city_mean_radiance'] / first_year['city_mean_radiance']) ** (1/years_span) - 1) * 100
+            
+            # Calculate growth in lit area
+            area_growth = ((last_year['city_lit_area_km2'] / first_year['city_lit_area_km2']) ** (1/years_span) - 1) * 100
+            
+            growth_data.append({
+                'city': city,
+                'radiance_annual_growth': radiance_growth,
+                'lit_area_annual_growth': area_growth,
+                'start_radiance': first_year['city_mean_radiance'],
+                'end_radiance': last_year['city_mean_radiance'],
+                'start_area': first_year['city_lit_area_km2'],
+                'end_area': last_year['city_lit_area_km2']
+            })
     
-    # Urban intensity analysis
-    print(f"\n🌆 Urban Intensity Analysis ({latest_year}):")
-    for _, row in latest_data.iterrows():
-        city_lit_area = row['city_lit_area_km2']
-        background_lit_area = row['regional_background_lit_area_km2']
-        city_area = row['city_area_km2']  # Now provided directly
-        admin_region_area = row.get('administrative_region_lit_area_km2', 0)
-        
-        city_lit_pct = (city_lit_area / city_area) * 100 if city_area > 0 else 0
-        # Background area calculation not needed for admin regions
-        
-        print(f"  {row['city']:<10}:")
-        print(f"    {'':>2}City lit coverage: {city_lit_pct:.1f}% ({city_lit_area:.1f} km²)")
-        print(f"    {'':>2}Regional background lit area: {background_lit_area:.1f} km²")
+    growth_df = pd.DataFrame(growth_data)
     
-    # Comparative analysis
-    print(f"\n🔍 Comparative Metrics:")
-    avg_city_radiance = latest_data['city_mean_radiance'].mean()
-    avg_background_radiance = latest_data['regional_background_mean_radiance'].mean()
-    avg_ratio = latest_data['city_to_regional_background_ratio'].mean()
+    print("📈 Annual Growth Rates (2017-2024):")
+    print("\nNightlight Intensity Growth:")
+    top_radiance_growth = growth_df.nlargest(5, 'radiance_annual_growth')
+    for _, row in top_radiance_growth.iterrows():
+        print(f"  {row['city']}: {row['radiance_annual_growth']:.1f}% annually")
     
-    print(f"  Average city radiance: {avg_city_radiance:.1f} nW/cm²/sr")
-    print(f"  Average background radiance: {avg_background_radiance:.1f} nW/cm²/sr")
-    print(f"  Average city-to-background ratio: {avg_ratio:.2f}x")
+    print("\nLit Area Expansion:")
+    top_area_growth = growth_df.nlargest(5, 'lit_area_annual_growth')
+    for _, row in top_area_growth.iterrows():
+        print(f"  {row['city']}: {row['lit_area_annual_growth']:.1f}% annually")
     
-    # Identify outliers
-    print(f"\n🎯 Urban Development Insights:")
-    highest_ratio_city = latest_data.iloc[0]
-    lowest_ratio_city = latest_data.iloc[-1]
-    
-    print(f"  🥇 Highest urban concentration: {highest_ratio_city['city']} ({highest_ratio_city['city_to_regional_background_ratio']:.2f}x)")
-    print(f"     - Strong urban center in {highest_ratio_city['administrative_region']}")
-    
-    print(f"  🌿 More distributed development: {lowest_ratio_city['city']} ({lowest_ratio_city['city_to_regional_background_ratio']:.2f}x)")
-    print(f"     - More balanced urban-rural radiance distribution")
-    
-    # Zone size analysis
-    print(f"\n🗺️ Analysis Zone Characteristics ({latest_year}):")
-    for _, row in latest_data.iterrows():
-        city_area = row['city_area_km2']
-        admin_region = row['administrative_region']
-        
-        print(f"  {row['city']} ({admin_region}):")
-        print(f"    City area: {city_area:.0f}km² (circular buffer)")
-        print(f"    Administrative region: {admin_region}")
-    
-    print(f"\n📋 Data Quality:")
-    print(f"  Total city-years analyzed: {len(df)}")
-    print(f"  Average city analysis radius: {df['city_radius_km'].mean():.1f}km")
-    print(f"  Analysis approach: City buffers + administrative regions")
+    return growth_df
 
+def analyze_urban_intensity(df):
+    """Analyze urban nightlight intensity patterns."""
+    
+    print("\n🌆 Urban Intensity Analysis")
+    print("=" * 50)
+    
+    # Calculate average metrics by city
+    city_stats = df.groupby('city').agg({
+        'city_mean_radiance': 'mean',
+        'city_to_regional_background_ratio': 'mean',
+        'city_lit_area_km2': 'mean',
+        'administrative_region': 'first'
+    }).round(1)
+    
+    city_stats = city_stats.sort_values('city_mean_radiance', ascending=False)
+    
+    print("🏙️  Top Cities by Mean Nightlight Intensity (2017-2024 average):")
+    for i, (city, stats) in enumerate(city_stats.head(10).iterrows(), 1):
+        print(f"  {i:2d}. {city:12s}: {stats['city_mean_radiance']:5.1f} nW/cm²/sr (Region: {stats['administrative_region']})")
+    
+    print("\n🌟 Highest City-to-Regional Contrast (average):")
+    city_contrast = city_stats.sort_values('city_to_regional_background_ratio', ascending=False)
+    for i, (city, stats) in enumerate(city_contrast.head(5).iterrows(), 1):
+        print(f"  {i}. {city}: {stats['city_to_regional_background_ratio']:.1f}x brighter than regional background")
+    
+    return city_stats
 
-def create_quick_visualization(csv_path: Path, output_dir: Path):
-    """Create a quick visualization of the results."""
+def analyze_regional_patterns(df):
+    """Analyze patterns by administrative region."""
     
-    df = pd.read_csv(csv_path)
+    print("\n🗺️  Regional Patterns Analysis")
+    print("=" * 50)
     
-    # Set up the plot style
+    # Group by administrative region
+    regional_stats = df.groupby('administrative_region').agg({
+        'city_mean_radiance': ['mean', 'count'],
+        'city_to_regional_background_ratio': 'mean',
+        'administrative_region_mean_radiance': 'mean'
+    }).round(2)
+    
+    regional_stats.columns = ['avg_city_radiance', 'num_cities', 'avg_contrast_ratio', 'regional_background']
+    regional_stats = regional_stats.sort_values('avg_city_radiance', ascending=False)
+    
+    print("📊 Administrative Regions by Urban Development:")
+    for region, stats in regional_stats.iterrows():
+        print(f"  {region}")
+        print(f"    Cities: {stats['num_cities']}")
+        print(f"    Avg City Intensity: {stats['avg_city_radiance']:.1f} nW/cm²/sr")
+        print(f"    Avg Contrast Ratio: {stats['avg_contrast_ratio']:.1f}x")
+        print(f"    Regional Background: {stats['regional_background']:.2f} nW/cm²/sr")
+        print()
+
+def check_data_anomalies(df):
+    """Check for data anomalies and interesting patterns."""
+    
+    print("\n🔍 Data Quality and Anomalies Check")
+    print("=" * 50)
+    
+    # Check for missing data
+    missing_data = df.isnull().sum()
+    if missing_data.sum() > 0:
+        print("⚠️  Missing data found:")
+        for col, count in missing_data[missing_data > 0].items():
+            print(f"    {col}: {count} missing values")
+    else:
+        print("✅ No missing data detected")
+    
+    # Check for extreme values
+    print("\n📊 Data Range Summary:")
+    print(f"City Mean Radiance: {df['city_mean_radiance'].min():.1f} - {df['city_mean_radiance'].max():.1f} nW/cm²/sr")
+    print(f"City-to-Regional Ratio: {df['city_to_regional_background_ratio'].min():.1f}x - {df['city_to_regional_background_ratio'].max():.1f}x")
+    print(f"City Lit Area: {df['city_lit_area_km2'].min():.1f} - {df['city_lit_area_km2'].max():.1f} km²")
+    
+    # Find extreme ratios
+    print(f"\n🌟 Extreme Urban-Rural Contrasts:")
+    extreme_ratios = df.nlargest(3, 'city_to_regional_background_ratio')
+    for _, row in extreme_ratios.iterrows():
+        print(f"  {row['city']} ({row['year']}): {row['city_to_regional_background_ratio']:.1f}x ratio")
+
+def create_visualizations(df):
+    """Create comprehensive visualizations."""
+    
+    print("\n📈 Creating Visualizations")
+    print("=" * 50)
+    
+    output_dir = Path("suhi_analysis_output/nightlight_regional_analysis")
+    
+    # Set style
     plt.style.use('default')
-    fig, axes = plt.subplots(2, 2, figsize=(15, 10))
-    fig.suptitle('Uzbekistan Regional Nightlight Analysis - City vs Administrative Region', fontsize=16, fontweight='bold')
+    sns.set_palette("husl")
     
-    # Plot 1: City-to-Background Ratios Over Time
-    cities = df['city'].unique()
-    colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9', '#F8C471', '#82E0AA', '#F1948A', '#AED6F1']
+    # Create figure with subplots - increased size for better visibility
+    fig, axes = plt.subplots(2, 3, figsize=(24, 16))
+    fig.suptitle('Uzbekistan Urban Nightlight Analysis (2017-2024)', fontsize=18, fontweight='bold')
     
-    for i, city in enumerate(cities):
+    # 1. Time series of top cities
+    ax1 = axes[0, 0]
+    top_cities = df.groupby('city')['city_mean_radiance'].mean().nlargest(8).index
+    
+    for city in top_cities:
         city_data = df[df['city'] == city].sort_values('year')
-        color = colors[i % len(colors)]
-        axes[0, 0].plot(city_data['year'], city_data['city_to_regional_background_ratio'], 
-                       marker='o', label=city, linewidth=2, color=color)
+        ax1.plot(city_data['year'], city_data['city_mean_radiance'], 
+                marker='o', linewidth=2, label=city)
     
-    axes[0, 0].set_title('City-to-Regional Background Radiance Ratios Over Time')
-    axes[0, 0].set_xlabel('Year')
-    axes[0, 0].set_ylabel('City/Regional Background Ratio')
-    axes[0, 0].legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-    axes[0, 0].grid(True, alpha=0.3)
+    ax1.set_title('Nightlight Intensity Trends - Top Cities')
+    ax1.set_xlabel('Year')
+    ax1.set_ylabel('Mean Radiance (nW/cm²/sr)')
+    ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9)
+    ax1.grid(True, alpha=0.3)
     
-    # Plot 2: Latest Year Comparison
-    latest_year = df['year'].max()
-    latest_data = df[df['year'] == latest_year].sort_values('city_to_regional_background_ratio', ascending=True)
+    # 2. City-to-regional ratios heatmap
+    ax2 = axes[0, 1]
+    pivot_ratios = df.pivot(index='city', columns='year', values='city_to_regional_background_ratio')
     
-    bars = axes[0, 1].bar(latest_data['city'], latest_data['city_to_regional_background_ratio'], 
-                         color=['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7'][:len(latest_data)])
-    axes[0, 1].set_title(f'City-to-Regional Background Ratios ({latest_year})')
-    axes[0, 1].set_xlabel('City')
-    axes[0, 1].set_ylabel('City/Regional Background Ratio')
-    axes[0, 1].tick_params(axis='x', rotation=45)
-    axes[0, 1].grid(True, alpha=0.3)
+    # Ensure all cities are visible - use smaller annotation font for better fit
+    sns.heatmap(pivot_ratios, annot=True, fmt='.1f', cmap='YlOrRd', ax=ax2,
+                cbar_kws={'label': 'City/Regional Ratio'}, annot_kws={'size': 8})
+    ax2.set_title('Urban-Rural Contrast Ratios (All 14 Cities)', fontsize=12)
+    ax2.set_xlabel('Year')
+    ax2.set_ylabel('City')
+    # Rotate y-axis labels for better readability
+    ax2.set_yticklabels(ax2.get_yticklabels(), rotation=0, fontsize=9)
     
-    # Add value labels on bars
-    for bar in bars:
-        height = bar.get_height()
-        axes[0, 1].text(bar.get_x() + bar.get_width()/2., height + 0.1,
-                        f'{height:.1f}', ha='center', va='bottom')
-    
-    # Plot 3: Mean Radiance Comparison
-    for i, city in enumerate(cities):
+    # 3. Urban area growth
+    ax3 = axes[0, 2]
+    for city in top_cities:
         city_data = df[df['city'] == city].sort_values('year')
-        color = colors[i % len(colors)]
-        axes[1, 0].plot(city_data['year'], city_data['city_mean_radiance'], 
-                       marker='o', label=f'{city} (City)', linewidth=2, color=color)
-        axes[1, 0].plot(city_data['year'], city_data['regional_background_mean_radiance'], 
-                       marker='s', label=f'{city} (Regional Bkg)', linewidth=1, 
-                       linestyle='--', color=color, alpha=0.7)
+        ax3.plot(city_data['year'], city_data['city_lit_area_km2'], 
+                marker='s', linewidth=2, label=city, alpha=0.8)
     
-    axes[1, 0].set_title('Mean Radiance: City vs Regional Background')
-    axes[1, 0].set_xlabel('Year')
-    axes[1, 0].set_ylabel('Mean Radiance (nW/cm²/sr)')
-    axes[1, 0].legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-    axes[1, 0].grid(True, alpha=0.3)
+    ax3.set_title('Urban Lit Area Growth')
+    ax3.set_xlabel('Year')
+    ax3.set_ylabel('Lit Area (km²)')
+    ax3.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9)
+    ax3.grid(True, alpha=0.3)
     
-    # Plot 4: Lit Area Comparison
-    for i, city in enumerate(cities):
-        city_data = df[df['city'] == city].sort_values('year')
-        color = colors[i % len(colors)]
-        axes[1, 1].plot(city_data['year'], city_data['city_lit_area_km2'], 
-                       marker='o', label=city, linewidth=2, color=color)
+    # 4. Average intensity by city (bar chart)
+    ax4 = axes[1, 0]
+    city_means = df.groupby('city')['city_mean_radiance'].mean().sort_values(ascending=True)
     
-    axes[1, 1].set_title('City Lit Area Over Time')
-    axes[1, 1].set_xlabel('Year')
-    axes[1, 1].set_ylabel('Lit Area (km²)')
-    axes[1, 1].legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-    axes[1, 1].grid(True, alpha=0.3)
+    bars = ax4.barh(range(len(city_means)), city_means.values, 
+                    color=plt.cm.viridis(np.linspace(0, 1, len(city_means))))
+    ax4.set_title('Average Nightlight Intensity by City (2017-2024)')
+    ax4.set_xlabel('Mean Radiance (nW/cm²/sr)')
+    ax4.set_yticks(range(len(city_means)))
+    ax4.set_yticklabels(city_means.index)
+    ax4.grid(True, alpha=0.3, axis='x')
+    
+    # Add value labels
+    for i, (bar, value) in enumerate(zip(bars, city_means.values)):
+        ax4.text(value + 0.5, bar.get_y() + bar.get_height()/2,
+                f'{value:.1f}', ha='left', va='center', fontsize=8)
+    
+    # 5. Scatter: Intensity vs Urban Area
+    ax5 = axes[1, 1]
+    
+    # Use 2024 data for scatter plot
+    recent_data = df[df['year'] == 2024]
+    
+    scatter = ax5.scatter(recent_data['city_lit_area_km2'], 
+                         recent_data['city_mean_radiance'],
+                         s=100, alpha=0.7, c=recent_data['city_to_regional_background_ratio'],
+                         cmap='plasma')
+    
+    # Add city labels
+    for _, row in recent_data.iterrows():
+        ax5.annotate(row['city'], (row['city_lit_area_km2'], row['city_mean_radiance']),
+                    xytext=(5, 5), textcoords='offset points', fontsize=8)
+    
+    ax5.set_title('Urban Intensity vs Area (2024)')
+    ax5.set_xlabel('Lit Area (km²)')
+    ax5.set_ylabel('Mean Radiance (nW/cm²/sr)')
+    ax5.grid(True, alpha=0.3)
+    
+    # Add colorbar for scatter plot
+    cbar = plt.colorbar(scatter, ax=ax5)
+    cbar.set_label('City/Regional Ratio')
+    
+    # 6. Regional comparison
+    ax6 = axes[1, 2]
+    
+    # Group by region and calculate stats
+    regional_summary = df.groupby('administrative_region').agg({
+        'city_mean_radiance': 'mean',
+        'administrative_region_mean_radiance': 'mean'
+    }).sort_values('city_mean_radiance', ascending=True)
+    
+    x_pos = np.arange(len(regional_summary))
+    
+    # Create grouped bar chart
+    width = 0.35
+    bars1 = ax6.barh(x_pos - width/2, regional_summary['city_mean_radiance'], 
+                     width, label='City Average', alpha=0.8)
+    bars2 = ax6.barh(x_pos + width/2, regional_summary['administrative_region_mean_radiance'], 
+                     width, label='Regional Background', alpha=0.8)
+    
+    ax6.set_title('City vs Regional Background Comparison')
+    ax6.set_xlabel('Mean Radiance (nW/cm²/sr)')
+    ax6.set_yticks(x_pos)
+    ax6.set_yticklabels([name.replace(' Region', '').replace(' City', '') 
+                        for name in regional_summary.index], fontsize=8)
+    ax6.legend()
+    ax6.grid(True, alpha=0.3, axis='x')
     
     plt.tight_layout()
     
-    # Save the plot
-    output_file = output_dir / 'quick_analysis_overview.png'
+    # Save visualization
+    output_file = output_dir / 'detailed_nightlight_analysis.png'
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     plt.close()
     
-    print(f"📊 Quick visualization saved: {output_file}")
-
+    print(f"📊 Detailed visualizations saved: {output_file}")
 
 def main():
-    """Main function to run quick analysis."""
+    """Main analysis function."""
     
-    # Define paths
-    results_dir = Path("suhi_analysis_output/nightlight_regional_analysis")
-    csv_file = results_dir / "uzbekistan_nightlight_regional_analysis.csv"
+    print("🌃 Uzbekistan Nightlight Results Analysis")
+    print("=" * 60)
     
-    if not csv_file.exists():
-        print("❌ Results file not found. Please run the main analysis first:")
-        print("   python run_uzbekistan_nightlight_regional_analysis.py")
-        return 1
+    # Load data
+    df = load_nightlight_data()
+    if df is None:
+        return
     
-    # Run analysis
-    analyze_results(csv_file)
+    # Perform analyses
+    growth_stats = analyze_temporal_trends(df)
+    city_stats = analyze_urban_intensity(df)
+    analyze_regional_patterns(df)
+    check_data_anomalies(df)
+    create_visualizations(df)
     
-    # Create visualization
-    print(f"\n📈 Creating quick visualization...")
-    create_quick_visualization(csv_file, results_dir)
-    
-    print(f"\n" + "=" * 60)
-    print(f"✅ Quick analysis complete!")
-    print(f"📁 Full results available in: {results_dir}")
-    print(f"📄 Detailed report: {results_dir / 'uzbekistan_nightlight_regional_summary.md'}")
-    
-    return 0
+    print("\n✅ Analysis Complete!")
+    print("📊 Check the output directory for visualizations and reports")
 
-
-if __name__ == '__main__':
-    exit(main())
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,49 @@
+{
+  "city": "Tashkent",
+  "year": 2022,
+  "timestamp": "2025-09-29T13:19:57.142259",
+  "region_name": "Tashkent Region",
+  "city_radius_km": 15.0,
+  "city_area_km2": 706.85775,
+  "analysis_approach": "city_center_administrative_region",
+  "city_stats": {
+    "mean": 16.611028530672137,
+    "median": 13.51581423128504,
+    "stdDev": 12.558062946101881,
+    "count": 2200,
+    "min": 1.2049999237060547,
+    "max": 139.9250030517578,
+    "lit_area_km2": 357.5567886638482
+  },
+  "city_buffer_stats": {
+    "mean": 12.036096766927884,
+    "median": 7.528739288186794,
+    "stdDev": 11.59091181157681,
+    "count": 3544,
+    "min": 0.8999999761581421,
+    "max": 139.9250030517578,
+    "lit_area_km2": 598.2912465151354
+  },
+  "region_stats": {
+    "mean": 1.520184678258588,
+    "median": 0.6128612109686121,
+    "stdDev": 3.7645097516886827,
+    "count": 21191,
+    "min": 0.26875001192092896,
+    "max": 56.75499725341797,
+    "lit_area_km2": 4245.588222134068
+  },
+  "regional_background_stats": {
+    "mean": 1.092290989407291,
+    "median": 0.5589124251379514,
+    "stdDev": 1.841195743632186,
+    "count": 20342,
+    "min": 0.26875001192092896,
+    "max": 29.657501220703125,
+    "lit_area_km2": 3645.748692797795
+  },
+  "city_to_region_ratio": 15.20751218472082,
+  "city_to_full_region_ratio": 10.926980628235585,
+  "city_background_difference": 15.518737541264846,
+  "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlight_regional_analysis\\thumbnails\\Tashkent_2022_regional_zones.png"
+}

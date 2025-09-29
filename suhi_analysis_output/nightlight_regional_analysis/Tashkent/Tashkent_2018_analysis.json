@@ -1,8 +1,8 @@
 {
   "city": "Tashkent",
   "year": 2018,
-  "timestamp": "2025-09-29T12:06:00.756415",
-  "region_name": "Tashkent City",
+  "timestamp": "2025-09-29T13:18:47.767696",
+  "region_name": "Tashkent Region",
   "city_radius_km": 15.0,
   "city_area_km2": 706.85775,
   "analysis_approach": "city_center_administrative_region",
@@ -16,7 +16,13 @@
     "lit_area_km2": 356.0469867582109
   },
   "city_buffer_stats": {
-    "error": "HTTPSConnectionPool(host='earthengine.googleapis.com', port=443): Max retries exceeded with url: /v1/projects/ee-sabitovty/value:compute?prettyPrint=false&alt=json (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001DF64CDB850>: Failed to establish a new connection: [WinError 10051] \u0421\u0434\u0435\u043b\u0430\u043d\u0430 \u043f\u043e\u043f\u044b\u0442\u043a\u0430 \u0432\u044b\u043f\u043e\u043b\u043d\u0438\u0442\u044c \u043e\u043f\u0435\u0440\u0430\u0446\u0438\u044e \u043d\u0430 \u0441\u043e\u043a\u0435\u0442\u0435 \u043f\u0440\u0438 \u043e\u0442\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u043e\u0439 \u0441\u0435\u0442\u0438'))"
+    "mean": 7.544082994155052,
+    "median": 4.1264651326243715,
+    "stdDev": 8.470678850764791,
+    "count": 3544,
+    "min": 0.6399999856948853,
+    "max": 49.80999755859375,
+    "lit_area_km2": 579.4096142169733
   },
   "region_stats": {
     "mean": 0.9518990358841021,

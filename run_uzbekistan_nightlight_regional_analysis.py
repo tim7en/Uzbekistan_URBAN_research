@@ -69,7 +69,7 @@ def calculate_regional_buffer_from_city(city_info: Dict[str, Any], regional_buff
 
 # Map cities to their regions for analysis
 CITY_TO_REGION_MAP = {
-    "Tashkent": "Tashkent City",
+    "Tashkent": "Tashkent Region",  # Use Tashkent Region instead of Tashkent City for meaningful regional comparison
     "Samarkand": "Samarkand Region",
     "Bukhara": "Bukhara Region",
     "Andijan": "Andijan Region",

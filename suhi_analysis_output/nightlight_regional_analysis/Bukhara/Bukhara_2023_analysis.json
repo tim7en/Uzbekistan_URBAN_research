@@ -1,22 +1,49 @@
 {
   "city": "Bukhara",
   "year": 2023,
-  "timestamp": "2025-09-29T12:12:44.093132",
+  "timestamp": "2025-09-29T12:29:27.637122",
   "region_name": "Bukhara Region",
   "city_radius_km": 10.0,
   "city_area_km2": 314.159,
   "analysis_approach": "city_center_administrative_region",
   "city_stats": {
-    "error": "Element.geometry: Parameter 'feature' is required and may not be null."
+    "mean": 5.744841495594909,
+    "median": 2.6102807592888877,
+    "stdDev": 7.1497840103949,
+    "count": 1709,
+    "min": 0.7450000047683716,
+    "max": 45.345001220703125,
+    "lit_area_km2": 298.12602714662995
   },
   "city_buffer_stats": {
-    "error": "Element.geometry: Parameter 'feature' is required and may not be null."
+    "mean": 4.5555927885200305,
+    "median": 1.8798828603780033,
+    "stdDev": 6.3463363090438945,
+    "count": 2435,
+    "min": 0.6599999666213989,
+    "max": 45.345001220703125,
+    "lit_area_km2": 386.67286869136007
   },
   "region_stats": {
-    "error": "Element.geometry: Parameter 'feature' is required and may not be null."
+    "mean": 0.5840993536092729,
+    "median": 0.4193926695723427,
+    "stdDev": 2.179264248056145,
+    "count": 51371,
+    "min": 0.29875001311302185,
+    "max": 222.73873901367188,
+    "lit_area_km2": 2296.010030249755
   },
   "regional_background_stats": {
-    "error": "Element.geometry: Parameter 'feature' is required and may not be null."
+    "mean": 0.5370836025293566,
+    "median": 0.41876773757270386,
+    "stdDev": 2.0428899553367357,
+    "count": 50834,
+    "min": 0.29875001311302185,
+    "max": 222.73873901367188,
+    "lit_area_km2": 1899.7985865509813
   },
-  "thumbnail": null
+  "city_to_region_ratio": 10.696363598776784,
+  "city_to_full_region_ratio": 9.835384100489623,
+  "city_background_difference": 5.207757893065553,
+  "thumbnail": "D:\\dev\\Uzbekistan_URBAN_research\\suhi_analysis_output\\nightlight_regional_analysis\\thumbnails\\Bukhara_2023_regional_zones.png"
 }
