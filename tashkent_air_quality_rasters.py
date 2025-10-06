@@ -1,9 +1,9 @@
-"""Tashkent PM2.5 Raster Extraction and Visualization Script.
+"""Tashkent Air Quality Raster Extraction and Visualization Script.
 
-This script extracts monthly average raster data for PM2.5 pollutant
-specifically for Tashkent city using CAMS Global Atmospheric Composition data. It creates:
-- 12 GeoTIFF raster files for PM2.5 monthly averages
-- A visualization showing 2024 trends for PM2.5
+This script extracts monthly average raster data for NO2, SO2, and PM2.5 pollutants
+specifically for Tashkent city using Sentinel-5P and CAMS data. It creates:
+- 12 GeoTIFF raster files for each pollutant monthly averages
+- A visualization showing 2024 trends for all three pollutants
 
 Data is extracted using Google Earth Engine with existing authentication routines.
 """
@@ -12,6 +12,7 @@ from pathlib import Path
 import argparse
 import json
 from datetime import datetime
+from typing import Optional
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -26,19 +27,19 @@ from services.air_quality import AirQualityAnalyzer
 from services.utils import UZBEKISTAN_CITIES, create_output_directories
 
 
-def extract_monthly_rasters(city_name: str, year: int, pollutants: list = None) -> dict:
+def extract_monthly_rasters(city_name: str, year: int, pollutants: Optional[list[str]] = None) -> dict:
     """Extract monthly raster composites for specified pollutants.
 
     Args:
         city_name: Name of the city (must be in UZBEKISTAN_CITIES)
         year: Year to extract data for
-        pollutants: List of pollutants to extract (default: ['PM25'])
+        pollutants: List of pollutants to extract (default: ['NO2', 'SO2', 'PM25'])
 
     Returns:
         Dictionary containing extraction results and file paths
     """
     if pollutants is None:
-        pollutants = ['PM25']
+        pollutants = ['NO2', 'SO2', 'PM25']
 
     analyzer = AirQualityAnalyzer()
 
@@ -177,17 +178,21 @@ def extract_monthly_rasters(city_name: str, year: int, pollutants: list = None) 
     return results
 
 
-def create_pm25_trends_visualization(city_name: str, year: int = 2025) -> dict:
-    """Create visualization showing PM2.5 trends for the specified year.
+def create_trends_visualization(city_name: str, year: int = 2025, pollutants: Optional[list[str]] = None) -> dict:
+    """Create visualization showing air quality trends for the specified year.
 
     Args:
         city_name: Name of the city
         year: Year to visualize (default: 2024)
+        pollutants: List of pollutants to include (default: ['NO2', 'SO2', 'PM25'])
 
     Returns:
         Dictionary with visualization results
     """
-    print(f"📈 Creating PM2.5 trends visualization for {city_name} {year}...")
+    if pollutants is None:
+        pollutants = ['NO2', 'SO2', 'PM25']
+
+    print(f"📈 Creating air quality trends visualization for {city_name} {year}...")
 
     analyzer = AirQualityAnalyzer()
 
@@ -195,91 +200,106 @@ def create_pm25_trends_visualization(city_name: str, year: int = 2025) -> dict:
     geometries = analyzer.get_city_geometry(city_name)
     geometry = geometries['urban']  # Focus on urban area for trends
 
-    # Collect monthly data for PM2.5
+    # Collect monthly data for all pollutants
     monthly_data = {}
-    pollutant = 'PM25'
-    
-    print(f"   Collecting {pollutant} data for {year}...")
-    monthly_values = []
-    months = []
 
-    for month in range(1, 13):
-        month_name = datetime(year, month, 1).strftime('%b')
+    for pollutant in pollutants:
+        print(f"   Collecting {pollutant} data for {year}...")
+        monthly_values = []
+        months = []
 
-        start_date = f"{year}-{month:02d}-01"
-        if month == 12:
-            end_date = f"{year+1}-01-01"
-        else:
-            end_date = f"{year}-{month+1:02d}-01"
+        for month in range(1, 13):
+            month_name = datetime(year, month, 1).strftime('%b')
 
-        try:
-            # Get data for this month
-            collection = analyzer.get_sentinel5p_data(pollutant, start_date, end_date, geometry)
+            start_date = f"{year}-{month:02d}-01"
+            if month == 12:
+                end_date = f"{year+1}-01-01"
+            else:
+                end_date = f"{year}-{month+1:02d}-01"
 
-            if collection.size().getInfo() > 0:
-                # Calculate monthly mean
-                monthly_composite = analyzer.calculate_monthly_composite(collection, geometry, 'mean')
-                config = analyzer.pollutants[pollutant]
+            try:
+                # Get data for this month
+                collection = analyzer.get_sentinel5p_data(pollutant, start_date, end_date, geometry)
 
-                # Extract mean value
-                stats = analyzer.extract_pollutant_stats(
-                    monthly_composite, geometry, config['band'], scale=10000  # CAMS resolution
-                )
+                if collection.size().getInfo() > 0:
+                    # Calculate monthly mean
+                    monthly_composite = analyzer.calculate_monthly_composite(collection, geometry, 'mean')
+                    config = analyzer.pollutants[pollutant]
 
-                if 'mean' in stats and stats['mean'] is not None:
-                    # Convert to appropriate units
-                    mean_value = stats['mean']
-                    if config['factor'] != 1:
-                        mean_value *= config['factor']
+                    # Extract mean value
+                    scale = 10000 if pollutant == 'PM25' else 7500  # CAMS vs Sentinel-5P resolution
+                    stats = analyzer.extract_pollutant_stats(
+                        monthly_composite, geometry, config['band'], scale=scale
+                    )
 
-                    monthly_values.append(mean_value)
-                    months.append(month_name)
-                    print(f"     {month_name}: {mean_value:.2e} {config['display_units']}")
+                    if 'mean' in stats and stats['mean'] is not None:
+                        # Convert to appropriate units
+                        mean_value = stats['mean']
+                        if config['factor'] != 1:
+                            mean_value *= config['factor']
+
+                        monthly_values.append(mean_value)
+                        months.append(month_name)
+                        print(f"     {month_name}: {mean_value:.1f} {config['display_units']}")
+                    else:
+                        monthly_values.append(None)
+                        months.append(month_name)
+                        print(f"     {month_name}: No data")
                 else:
                     monthly_values.append(None)
                     months.append(month_name)
                     print(f"     {month_name}: No data")
-            else:
+
+            except Exception as e:
+                print(f"     Error getting {pollutant} data for {month_name}: {e}")
                 monthly_values.append(None)
                 months.append(month_name)
-                print(f"     {month_name}: No data")
 
-        except Exception as e:
-            print(f"     Error getting {pollutant} data for {month_name}: {e}")
-            monthly_values.append(None)
-            months.append(month_name)
-
-    monthly_data[pollutant] = {
-        'months': months,
-        'values': monthly_values
-    }
+        monthly_data[pollutant] = {
+            'months': months,
+            'values': monthly_values
+        }
 
     # Create visualization
-    fig, ax = plt.subplots(1, 1, figsize=(12, 6))
-    fig.suptitle(f'{city_name} PM2.5 Trends - {year}', fontsize=16, fontweight='bold')
+    n_pollutants = len(pollutants)
+    fig, axes = plt.subplots(n_pollutants, 1, figsize=(12, 6*n_pollutants))
+    if n_pollutants == 1:
+        axes = [axes]  # Make it iterable
 
-    # PM2.5 plot
-    pm25_data = monthly_data['PM25']
-    valid_pm25 = [(m, v) for m, v in zip(pm25_data['months'], pm25_data['values']) if v is not None]
+    fig.suptitle(f'{city_name} Air Quality Trends - {year}', fontsize=16, fontweight='bold')
 
-    if valid_pm25:
-        months_pm25, values_pm25 = zip(*valid_pm25)
-        ax.plot(months_pm25, values_pm25, 'go-', linewidth=2, markersize=8, label='PM₂.₅')
-        ax.fill_between(months_pm25, values_pm25, alpha=0.3, color='green')
-        ax.set_ylabel('PM₂.₅ (µg/m³)', fontsize=12)
-        ax.set_title('Particulate Matter (PM₂.₅) Monthly Averages', fontsize=14)
-        ax.grid(True, alpha=0.3)
-        ax.legend()
+    # Define colors and labels for each pollutant
+    pollutant_config = {
+        'NO2': {'color': 'red', 'label': 'NO₂', 'units': 'μmol/m²'},
+        'SO2': {'color': 'blue', 'label': 'SO₂', 'units': 'μmol/m²'},
+        'PM25': {'color': 'green', 'label': 'PM₂.₅', 'units': 'μg/m³'}
+    }
 
-        # Add value labels
-        for i, v in enumerate(values_pm25):
-            ax.annotate(f'{v:.2e}', (months_pm25[i], v),
-                        xytext=(0, 10), textcoords='offset points',
-                        ha='center', fontsize=9)
-    else:
-        ax.text(0.5, 0.5, 'No PM₂.₅ data available', transform=ax.transAxes,
-                ha='center', va='center', fontsize=14)
-        ax.set_title('Particulate Matter (PM₂.₅) Monthly Averages - No Data', fontsize=14)
+    for i, pollutant in enumerate(pollutants):
+        ax = axes[i]
+        data = monthly_data[pollutant]
+        config = pollutant_config[pollutant]
+
+        valid_data = [(m, v) for m, v in zip(data['months'], data['values']) if v is not None]
+
+        if valid_data:
+            months_plot, values_plot = zip(*valid_data)
+            ax.plot(months_plot, values_plot, 'o-', color=config['color'], linewidth=2, markersize=8, label=config['label'])
+            ax.fill_between(months_plot, values_plot, alpha=0.3, color=config['color'])
+            ax.set_ylabel(f"{config['label']} ({config['units']})", fontsize=12)
+            ax.set_title(f'{config["label"]} Monthly Averages', fontsize=14)
+            ax.grid(True, alpha=0.3)
+            ax.legend()
+
+            # Add value labels (rounded to 1 decimal place)
+            for j, v in enumerate(values_plot):
+                ax.annotate(f'{v:.1f}', (months_plot[j], v),
+                           xytext=(0, 10), textcoords='offset points',
+                           ha='center', fontsize=9)
+        else:
+            ax.text(0.5, 0.5, f'No {config["label"]} data available', transform=ax.transAxes,
+                    ha='center', va='center', fontsize=14)
+            ax.set_title(f'{config["label"]} Monthly Averages - No Data', fontsize=14)
 
     plt.tight_layout()
 
@@ -287,36 +307,41 @@ def create_pm25_trends_visualization(city_name: str, year: int = 2025) -> dict:
     output_dir = Path('tashkent_air_quality_rasters')
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    plot_filename = f"{city_name.lower()}_pm25_trends_{year}.png"
+    plot_filename = f"{city_name.lower()}_air_quality_trends_{year}.png"
     plot_path = output_dir / plot_filename
 
     plt.savefig(plot_path, dpi=300, bbox_inches='tight')
     plt.close()
 
-    print(f"   ✅ PM2.5 trends visualization saved: {plot_path}")
+    print(f"   ✅ Air quality trends visualization saved: {plot_path}")
 
     # Save data as CSV for further analysis
     csv_data = []
-    for i, month in enumerate(pm25_data['months']):
-        row = {
-            'Month': month,
-            'PM25_Value': pm25_data['values'][i]
-        }
+    for i, month in enumerate(monthly_data[pollutants[0]]['months']):  # Use months from first pollutant
+        row = {'Month': month}
+        for pollutant in pollutants:
+            row[f"{pollutant}_Value"] = monthly_data[pollutant]['values'][i]
         csv_data.append(row)
 
-    csv_filename = f"{city_name.lower()}_pm25_trends_{year}.csv"
+    csv_filename = f"{city_name.lower()}_air_quality_trends_{year}.csv"
     csv_path = output_dir / csv_filename
 
     df = pd.DataFrame(csv_data)
     df.to_csv(csv_path, index=False)
 
-    print(f"   ✅ PM2.5 trends data saved: {csv_path}")
+    print(f"   ✅ Air quality trends data saved: {csv_path}")
+
+    # Count data points for each pollutant
+    data_points = {}
+    for pollutant in pollutants:
+        valid_count = sum(1 for v in monthly_data[pollutant]['values'] if v is not None)
+        data_points[pollutant] = valid_count
 
     return {
         'plot_file': str(plot_path),
         'data_file': str(csv_path),
         'monthly_data': monthly_data,
-        'data_points_pm25': len(valid_pm25)
+        'data_points': data_points
     }
 
 
@@ -324,7 +349,7 @@ def main():
     parser = argparse.ArgumentParser(description='Extract Tashkent air quality rasters and create visualizations')
     parser.add_argument('--year', type=int, default=2024, help='Year to extract data for (default: 2024)')
     parser.add_argument('--pollutants', nargs='*', choices=['NO2', 'SO2', 'PM25'],
-                       default=['PM25'], help='Pollutants to extract (default: PM25)')
+                       default=['NO2', 'SO2', 'PM25'], help='Pollutants to extract (default: NO2, SO2, PM25)')
     parser.add_argument('--extract-rasters', action='store_true',
                        help='Extract monthly raster files')
     parser.add_argument('--create-visualization', action='store_true',
@@ -348,7 +373,7 @@ def main():
     city_name = "Tashkent"
     year = args.year
 
-    print("🏙️ Tashkent PM2.5 Data Extraction")
+    print("🏙️ Tashkent Air Quality Data Extraction")
     print("=" * 50)
     print(f"   City: {city_name}")
     print(f"   Year: {year}")
@@ -379,14 +404,15 @@ def main():
 
     # Create visualization if requested
     if args.create_visualization or args.all:
-        print("\n📈 Creating PM2.5 trends visualization...")
-        viz_results = create_pm25_trends_visualization(city_name, year)
+        print("\n📈 Creating air quality trends visualization...")
+        viz_results = create_trends_visualization(city_name, year, args.pollutants)
         results['visualization'] = viz_results
 
         print("\n📈 Visualization Summary:")
         print(f"   Plot saved: {viz_results['plot_file']}")
         print(f"   Data saved: {viz_results['data_file']}")
-        print(f"   PM2.5 data points: {viz_results['data_points_pm25']}")
+        for pollutant, count in viz_results['data_points'].items():
+            print(f"   {pollutant} data points: {count}")
 
     # Save overall results
     output_dir = Path('tashkent_air_quality_rasters')
@@ -398,7 +424,7 @@ def main():
 
     print(f"\n💾 Complete results saved: {results_file}")
 
-    print("\n🎯 Tashkent PM2.5 Extraction Complete!")
+    print("\n🎯 Tashkent Air Quality Extraction Complete!")
     print("=" * 50)
     print("Note: Raster exports to Google Drive may take several minutes to complete.")
     print("Check your Google Drive 'tashkent_air_quality_rasters' folder for the GeoTIFF files.")

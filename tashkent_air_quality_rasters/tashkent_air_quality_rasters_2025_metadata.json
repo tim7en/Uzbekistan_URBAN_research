@@ -1,0 +1,336 @@
+{
+  "city": "Tashkent",
+  "year": 2025,
+  "extraction_timestamp": "2025-10-06T15:53:48.490396",
+  "rasters": {
+    "NO2": {
+      "monthly_files": [
+        {
+          "month": 1,
+          "month_name": "January",
+          "filename": "tashkent_no2_2025_01_january.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_no2_2025_01_january.tif",
+          "gee_task_id": "2FO6ZBV2XDPCZHGYRPEFHYJJ",
+          "status": "export_started",
+          "data_points": 440
+        },
+        {
+          "month": 2,
+          "month_name": "February",
+          "filename": "tashkent_no2_2025_02_february.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_no2_2025_02_february.tif",
+          "gee_task_id": "JRLXTHCAPWXOEUM2DV67AQY3",
+          "status": "export_started",
+          "data_points": 397
+        },
+        {
+          "month": 3,
+          "month_name": "March",
+          "filename": "tashkent_no2_2025_03_march.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_no2_2025_03_march.tif",
+          "gee_task_id": "T5ZZEW3ATHLJPP2XEL2FX776",
+          "status": "export_started",
+          "data_points": 439
+        },
+        {
+          "month": 4,
+          "month_name": "April",
+          "filename": "tashkent_no2_2025_04_april.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_no2_2025_04_april.tif",
+          "gee_task_id": "4SJAPD5OL7TROLAKS6BNLG7H",
+          "status": "export_started",
+          "data_points": 426
+        },
+        {
+          "month": 5,
+          "month_name": "May",
+          "filename": "tashkent_no2_2025_05_may.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_no2_2025_05_may.tif",
+          "gee_task_id": "JNNM3DDURXERYJEM5LBSTNQB",
+          "status": "export_started",
+          "data_points": 438
+        },
+        {
+          "month": 6,
+          "month_name": "June",
+          "filename": "tashkent_no2_2025_06_june.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_no2_2025_06_june.tif",
+          "gee_task_id": "FMLICNKAUKLWNWDOV3X4K725",
+          "status": "export_started",
+          "data_points": 426
+        },
+        {
+          "month": 7,
+          "month_name": "July",
+          "filename": "tashkent_no2_2025_07_july.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_no2_2025_07_july.tif",
+          "gee_task_id": "A3YARSFUK2T45IKELWNLTIP6",
+          "status": "export_started",
+          "data_points": 440
+        },
+        {
+          "month": 8,
+          "month_name": "August",
+          "filename": "tashkent_no2_2025_08_august.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_no2_2025_08_august.tif",
+          "gee_task_id": "KHVFQ4PXUWSZQPYHBRNR62IT",
+          "status": "export_started",
+          "data_points": 439
+        },
+        {
+          "month": 9,
+          "month_name": "September",
+          "filename": "tashkent_no2_2025_09_september.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_no2_2025_09_september.tif",
+          "gee_task_id": "KHFTZ5FJJVUASYH5WBAMUO2H",
+          "status": "export_started",
+          "data_points": 323
+        },
+        {
+          "month": 10,
+          "month_name": "October",
+          "filename": null,
+          "status": "no_data",
+          "data_points": 0
+        },
+        {
+          "month": 11,
+          "month_name": "November",
+          "filename": null,
+          "status": "no_data",
+          "data_points": 0
+        },
+        {
+          "month": 12,
+          "month_name": "December",
+          "filename": null,
+          "status": "no_data",
+          "data_points": 0
+        }
+      ],
+      "extraction_status": "success",
+      "error_details": null
+    },
+    "SO2": {
+      "monthly_files": [
+        {
+          "month": 1,
+          "month_name": "January",
+          "filename": "tashkent_so2_2025_01_january.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_so2_2025_01_january.tif",
+          "gee_task_id": "SZ323SU6ULWP3DUBZ7MK73UJ",
+          "status": "export_started",
+          "data_points": 440
+        },
+        {
+          "month": 2,
+          "month_name": "February",
+          "filename": "tashkent_so2_2025_02_february.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_so2_2025_02_february.tif",
+          "gee_task_id": "CZS7PQQO5OVFLTQ7FVQ2PSI7",
+          "status": "export_started",
+          "data_points": 397
+        },
+        {
+          "month": 3,
+          "month_name": "March",
+          "filename": "tashkent_so2_2025_03_march.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_so2_2025_03_march.tif",
+          "gee_task_id": "BOJL27FIS7ISLOG5S25GUQW5",
+          "status": "export_started",
+          "data_points": 438
+        },
+        {
+          "month": 4,
+          "month_name": "April",
+          "filename": "tashkent_so2_2025_04_april.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_so2_2025_04_april.tif",
+          "gee_task_id": "CTP2BJ2XYEWIR6NEHNXS22VF",
+          "status": "export_started",
+          "data_points": 426
+        },
+        {
+          "month": 5,
+          "month_name": "May",
+          "filename": "tashkent_so2_2025_05_may.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_so2_2025_05_may.tif",
+          "gee_task_id": "KLTM3NSAOACYH6W2XAISOSHO",
+          "status": "export_started",
+          "data_points": 438
+        },
+        {
+          "month": 6,
+          "month_name": "June",
+          "filename": "tashkent_so2_2025_06_june.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_so2_2025_06_june.tif",
+          "gee_task_id": "VS2RY232VSM6HCA24NVG4JEY",
+          "status": "export_started",
+          "data_points": 426
+        },
+        {
+          "month": 7,
+          "month_name": "July",
+          "filename": "tashkent_so2_2025_07_july.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_so2_2025_07_july.tif",
+          "gee_task_id": "UJPZUMZEP6EXKQTKIHPZFDPK",
+          "status": "export_started",
+          "data_points": 440
+        },
+        {
+          "month": 8,
+          "month_name": "August",
+          "filename": "tashkent_so2_2025_08_august.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_so2_2025_08_august.tif",
+          "gee_task_id": "35EZM6QRDEVC6E44BSHCVCB2",
+          "status": "export_started",
+          "data_points": 440
+        },
+        {
+          "month": 9,
+          "month_name": "September",
+          "filename": "tashkent_so2_2025_09_september.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_so2_2025_09_september.tif",
+          "gee_task_id": "EIQB3BXMACND7ZKVR5JAZPQP",
+          "status": "export_started",
+          "data_points": 423
+        },
+        {
+          "month": 10,
+          "month_name": "October",
+          "filename": "tashkent_so2_2025_10_october.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_so2_2025_10_october.tif",
+          "gee_task_id": "XH3RMGSS26PZMRPZGEVTUCJS",
+          "status": "export_started",
+          "data_points": 36
+        },
+        {
+          "month": 11,
+          "month_name": "November",
+          "filename": null,
+          "status": "no_data",
+          "data_points": 0
+        },
+        {
+          "month": 12,
+          "month_name": "December",
+          "filename": null,
+          "status": "no_data",
+          "data_points": 0
+        }
+      ],
+      "extraction_status": "success",
+      "error_details": null
+    },
+    "PM25": {
+      "monthly_files": [
+        {
+          "month": 1,
+          "month_name": "January",
+          "filename": "tashkent_pm25_2025_01_january.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_pm25_2025_01_january.tif",
+          "gee_task_id": "43GOEQZMWB46TD7RL66NSJZW",
+          "status": "export_started",
+          "data_points": 2542
+        },
+        {
+          "month": 2,
+          "month_name": "February",
+          "filename": "tashkent_pm25_2025_02_february.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_pm25_2025_02_february.tif",
+          "gee_task_id": "VT6XRDXLVIVOYDR66IFNSJGZ",
+          "status": "export_started",
+          "data_points": 2296
+        },
+        {
+          "month": 3,
+          "month_name": "March",
+          "filename": "tashkent_pm25_2025_03_march.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_pm25_2025_03_march.tif",
+          "gee_task_id": "OMUUNUMD4WR2N4T2XSBWQEHX",
+          "status": "export_started",
+          "data_points": 2542
+        },
+        {
+          "month": 4,
+          "month_name": "April",
+          "filename": "tashkent_pm25_2025_04_april.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_pm25_2025_04_april.tif",
+          "gee_task_id": "ZCC6JLKP7E7FX362OOT4DWDH",
+          "status": "export_started",
+          "data_points": 2460
+        },
+        {
+          "month": 5,
+          "month_name": "May",
+          "filename": "tashkent_pm25_2025_05_may.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_pm25_2025_05_may.tif",
+          "gee_task_id": "5NWXUW3OKFZI2V6WTZMNIB4T",
+          "status": "export_started",
+          "data_points": 2542
+        },
+        {
+          "month": 6,
+          "month_name": "June",
+          "filename": "tashkent_pm25_2025_06_june.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_pm25_2025_06_june.tif",
+          "gee_task_id": "3GPO6R5637M7WI3BDNLIQDLQ",
+          "status": "export_started",
+          "data_points": 2452
+        },
+        {
+          "month": 7,
+          "month_name": "July",
+          "filename": "tashkent_pm25_2025_07_july.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_pm25_2025_07_july.tif",
+          "gee_task_id": "SFUZGRRCCG44G3K2OIUIO6JE",
+          "status": "export_started",
+          "data_points": 2509
+        },
+        {
+          "month": 8,
+          "month_name": "August",
+          "filename": "tashkent_pm25_2025_08_august.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_pm25_2025_08_august.tif",
+          "gee_task_id": "35RLRWOVG33VE7RO535OJGXS",
+          "status": "export_started",
+          "data_points": 2542
+        },
+        {
+          "month": 9,
+          "month_name": "September",
+          "filename": "tashkent_pm25_2025_09_september.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_pm25_2025_09_september.tif",
+          "gee_task_id": "6HYEET7AS46ZRBCCZMEGWZHS",
+          "status": "export_started",
+          "data_points": 2460
+        },
+        {
+          "month": 10,
+          "month_name": "October",
+          "filename": "tashkent_pm25_2025_10_october.tif",
+          "local_path": "tashkent_air_quality_rasters\\tashkent_pm25_2025_10_october.tif",
+          "gee_task_id": "V5F7TOBEEJBFTRDZPZMTIVOB",
+          "status": "export_started",
+          "data_points": 518
+        },
+        {
+          "month": 11,
+          "month_name": "November",
+          "filename": null,
+          "status": "no_data",
+          "data_points": 0
+        },
+        {
+          "month": 12,
+          "month_name": "December",
+          "filename": null,
+          "status": "no_data",
+          "data_points": 0
+        }
+      ],
+      "extraction_status": "success",
+      "error_details": null
+    }
+  },
+  "metadata": {}
+}
