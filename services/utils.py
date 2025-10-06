@@ -73,6 +73,8 @@ DATASETS = {
     "sentinel5p_aerosol": "COPERNICUS/S5P/OFFL/L3_AER_AI",
     "sentinel2_aod": "COPERNICUS/S2_SR_HARMONIZED",
     "sentinel3_olci": "COPERNICUS/S3/OLCI",
+    # PM2.5 from CAMS Global Atmospheric Composition forecasts
+    "cams_pm25": "ECMWF/CAMS/NRT",
 }
 
 GEE_CONFIG = {

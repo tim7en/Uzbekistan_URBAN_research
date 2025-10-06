@@ -1,0 +1,43 @@
+{
+  "city": "Tashkent",
+  "year": 2025,
+  "extraction_timestamp": "2025-10-06T15:35:29.259220",
+  "raster_extraction": null,
+  "visualization": {
+    "plot_file": "tashkent_air_quality_rasters\\tashkent_pm25_trends_2025.png",
+    "data_file": "tashkent_air_quality_rasters\\tashkent_pm25_trends_2025.csv",
+    "monthly_data": {
+      "PM25": {
+        "months": [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ],
+        "values": [
+          21.54571381916558,
+          21.49030248411839,
+          16.182339520466396,
+          13.209353688522055,
+          11.111175787931693,
+          13.904124772249814,
+          9.912327842567336,
+          9.904082373487782,
+          11.108179079912064,
+          14.426809061678753,
+          null,
+          null
+        ]
+      }
+    },
+    "data_points_pm25": 10
+  }
+}

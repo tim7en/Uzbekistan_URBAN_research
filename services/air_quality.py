@@ -42,7 +42,10 @@ class AirQualityAnalyzer:
             'O3': {'dataset': 'sentinel5p_o3', 'band': 'O3_column_number_density',
                   'units': 'mol/m²', 'factor': 1e6, 'display_units': 'µmol/m²'},
             'SO2': {'dataset': 'sentinel5p_so2', 'band': 'SO2_column_number_density',
-                   'units': 'mol/m²', 'factor': 1e6, 'display_units': 'µmol/m²'}
+                   'units': 'mol/m²', 'factor': 1e6, 'display_units': 'µmol/m²'},
+            # PM2.5 from CAMS Global Atmospheric Composition forecasts
+            'PM25': {'dataset': 'cams_pm25', 'band': 'particulate_matter_d_less_than_25_um_surface',
+                    'units': 'kg/m³', 'factor': 1e9, 'display_units': 'µg/m³'}
         }
 
         # Health impact thresholds (WHO guidelines)
