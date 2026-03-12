@@ -1,0 +1,85 @@
+{
+  "analysis_start": "2025-10-01",
+  "analysis_end_inclusive": "2026-03-12",
+  "analysis_end_exclusive": "2026-03-13",
+  "center": {
+    "lon": 69.2401,
+    "lat": 41.2995
+  },
+  "domain_half_degree": 0.7,
+  "grid_step_deg": 0.07,
+  "s5p_scale_m": 7000,
+  "sources": [
+    {
+      "key": "almalyk",
+      "label": "Almalyk smelter complex",
+      "lon": 69.6,
+      "lat": 40.848,
+      "category": "smelter",
+      "color": "#d62728",
+      "marker": "^",
+      "buffer_km": 15.0,
+      "dist_km": 41,
+      "confidence": "high",
+      "note": "Strong persistent hotspot south-east of Tashkent."
+    },
+    {
+      "key": "angren",
+      "label": "Angren power / industrial corridor",
+      "lon": 69.968,
+      "lat": 41.018,
+      "category": "power",
+      "color": "#ff7f0e",
+      "marker": "s",
+      "buffer_km": 15.0,
+      "dist_km": 75,
+      "confidence": "medium",
+      "note": "Secondary eastern hotspot with wind geometry favorable for city impact."
+    },
+    {
+      "key": "chirchiq",
+      "label": "Chirchiq industrial area",
+      "lon": 69.583,
+      "lat": 41.468,
+      "category": "chemical",
+      "color": "#9467bd",
+      "marker": "D",
+      "buffer_km": 15.0,
+      "dist_km": 38,
+      "confidence": "medium",
+      "note": "Intermittent north-east signal; weaker than Almalyk and Angren."
+    },
+    {
+      "key": "tashkent_corridor",
+      "label": "Tashkent urban / CHP corridor",
+      "lon": 69.24,
+      "lat": 41.3,
+      "category": "urban_power",
+      "color": "#17becf",
+      "marker": "o",
+      "buffer_km": 15.0,
+      "dist_km": 0,
+      "confidence": "medium",
+      "note": "Local urban background plus CHP emissions; CHP-1 and CHP-2 are not separable at TROPOMI resolution."
+    }
+  ],
+  "seasonal_domain_stats": {
+    "valid_grid_cells": 400,
+    "valid_fraction": 1.0,
+    "mean_umol_m2": 351.8363666880139,
+    "median_umol_m2": 317.34443993166303,
+    "p75_umol_m2": 474.74983126181377,
+    "p90_umol_m2": 606.7920488566455,
+    "p95_umol_m2": 686.9594891469407
+  },
+  "selected_transport_events": [
+    [
+      "2025-11-15",
+      "15 Nov 2025"
+    ],
+    [
+      "2026-02-17",
+      "17 Feb 2026"
+    ]
+  ]
+}
