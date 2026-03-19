@@ -22,6 +22,38 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT))
 
+# ---------------------------------------------------------------------------
+# Load uz.json region boundaries (replaces GAUL lookups)
+# ---------------------------------------------------------------------------
+with open(ROOT / "uz.json") as _f:
+    _UZ_GJ = json.load(_f)
+
+# Excel region name → uz.json feature id
+_UZ_ID_MAP = {
+    "Tashkent City":       "UZTK",
+    "Tashkent Region":     "UZTO",
+    "Navoi Region":        "UZNW",
+    "Kashkadarya Region":  "UZQA",
+    "Bukhara Region":      "UZBU",
+    "Samarkand Region":    "UZSA",
+    "Fergana Region":      "UZFA",
+    "Andijan Region":      "UZAN",
+    "Namangan Region":     "UZNG",
+    "Surkhandarya Region": "UZSU",
+    "Khorezm Region":      "UZXO",
+    "Jizzakh Region":      "UZJI",
+    "Syrdarya Region":     "UZSI",
+    "Rep. Karakalpakstan": "UZQR",
+}
+_UZ_FEATURES = {f["properties"]["id"]: f for f in _UZ_GJ["features"]}
+
+
+def _get_uz_feature(region_name: str) -> dict:
+    fid = _UZ_ID_MAP.get(region_name)
+    if fid and fid in _UZ_FEATURES:
+        return _UZ_FEATURES[fid]
+    raise KeyError(f"No uz.json feature for '{region_name}'")
+
 import numpy as np
 import requests
 import matplotlib
@@ -173,35 +205,23 @@ def load_emissions_excel(xlsx_path: Path) -> pd.DataFrame:
 # ---------------------------------------------------------------------------
 
 def get_region_geometry(region_name: str) -> ee.Geometry:
-    """Try GAUL lookup; fall back to buffer if not found."""
-    gaul = ee.FeatureCollection("FAO/GAUL/2015/level1")
-    uz   = gaul.filter(ee.Filter.eq("ADM0_NAME", "Uzbekistan"))
+    """Return exact boundary from uz.json as an ee.Geometry."""
+    feat = _get_uz_feature(region_name)
+    geom_json = feat["geometry"]
+    geom = ee.Geometry(geom_json)
+    area = geom.area().getInfo() / 1e6
+    print(f"    uz.json geometry for '{region_name}': ~{area:,.0f} km2")
+    return geom
 
-    # For Tashkent Region specifically, exclude the City feature
-    exclude_city = region_name == "Tashkent Region"
 
-    candidates = REGION_GAUL_MAP.get(region_name, [region_name])
-    for name in candidates:
-        try:
-            filt = uz.filter(ee.Filter.stringContains("ADM1_NAME", name.split("'")[0]))
-            if exclude_city:
-                filt = filt.filter(
-                    ee.Filter.Not(ee.Filter.stringContains("ADM1_NAME", "shahri"))
-                ).filter(
-                    ee.Filter.Not(ee.Filter.stringContains("ADM1_NAME", "City"))
-                )
-            if filt.size().getInfo() > 0:
-                geom = filt.geometry()
-                area = geom.area().getInfo() / 1e6
-                print(f"    GAUL match '{name}': ~{area:,.0f} km2")
-                return geom
-        except Exception:
-            continue
-
-    # Fallback
-    lon, lat, buf = REGION_FALLBACKS.get(region_name, (65.0, 40.0, 200_000))
-    print(f"    GAUL lookup failed for '{region_name}' — using fallback buffer")
-    return ee.Geometry.Point([lon, lat]).buffer(buf).bounds()
+def get_region_polygon_coords(region_name: str) -> list:
+    """Return list of (lon, lat) coordinate rings for matplotlib plotting."""
+    feat = _get_uz_feature(region_name)
+    geom = feat["geometry"]
+    if geom["type"] == "Polygon":
+        return [geom["coordinates"][0]]   # outer ring only
+    # MultiPolygon: return outer ring of each part
+    return [part[0] for part in geom["coordinates"]]
 
 
 def download_geotiff(image: ee.Image, region: ee.Geometry, scale: int,
@@ -273,6 +293,14 @@ def load_raster(path: Path):
     return data, transform, bounds
 
 
+def make_polygon_mask(geom_json: dict, transform, shape: tuple) -> np.ndarray:
+    """Return bool array (shape) where True = inside the region polygon."""
+    from rasterio.features import geometry_mask
+    outside = geometry_mask([geom_json], transform=transform,
+                            out_shape=shape, invert=False)
+    return ~outside   # True = inside
+
+
 def resample_to_match(src_arr: np.ma.MaskedArray, src_shape, tgt_shape):
     zy = tgt_shape[0] / src_shape[0]
     zx = tgt_shape[1] / src_shape[1]
@@ -322,17 +350,23 @@ def compute_intensity(lulc, nl_norm, full_mask, refined_Mt, pixel_area_km2):
     return total
 
 
-def build_emission_grid(lulc, nl_resampled, refined_Mt, pixel_area_km2):
-    full_mask = (~lulc.mask) if (hasattr(lulc,"mask") and lulc.mask.ndim>0) \
-                else np.ones(lulc.shape, bool)
+def build_emission_grid(lulc, nl_resampled, refined_Mt, pixel_area_km2,
+                        poly_mask: np.ndarray = None):
+    # Base validity mask: non-nodata pixels intersected with polygon
+    nodata_mask = (~lulc.mask) if (hasattr(lulc, "mask") and lulc.mask.ndim > 0) \
+                  else np.ones(lulc.shape, bool)
+    full_mask = nodata_mask if poly_mask is None else (nodata_mask & poly_mask)
+
     nl_data = nl_resampled.filled(0).astype(float)
     nl_max  = np.percentile(nl_data[nl_data > 0], 98) if (nl_data > 0).any() else 1.0
     nl_norm = np.clip(nl_data / nl_max, 0, 1)
 
     grid = compute_intensity(lulc, nl_norm, full_mask, refined_Mt, pixel_area_km2)
-    # Gaussian smoothing
-    grid = gaussian_filter(grid, sigma=4)
-    return grid, nl_norm, nl_data
+    # Gaussian smoothing — applied only within polygon to avoid bleed
+    grid_sm = gaussian_filter(grid, sigma=4)
+    if poly_mask is not None:
+        grid_sm[~poly_mask] = 0.0
+    return grid_sm, nl_norm, nl_data
 
 
 def lulc_composition(lulc) -> dict:
@@ -357,7 +391,8 @@ def lulc_composition(lulc) -> dict:
 def draw_map(region_name: str, emission_grid: np.ndarray,
              lulc, nl_data, lulc_transform,
              refined_Mt: dict, original_Mt: dict,
-             lulc_comp: dict, out_path: Path):
+             lulc_comp: dict, out_path: Path,
+             poly_rings: list = None, poly_mask: np.ndarray = None):
 
     rows, cols = emission_grid.shape
     west  = lulc_transform.c
@@ -396,20 +431,26 @@ def draw_map(region_name: str, emission_grid: np.ndarray,
     ax_leg  = fig.add_subplot(gs[2, 2])
     ax_pie  = fig.add_subplot(gs[2, 3])
 
-    # ---- LULC faint background ----
+    # ---- LULC faint background (clipped to polygon) ----
     lulc_rgba = np.zeros((*lulc.shape, 4), dtype=float)
     import matplotlib.colors as mcolors
+    lulc_int = lulc.filled(0).astype(int)
     for cid, hex_col in ESRI_ID_PALETTE.items():
         rgba = mcolors.to_rgba(hex_col, 0.18)
-        mask = lulc.filled(0).astype(int) == cid
+        px_mask = (lulc_int == cid)
+        if poly_mask is not None:
+            px_mask = px_mask & poly_mask
         for c in range(4):
-            lulc_rgba[mask, c] = rgba[c]
+            lulc_rgba[px_mask, c] = rgba[c]
     ax_map.imshow(lulc_rgba, extent=extent, origin="upper", aspect="auto",
                   interpolation="nearest")
 
-    # ---- GHG intensity ----
-    em_log = np.where(emission_grid > 0,
-                      np.log10(np.maximum(emission_grid, 1e-3)), np.nan)
+    # ---- GHG intensity (clipped to polygon) ----
+    em_display = emission_grid.copy()
+    if poly_mask is not None:
+        em_display[~poly_mask] = 0.0
+    em_log = np.where(em_display > 0,
+                      np.log10(np.maximum(em_display, 1e-3)), np.nan)
     img = ax_map.imshow(em_log, extent=extent, origin="upper",
                         cmap=GHG_CMAP, vmin=log_min, vmax=log_max,
                         interpolation="bilinear", aspect="auto", alpha=0.93)
@@ -429,6 +470,14 @@ def draw_map(region_name: str, emission_grid: np.ndarray,
             ax_map.clabel(cs, fmt="%.0f", fontsize=5, colors="white")
     except Exception:
         pass
+
+    # ---- Region boundary from uz.json (halo: dark outer + bright inner) ----
+    if poly_rings:
+        for ring in poly_rings:
+            xs = [c[0] for c in ring] + [ring[0][0]]
+            ys = [c[1] for c in ring] + [ring[0][1]]
+            ax_map.plot(xs, ys, color="#000000", lw=3.5, alpha=0.70, zorder=5)
+            ax_map.plot(xs, ys, color="#FFFFFF", lw=1.6, alpha=1.00, zorder=6)
 
     # ---- Map style ----
     refined_total = sum(v for k, v in refined_Mt.items()
@@ -457,33 +506,37 @@ def draw_map(region_name: str, emission_grid: np.ndarray,
     cb.outline.set_edgecolor("#777")
     ax_cbar.set_facecolor("#0E1117")
 
-    # ---- Sector bars: original vs refined ----
+    # ---- Sector bars: BTR1 values (single bar, sector-coloured) ----
     sectors = list(SECTOR_LABELS.keys())
     x = np.arange(len(sectors))
-    w = 0.35
-    orig_vals    = [float(original_Mt.get(s) or 0) for s in sectors]
-    refined_vals = [float(refined_Mt.get(s)  or 0) for s in sectors]
-    bars_orig = ax_bars.bar(x - w/2, orig_vals, w, color="#546E7A",
-                            label="Original (proxy)", alpha=0.9, edgecolor="white", lw=0.4)
-    bars_ref  = ax_bars.bar(x + w/2, refined_vals, w,
-                            color=[SECTOR_COLORS[i] for i in range(len(sectors))],
-                            label="Refined (LULC + NL)", alpha=0.9, edgecolor="white", lw=0.4)
+    w = 0.55
+    orig_vals = [float(original_Mt.get(s) or 0) for s in sectors]
+    bars = ax_bars.bar(x, orig_vals, w,
+                       color=SECTOR_COLORS[:len(sectors)],
+                       edgecolor="#0E1117", lw=0.5, zorder=3)
+    # Value labels on each bar
+    max_v = max(orig_vals) if orig_vals else 1
+    for bar, v in zip(bars, orig_vals):
+        if v > 0:
+            ax_bars.text(bar.get_x() + bar.get_width() / 2,
+                         bar.get_height() + max_v * 0.02,
+                         f"{v:.2f}", ha="center", va="bottom",
+                         fontsize=7, color="white", fontweight="bold")
     ax_bars.set_xticks(x)
     ax_bars.set_xticklabels([SECTOR_LABELS[s] for s in sectors],
-                            rotation=38, ha="right", fontsize=6.5, color="white")
+                            rotation=30, ha="right", fontsize=7.5, color="white")
     ax_bars.set_ylabel("Mt CO\u2082-eq", fontsize=8, color="white")
-    ax_bars.set_title("Original vs Refined Sector Emissions",
-                      fontsize=8, fontweight="bold", color="white")
-    ax_bars.tick_params(colors="white", labelsize=7)
+    ax_bars.set_title("Sector Emissions — BTR1 (Mt CO\u2082-eq)",
+                      fontsize=9, fontweight="bold", color="white", pad=5)
+    ax_bars.tick_params(colors="white", labelsize=7.5)
     ax_bars.set_facecolor("#16191F")
     ax_bars.spines["top"].set_visible(False)
     ax_bars.spines["right"].set_visible(False)
     for sp in ax_bars.spines.values():
         sp.set_edgecolor("#444")
-    ax_bars.yaxis.grid(True, alpha=0.2, lw=0.5, color="white")
+    ax_bars.yaxis.grid(True, alpha=0.18, lw=0.5, color="white")
     ax_bars.set_axisbelow(True)
-    ax_bars.legend(fontsize=7, facecolor="#16191F", labelcolor="white",
-                   edgecolor="#444", loc="upper right")
+    ax_bars.set_ylim(0, max_v * 1.25)
 
     # ---- LULC legend panel (all 8 classes, always shown) ----
     ax_leg.set_facecolor("#16191F")
@@ -637,9 +690,19 @@ def main():
 
         nl_res = resample_to_match(nl, nl.shape, lulc.shape)
 
-        pixel_deg    = abs(lulc_transform.a)
-        pixel_km     = pixel_deg * 111.0
+        pixel_deg      = abs(lulc_transform.a)
+        pixel_km       = pixel_deg * 111.0
         pixel_area_km2 = pixel_km ** 2
+
+        # --- Polygon pixel mask from uz.json ---
+        try:
+            feat_geom = _get_uz_feature(region_name)["geometry"]
+            poly_mask = make_polygon_mask(feat_geom, lulc_transform, lulc.shape)
+            inside_px = poly_mask.sum()
+            print(f"  Polygon mask: {inside_px:,} pixels inside region")
+        except Exception as e:
+            print(f"  WARNING: polygon mask failed ({e}), using full bbox")
+            poly_mask = None
 
         # --- Emission totals ---
         sectors_all = ["electricity_heat","residential_commercial","industry_combustion",
@@ -691,7 +754,7 @@ def main():
         print(f"  Building emission grid ({lulc.shape[0]}x{lulc.shape[1]} px)...")
         try:
             grid, nl_norm, nl_data = build_emission_grid(
-                lulc, nl_res, refined_Mt, pixel_area_km2
+                lulc, nl_res, refined_Mt, pixel_area_km2, poly_mask=poly_mask
             )
         except Exception as e:
             print(f"  ERROR building grid: {e} — skipping.")
@@ -706,9 +769,14 @@ def main():
         # --- Draw map ---
         print(f"  Rendering map...")
         try:
+            try:
+                poly_rings = get_region_polygon_coords(region_name)
+            except Exception:
+                poly_rings = None
             draw_map(
                 region_name, grid, lulc, nl_data, lulc_transform,
                 refined_Mt, original_Mt, lulc_comp_frac, out_path,
+                poly_rings=poly_rings, poly_mask=poly_mask,
             )
             processed.append(region_name)
         except Exception as e:
