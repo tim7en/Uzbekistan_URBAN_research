@@ -1,0 +1,444 @@
+[
+  {
+    "region": "Tashkent City",
+    "unit_key": "Tashkent City",
+    "year": 2022,
+    "confidence": {
+      "score": 100,
+      "notes": [
+        "ESRI LULC: 6 classes detected",
+        "VIIRS nightlights: valid annual median",
+        "LULC area > 500 km² — good regional coverage"
+      ]
+    },
+    "lulc_summary": {
+      "total_area_km2": 2122.6605,
+      "classes": {
+        "Water": {
+          "class_id": 1,
+          "area_km2": 16.4322,
+          "fraction": 0.007741
+        },
+        "Rangeland": {
+          "class_id": 11,
+          "area_km2": 105.5889,
+          "fraction": 0.049744
+        },
+        "Trees": {
+          "class_id": 2,
+          "area_km2": 2.2887,
+          "fraction": 0.001078
+        },
+        "Crops": {
+          "class_id": 5,
+          "area_km2": 926.2243,
+          "fraction": 0.436351
+        },
+        "Built_Area": {
+          "class_id": 7,
+          "area_km2": 1069.6464,
+          "fraction": 0.503918
+        },
+        "Bare_Ground": {
+          "class_id": 8,
+          "area_km2": 2.48,
+          "fraction": 0.001168
+        }
+      }
+    },
+    "nightlight_summary": {
+      "avg_rad_mean": 11.960778,
+      "avg_rad_median": 5.482881,
+      "avg_rad_p90": 33.472868,
+      "avg_rad_stdDev": 14.172328
+    },
+    "nl_score_normalised": 1.0,
+    "original_emissions_Mt": {
+      "electricity_heat": 8.67,
+      "residential_commercial": 2.52,
+      "industry_combustion": 1.6,
+      "transport": 1.69,
+      "fugitive_emissions": 0.65,
+      "ippu": 1.22,
+      "agriculture": 0.31,
+      "waste": 0.37,
+      "lulucf": -0.06,
+      "total": 17.029999999999998,
+      "net_total": 16.97
+    },
+    "refined_emissions_Mt": {
+      "electricity_heat": 7.809794,
+      "residential_commercial": 1.83243,
+      "industry_combustion": 1.401034,
+      "transport": 1.396567,
+      "fugitive_emissions": 0.65,
+      "ippu": 1.098142,
+      "agriculture": 0.169371,
+      "waste": 0.287402,
+      "lulucf": -0.015341
+    },
+    "adjustments": {
+      "electricity_heat": {
+        "prior_Mt": 8.67,
+        "refined_Mt": 7.809794,
+        "adjustment_factor": 0.9008,
+        "lulc_component": 0.5039,
+        "nl_score": 1.0,
+        "signal_breakdown": {
+          "Built_Area": {
+            "weight": 0.2,
+            "fraction": 0.50392,
+            "contribution": 0.100784
+          }
+        }
+      },
+      "residential_commercial": {
+        "prior_Mt": 2.52,
+        "refined_Mt": 1.83243,
+        "adjustment_factor": 0.7272,
+        "lulc_component": 0.5039,
+        "nl_score": 1.0,
+        "signal_breakdown": {
+          "Built_Area": {
+            "weight": 0.55,
+            "fraction": 0.50392,
+            "contribution": 0.277155
+          }
+        }
+      },
+      "industry_combustion": {
+        "prior_Mt": 1.6,
+        "refined_Mt": 1.401034,
+        "adjustment_factor": 0.8756,
+        "lulc_component": 0.3782,
+        "nl_score": 1.0,
+        "signal_breakdown": {
+          "Built_Area": {
+            "weight": 0.15,
+            "fraction": 0.50392,
+            "contribution": 0.075588
+          },
+          "Bare_Ground": {
+            "weight": 0.05,
+            "fraction": 0.00117,
+            "contribution": 5.8e-05
+          }
+        }
+      },
+      "transport": {
+        "prior_Mt": 1.69,
+        "refined_Mt": 1.396567,
+        "adjustment_factor": 0.8264,
+        "lulc_component": 0.5039,
+        "nl_score": 1.0,
+        "signal_breakdown": {
+          "Built_Area": {
+            "weight": 0.35,
+            "fraction": 0.50392,
+            "contribution": 0.176371
+          }
+        }
+      },
+      "fugitive_emissions": {
+        "prior_Mt": 0.65,
+        "refined_Mt": 0.65,
+        "adjustment_factor": 1.0,
+        "lulc_component": 0.0,
+        "nl_score": 1.0,
+        "signal_breakdown": {}
+      },
+      "ippu": {
+        "prior_Mt": 1.22,
+        "refined_Mt": 1.098142,
+        "adjustment_factor": 0.9001,
+        "lulc_component": 0.0012,
+        "nl_score": 1.0,
+        "signal_breakdown": {
+          "Bare_Ground": {
+            "weight": 0.1,
+            "fraction": 0.00117,
+            "contribution": 0.000117
+          }
+        }
+      },
+      "agriculture": {
+        "prior_Mt": 0.31,
+        "refined_Mt": 0.169371,
+        "adjustment_factor": 0.5464,
+        "lulc_component": 0.3021,
+        "nl_score": 1.0,
+        "signal_breakdown": {
+          "Crops": {
+            "weight": 0.45,
+            "fraction": 0.43635,
+            "contribution": 0.196358
+          },
+          "Flooded_Vegetation": {
+            "weight": 0.2,
+            "fraction": 0.0,
+            "contribution": 0.0
+          }
+        }
+      },
+      "waste": {
+        "prior_Mt": 0.37,
+        "refined_Mt": 0.287402,
+        "adjustment_factor": 0.7768,
+        "lulc_component": 0.5039,
+        "nl_score": 1.0,
+        "signal_breakdown": {
+          "Built_Area": {
+            "weight": 0.45,
+            "fraction": 0.50392,
+            "contribution": 0.226763
+          }
+        }
+      },
+      "lulucf": {
+        "prior_Mt": -0.06,
+        "refined_Mt": -0.015341,
+        "adjustment_factor": 0.2557,
+        "lulc_component": 0.0076,
+        "nl_score": 1.0,
+        "signal_breakdown": {
+          "Trees": {
+            "weight": 0.65,
+            "fraction": 0.00108,
+            "contribution": 0.000701
+          },
+          "Rangeland": {
+            "weight": 0.1,
+            "fraction": 0.04974,
+            "contribution": 0.004974
+          }
+        }
+      }
+    }
+  },
+  {
+    "region": "Tashkent Region",
+    "unit_key": "Tashkent Region",
+    "year": 2022,
+    "confidence": {
+      "score": 100,
+      "notes": [
+        "ESRI LULC: 8 classes detected",
+        "VIIRS nightlights: valid annual median",
+        "LULC area > 500 km² — good regional coverage"
+      ]
+    },
+    "lulc_summary": {
+      "total_area_km2": 20923.8794,
+      "classes": {
+        "Water": {
+          "class_id": 1,
+          "area_km2": 333.8434,
+          "fraction": 0.015955
+        },
+        "Rangeland": {
+          "class_id": 11,
+          "area_km2": 10605.4123,
+          "fraction": 0.506857
+        },
+        "Trees": {
+          "class_id": 2,
+          "area_km2": 355.1953,
+          "fraction": 0.016976
+        },
+        "Flooded_Vegetation": {
+          "class_id": 4,
+          "area_km2": 4.87,
+          "fraction": 0.000233
+        },
+        "Crops": {
+          "class_id": 5,
+          "area_km2": 6566.5416,
+          "fraction": 0.31383
+        },
+        "Built_Area": {
+          "class_id": 7,
+          "area_km2": 2464.7029,
+          "fraction": 0.117794
+        },
+        "Bare_Ground": {
+          "class_id": 8,
+          "area_km2": 511.5965,
+          "fraction": 0.02445
+        },
+        "Snow_Ice": {
+          "class_id": 9,
+          "area_km2": 81.7174,
+          "fraction": 0.003905
+        }
+      }
+    },
+    "nightlight_summary": {
+      "avg_rad_mean": 2.078613,
+      "avg_rad_median": 0.496143,
+      "avg_rad_p90": 3.456148,
+      "avg_rad_stdDev": 5.817649
+    },
+    "nl_score_normalised": 0.1738,
+    "original_emissions_Mt": {
+      "electricity_heat": 2.98,
+      "residential_commercial": 2.54,
+      "industry_combustion": 2.56,
+      "transport": 1.25,
+      "fugitive_emissions": 0.65,
+      "ippu": 5.48,
+      "agriculture": 3.38,
+      "waste": 0.37,
+      "lulucf": -0.43,
+      "total": 19.21,
+      "net_total": 18.78
+    },
+    "refined_emissions_Mt": {
+      "electricity_heat": 1.223146,
+      "residential_commercial": 0.887841,
+      "industry_combustion": 1.038808,
+      "transport": 0.502566,
+      "fugitive_emissions": 0.51574,
+      "ippu": 2.681572,
+      "agriculture": 1.660493,
+      "waste": 0.223113,
+      "lulucf": -0.13404
+    },
+    "adjustments": {
+      "electricity_heat": {
+        "prior_Mt": 2.98,
+        "refined_Mt": 1.223146,
+        "adjustment_factor": 0.4105,
+        "lulc_component": 0.1178,
+        "nl_score": 0.1738,
+        "signal_breakdown": {
+          "Built_Area": {
+            "weight": 0.2,
+            "fraction": 0.11779,
+            "contribution": 0.023559
+          }
+        }
+      },
+      "residential_commercial": {
+        "prior_Mt": 2.54,
+        "refined_Mt": 0.887841,
+        "adjustment_factor": 0.3495,
+        "lulc_component": 0.1178,
+        "nl_score": 0.1738,
+        "signal_breakdown": {
+          "Built_Area": {
+            "weight": 0.55,
+            "fraction": 0.11779,
+            "contribution": 0.064787
+          }
+        }
+      },
+      "industry_combustion": {
+        "prior_Mt": 2.56,
+        "refined_Mt": 1.038808,
+        "adjustment_factor": 0.4058,
+        "lulc_component": 0.0945,
+        "nl_score": 0.1738,
+        "signal_breakdown": {
+          "Built_Area": {
+            "weight": 0.15,
+            "fraction": 0.11779,
+            "contribution": 0.017669
+          },
+          "Bare_Ground": {
+            "weight": 0.05,
+            "fraction": 0.02445,
+            "contribution": 0.001223
+          }
+        }
+      },
+      "transport": {
+        "prior_Mt": 1.25,
+        "refined_Mt": 0.502566,
+        "adjustment_factor": 0.4021,
+        "lulc_component": 0.1178,
+        "nl_score": 0.1738,
+        "signal_breakdown": {
+          "Built_Area": {
+            "weight": 0.35,
+            "fraction": 0.11779,
+            "contribution": 0.041228
+          }
+        }
+      },
+      "fugitive_emissions": {
+        "prior_Mt": 0.65,
+        "refined_Mt": 0.51574,
+        "adjustment_factor": 0.7934,
+        "lulc_component": 0.0,
+        "nl_score": 0.1738,
+        "signal_breakdown": {}
+      },
+      "ippu": {
+        "prior_Mt": 5.48,
+        "refined_Mt": 2.681572,
+        "adjustment_factor": 0.4893,
+        "lulc_component": 0.0244,
+        "nl_score": 0.1738,
+        "signal_breakdown": {
+          "Bare_Ground": {
+            "weight": 0.1,
+            "fraction": 0.02445,
+            "contribution": 0.002445
+          }
+        }
+      },
+      "agriculture": {
+        "prior_Mt": 3.38,
+        "refined_Mt": 1.660493,
+        "adjustment_factor": 0.4913,
+        "lulc_component": 0.2173,
+        "nl_score": 0.1738,
+        "signal_breakdown": {
+          "Crops": {
+            "weight": 0.45,
+            "fraction": 0.31383,
+            "contribution": 0.141224
+          },
+          "Flooded_Vegetation": {
+            "weight": 0.2,
+            "fraction": 0.00023,
+            "contribution": 4.7e-05
+          }
+        }
+      },
+      "waste": {
+        "prior_Mt": 0.37,
+        "refined_Mt": 0.223113,
+        "adjustment_factor": 0.603,
+        "lulc_component": 0.1178,
+        "nl_score": 0.1738,
+        "signal_breakdown": {
+          "Built_Area": {
+            "weight": 0.45,
+            "fraction": 0.11779,
+            "contribution": 0.053007
+          }
+        }
+      },
+      "lulucf": {
+        "prior_Mt": -0.43,
+        "refined_Mt": -0.13404,
+        "adjustment_factor": 0.3117,
+        "lulc_component": 0.0823,
+        "nl_score": 0.1738,
+        "signal_breakdown": {
+          "Trees": {
+            "weight": 0.65,
+            "fraction": 0.01698,
+            "contribution": 0.011034
+          },
+          "Rangeland": {
+            "weight": 0.1,
+            "fraction": 0.50686,
+            "contribution": 0.050686
+          }
+        }
+      }
+    }
+  }
+]
